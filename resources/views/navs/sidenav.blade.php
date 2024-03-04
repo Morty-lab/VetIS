@@ -67,6 +67,7 @@
             </li>
           </ul>
       </li>
+      @if (auth()->user()->role == "admin")
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons mdi mdi-account"></i>
@@ -86,6 +87,7 @@
           </ul>
       </li>
       @endif
+
       <li class="menu-item">
         <a href="page-2.html" class="menu-link">
           <i class="menu-icon tf-icons mdi mdi-calendar-account"></i>
