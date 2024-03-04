@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/admin',[App\Http\Controllers\AdminController::class,'index']);
-Route::get('/login',[App\Http\Controllers\LoginController::class,'index']);
+
+// Route::get('/admin',[App\Http\Controllers\AdminController::class,'index']);
+Route::get('/',[App\Http\Controllers\LoginController::class,'index']);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
