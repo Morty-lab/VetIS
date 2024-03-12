@@ -23,7 +23,7 @@
                           <h6 class="card-title">Good Morning,</h6>
                           <h4 class="card-title pb-xl-1">Dr. Kent Invento!</h4>
                           <p class="mb-3">You have <span class="h6 mb-0">10</span> scheduled appointments today.</p>
-                          <a href="javascript:;" class="btn btn-primary">View Profile</a>
+                          <a  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUser">View Profile</a>
                         </div>
                       </div>
                       <div class="col-md-6 text-center text-md-end text-sm-center order-1 order-md-2">

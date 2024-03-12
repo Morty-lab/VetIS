@@ -80,9 +80,11 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="app-ecommerce-dashboard.html" class="menu-link">
-                <div data-i18n="Dashboard">Add Doctor</div>
+              <a  class="menu-link" data-bs-toggle="modal" data-bs-target="#editUser">
+                <div data-i18n="Dashboard" >Add Doctor</div>
               </a>
+              @include('modals.addUserModal')
+
             </li>
           </ul>
       </li>
