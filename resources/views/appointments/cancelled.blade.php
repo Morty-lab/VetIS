@@ -118,7 +118,6 @@
                             <a class="btn btn-outline-danger" href="/viewappointments">Open</a>
                         </td>
                     </tr>
-                    <p>Cancelled</p>
                 </tbody>
             </table>
         </div>
