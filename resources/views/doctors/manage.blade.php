@@ -43,18 +43,20 @@
           </tr>
         </thead>
         <tbody>
+            @foreach ($doctors as $doctor)
           <tr>
-            <td>Tiger Nixon</td>
-            <td>21</td>
-            <td>Veterinarian</td>
-            <td>2011/04/25</td>
+            <td>{{ $doctor->firstname }} {{ $doctor->lastname }}</td>
+            <td>{{ $doctor->age }}</td>
+            <td>{{ $doctor->position }}</td>
+            <td>{{ $doctor->created_at->format('Y-m-d') }}</td>
             <td>
               <div class="badge bg-primary text-white rounded-pill">Full-time</div>
             </td>
             <td>
-              <a class="btn btn-primary" href="/profiledoctor">Open</a>
+              <a class="btn btn-primary" href="{{route('doctor.profile', $doctor->id)}}">Open</a>
             </td>
           </tr>
+          @endforeach
         </tbody>
       </table>
     </div>

@@ -19,6 +19,11 @@ class PetRecords extends Model
         'remarks',
     ];
 
+    // public function pet()
+    // {
+    //     return $this->belongsTo(Pet::class);
+    // }
+
     public static function getAllPetRecords()
     {
         return self::all();
