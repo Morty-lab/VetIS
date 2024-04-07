@@ -88,5 +88,9 @@ Route::get('/cancelledappointments', function () {
     return view('appointments.cancelled');
 });
 
+Route::get('/manageschedules', function () {
+    return view('schedule.calendar');
+});
+
 
 require __DIR__ . '/auth.php';

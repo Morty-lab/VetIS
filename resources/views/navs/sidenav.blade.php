@@ -52,7 +52,7 @@
                     Appointments
                 </a>
 
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link @if(Request::is('manageschedules')) active @endif" href="/manageschedules">
                     <div class="nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
                     Schedule
                 </a>

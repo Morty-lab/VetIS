@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 @endsection
 
 @section('content')
@@ -144,6 +145,16 @@
             </div>
         </div>
     </div>
+    <div class="col mb-4">
+        <div class="card card-header-actions h-100">
+            <div class="card-header">
+                Schedule Calendar
+            </div>
+            <div class="card-body">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
     <!-- Example DataTable for Dashboard Demo-->
 </div>
 @endsection
@@ -158,4 +169,14 @@
 
 <!-- Page JS -->
 <script src="{{ asset('assets/js/dashboards-analytics.js')}}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+        });
+        calendar.render();
+    });
+</script>
 @endsection
