@@ -1,100 +1,148 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+<nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
+    <!-- Sidenav Toggle Button-->
+    <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
+    <!-- Navbar Brand-->
+    <!-- * * Tip * * You can use text or an image for your navbar brand.-->
+    <!-- * * * * * * When using an image, we recommend the SVG format.-->
+    <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{ route('dashboard') }}">VetIS</a>
+    <!-- Navbar Search Input-->
+    <!-- * * Note: * * Visible only on and above the lg breakpoint-->
+    <!-- <form class="form-inline me-auto d-none d-lg-block me-3">
+        <div class="input-group input-group-joined input-group-solid">
+            <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search" />
+            <div class="input-group-text"><i data-feather="search"></i></div>
         </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+    </form> -->
+    <!-- Navbar Items-->
+    <ul class="navbar-nav align-items-center ms-auto">
+        <!-- Navbar Search Dropdown-->
+        <!-- * * Note: * * Visible only below the lg breakpoint-->
+        <li class="nav-item dropdown no-caret me-3 d-lg-none">
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="dashboard-1.html#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="search"></i></a>
+            <!-- Dropdown - Search-->
+            <div class="dropdown-menu dropdown-menu-end p-3 shadow animated--fade-in-up" aria-labelledby="searchDropdown">
+                <form class="form-inline me-auto w-100">
+                    <div class="input-group input-group-joined input-group-solid">
+                        <input class="form-control pe-0" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                        <div class="input-group-text"><i data-feather="search"></i></div>
+                    </div>
                 </form>
             </div>
-        </div>
-    </div>
+        </li>
+        <!-- Alerts Dropdown-->
+        <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="bell"></i></a>
+            <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
+                <h6 class="dropdown-header dropdown-notifications-header">
+                    <i class="me-2" data-feather="bell"></i>
+                    Alerts Center
+                </h6>
+                <!-- Example Alert 1-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-details">December 29, 2021</div>
+                        <div class="dropdown-notifications-item-content-text">This is an alert message. It's nothing serious, but it requires your attention.</div>
+                    </div>
+                </a>
+                <!-- Example Alert 2-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <div class="dropdown-notifications-item-icon bg-info"><i data-feather="bar-chart"></i></div>
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-details">December 22, 2021</div>
+                        <div class="dropdown-notifications-item-content-text">A new monthly report is ready. Click here to view!</div>
+                    </div>
+                </a>
+                <!-- Example Alert 3-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <div class="dropdown-notifications-item-icon bg-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-details">December 8, 2021</div>
+                        <div class="dropdown-notifications-item-content-text">Critical system failure, systems shutting down.</div>
+                    </div>
+                </a>
+                <!-- Example Alert 4-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <div class="dropdown-notifications-item-icon bg-success"><i data-feather="user-plus"></i></div>
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-details">December 2, 2021</div>
+                        <div class="dropdown-notifications-item-content-text">New user request. Woody has requested access to the organization.</div>
+                    </div>
+                </a>
+                <a class="dropdown-item dropdown-notifications-footer" href="dashboard-1.html#!">View All Alerts</a>
+            </div>
+        </li>
+        <!-- Messages Dropdown-->
+        <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail"></i></a>
+            <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownMessages">
+                <h6 class="dropdown-header dropdown-notifications-header">
+                    <i class="me-2" data-feather="mail"></i>
+                    Message Center
+                </h6>
+                <!-- Example Message 1  -->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <img class="dropdown-notifications-item-img" src="assets/img/illustrations/profiles/profile-2.png" />
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                        <div class="dropdown-notifications-item-content-details">Thomas Wilcox · 58m</div>
+                    </div>
+                </a>
+                <!-- Example Message 2-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <img class="dropdown-notifications-item-img" src="assets/img/illustrations/profiles/profile-3.png" />
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                        <div class="dropdown-notifications-item-content-details">Emily Fowler · 2d</div>
+                    </div>
+                </a>
+                <!-- Example Message 3-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <img class="dropdown-notifications-item-img" src="assets/img/illustrations/profiles/profile-4.png" />
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                        <div class="dropdown-notifications-item-content-details">Marshall Rosencrantz · 3d</div>
+                    </div>
+                </a>
+                <!-- Example Message 4-->
+                <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
+                    <img class="dropdown-notifications-item-img" src="assets/img/illustrations/profiles/profile-5.png" />
+                    <div class="dropdown-notifications-item-content">
+                        <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                        <div class="dropdown-notifications-item-content-details">Colby Newton · 3d</div>
+                    </div>
+                </a>
+                <!-- Footer Link-->
+                <a class="dropdown-item dropdown-notifications-footer" href="dashboard-1.html#!">Read All Messages</a>
+            </div>
+        </li>
+        <!-- User Dropdown-->
+        <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></a>
+            <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
+                <h6 class="dropdown-header d-flex align-items-center">
+                    <img class="dropdown-user-img" src="assets/img/illustrations/profiles/profile-1.png" />
+                    <div class="dropdown-user-details">
+                        <div class="dropdown-user-details-name">{{ Auth::user()->name }}</div>
+                        <div class="dropdown-user-details-email"><a href="cdn-cgi/l/email-protection.html" class="__cf_email__ text-muted"> {{ Auth::user()->email }} </a></div>
+                    </div>
+                </h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                    <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
+                    Account
+                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+
+                    <button class="dropdown-item" href="dashboard-1.html#!">
+                        <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+                        Logout
+                    </button>
+                </form>
+
+            </div>
+        </li>
+    </ul>
 </nav>

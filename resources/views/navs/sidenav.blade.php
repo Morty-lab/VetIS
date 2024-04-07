@@ -1,211 +1,149 @@
-{{-- @extends('layouts.app') --}}
+    <nav class="sidenav shadow-right sidenav-light">
+        <div class="sidenav-menu">
+            <div class="nav accordion" id="accordionSidenav">
+                <!-- Sidenav Menu Heading (Account)-->
+                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
+                <div class="sidenav-menu-heading d-sm-none">Account</div>
+                <!-- Sidenav Link (Alerts)-->
+                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
+                <a class="nav-link d-sm-none" href="dashboard-1.html#!">
+                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
+                    Alerts
+                    <span class="badge bg-warning-soft text-warning ms-auto">4 New!</span>
+                </a>
+                <!-- Sidenav Link (Messages)-->
+                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
+                <a class="nav-link d-sm-none" href="dashboard-1.html#!">
+                    <div class="nav-link-icon"><i data-feather="mail"></i></div>
+                    Messages
+                    <span class="badge bg-success-soft text-success ms-auto">2 New!</span>
+                </a>
+                <!-- Sidenav Menu Heading (Core)-->
+                <div class="sidenav-menu-heading">Main</div>
+                <!-- Sidenav Accordion (Dashboard)-->
+                <a class="nav-link  @if(Request::is('dashboard')) active @endif"" href=" /dashboard">
+                    <div class="nav-link-icon"><i class="fa-solid fa-bolt"></i></div>
+                    Dashboard
+                </a>
 
-{{-- @section('styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css')}}" />
+                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet') || Request::is('editpet')) active @endif" href="/managepet">
+                    <div class="nav-link-icon"><i class="fa-solid fa-paw"></i></div>
+                    Pets
+                </a>
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-statistics.css')}}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-analytics.css')}}" />
-@endsection --}}
+                @if (auth()->user()->role == "admin")
+                <a class="nav-link @if(Request::is('managedoctor') || Request::is('adddoctor') || Request::is('profiledoctor') || Request::is('securitydoctor') || Request::is('adminsettingsdoctor'))  active @endif" href=" /managedoctor">
+                    <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                    Doctors
+                </a>
 
-{{-- @section('sidnav') --}}
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo">
-      <a href="index.html" class="app-brand-link">
-        <span class="app-brand-logo demo">
-          @include('_partials.macros')
-        </span>
-        <span class="app-brand-text demo menu-text fw-bold ms-2">VetIS</span>
-      </a>
+                <div class="collapse" id="collapseDoctors" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                        <a class="nav-link" href="/managedoctor">
+                            Manage Doctors
+                        </a>
+                    </nav>
+                </div>
+                @endif
 
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M11.4854 4.88844C11.0081 4.41121 10.2344 4.41121 9.75715 4.88844L4.51028 10.1353C4.03297 10.6126 4.03297 11.3865 4.51028 11.8638L9.75715 17.1107C10.2344 17.5879 11.0081 17.5879 11.4854 17.1107C11.9626 16.6334 11.9626 15.8597 11.4854 15.3824L7.96672 11.8638C7.48942 11.3865 7.48942 10.6126 7.96672 10.1353L11.4854 6.61667C11.9626 6.13943 11.9626 5.36568 11.4854 4.88844Z"
-            fill="currentColor"
-            fill-opacity="0.6" />
-          <path
-            d="M15.8683 4.88844L10.6214 10.1353C10.1441 10.6126 10.1441 11.3865 10.6214 11.8638L15.8683 17.1107C16.3455 17.5879 17.1192 17.5879 17.5965 17.1107C18.0737 16.6334 18.0737 15.8597 17.5965 15.3824L14.0778 11.8638C13.6005 11.3865 13.6005 10.6126 14.0778 10.1353L17.5965 6.61667C18.0737 6.13943 18.0737 5.36568 17.5965 4.88844C17.1192 4.41121 16.3455 4.41121 15.8683 4.88844Z"
-            fill="currentColor"
-            fill-opacity="0.38" />
-        </svg>
-      </a>
-    </div>
+                <a class="nav-link @if(Request::is('manageappointments')) active @endif" href="/manageappointments">
+                    <div class="nav-link-icon"><i class="fa-regular fa-calendar-plus"></i></div>
+                    Appointments
+                </a>
 
-    <div class="menu-inner-shadow"></div>
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                    Schedule
+                </a>
 
-    <ul class="menu-inner py-1">
-      <!-- Page -->
-      <li class="menu-header fw-medium mt-0">
-        <span class="menu-header-text" data-i18n="Components">Home</span>
-      </li>
-      <li class="menu-item active">
-        <a href="index.html" class="menu-link">
-          <span class="menu-icon mdi mdi-home"></span>
-          <div data-i18n="Page 1">Dashboard</div>
-        </a>
-      </li>
+                @if (auth()->user()->role == "staff" || auth()->user()->role == "admin")
+                <div class="sidenav-menu-heading">Sales</div>
 
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons mdi mdi-paw"></i>
-          <div data-i18n="Page 2">Pets</div>
-        </a>
-          <ul class="menu-sub">
-            <li class="menu-item">
-              <a href="app-ecommerce-dashboard.html" class="menu-link">
-                <div data-i18n="Dashboard">Manage Pet</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="app-ecommerce-dashboard.html" class="menu-link">
-                <div data-i18n="Dashboard">Add Pet</div>
-              </a>
-            </li>
-          </ul>
-      </li>
-      @if (auth()->user()->role == "admin")
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons mdi mdi-account"></i>
-          <div data-i18n="Page 2">Doctors</div>
-        </a>
-          <ul class="menu-sub">
-            <li class="menu-item">
-              <a href="app-ecommerce-dashboard.html" class="menu-link">
-                <div data-i18n="Dashboard">Manage Doctor</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a  class="menu-link" data-bs-toggle="modal" data-bs-target="#editUser">
-                <div data-i18n="Dashboard" >Add Doctor</div>
-              </a>
-              @include('modals.addUserModal')
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-solid fa-table-columns"></i></div>
+                    POS Dashboard
+                </a>
 
-            </li>
-          </ul>
-      </li>
-      @endif
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-regular fa-credit-card"></i></div>
+                    Billing and Payment
+                </a>
+                @endif
 
-      <li class="menu-item">
-        <a href="page-2.html" class="menu-link">
-          <i class="menu-icon tf-icons mdi mdi-calendar-account"></i>
+                <div class="sidenav-menu-heading">Inventory</div>
 
-          <div data-i18n="Page 2">Doctor's Schedule</div>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons mdi mdi-calendar"></i>
-          <div data-i18n="Page 2">Appointment</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="app-ecommerce-product-list.html" class="menu-link">
-              <div data-i18n="Product list">Manage Appointments</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="app-ecommerce-product-list.html" class="menu-link">
-              <div data-i18n="Product list">Add Appointments</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="menu-header fw-medium mt-2">
-        <span class="menu-header-text" data-i18n="Components">Point of Sales</span>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link">
-          <i class="menu-icon tf-icons mdi mdi-view-dashboard"></i>
-          <div data-i18n="Page 2">POS Dashboard</div>
-        </a>
-      </li>
-      <li class="menu-header fw-medium mt-2">
-        <span class="menu-header-text" data-i18n="Components">Inventory</span>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons mdi mdi-truck"></i>
-          <div data-i18n="Page 2">Manage Suppliers</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="app-ecommerce-product-list.html" class="menu-link">
-              <div data-i18n="Product list">All Supplier</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="app-ecommerce-product-list.html" class="menu-link">
-              <div data-i18n="Product list">Add Supplier</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons mdi mdi-list-box"></i>
-          <div data-i18n="Page 2">Manage Products</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="app-ecommerce-product-list.html" class="menu-link">
-              <div data-i18n="Product list">All Products</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="app-ecommerce-product-list.html" class="menu-link">
-              <div data-i18n="Product list">Add Products</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="menu-header fw-medium mt-4">
-        <span class="menu-header-text" data-i18n="Components">User Management</span>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link">
-          <i class="menu-icon tf-icons mdi mdi-account"></i>
-          <div data-i18n="Page 2">Admin/Owner</div>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link">
-          <i class="menu-icon tf-icons mdi mdi-account"></i>
-          <div data-i18n="Page 2">Sub-Admin/User</div>
-        </a>
-      </li>
-      <li class="menu-header fw-medium mt-4">
-        <span class="menu-header-text" data-i18n="Components">Reports</span>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link">
-          <i class="menu-icon tf-icons mdi mdi-note"></i>
-          <div data-i18n="Page 2">Pets</div>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link">
-          <i class="menu-icon tf-icons mdi mdi-note"></i>
-          <div data-i18n="Page 2">Vaccination/Immunization</div>
-        </a>
-      </li>
-    </ul>
-  </aside>
-{{-- @endsection --}}
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-truck-field"></i></div>
+                    Manage Suppliers
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                        <a class="nav-link">
+                            Manage Suppliers
+                        </a>
+                        <a class="nav-link">
+                            Add Suppliers
+                        </a>
+                    </nav>
+                </div>
 
-{{-- @section('scripts')
-    <!-- Vendors JS -->
-    <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js')}}"></script>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    Manage Products
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseProduct" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                        <a class="nav-link">
+                            All Products
+                        </a>
+                        <a class="nav-link">
+                            Add Products
+                        </a>
+                    </nav>
+                </div>
 
-    <!-- Main JS -->
-    <script src="../../assets/js/main.js"></script>
+                @if (auth()->user()->role == "admin")
 
-    <!-- Page JS -->
-    <script src="{{ asset('assets/js/dashboards-analytics.js')}}"></script>
-@endsection
- --}}
+                <div class="sidenav-menu-heading">User Management</div>
+
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-regular fa-user"></i></div>
+                    Admin/Owner
+                </a>
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-regular fa-user"></i></div>
+                    Client/Pet Owners
+                </a>
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-regular fa-user"></i></i></div>
+                    Staffs
+                </a>
+                @endif
+
+                @if (auth()->user()->role == "admin" || auth()->user()->role == "secretary")
+
+                <div class="sidenav-menu-heading">Reports</div>
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-solid fa-dog"></i></div>
+                    Pets
+                </a>
+                <a class="nav-link" href="tables.html">
+                    <div class="nav-link-icon"><i class="fa-solid fa-syringe"></i></div>
+                    Vaccination
+                </a>
+                @endif
+            </div>
+        </div>
+        <!-- Sidenav Footer-->
+        <div class="sidenav-footer">
+            <div class="sidenav-footer-content">
+                <div class="sidenav-footer-subtitle">Logged in as:</div>
+                <div class="sidenav-footer-title">{{Auth::user()->name}}</div>
+            </div>
+        </div>
+    </nav>

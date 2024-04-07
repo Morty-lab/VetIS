@@ -1,10 +1,10 @@
-<div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+<div class="modal fade z-index-3" id="addDoctor" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
         <div class="modal-content p-3 p-md-5">
             <div class="modal-body py-3 py-md-0">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="text-center mb-4">
-                    <h3 class="mb-2">Edit User Information</h3>
+                    <h3 class="mb-2">Add Doctor</h3>
                     <p class="pt-1">Updating user details will receive a privacy audit.</p>
                 </div>
                 <form id="editUserForm" class="row g-4" onsubmit="return false">
@@ -67,8 +67,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-floating form-floating-outline">
-                            <select id="modalEditUserLanguage" name="modalEditUserLanguage" class="select2 form-select"
-                                multiple>
+                            <select id="modalEditUserLanguage" name="modalEditUserLanguage" class="select2 form-select">
                                 <option value="">Select</option>
                                 <option value="english" selected>English</option>
                                 <option value="spanish">Spanish</option>
