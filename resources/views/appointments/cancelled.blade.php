@@ -11,7 +11,7 @@
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
                     <li class="breadcrumb-item"><a href="/manageappointments">Manage Appointments</a></li>
-                    <li class="breadcrumb-item active">Appointment Requests</li>
+                    <li class="breadcrumb-item active">Cancelled Appointments</li>
                 </ol>
             </nav>
         </div>
@@ -91,7 +91,7 @@
     </div>
 
     <div class="card">
-        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Appointment Requests</span>
+        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Cancelled Appointments</span>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -112,14 +112,10 @@
                         <td>Kent Invento</td>
                         <td>Dog</td>
                         <td>
-                            <div class="badge bg-warning text-white rounded-pill">Pending</div>
+                            <div class="badge bg-danger text-white rounded-pill">Cancelled</div>
                         </td>
                         <td>
-
-                            <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
-                            <span class="px-2"> | </span>
-                            <a class="btn btn-success" href="/viewappointments">Approve</a>
-                            <a class="btn btn-danger" href="/viewappointments">Decline</a>
+                            <a class="btn btn-outline-danger" href="/viewappointments">Open</a>
                         </td>
                     </tr>
                 </tbody>

@@ -72,5 +72,21 @@ Route::get('/adminsettingsdoctor', function () {
 Route::get('/manageappointments', function () {
     return view('appointments.manage');
 });
+Route::get('/viewappointments', function () {
+    return view('appointments.view');
+});
+Route::get('/todayappointments', function () {
+    return view('appointments.today');
+});
+Route::get('/finishedappointments', function () {
+    return view('appointments.completed');
+});
+Route::get('/pendingappointments', function () {
+    return view('appointments.request');
+});
+Route::get('/cancelledappointments', function () {
+    return view('appointments.cancelled');
+});
+
 
 require __DIR__ . '/auth.php';
