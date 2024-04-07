@@ -32,9 +32,9 @@
 
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href="/profiledoctor">Profile</a>
-        <a class="nav-link" href="/securitydoctor">Security</a>
-        <a class="nav-link active" href="/adminsettingsdoctor">Admin Settings</a>
+        <a class="nav-link ms-0" href="{{route('doctor.profile', $doctor->id)}}">Profile</a>
+        <a class="nav-link" href="{{route('doctor.security', $doctor->id)}}">Security</a>
+        <a class="nav-link active" href="{{route('doctor.admin', $doctor->id)}}">Admin Settings</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row">
