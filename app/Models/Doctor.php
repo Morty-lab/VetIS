@@ -11,18 +11,8 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'address',
-        'phone_number',
-        'birthday',
-        'position',
-        'username',
-        'password',
-        'profile_picture',
-    ];
+    protected $fillable = ['user_id', 'firstname', 'lastname', 'address', 'phone_number', 'birthday', 'position'];
+
 
     protected $casts = [
         'password' => 'hashed',

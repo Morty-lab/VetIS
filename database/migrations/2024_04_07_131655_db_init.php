@@ -23,18 +23,17 @@ return new class extends Migration
         });
 
         Schema::create('doctors', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('email')->unique();
             $table->string('address');
             $table->string('phone_number');
             $table->date('birthday');
             $table->string('position');
-            $table->string('username');
-            $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
 
@@ -97,8 +96,9 @@ return new class extends Migration
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('pets');
         Schema::dropIfExists('clients');
-        Schema::dropIfExists('users');
         Schema::dropIfExists('doctors');
+        Schema::dropIfExists('users');
+
 
     }
 };

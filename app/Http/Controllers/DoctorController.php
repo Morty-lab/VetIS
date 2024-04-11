@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class DoctorController extends Controller
 {
@@ -48,10 +51,34 @@ class DoctorController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Doctor::createDoctor($request->all());
+        $user = User::create([
+            'name' => $request->username,
+            'email' => $request->email,
+            'role' => "doctor",
+            'password' => Hash::make($request->password),
+        ]);
+
+        $userid =17;
+
+        // dd($userid);
+
+
+        Doctor::createDoctor([
+            'user_id' => $user->id,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'birthday' => $request->birthday,
+            'position' => $request->position,
+        ]);
+
 
         return redirect()->route('doctor.index')
             ->with('success', 'Doctor created successfully.');
+
+
+
     }
 
     /**
