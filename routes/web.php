@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PetsController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Clients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
@@ -45,18 +47,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Pets
-    Route::get('/addpet', function () {
-        return view('pets.add');
-    });
-    Route::get('/managepet', function () {
-        return view('pets.manage');
-    });
-    Route::get('/profilepet', function () {
-        return view('pets.profile');
-    });
-    Route::get('/editpet', function () {
-        return view('pets.edit');
-    });
+    Route::get('/addpet', [PetsController::class, 'create'])->name('pet.create');
+    Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
+    Route::get('/profilepet/{pets}', [PetsController::class, 'show'])->name('pets.show');
+    Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
+    Route::put('/editpet/{pets}', [PetsController::class, 'update'])->name('pets.update');
+
+
+Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store');
+
 
     // Doctors
     Route::get('/managedoctor', [DoctorController::class, 'index'])->name('doctor.index');

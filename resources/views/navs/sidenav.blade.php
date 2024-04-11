@@ -26,7 +26,7 @@
                     Dashboard
                 </a>
 
-                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet') || Request::is('editpet')) active @endif" href="/managepet">
+                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet') || Request::is('editpet')) active @endif" href="{{route('pet.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-paw"></i></div>
                     Pets
                 </a>
