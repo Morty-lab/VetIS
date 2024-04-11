@@ -42,19 +42,26 @@ return new class extends Migration
             $table->string("client_name");
             $table->string("client_no");
             $table->string("client_address");
-            $table->string("client_FB_account");
+            $table->string("client_email_address");
             $table->timestamps();
         });
 
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->integer("ownerID");
+            $table->unsignedBigInteger("owner_ID");
             $table->string("pet_name");
             $table->string("pet_breed");
+            $table->string("pet_type");
             $table->string("pet_gender");
             $table->date("pet_birthdate");
-            $table->string("pet_markings");
+            $table->string("pet_color");
+            $table->string("pet_picture")->nullable();
+            $table->string("pet_description")->nullable();
+            $table->float("pet_weight");
+            $table->boolean("vaccinated")->nullable();
+            $table->boolean("neutered")->nullable();
             $table->timestamps();
+            $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
         });
 
 
