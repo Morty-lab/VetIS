@@ -43,7 +43,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Authentication</div>
                     <div class="card-body">
-                        <form action="{{ route('doctor.update', $doctor->id) }}" method="POST">
+                        <form action="{{ route('doctor.updateSecurity', $doctor->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <!-- Form Group (current password)-->
@@ -65,7 +65,7 @@
                                     placeholder="Confirm new password" />
                             </div>
 
-                            <button class="btn btn-primary" type="button">Update</button>
+                            <button class="btn btn-primary" type="submit">Update</button>
                         </form>
                     </div>
                 </div>

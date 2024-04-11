@@ -52,13 +52,13 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputFirstName">First name</label>
                                     <input class="form-control" id="inputFirstName" type="text" name="firstname"
-                                        placeholder="First Name" value="{{ $doctor->firstname }}" />
+                                        placeholder="First Name" value="{{ $doctor->doctor->firstname }}" />
                                 </div>
                                 <!-- Form Group (last name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputLastName">Last name</label>
                                     <input class="form-control" id="inputLastName" type="text" name="lastname"
-                                        placeholder="Last Name" value="{{ $doctor->lastname }}" />
+                                        placeholder="Last Name" value="{{ $doctor->doctor->lastname }}" />
                                 </div>
                             </div>
                             <!-- Form Group (email address)-->
@@ -71,7 +71,7 @@
                                 <label class="small mb-1" for="inputAddress">Address (Street, Barangay, City/Municipality,
                                     Province)</label>
                                 <input class="form-control" id="inputAddress" type="text" name="address"
-                                    placeholder="Address" value="{{ $doctor->address }}" />
+                                    placeholder="Address" value="{{ $doctor->doctor->address }}" />
                             </div>
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -79,24 +79,24 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
                                     <input class="form-control" id="inputPhone" type="tel" name="phone_number"
-                                        placeholder="Phone Number" value="{{ $doctor->phone_number }}" />
+                                        placeholder="Phone Number" value="{{ $doctor->doctor->phone_number }}" />
                                 </div>
                                 <!-- Form Group (birthday)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                    <input class="form-control" id="inputBirthday" type="text" name="birthday"
-                                        placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}" />
+                                    <input class="form-control" id="inputBirthday" type="date"  name="birthday"
+                                        placeholder="MM/DD/YYYY" value="{{ $doctor->doctor->birthday }}" />
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputPosition">Position</label>
                                 <input class="form-control" id="inputPosition" type="text" name="position"
-                                    placeholder="Position" value="{{ $doctor->position }}" />
+                                    placeholder="Position" value="{{ $doctor->doctor->position }}" />
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Username</label>
-                                <input class="form-control" id="inputUsername" type="text" name="username"
-                                    placeholder="Username" value="{{ $doctor->username }}" />
+                                <input class="form-control" id="inputUsername" type="text" name="name"
+                                    placeholder="Username" value="{{ $doctor->name }}" />
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" id="regbtn" type="submit" >Save
