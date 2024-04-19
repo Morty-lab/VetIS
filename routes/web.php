@@ -93,11 +93,20 @@ Route::middleware('auth')->group(function () {
         return view('appointments.cancelled');
     });
 
-});
+    Route::get('/manageschedules', function () {
+        return view('schedule.calendar');
+    });
 
-
-Route::get('/manageschedules', function () {
-    return view('schedule.calendar');
+    // Pet Owners
+    Route::get('/manageowners', function () {
+        return view('owners.manage');
+    });
+    Route::get('/addowner', function () {
+        return view('owners.add');
+    });
+    Route::get('/profileowner', function () {
+        return view('owners.profile');
+    });
 });
 
 

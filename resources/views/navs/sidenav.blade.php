@@ -32,7 +32,12 @@
                 </a>
 
                 @if (auth()->user()->role == "admin")
-                <a class="nav-link @if(Request::is('managedoctor') || Request::is('adddoctor') || Request::is('profiledoctor') || Request::is('securitydoctor') || Request::is('adminsettingsdoctor'))  active @endif" href="{{route('doctor.index')}}">
+                <a class="nav-link  @if(Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="/manageowners">
+                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                    Pet Owners
+                </a>
+
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif" " href=" {{route('doctor.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
                     Doctors
                 </a>
