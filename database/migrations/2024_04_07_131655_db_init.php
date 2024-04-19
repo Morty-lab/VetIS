@@ -46,6 +46,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string("product_name");
+            $table->string("product_category");
+            $table->float("price");
+            $table->string("unit");
+            $table->integer("status")->nullable();
+            $table->float("stock");
+            $table->timestamps();
+        });
+
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("owner_ID");
@@ -80,14 +91,23 @@ return new class extends Migration
 
         Schema::create('pet_records', function (Blueprint $table) {
             $table->id();
-            $table->integer("pet_ID");
-            $table->foreign("id")->references("id")->on("pets")->onDelete("cascade");
+            $table->unsignedBigInteger("petID");
+            $table->foreign("petID")->references("id")->on("pets")->onDelete("cascade");
             $table->date("record_date");
             $table->float("pet_weight");
             $table->float("pet_temperature");
-            $table->string("medication_given");
             $table->string("procedure_given");
             $table->string("remarks");
+            $table->timestamps();
+        });
+
+        Schema::create('medications', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("recordID");
+            $table->unsignedBigInteger("productID");
+            $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
+            $table->foreign("productID")->references("id")->on("products")->onDelete("cascade");
+            $table->string("treatment");
             $table->timestamps();
         });
 
@@ -102,6 +122,7 @@ return new class extends Migration
         Schema::dropIfExists('pet_records');
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('pets');
+        Schema::dropIfExists('products');
         Schema::dropIfExists('clients');
         Schema::dropIfExists('doctors');
         Schema::dropIfExists('users');
