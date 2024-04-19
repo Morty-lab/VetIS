@@ -21,7 +21,7 @@
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
                     <li class="breadcrumb-item"><a href="/managedoctor">Manage Pet Owner</a></li>
-                    <li class="breadcrumb-item active">Add Pet Owner</li>
+                    <li class="breadcrumb-item active">Owner Profile</li>
                 </ol>
             </nav>
         </div>
@@ -113,7 +113,8 @@
             </div>
         </div>
     </div>
-    <div class="card">
+
+    <div class="card mb-4">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
             <a class="btn btn-primary justify-end" href="/addpet">Add Pet</a>
         </div>
@@ -144,6 +145,35 @@
                         <td>
                             <div class="badge bg-primary text-white rounded-pill">Vaccinated</div>
                         </td>
+                        <td>
+                            <a class="btn btn-primary" href="/profilepet">Open</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Billing History</span>
+        </div>
+        <div class="card-body">
+            <table id="billingTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Billing #</th>
+                        <th>Payable</th>
+                        <th>Remaining</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>04/19/2024</td>
+                        <td>PH20324232</td>
+                        <td>Php. 2000</td>
+                        <td>Php. 0.00</td>
                         <td>
                             <a class="btn btn-primary" href="/profilepet">Open</a>
                         </td>
