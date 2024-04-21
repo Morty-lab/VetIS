@@ -53,7 +53,17 @@ return new class extends Migration
             $table->float("price");
             $table->string("unit");
             $table->integer("status")->nullable();
-            $table->float("stock");
+            $table->timestamps();
+        });
+
+        Schema::create('stocks', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("product_id");
+            $table->integer("stock");
+            $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade");
+            $table->float("price");
+            $table->string("unit");
+            $table->integer("status")->nullable();
             $table->timestamps();
         });
 
@@ -101,12 +111,25 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('prescriptions', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("recordID");
+            $table->unsignedBigInteger("productID");
+            $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
+            $table->foreign("productID")->references("id")->on("products")->onDelete("cascade");
+            $table->string("treatment");
+            $table->string("dose");
+            $table->timestamps();
+        });
+
         Schema::create('medications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("recordID");
             $table->unsignedBigInteger("productID");
             $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
             $table->foreign("productID")->references("id")->on("products")->onDelete("cascade");
+            $table->float("dosage");
+            $table->float("price");
             $table->string("treatment");
             $table->timestamps();
         });
@@ -119,9 +142,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pet_records');
+
         Schema::dropIfExists('appointments');
+        Schema::dropIfExists('medications');
+        Schema::dropIfExists('prescriptions');
+        Schema::dropIfExists('pet_records');
         Schema::dropIfExists('pets');
+        Schema::dropIfExists('stocks');
         Schema::dropIfExists('products');
         Schema::dropIfExists('clients');
         Schema::dropIfExists('doctors');
