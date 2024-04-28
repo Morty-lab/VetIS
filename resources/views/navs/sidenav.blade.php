@@ -47,7 +47,7 @@
                 </div>
                 @endif
 
-                <a class="nav-link @if(Request::is('manageappointments')) active @endif" href="/manageappointments">
+                <a class="nav-link @if(Request::is('manageappointments')) active @endif" href="{{route('appointments.index')}}">
                     <div class="nav-link-icon"><i class="fa-regular fa-calendar-plus"></i></div>
                     Appointments
                 </a>

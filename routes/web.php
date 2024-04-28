@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
 use App\Http\Controllers\ProfileController;
@@ -9,9 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-
+use App\Models\Pets;
+use App\Models\Appointments;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,28 +127,41 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
         $doctor->role = $request->role;
         $doctor->save();
 
+
         // Redirect back with a success message
         return back()->with('success', 'Password updated successfully.');
     })->name('doctor.updateAdmin');
 
     // Appointments
-    Route::get('/manageappointments', function () {
-        return view('appointments.manage');
-    });
-    Route::get('/viewappointments', function () {
-        return view('appointments.view');
-    });
+    Route::get('/manageappointments', [AppointmentsController::class, 'index'])->name('appointments.index');
+    Route::post('addappontments', [AppointmentsController::class, 'store'])->name('appointments.add');
+    // Route::get('viewappointments',[AppointmentsController::class, 'index'])->name('appointments.view');
     Route::get('/todayappointments', function () {
-        return view('appointments.today');
+        $clients = Clients::all();
+        $pets = Pets::all();
+        $appointments = Appointments::with('client')->get();
+        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     });
     Route::get('/finishedappointments', function () {
-        return view('appointments.completed');
+
+        $clients = Clients::all();
+        $pets = Pets::all();
+        $appointments = Appointments::with('client')->get();
+        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     });
     Route::get('/pendingappointments', function () {
-        return view('appointments.request');
+
+        $clients = Clients::all();
+        $pets = Pets::all();
+        $appointments = Appointments::with('client')->get();
+        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     });
     Route::get('/cancelledappointments', function () {
-        return view('appointments.cancelled');
+
+        $clients = Clients::all();
+        $pets = Pets::all();
+        $appointments = Appointments::with('client')->get();
+        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     });
 
 });
