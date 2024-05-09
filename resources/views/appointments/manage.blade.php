@@ -90,8 +90,9 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Service</label>
-                                    <select class="form-control" name="service" id="">
-                                        <option value="1" disabled selected> yawa</option>
+                                    <select class="form-control" name="purpose" id="">
+                                        <option value="vaccination">Vaccination</option>
+                                        <option value="surgery">Surgery</option>
                                     </select>
 
                                 </div>
@@ -143,16 +144,17 @@
                                 @php
                                     $todayCount = 0;
                                     foreach ($appointments as $appointment) {
-                                        if ($appointment->status == 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        if (
+                                            $appointment->status == 0 &&
+                                            \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                        ) {
                                             $todayCount++;
                                         } else {
                                             continue;
                                         }
-
-
                                     }
                                 @endphp
-                                <div class="text-lg fw-bold">{{$todayCount}}</div>
+                                <div class="text-lg fw-bold">{{ $todayCount }}</div>
                             </div>
                             <i class="fa-regular fa-calendar text-white-50 fa-2x"></i>
                         </div>
@@ -171,17 +173,18 @@
                                 @php
                                     $finishedCount = 0;
                                     foreach ($appointments as $appointment) {
-                                        if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        if (
+                                            $appointment->status == 1 &&
+                                            \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                        ) {
                                             $finishedCount++;
                                         } else {
                                             continue;
                                         }
-
-
                                     }
                                 @endphp
                                 <div class="text-white-75 small">Finished Appointments</div>
-                                <div class="text-lg fw-bold">{{$finishedCount}}</div>
+                                <div class="text-lg fw-bold">{{ $finishedCount }}</div>
                             </div>
                             <i class="fa-regular fa-calendar-check text-white-50 fa-2x"></i>
                         </div>
@@ -200,17 +203,15 @@
                                 @php
                                     $requestCount = 0;
                                     foreach ($appointments as $appointment) {
-                                        if ($appointment->status == null && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        if (is_null($appointment->status) == true) {
                                             $requestCount++;
                                         } else {
                                             continue;
                                         }
-
-
                                     }
                                 @endphp
                                 <div class="text-white-75 small">Appointment Requests</div>
-                                <div class="text-lg fw-bold">{{$requestCount}}</div>
+                                <div class="text-lg fw-bold">{{ $requestCount }}</div>
                             </div>
                             <i class="fa-solid fa-xmark text-white-50 fa-2x"></i>
                         </div>
@@ -229,17 +230,18 @@
                                 @php
                                     $cancelledCount = 0;
                                     foreach ($appointments as $appointment) {
-                                        if ($appointment->status == 4 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        if (
+                                            $appointment->status == 4 &&
+                                            \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                        ) {
                                             $cancelledCount++;
                                         } else {
                                             continue;
                                         }
-
-
                                     }
                                 @endphp
                                 <div class="text-white-75 small">Cancelled Appointments</div>
-                                <div class="text-lg fw-bold">{{$cancelledCount}}</div>
+                                <div class="text-lg fw-bold">{{ $cancelledCount }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="message-circle"></i>
                         </div>
@@ -270,25 +272,43 @@
                     </thead>
                     <tbody>
                         @foreach ($appointments as $appointment)
-                        @if (  $appointment->status == 0  )
-                        <tr>
-                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
-                            <td>VETIS-00001</td>
-                            <td>{{$appointment->client->client_name}}</td>
-                            <td>{{$appointment->pet->pet_type}}</td>
-                            <td>
-                                <div class="badge bg-primary text-white rounded-pill">Scheduled</div>
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
-                            </td>
+                            @if ($appointment->status == 0)
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                                    <td>VETIS-00001</td>
+                                    <td>{{ $appointment->client->client_name }}</td>
+                                    <td>{{ $appointment->pet->pet_type }}</td>
+                                    <td>
 
-                        </tr>
-                        @else
-                            @continue
-                        @endif
+                                        @if (is_null($appointment->status) == true)
+                                            <div class="badge bg-warning text-white rounded-pill">
+                                                Pending
+                                            </div>
+                                        @elseif ($appointment->status == 0)
+                                            <div class="badge bg-primary text-white rounded-pill">
+                                                scheduled
+                                            </div>
+                                        @elseif ($appointment->status == 2)
+                                            <div class="badge bg-danger text-white rounded-pill">
+                                                Canceled
+                                            </div>
+                                        @elseif ($appointment->status == 1)
+                                            <div class="badge bg-success text-white rounded-pill">
+                                                Finished
+                                            </div>
+                                        @endif
 
+
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                                    </td>
+
+                                </tr>
+                            @else
+                                @continue
+                            @endif
                         @endforeach
 
                     </tbody>
@@ -308,12 +328,15 @@
             // Get the current date
             var currentDate = new Date();
 
-            // Calculate the difference in years
-            var age = currentDate.getFullYear() - birthDate.getFullYear();
-            var m = currentDate.getMonth() - birthDate.getMonth();
+            // Calculate the difference in months
+            var age = currentDate.getMonth() - birthDate.getMonth();
+            var y = currentDate.getFullYear() - birthDate.getFullYear();
 
             // Adjust the age if the current month is less than the birth month
-            if (m < 0 || (m === 0 && currentDate.getDate() < birthDate.getDate())) {
+            if (age < 0) {
+                age += 12;
+                y--;
+            } else if (currentDate.getDate() < birthDate.getDate()) {
                 age--;
             }
 
@@ -356,6 +379,7 @@
         function handlePetSelect() {
             var selectedPetId = document.getElementById('inputPetName').value;
             var selectedPet = pets.find(pet => pet.id == selectedPetId);
+            console.log(selectedPet)
 
 
             if (selectedPetId) {

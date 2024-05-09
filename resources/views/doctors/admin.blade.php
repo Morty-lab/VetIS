@@ -20,8 +20,8 @@
             <div class="page-header-content">
                 <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                        <li class="breadcrumb-item"><a href="/managedoctor">Manage Doctors</a></li>
-                        <li class="breadcrumb-item active">Doctor Profile</li>
+                        <li class="breadcrumb-item"><a href="/managedoctor">Manage Veterinarians</a></li>
+                        <li class="breadcrumb-item active">Veterinarian Profile</li>
                     </ol>
                 </nav>
             </div>
@@ -48,7 +48,7 @@
                         <div class="card-header">Role</div>
                         <div class="card-body">
                             <select class="form-control" id="exampleFormControlSelect2" name="role">
-                                <option value="Doctor" {{ $doctor->role == 'doctor' ? 'selected' : '' }}>Doctor</option>
+                                <option value="Doctor" {{ $doctor->role == 'doctor' ? 'selected' : '' }}>Veterinarian</option>
                                 <option value="Admin/Owner" {{ $doctor->role == 'admin' ? 'selected' : '' }}>Admin/Owner</option>
                                 <option value="Secretary" {{ $doctor->role == 'Secretary' ? 'selected' : '' }}>Secretary</option>
                                 <option value="Staff" {{ $doctor->role == 'staff' ? 'selected' : '' }}>Staff</option>

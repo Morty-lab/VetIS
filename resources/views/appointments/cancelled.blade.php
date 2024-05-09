@@ -86,7 +86,7 @@
                             @php
                                 $requestCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == null && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if (is_null($appointment->status) == true ) {
                                         $requestCount++;
                                     } else {
                                         continue;

@@ -135,7 +135,7 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     // Appointments
     Route::get('/manageappointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::post('addappontments', [AppointmentsController::class, 'store'])->name('appointments.add');
-    // Route::get('viewappointments',[AppointmentsController::class, 'index'])->name('appointments.view');
+    Route::get('viewappointments/{id}',[AppointmentsController::class, 'view'])->name('appointments.view');
     Route::get('/todayappointments', function () {
         $clients = Clients::all();
         $pets = Pets::all();

@@ -86,7 +86,7 @@
                             @php
                                 $requestCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == null && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if (is_null($appointment->status) == true ) {
                                         $requestCount++;
                                     } else {
                                         continue;
@@ -154,22 +154,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>April 7, 2024 | 12:00PM</td>
-                        <td>VETIS-00001</td>
-                        <td>Kent Invento</td>
-                        <td>Dog</td>
-                        <td>
-                            <div class="badge bg-warning text-white rounded-pill">Pending</div>
-                        </td>
-                        <td>
+                    @foreach ($appointments as $appointment)
+                        @if (  is_null($appointment->status) == true  )
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>VETIS-00001</td>
+                            <td>{{$appointment->client->client_name}}</td>
+                            <td>{{$appointment->pet->pet_type}}</td>
+                            <td>
+                                <div class="badge bg-warning text-white rounded-pill">
 
-                            <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
-                            <span class="px-2"> | </span>
-                            <a class="btn btn-success" href="/viewappointments">Approve</a>
-                            <a class="btn btn-danger" href="/viewappointments">Decline</a>
-                        </td>
-                    </tr>
+                                    Pending
+
+
+                                </div>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
+                            </td>
+
+                        </tr>
+                        @else
+                            @continue
+                        @endif
+
+                        @endforeach
                 </tbody>
             </table>
         </div>

@@ -86,7 +86,7 @@
                             @php
                                 $requestCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == null && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if (is_null($appointment->status) == true ) {
                                         $requestCount++;
                                     } else {
                                         continue;
@@ -166,7 +166,7 @@
                             <div class="badge bg-primary text-white rounded-pill">Scheduled</div>
                         </td>
                         <td>
-                            <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
+                            <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
                         </td>
 
                     </tr>

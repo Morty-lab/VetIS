@@ -22,6 +22,13 @@ class AppointmentsController extends Controller
         return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     }
 
+    public function view($id){
+
+        $appointment = Appointments::with(['client', 'pet'])->find($id);
+
+        return view('appointments.view', ["appointment" => $appointment]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -43,6 +50,7 @@ class AppointmentsController extends Controller
             'pet_ID' => 'required',
             'appointment_date' => 'required|date',
             'appointment_time' => 'nullable|date_format:H:i',
+            'purpose' => 'required',
         ]);
 
 

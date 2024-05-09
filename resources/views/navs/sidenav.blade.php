@@ -34,14 +34,14 @@
                 @if (auth()->user()->role == "admin")
                 <a class="nav-link @if(Request::is('managedoctor') || Request::is('adddoctor') || Request::is('profiledoctor') || Request::is('securitydoctor') || Request::is('adminsettingsdoctor'))  active @endif" href="{{route('doctor.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
-                    Doctors
+                    Veterinarians
                 </a>
 
                 <div class="collapse" id="collapseDoctors" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
                         <a class="nav-link" href="/managedoctor">
-                            Manage Doctors
+                            Manage Veterinarians
                         </a>
                     </nav>
                 </div>
