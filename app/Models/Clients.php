@@ -21,6 +21,11 @@ class Clients extends Model
         return $this->hasMany(Pets::class, 'owner_ID');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointments::class, 'owner_ID');
+    }
+
     public static function getAllClients()
     {
         return self::all();

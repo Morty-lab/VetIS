@@ -26,7 +26,19 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-white-75 small">Today's Appointments</div>
-                            <div class="text-lg fw-bold">25</div>
+                            @php
+                                $todayCount = 0;
+                                foreach ($appointments as $appointment) {
+                                    if ($appointment->status == 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        $todayCount++;
+                                    } else {
+                                        continue;
+                                    }
+
+
+                                }
+                            @endphp
+                            <div class="text-lg fw-bold">{{$todayCount}}</div>
                         </div>
                         <i class="fa-regular fa-calendar text-white-50 fa-2x"></i>
                     </div>
@@ -42,8 +54,20 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
+                            @php
+                                $finishedCount = 0;
+                                foreach ($appointments as $appointment) {
+                                    if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        $finishedCount++;
+                                    } else {
+                                        continue;
+                                    }
+
+
+                                }
+                            @endphp
                             <div class="text-white-75 small">Finished Appointments</div>
-                            <div class="text-lg fw-bold">15</div>
+                            <div class="text-lg fw-bold">{{$finishedCount}}</div>
                         </div>
                         <i class="fa-regular fa-calendar-check text-white-50 fa-2x"></i>
                     </div>
@@ -59,8 +83,20 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
+                            @php
+                                $requestCount = 0;
+                                foreach ($appointments as $appointment) {
+                                    if (is_null($appointment->status) == true ) {
+                                        $requestCount++;
+                                    } else {
+                                        continue;
+                                    }
+
+
+                                }
+                            @endphp
                             <div class="text-white-75 small">Appointment Requests</div>
-                            <div class="text-lg fw-bold">17</div>
+                            <div class="text-lg fw-bold">{{$requestCount}}</div>
                         </div>
                         <i class="fa-solid fa-xmark text-white-50 fa-2x"></i>
                     </div>
@@ -76,8 +112,20 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
+                            @php
+                                $cancelledCount = 0;
+                                foreach ($appointments as $appointment) {
+                                    if ($appointment->status == 4 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                        $cancelledCount++;
+                                    } else {
+                                        continue;
+                                    }
+
+
+                                }
+                            @endphp
                             <div class="text-white-75 small">Cancelled Appointments</div>
-                            <div class="text-lg fw-bold">17</div>
+                            <div class="text-lg fw-bold">{{$cancelledCount}}</div>
                         </div>
                         <i class="feather-xl text-white-50" data-feather="message-circle"></i>
                     </div>
@@ -106,22 +154,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>April 7, 2024 | 12:00PM</td>
-                        <td>VETIS-00001</td>
-                        <td>Kent Invento</td>
-                        <td>Dog</td>
-                        <td>
-                            <div class="badge bg-warning text-white rounded-pill">Pending</div>
-                        </td>
-                        <td>
+                    @foreach ($appointments as $appointment)
+                        @if (  is_null($appointment->status) == true  )
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>VETIS-00001</td>
+                            <td>{{$appointment->client->client_name}}</td>
+                            <td>{{$appointment->pet->pet_type}}</td>
+                            <td>
+                                <div class="badge bg-warning text-white rounded-pill">
 
-                            <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
-                            <span class="px-2"> | </span>
-                            <a class="btn btn-success" href="/viewappointments">Approve</a>
-                            <a class="btn btn-danger" href="/viewappointments">Decline</a>
-                        </td>
-                    </tr>
+                                    Pending
+
+
+                                </div>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="/viewappointments">Open</a>
+                            </td>
+
+                        </tr>
+                        @else
+                            @continue
+                        @endif
+
+                        @endforeach
                 </tbody>
             </table>
         </div>

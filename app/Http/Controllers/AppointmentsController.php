@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
+use App\Models\Clients;
+use App\Models\Pets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentsController extends Controller
 {
@@ -12,7 +15,18 @@ class AppointmentsController extends Controller
      */
     public function index()
     {
-        //
+        // return view('appointments.view');
+        $clients = Clients::all();
+        $pets = Pets::all();
+        $appointments = Appointments::with('client')->get();
+        return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+    }
+
+    public function view($id){
+
+        $appointment = Appointments::with(['client', 'pet'])->find($id);
+
+        return view('appointments.view', ["appointment" => $appointment]);
     }
 
     /**
@@ -28,7 +42,28 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // dd($request);
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'owner_ID' => 'required',
+            'pet_ID' => 'required',
+            'appointment_date' => 'required|date',
+            'appointment_time' => 'nullable|date_format:H:i',
+            'purpose' => 'required',
+        ]);
+
+
+
+        // Create a new appointment using the validated data
+        $appointment = new Appointments($validatedData);
+        $result = $appointment->save();
+
+
+
+        Log::info('Appointment creation result:', ['saved' => $result]);
+        return redirect()->route('appointments.index');
+
     }
 
     /**
