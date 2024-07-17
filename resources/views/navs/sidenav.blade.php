@@ -80,7 +80,7 @@
 
                 <div class="sidenav-menu-heading">Inventory</div>
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapsePages">
+                <a class="nav-link collapsed  @if(Request::is('suppliers')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapsePages">
                     <div class="nav-link-icon"><i class="fa-solid fa-truck-field"></i></div>
                     Manage Suppliers
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -88,28 +88,50 @@
                 <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link">
-                            Manage Suppliers
-                        </a>
-                        <a class="nav-link">
-                            Add Suppliers
+                        <a class="nav-link" href="suppliers">
+                            All Suppliers
                         </a>
                     </nav>
                 </div>
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapsePages">
-                    <div class="nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                <a class="nav-link collapsed @if(Request::is('products')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
                     Manage Products
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseProduct" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link">
+                        <a class="nav-link" href="/products">
                             All Products
                         </a>
-                        <a class="nav-link">
-                            Add Products
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed @if(Request::is('units')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUnits" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-balance-scale"></i></div>
+                    Manage Units
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseUnits" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                        <a class="nav-link" href="/units">
+                            All Units
+                        </a>
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed @if(Request::is('categories')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-tags"></i></div>
+                    Manage Categories
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseCategory" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                        <a class="nav-link" href="categories">
+                            All Categories
                         </a>
                     </nav>
                 </div>

@@ -107,6 +107,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profileowner', function () {
         return view('owners.profile');
     });
+    Route::get('/products', function () {
+        return view('inventory.products');
+    });
+    Route::get('/categories', function () {
+        return view('inventory.categories');
+    });
+    Route::get('/suppliers', function () {
+        return view('inventory.suppliers');
+    });
+    Route::get('/units', function () {
+        return view('inventory.units');
+    });
 });
 
 
