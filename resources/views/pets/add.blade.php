@@ -36,15 +36,16 @@
             <div class="card mb-4">
                 <div class="card-header">Pet Profile</div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ route('pets.store') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
-                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="" />
+                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="" name="pet_name"/>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                <select class="form-control" id="selectPetType">
+                                <select class="form-control" id="selectPetType" name="pet_type" >
                                     <option disabled selected>-- Select Pet Type --</option>
                                     <option>Dog</option>
                                     <option>Cat</option>
@@ -54,28 +55,28 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputBreed">Breed</label>
-                                <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="" />
+                                <label class="small mb-1" for="inputBreed" >Breed</label>
+                                <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="" name="pet_breed"/>
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputColor">Color</label>
-                                <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" />
+                                <label class="small mb-1" for="inputColor" >Color</label>
+                                <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color"/>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight</label>
-                                <input class="form-control" id="inputWeight" type="text" value="" placeholder="Weight" />
+                                <label class="small mb-1" for="inputWeight" >Weight</label>
+                                <input class="form-control" id="inputWeight" type="text" value="" placeholder="Weight" name="pet_weight"/>
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                <input class="form-control" id="inputBirthdate" type="date" value="" />
+                                <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate"/>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
-                                <select class="form-control" id="selectGender">
+                                <select class="form-control" id="selectGender" name="pet_gender">
                                     <option disabled selected>-- Select Gender --</option>
                                     <option>Male</option>
                                     <option>Female</option>
@@ -87,27 +88,31 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="pet_vaccinated">
                                     <label class="small" for="inlineCheckbox1">Vaccinated</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="pet_neutered">
                                     <label class="small" for="inlineCheckbox1">Spayed/Neutered</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                            <textarea name="inputPetDescription" id="inputPetDescription" class="form-control form-control-solid" cols="30" rows="5"></textarea>
+                            <textarea name="pet_description" id="inputPetDescription" class="form-control form-control-solid" cols="30" rows="5"></textarea>
                         </div>
                         <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
                         <hr class="mt-1 mb-3">
 
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
-                            <input class="form-control" id="inputOwnerName" type="text" placeholder="Owner Name" value="" />
+                            <select class="form-control" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
@@ -124,7 +129,7 @@
                             <input class="form-control" id="inputOwnerEmail" type="text" value="" placeholder="Owner Address" />
                         </div>
                         <!-- Save changes button-->
-                        <button class="btn btn-primary" id="regbtn" type="button" href="/managedoctor">Add Pet</button>
+                        <button class="btn btn-primary" id="regbtn" type="submit">Add Pet</button>
                     </form>
                 </div>
             </div>
@@ -147,27 +152,37 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get the register button
-        var registerButton = document.getElementById('regbtn');
 
-        // Add event listener to the register button
-        registerButton.addEventListener('click', function() {
-            // Show the success alert
-            var successAlert = document.getElementById('successAlert');
-            successAlert.style.display = 'flex';
 
-            setTimeout(function() {
-                window.location.href = '/managedoctor';
-            }, 4000);
 
-            // Optionally, hide the alert after a certain period (e.g., 3 seconds)
-            setTimeout(function() {
-                successAlert.style.display = 'none';
-            }, 3000);
-        });
-    });
+    var clients = @json($clients);
+
+
+    function handleClientSelect() {
+
+        var selectedClientId = document.getElementById('inputOwnerName').value;
+        var selectedClient = clients.find(client => client.id == selectedClientId);
+
+        if (selectedClient) {
+            document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
+            document.getElementById('ownerContact').value = selectedClient.client_no;
+            document.getElementById('inputOwnerEmail').value = selectedClient.client_email_address;
+        }
+
+        console.log(selectedClientId);
+    };
+
+    window.addEventListener("load", function() {
+        handleClientSelect();
+});
+
+
+
+
+
 </script>
+
+
 @endsection
 
 @section('scripts')

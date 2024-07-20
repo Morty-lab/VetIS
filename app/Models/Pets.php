@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Pets extends Model
 {
@@ -11,12 +12,27 @@ class Pets extends Model
 
     protected $fillable = [
         'ownerID',
+        'pet_type',
         'pet_name',
         'pet_breed',
         'pet_gender',
         'pet_birthdate',
-        'pet_markings',
+        'pet_color',
+        'pet_weight',
+        'vaccinated',
+        'neutered',
+        'pet_description',
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Clients::class, 'owner_ID');
+    }
+
+    public function pet()
+    {
+        return $this->hasMany(Appointments::class, 'pet_ID');
+    }
 
     public static function getAllPets()
     {
@@ -50,6 +66,11 @@ class Pets extends Model
             return $pet->delete();
         }
         return false;
+    }
+
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->attributes['pet_birthdate'])->age;
     }
 
 }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class DoctorController extends Controller
 {
@@ -48,10 +51,29 @@ class DoctorController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Doctor::createDoctor($request->all());
+        $user = User::create([
+            'name' => $request->username,
+            'email' => $request->email,
+            'role' => "doctor",
+            'password' => Hash::make($request->password),
+        ]);
+
+        Doctor::createDoctor([
+            'user_id' => $user->id,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'birthday' => $request->birthday,
+            'position' => $request->position,
+        ]);
+
 
         return redirect()->route('doctor.index')
             ->with('success', 'Doctor created successfully.');
+
+
+
     }
 
     /**
@@ -59,8 +81,17 @@ class DoctorController extends Controller
      */
     public function showProfile(string $id)
     {
-        $doctor = Doctor::getDoctorById($id);
-        return view('doctors.profile', ['doctor' => $doctor]);
+        $user = User::with('doctor')->find($id);
+
+        // If the user or doctor information is not found, handle it accordingly
+        if (!$user || !$user->doctor) {
+            // Handle the case where the user or doctor is not found
+            // For example, return a 404 error or redirect the user
+            abort(404, 'User or Doctor not found');
+        }
+
+        // Pass the combined user and doctor information to the view
+        return view('doctors.profile', ['doctor' => $user]);
     }
 
     public function show(string $id)
@@ -92,13 +123,14 @@ class DoctorController extends Controller
             'phone_number' => 'required|max:20',
             'birthday' => 'required|date',
             'position' => 'required|max:255',
-            'username' => 'required|max:255',
+            'name' => 'required|max:255',
         ]);
 
         // Find the doctor by ID
-        $doctor = Doctor::findOrFail($id);
+        $doctor = User::with('doctor')->find($id);
 
         // Update the doctor's information
+        $doctor->doctor->update($validatedData);
         $doctor->update($validatedData);
 
         // Redirect the user back to the doctor management page with a success message

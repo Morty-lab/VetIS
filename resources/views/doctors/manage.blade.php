@@ -14,7 +14,7 @@
             <div class="page-header-icon">
               <i class="fa-solid fa-user-doctor p-1"></i>
             </div>
-            Manage Doctors
+            Manage Veterinarians
           </h1>
           <div class="page-header-subtitle">
             Add and Edit Veterinary Doctors
@@ -27,8 +27,8 @@
 <!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
   <div class="card">
-    <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Doctors List</span>
-      <a class="btn btn-primary justify-end" href="/adddoctor">Add Doctor</a>
+    <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Veterinarian List</span>
+      <a class="btn btn-primary justify-end" href="/adddoctor">Add Veterinarian</a>
     </div>
     <div class="card-body">
       <table id="datatablesSimple">
@@ -53,7 +53,7 @@
               <div class="badge bg-primary text-white rounded-pill">Full-time</div>
             </td>
             <td>
-              <a class="btn btn-primary" href="{{route('doctor.profile', $doctor->id)}}">Open</a>
+              <a class="btn btn-primary" href="{{route('doctor.profile', $doctor->user_id)}}">Open</a>
             </td>
           </tr>
           @endforeach

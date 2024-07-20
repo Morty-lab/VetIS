@@ -20,7 +20,7 @@
         <div class="page-header-content">
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                    <li class="breadcrumb-item"><a href="/managepet">Manage Pets</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('pet.index') }}">Manage Pets</a></li>
                     <li class="breadcrumb-item active">Pet Profile</li>
                 </ol>
             </nav>
@@ -30,9 +30,9 @@
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
     <nav class="nav nav-borders">
-        <a class="nav-link active ms-0" href="/profilepet">Pet Profile</a>
+        <a class="nav-link active ms-0" href="{{ route('pets.show', $pet->id) }}">Pet Profile</a>
         @if (auth()->user()->role != "staff")
-        <a class="nav-link" href="/editpet">Edit Profile</a>
+        <a class="nav-link" href="{{ route('pets.edit', $pet->id) }}">Edit Profile</a>
         @endif
     </nav>
     <hr class="mt-0 mb-4" />
@@ -45,41 +45,41 @@
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
-                            <p>Lexie</p>
+                            <p>{{$pet->pet_name}}</p>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputPetName">PetID</label>
-                            <p>00001</p>
+                            <p>{{$pet->id}}</p>
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectPetType">Pet Type</label>
-                            <p>Dog</p>
+                            <p>{{$pet->pet_type}}</p>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBreed">Breed</label>
-                            <p>Japanese Spitz</p>
+                            <p>{{$pet->pet_breed}}</p>
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputColor">Color</label>
-                            <p>White</p>
+                            <p>{{$pet->pet_color}}</p>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputWeight">Weight</label>
-                            <p>8.5KG</p>
+                            <p>{{$pet->pet_weight}}</p>
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                            <p>September 5, 2023</p>
+                            <p>{{$pet->pet_birthdate}}</p>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectGender">Gender</label>
-                            <p>Female</p>
+                            <p>{{$pet->pet_gender}}</p>
                         </div>
                     </div>
                     <h6 class="mb-2 mt-5 text-primary">Other Information</h6>
@@ -87,41 +87,42 @@
                     <div class="row gx-3 mb-3">
                         <div class="col-md-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked disabled>
-                                <label class="small" for="inlineCheckbox1">Vaccinated</label>
+                                <input class="form-check-input" type="checkbox" id="vaccinatedCheckbox" value="option1" @checked($pet->vaccinated) disabled>
+                                <label class="small" for="vaccinatedCheckbox">Vaccinated</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" disabled>
-                                <label class="small" for="inlineCheckbox1">Spayed/Neutered</label>
+                                <input class="form-check-input" type="checkbox" id="neuteredCheckbox" value="option1" @checked($pet->neutered) disabled>
+                                <label class="small" for="neuteredCheckbox">Spayed/Neutered</label>
                             </div>
                         </div>
                     </div>
+
                     <div class="mb-3">
                         <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                        <p>A medium sized Japanese Spitz Dog.</p>
+                        <p>{{$pet->pet_description}}</p>
                     </div>
                     <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
                     <hr class="mt-1 mb-3">
 
                     <div class="mb-3">
                         <label class="small mb-1" for="inputOwnerName">Owner Name</label>
-                        <p>Kent Invento</p>
+                        <p>{{$pet->client->client_name}}</p>
                     </div>
                     <div class="row gx-3 mb-1">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                            <p>Purok - 3, Batangan, Valencia City, Bukidnon</p>
+                            <p>{{$pet->client->client_address}}</p>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="ownerContact">Contact Number</label>
-                            <p>09942194953</p>
+                            <p>{{$pet->client->client_no}}</p>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                        <p>princeinventorevltn89@gmail.com</p>
+                        <p>{{$pet->client->client_email_address}}</p>
                     </div>
                 </div>
             </div>
@@ -146,26 +147,8 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get the register button
-        var registerButton = document.getElementById('regbtn');
-
-        // Add event listener to the register button
-        registerButton.addEventListener('click', function() {
-            // Show the success alert
-            var successAlert = document.getElementById('successAlert');
-            successAlert.style.display = 'flex';
-
-            setTimeout(function() {
-                window.location.href = '/managedoctor';
-            }, 4000);
-
-            // Optionally, hide the alert after a certain period (e.g., 3 seconds)
-            setTimeout(function() {
-                successAlert.style.display = 'none';
-            }, 3000);
-        });
-    });
+    var pet = @json($pet);
+    console.log(pet);
 </script>
 @endsection
 

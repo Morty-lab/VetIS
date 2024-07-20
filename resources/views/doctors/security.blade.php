@@ -20,8 +20,8 @@
             <div class="page-header-content">
                 <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                        <li class="breadcrumb-item"><a href="/managedoctor">Manage Doctors</a></li>
-                        <li class="breadcrumb-item active">Doctor Profile</li>
+                        <li class="breadcrumb-item"><a href="/managedoctor">Manage Veterinarinas</a></li>
+                        <li class="breadcrumb-item active">Veterinarian Profile</li>
                     </ol>
                 </nav>
             </div>
@@ -43,7 +43,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Authentication</div>
                     <div class="card-body">
-                        <form action="{{ route('doctor.update', $doctor->id) }}" method="POST">
+                        <form action="{{ route('doctor.updateSecurity', $doctor->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <!-- Form Group (current password)-->
@@ -65,7 +65,7 @@
                                     placeholder="Confirm new password" />
                             </div>
 
-                            <button class="btn btn-primary" type="button">Update</button>
+                            <button class="btn btn-primary" type="submit">Update</button>
                         </form>
                     </div>
                 </div>
