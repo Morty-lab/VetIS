@@ -4,16 +4,15 @@
 @endsection
 
 @section('content')
-    <div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert"
-        style="display: none; z-index: 100;">
-        <div class="alert-icon-aside">
-            <i class="fa-regular fa-circle-check"></i>
-        </div>
-        <div class="alert-icon-content">
-            <h6 class="alert-heading">Success</h6>
-            Doctor Registered Successfully!
-        </div>
+<div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert" style="display: none; z-index: 100;">
+    <div class="alert-icon-aside">
+        <i class="fa-regular fa-circle-check"></i>
     </div>
+    <div class="alert-icon-content">
+        <h6 class="alert-heading">Success</h6>
+        Doctor Registered Successfully!
+    </div>
+</div>
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-xl px-4">
@@ -25,10 +24,13 @@
                     </ol>
                 </nav>
             </div>
+
         </div>
-    </header>
-    <!-- Main page content-->
-    <div class="container-xl px-4 mt-4">
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-4">
+
 
         <!-- Account page navigation-->
         <nav class="nav nav-borders">
@@ -60,12 +62,12 @@
                                     <input class="form-control" id="inputLastName" type="text" name="lastname"
                                         placeholder="Last Name" value="{{ $doctor->doctor->lastname }}" />
                                 </div>
+
                             </div>
-                            <!-- Form Group (email address)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                <input class="form-control" id="inputEmailAddress" type="email" name="email"
-                                    placeholder="Email Address" value="{{ $doctor->email }}" />
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input class="form-control" id="inputLastName" type="text" name="lastname" placeholder="Last Name" value="{{ $doctor->lastname }}" />
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputAddress">Address (Street, Barangay, City/Municipality,
@@ -103,49 +105,49 @@
                                 Changes</button>
                         </form>
 
-                    </div>
+
                 </div>
             </div>
-            <div class="col-xl-4">
-                <!-- Profile picture card-->
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Profile Picture</div>
-                    <div class="card-body text-center">
-                        <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2"
-                            src="assets/img/illustrations/profiles/profile-1.png" alt="" />
-                        <!-- Profile picture help block-->
-                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                        <!-- Profile picture upload button-->
-                        <button class="btn btn-primary" type="button">Upload new image</button>
-                    </div>
+        </div>
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <button class="btn btn-primary" type="button">Upload new image</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get the register button
-            var registerButton = document.getElementById('regbtn');
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the register button
+        var registerButton = document.getElementById('regbtn');
 
-            // Add event listener to the register button
-            registerButton.addEventListener('click', function() {
-                // Show the success alert
-                var successAlert = document.getElementById('successAlert');
-                successAlert.style.display = 'flex';
+        // Add event listener to the register button
+        registerButton.addEventListener('click', function() {
+            // Show the success alert
+            var successAlert = document.getElementById('successAlert');
+            successAlert.style.display = 'flex';
 
-                setTimeout(function() {
-                    window.location.href = '/managedoctor';
-                }, 4000);
+            setTimeout(function() {
+                window.location.href = '/managedoctor';
+            }, 4000);
 
-                // Optionally, hide the alert after a certain period (e.g., 3 seconds)
-                setTimeout(function() {
-                    successAlert.style.display = 'none';
-                }, 3000);
-            });
+            // Optionally, hide the alert after a certain period (e.g., 3 seconds)
+            setTimeout(function() {
+                successAlert.style.display = 'none';
+            }, 3000);
         });
-    </script>
+    });
+</script>
 @endsection
 
 @section('scripts')

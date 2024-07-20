@@ -164,8 +164,33 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
         return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     });
 
-});
+    Route::get('/manageschedules', function () {
+        return view('schedule.calendar');
+    });
 
+    // Pet Owners
+    Route::get('/manageowners', function () {
+        return view('owners.manage');
+    });
+    Route::get('/addowner', function () {
+        return view('owners.add');
+    });
+    Route::get('/profileowner', function () {
+        return view('owners.profile');
+    });
+    Route::get('/products', function () {
+        return view('inventory.products');
+    });
+    Route::get('/categories', function () {
+        return view('inventory.categories');
+    });
+    Route::get('/suppliers', function () {
+        return view('inventory.suppliers');
+    });
+    Route::get('/units', function () {
+        return view('inventory.units');
+    });
+});
 
 
 require __DIR__ . '/auth.php';

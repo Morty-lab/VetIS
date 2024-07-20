@@ -11,7 +11,7 @@
     </div>
     <div class="alert-icon-content">
         <h6 class="alert-heading">Success</h6>
-        Doctor Registered Successfully!
+        Owner Registered Successfully!
     </div>
 </div>
 
@@ -20,8 +20,8 @@
         <div class="page-header-content">
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                    <li class="breadcrumb-item"><a href="/managedoctor">Manage Veterinarians</a></li>
-                    <li class="breadcrumb-item active">Add Veterinarian</li>
+                    <li class="breadcrumb-item"><a href="/managedoctor">Manage Pet Owner</a></li>
+                    <li class="breadcrumb-item active">Add Pet Owner</li>
                 </ol>
             </nav>
         </div>
@@ -34,9 +34,9 @@
         <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Account Registration</div>
+                <div class="card-header">Pet Owner Registration</div>
                 <div class="card-body">
-                    <form method="POST" action="{{route('doctor.add')}}" enctype="multipart/form-data">
+                    <form method="POST" action="" enctype="multipart/form-data">
                         @csrf
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
@@ -93,13 +93,9 @@
                                 @enderror
                             </div>
                         </div>
-                        <!-- Form Group (position)-->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputPosition">Position</label>
-                            <input class="form-control @error('position') is-invalid @enderror" id="inputPosition" name="position" type="text" placeholder="Position" value="" />
-                            @error('position')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="small mb-1" for="inputUsername">Pets Owned</label>
+                            <input class="form-control @error('petsowned') is-invalid @enderror" id="inputPetsOwned" name="petsowned" type="text" placeholder="Pets Owned" value="" />
                         </div>
                         <!-- Form Group (username)-->
                         <div class="mb-3">
