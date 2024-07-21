@@ -50,4 +50,14 @@ class User extends Authenticatable
         return $this->hasOne(Doctor::class);
     }
 
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
+    }
+
+    public function secretary()
+    {
+        return $this->hasOne(Secretary::class);
+    }
+
 }

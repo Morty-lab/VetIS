@@ -36,6 +36,33 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
+        Schema::create('staffs', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->date('birthday');
+            $table->string('position');
+            $table->string('profile_picture')->nullable();
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('secretaries', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->date('birthday');
+            $table->string('profile_picture')->nullable();
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
 
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
@@ -90,6 +117,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("owner_ID");
             $table->unsignedBigInteger("pet_ID");
+            $table->unsignedBigInteger("doctor_ID");
+            $table->foreign("doctor_ID")->references("id")->on("doctors")->onDelete("cascade");
             $table->foreign("pet_ID")->references("id")->on("pets")->onDelete("cascade");
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
             $table->date("appointment_date");
@@ -134,6 +163,16 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id();
+            $table->string("supplier_name");
+            $table->string("supplier_address");
+            $table->string("supplier_email_address");
+            $table->string("supplier_phone_number");
+            $table->string("supplier_contact_person");
+            $table->timestamps();
+
+        });
 
     }
 
@@ -152,6 +191,8 @@ return new class extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('clients');
         Schema::dropIfExists('doctors');
+        Schema::dropIfExists('secretaries');
+        Schema::dropIfExists('staffs');
         Schema::dropIfExists('users');
 
 
