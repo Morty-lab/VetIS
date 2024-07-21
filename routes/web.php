@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use App\Models\Clients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -178,15 +179,20 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     Route::get('/profileowner', function () {
         return view('owners.profile');
     });
+
+    // Inventory Routes
     Route::get('/products', function () {
         return view('inventory.products');
     });
     Route::get('/categories', function () {
         return view('inventory.categories');
     });
-    Route::get('/suppliers', function () {
-        return view('inventory.suppliers');
-    });
+
+    //suppliers Sub Routes
+    Route::get('/suppliers', [SupplierController::class , 'index'])->name("suppliers.index");
+    Route::post('/suppliers/add', [SupplierController::class, 'add'])->name("suppliers.add");
+    Route::post('/suppliers/update/{id}', [SupplierController::class , 'update'])->name("suppliers.update");
+    Route::get('/suppliers/{id}', [SupplierController::class , 'delete'])->name("suppliers.delete");
     Route::get('/units', function () {
         return view('inventory.units');
     });

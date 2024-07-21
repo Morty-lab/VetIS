@@ -90,7 +90,7 @@
                 <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="suppliers">
+                        <a class="nav-link" href="{{route('suppliers.index')}}">
                             All Suppliers
                         </a>
                     </nav>
