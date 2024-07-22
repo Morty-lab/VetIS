@@ -73,21 +73,34 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id();
+            $table->string("supplier_name");
+            $table->string("supplier_address");
+            $table->string("supplier_email_address");
+            $table->string("supplier_phone_number");
+            $table->string("supplier_contact_person");
+            $table->timestamps();
+
+        });
+
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("supplier_id");
             $table->string("product_name");
             $table->string("product_category");
             $table->float("price");
             $table->string("unit");
             $table->integer("status")->nullable();
             $table->timestamps();
+            $table->foreign("supplier_id")->references("id")->on("suppliers")->onDelete("cascade");
         });
 
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("product_id");
+            $table->unsignedBigInteger("products_id");
             $table->integer("stock");
-            $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade");
+            $table->foreign("products_id")->references("id")->on("products")->onDelete("cascade");
             $table->float("price");
             $table->string("unit");
             $table->integer("status")->nullable();
@@ -163,16 +176,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('suppliers', function (Blueprint $table) {
-            $table->id();
-            $table->string("supplier_name");
-            $table->string("supplier_address");
-            $table->string("supplier_email_address");
-            $table->string("supplier_phone_number");
-            $table->string("supplier_contact_person");
-            $table->timestamps();
 
-        });
 
     }
 
@@ -194,6 +198,7 @@ return new class extends Migration
         Schema::dropIfExists('secretaries');
         Schema::dropIfExists('staffs');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('suppliers');
 
 
     }

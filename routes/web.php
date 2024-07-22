@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use App\Models\Clients;
@@ -181,9 +182,14 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     });
 
     // Inventory Routes
-    Route::get('/products', function () {
-        return view('inventory.products');
-    });
+
+    //products Sub Routes
+    Route::get('/products', [ProductsController::class , 'index'])->name("products.index");
+    Route::post('/products/addStocks/{id}', [ProductsController::class, 'addStocks'])->name("products.addStocks");
+    Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
+    Route::post('/products/update/{id}', [ProductsController::class , 'update'])->name("products.update");
+    Route::get('/products/{id}', [ProductsController::class , 'destroy'])->name("products.delete");
+
     Route::get('/categories', function () {
         return view('inventory.categories');
     });

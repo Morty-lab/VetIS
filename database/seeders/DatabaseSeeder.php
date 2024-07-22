@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Products;
+use App\Models\Stocks;
+use App\Models\Suppliers;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Stocks::factory()->count(10)->create();
+
+
+
+
         $this->call([UsersTableSeeder::class,ClientsTableSeeder::class,PetSeeder::class]);
+
 
         // \App\Models\User::factory(10)->create();
 
