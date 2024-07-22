@@ -118,7 +118,7 @@
                 <div class="collapse" id="collapseUnits" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="/units">
+                        <a class="nav-link" href="{{route('units.index')}}">
                             All Units
                         </a>
                     </nav>
