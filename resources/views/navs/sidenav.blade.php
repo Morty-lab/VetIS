@@ -104,7 +104,7 @@
                 <div class="collapse" id="collapseProduct" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="/products">
+                        <a class="nav-link" href="{{route('products.index')}}">
                             All Products
                         </a>
                     </nav>

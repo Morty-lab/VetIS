@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Products extends Model
 {
@@ -16,40 +18,48 @@ class Products extends Model
         'unit',
         'status',
         'stock',
+        'supplier_id'
     ];
 
+
+
+    public function suppliers(): BelongsToMany
+    {
+        return $this->belongsToMany(Suppliers::class);
+    }
+
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stocks::class);
+    }
+
     public static function getAllProducts()
-{
-    return self::all();
-}
-
-public static function getProductById($id)
-{
-    return self::find($id);
-}
-
-public static function createProduct($data)
-{
-    return self::create($data);
-}
-
-public static function updateProduct($id, $data)
-{
-    $product = self::find($id);
-    if ($product) {
-        $product->fill($data)->save();
-        return $product;
+    {
+        return self::all();
     }
-    return null;
-}
 
-public static function deleteProduct($id)
-{
-    $product = self::find($id);
-    if ($product) {
-        return $product->delete();
+    public static function getProductById($id)
+    {
+        return self::find($id);
     }
-    return false;
-}
+
+    public static function createProduct($data)
+    {
+        return self::create($data);
+    }
+
+    public static function updateProduct($id, $data)
+    {
+        return self::find($id)->update($data);
+    }
+
+    public static function deleteProduct($id)
+    {
+        $product = self::find($id);
+        if ($product) {
+            return $product->delete();
+        }
+        return false;
+    }
 
 }
