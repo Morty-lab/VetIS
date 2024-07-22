@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Products;
 use App\Models\Suppliers;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductsFactory extends Factory
@@ -27,7 +28,7 @@ class ProductsFactory extends Factory
             'product_name' => $this->faker->words(3, true),
             'product_category' => $this->faker->randomElement(['Electronics', 'Books', 'Clothing']),
             'price' => $this->faker->randomFloat(2, 1, 100),
-            'unit' => $this->faker->randomElement(['pcs', 'kg', 'ltr']),
+            'unit' => Unit::factory(),
             'status' => $this->faker->randomElement([0, 1]),
         ];
     }

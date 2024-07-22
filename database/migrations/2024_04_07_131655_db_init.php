@@ -84,26 +84,34 @@ return new class extends Migration
 
         });
 
+        Schema::create('units', Function (Blueprint $table){
+            $table->id();
+            $table->string("unit_name");
+            $table->timestamps();
+        });
+
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("supplier_id");
             $table->string("product_name");
             $table->string("product_category");
             $table->float("price");
-            $table->string("unit");
+            $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
-            $table->timestamps();
+            $table->foreign("unit")->references("id")->on("units");
             $table->foreign("supplier_id")->references("id")->on("suppliers")->onDelete("cascade");
+            $table->timestamps();
         });
 
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("products_id");
             $table->integer("stock");
-            $table->foreign("products_id")->references("id")->on("products")->onDelete("cascade");
             $table->float("price");
-            $table->string("unit");
+            $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
+            $table->foreign("products_id")->references("id")->on("products")->onDelete("cascade");
+            $table->foreign("unit")->references("id")->on("units");
             $table->timestamps();
         });
 
@@ -198,6 +206,7 @@ return new class extends Migration
         Schema::dropIfExists('secretaries');
         Schema::dropIfExists('staffs');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('units');
         Schema::dropIfExists('suppliers');
 
 

@@ -24,6 +24,11 @@ class Stocks extends Model
         return $this->belongsTo(Products::class,'product_id');
     }
 
+    public function unit():BelongsTo
+    {
+        return $this->belongsTo(Unit::class,'id');
+    }
+
     public static function addStock($data)
     {
 

@@ -45,9 +45,9 @@
                                 <label class="small mb-1" for="selectUnitType">Unit Type</label>
                                 <select class="form-control" id="selectUnitType" name="unit">
                                     <option disabled="" selected="">-- Select Unit Type --</option>
-                                    <option>Unit 1</option>
-                                    <option>Unit 2</option>
-                                    <option>Unit 3</option>
+                                    @foreach ($units as $i)
+                                        <option value="{{ $i->id }}">{{ $i->unit_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -105,7 +105,11 @@
                             <div class="row gx-3 mb-3 px-1">
                                 <div class="col-md-3">
                                     <label class="small mb-1" for="selectUnitType">Unit Type</label>
-                                    <p>{{ $product->unit }}</p>
+                                    @foreach ($units as $i)
+                                        @if ($i->id == $product->unit)
+                                            <p>{{ $i->unit_name }}</p>
+                                        @endif
+                                    @endforeach
                                 </div>
                                 <div class="col-md-3">
                                     <label class="small mb-1" for="productPrice">Product Price</label>
@@ -197,9 +201,13 @@
                                     <label class="small mb-1" for="selectUnitType">Unit Type</label>
                                     <select class="form-control" id="selectUnitType" name="unit">
                                         <option disabled="" selected="">-- Select Unit Type --</option>
-                                        <option>Unit 1</option>
-                                        <option selected>Unit 2</option>
-                                        <option>Unit 3</option>
+                                        @foreach ($units as $i)
+                                            @if ($i->id == $product->unit_id)
+                                                <option value="{{ $i->id }}" selected>{{ $i->unit_name }}</option>
+                                            @else
+                                                <option value="{{ $i->id }}">{{ $i->unit_name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -322,7 +330,13 @@
                                     <tr>
                                         <td>{{ $product->product_name }}</td>
                                         <td>{{ $product->product_category }}</td>
-                                        <td>{{ $product->unit }}</td>
+                                        <td>
+                                            @foreach ($units as $i)
+                                                @if ($i->id == $product->unit)
+                                                    <p>{{ $i->unit_name }}</p>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td class="d-flex justify-content-between">
                                             <div class="col-auto">Php</div>
                                             <div class="col-auto">{{ $product->price }}</div>

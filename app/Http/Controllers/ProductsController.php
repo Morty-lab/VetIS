@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\Suppliers;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -18,8 +19,9 @@ class ProductsController extends Controller
             $query->orderBy('created_at', 'desc');
         }])->get();
         $supplier = Suppliers::with('products.stocks')->get();
+        $units = Unit::getAllUnits();
 
-        return view('inventory.products', ["products" => $products, "suppliers" => $supplier]);
+        return view('inventory.products', ["products" => $products, "suppliers" => $supplier, "units" => $units]);
     }
 
     /**

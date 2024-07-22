@@ -6,6 +6,7 @@ use App\Http\Controllers\PetsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
 use App\Models\Clients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -199,9 +200,12 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     Route::post('/suppliers/add', [SupplierController::class, 'add'])->name("suppliers.add");
     Route::post('/suppliers/update/{id}', [SupplierController::class , 'update'])->name("suppliers.update");
     Route::get('/suppliers/{id}', [SupplierController::class , 'delete'])->name("suppliers.delete");
-    Route::get('/units', function () {
-        return view('inventory.units');
-    });
+
+    //units Sub Routes
+    Route::get('/units',[UnitController::class , 'index'])->name("units.index");
+    Route::post('/units/add', [UnitController::class, 'store'])->name("units.add");
+    Route::post('/units/update/{id}', [UnitController::class , 'update'])->name("units.update");
+    Route::get('/units/{id}', [UnitController::class , 'destroy'])->name("units.delete");
 });
 
 
