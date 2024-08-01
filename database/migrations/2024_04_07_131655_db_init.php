@@ -90,16 +90,23 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('category', Function (Blueprint $table){
+            $table->id();
+            $table->string("category_name");
+            $table->timestamps();
+        });
+
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("supplier_id");
             $table->string("product_name");
-            $table->string("product_category");
+            $table->unsignedBigInteger("product_category");
             $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
             $table->foreign("unit")->references("id")->on("units");
             $table->foreign("supplier_id")->references("id")->on("suppliers")->onDelete("cascade");
+            $table->foreign("product_category")->references("id")->on("category");
             $table->timestamps();
         });
 
@@ -114,6 +121,7 @@ return new class extends Migration
             $table->foreign("unit")->references("id")->on("units");
             $table->timestamps();
         });
+
 
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
@@ -206,6 +214,7 @@ return new class extends Migration
         Schema::dropIfExists('secretaries');
         Schema::dropIfExists('staffs');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('category');
         Schema::dropIfExists('units');
         Schema::dropIfExists('suppliers');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\Suppliers;
@@ -20,8 +21,8 @@ class ProductsController extends Controller
         }])->get();
         $supplier = Suppliers::with('products.stocks')->get();
         $units = Unit::getAllUnits();
-
-        return view('inventory.products', ["products" => $products, "suppliers" => $supplier, "units" => $units]);
+        $categories = Category::getAllCategories();
+        return view('inventory.products', ["products" => $products, "suppliers" => $supplier, "units" => $units, 'categories' => $categories]);
     }
 
     /**

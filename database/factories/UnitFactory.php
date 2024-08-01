@@ -12,8 +12,22 @@ class UnitFactory extends Factory
 
     public function definition()
     {
+        $units = [
+            "Bottles",
+            "Boxes",
+            "Capsules",
+            "Chews",
+            "Kilograms",
+            "Liters",
+            "Milliliters",
+            "Packs",
+            "Pieces",
+            "Tablets"
+        ];
+
+        $key = array_rand($units);
         return [
-            'unit_name' => $this->faker->word,
+            'unit_name' => $units[$key],
         ];
     }
 }
