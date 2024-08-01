@@ -39,6 +39,11 @@ class Products extends Model
         return $this->belongsTo(Unit::class,'id');
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class,'id');
+    }   
+
     public static function getAllProducts()
     {
         return self::all();

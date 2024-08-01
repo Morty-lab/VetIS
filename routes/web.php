@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
 use App\Http\Controllers\ProductsController;
@@ -191,9 +192,11 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     Route::post('/products/update/{id}', [ProductsController::class , 'update'])->name("products.update");
     Route::get('/products/{id}', [ProductsController::class , 'destroy'])->name("products.delete");
 
-    Route::get('/categories', function () {
-        return view('inventory.categories');
-    });
+    //categories Sub Routes
+    Route::get('/categories', [CategoryController::class , 'index'])->name("categories.index");
+    Route::get('/categories/delete/{id}', [CategoryController::class , 'destroy'])->name("categories.delete");
+    Route::post('/categories/add', [CategoryController::class, 'store'])->name("categories.add");
+    Route::post('/categories/update/{id}', [CategoryController::class , 'update'])->name("categories.update");
 
     //suppliers Sub Routes
     Route::get('/suppliers', [SupplierController::class , 'index'])->name("suppliers.index");

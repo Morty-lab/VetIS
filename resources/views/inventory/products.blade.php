@@ -36,9 +36,9 @@
                                 <label class="small mb-1" for="selectProductCategory">Product Category</label>
                                 <select class="form-control" id="selectProductCategory" name="category">
                                     <option disabled="" selected="">-- Select Product Category --</option>
-                                    <option>Category 1</option>
-                                    <option>Category 2</option>
-                                    <option>Category 3</option>
+                                    @foreach ($categories as $i)
+                                    <option value="{{ $i->id }}">{{ $i->category_name }}</option>
+                                @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -192,9 +192,13 @@
                                     <label class="small mb-1" for="selectProductCategory">Product Category</label>
                                     <select class="form-control" id="selectProductCategory" name="category">
                                         <option disabled="">-- Select Product Category --</option>
-                                        <option selected>Category 1</option>
-                                        <option>Category 2</option>
-                                        <option>Category 3</option>
+                                        @foreach ($categories as $i)
+                                        @if ($i->id == $product->product_category)
+                                            <option value="{{ $i->id }}" selected>{{ $i->category_name }}</option>
+                                        @else
+                                            <option value="{{ $i->id }}">{{ $i->category_name }}</option>
+                                        @endif
+                                    @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -329,7 +333,13 @@
                                 @foreach ($products as $product)
                                     <tr>
                                         <td>{{ $product->product_name }}</td>
-                                        <td>{{ $product->product_category }}</td>
+                                        <td>
+                                            @foreach ($categories as $i)
+                                                @if ($i->id == $product->product_category)
+                                                    <p>{{ $i->category_name }}</p>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td>
                                             @foreach ($units as $i)
                                                 @if ($i->id == $product->unit)

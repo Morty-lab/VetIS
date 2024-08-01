@@ -132,7 +132,7 @@
                 <div class="collapse" id="collapseCategory" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="categories">
+                        <a class="nav-link" href="{{route('categories.index')}}">
                             All Categories
                         </a>
                     </nav>
