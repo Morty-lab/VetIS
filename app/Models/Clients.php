@@ -16,6 +16,16 @@ class Clients extends Model
         'client_FB_account',
     ];
 
+    public function pets()
+    {
+        return $this->hasMany(Pets::class, 'owner_ID');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointments::class, 'owner_ID');
+    }
+
     public static function getAllClients()
     {
         return self::all();
