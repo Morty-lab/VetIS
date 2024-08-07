@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
 use App\Models\Clients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -178,6 +182,7 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     Route::get('/profileowner', function () {
         return view('owners.profile');
     });
+<<<<<<< HEAD
     Route::get('/products', function () {
         return view('inventory.products');
     });
@@ -193,6 +198,35 @@ Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store')
     Route::get('/pos', function () {
         return view('pos.pos');
     });
+=======
+
+    // Inventory Routes
+
+    //products Sub Routes
+    Route::get('/products', [ProductsController::class , 'index'])->name("products.index");
+    Route::post('/products/addStocks/{id}', [ProductsController::class, 'addStocks'])->name("products.addStocks");
+    Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
+    Route::post('/products/update/{id}', [ProductsController::class , 'update'])->name("products.update");
+    Route::get('/products/{id}', [ProductsController::class , 'destroy'])->name("products.delete");
+
+    //categories Sub Routes
+    Route::get('/categories', [CategoryController::class , 'index'])->name("categories.index");
+    Route::get('/categories/delete/{id}', [CategoryController::class , 'destroy'])->name("categories.delete");
+    Route::post('/categories/add', [CategoryController::class, 'store'])->name("categories.add");
+    Route::post('/categories/update/{id}', [CategoryController::class , 'update'])->name("categories.update");
+
+    //suppliers Sub Routes
+    Route::get('/suppliers', [SupplierController::class , 'index'])->name("suppliers.index");
+    Route::post('/suppliers/add', [SupplierController::class, 'add'])->name("suppliers.add");
+    Route::post('/suppliers/update/{id}', [SupplierController::class , 'update'])->name("suppliers.update");
+    Route::get('/suppliers/{id}', [SupplierController::class , 'delete'])->name("suppliers.delete");
+
+    //units Sub Routes
+    Route::get('/units',[UnitController::class , 'index'])->name("units.index");
+    Route::post('/units/add', [UnitController::class, 'store'])->name("units.add");
+    Route::post('/units/update/{id}', [UnitController::class , 'update'])->name("units.update");
+    Route::get('/units/{id}', [UnitController::class , 'destroy'])->name("units.delete");
+>>>>>>> 4afff18647a9fb9c65754d33ed604caa2573df03
 });
 
 
