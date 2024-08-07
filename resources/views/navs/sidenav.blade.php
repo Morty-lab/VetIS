@@ -90,7 +90,7 @@
                 <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="suppliers">
+                        <a class="nav-link" href="{{route('suppliers.index')}}">
                             All Suppliers
                         </a>
                     </nav>
@@ -104,7 +104,7 @@
                 <div class="collapse" id="collapseProduct" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="/products">
+                        <a class="nav-link" href="{{route('products.index')}}">
                             All Products
                         </a>
                     </nav>
@@ -118,7 +118,7 @@
                 <div class="collapse" id="collapseUnits" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="/units">
+                        <a class="nav-link" href="{{route('units.index')}}">
                             All Units
                         </a>
                     </nav>
@@ -132,7 +132,7 @@
                 <div class="collapse" id="collapseCategory" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="categories">
+                        <a class="nav-link" href="{{route('categories.index')}}">
                             All Categories
                         </a>
                     </nav>
