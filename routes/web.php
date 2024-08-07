@@ -119,6 +119,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/units', function () {
         return view('inventory.units');
     });
+    Route::get('/pos', function () {
+        return view('pos.pos');
+    });
 });
 
 
