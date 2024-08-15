@@ -87,12 +87,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity">
-                        <button class="btn btn-primary" type="button" onclick="addItem({
-                        'sku' : {{$product->id}},
-                        'name' : '{{$product->product_name}}',
-                        'price' : {{$product->price}},
-                        'qty' : 3 })">Add Product</button>
+                        <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" oninput="setQuantity(this.value)">
+                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
+                            onclick="addItem({
+                        'sku' : {{ $product->id }},
+                        'name' : '{{ $product->product_name }}',
+                        'price' : {{ $product->price }},
+                        'qty' : document.getElementById('quantityInput').value
+                        })">Add
+                            Product</button>
                     </div>
                 </div>
             </div>
@@ -162,17 +165,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <a href="google.com">
-                                    <!-- for redirecting: use onlinck ex, onclick="window.location='https://google.com'" -->
-                                    <tr style="cursor: pointer;">
-                                        <td>Kent Invento</td>
-                                        <td>VETIS2330213</td>
+
+                                @foreach ($customers as $customer)
+                                    <tr style="cursor: pointer;" onclick="setCustomer('{{ $customer->client_name }}')" data-bs-dismiss="modal">
+                                        <td>{{ $customer->client_name }}</td>
+                                        <td>{{ $customer->id }}</td>
                                     </tr>
-                                </a>
-                                <tr style="cursor: pointer;">
-                                    <td>Jay Invento</td>
-                                    <td>VETIS2330213</td>
-                                </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -263,7 +263,7 @@
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Date</p>
-                                            <p class="text-md text-grey mb-0">08/11/24 | 9:45AM</p>
+                                            <p class="text-md text-grey mb-0">   {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
                                         </div>
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
@@ -279,7 +279,7 @@
                                         <div
                                             class="discount-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Discount %</p>
-                                            <p class="text-lg text-grey mb-0">5%</p>
+                                            <p class="text-lg text-grey mb-0" ></p>
                                         </div>
                                         <hr>
                                         <div class="total-section d-flex justify-content-between align-items-center">
@@ -404,11 +404,11 @@
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Date</p>
-                                <p class="text-md text-grey mb-0">08/11/24 | 9:45AM</p>
+                                <p class="text-md text-grey mb-0"> {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Customer</p>
-                                <p class="text-md text-grey mb-0">Juan Dela Cruz</p>
+                                <p class="text-md text-grey mb-0" id="customer">Juan Dela Cruz</p>
                             </div>
                             <hr>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
@@ -417,7 +417,7 @@
                             </div>
                             <div class="discount-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Discount %</p>
-                                <p class="text-lg text-grey mb-0">5%</p>
+                                <p class="text-lg text-grey mb-0" id="discount">5%</p>
                             </div>
                             <hr>
                             <div class="total-section d-flex justify-content-between align-items-center">
@@ -497,6 +497,8 @@
         };
         document.addEventListener('DOMContentLoaded', focusInputOnModalShown);
     </script>
+
+
 </body>
 
 </html>

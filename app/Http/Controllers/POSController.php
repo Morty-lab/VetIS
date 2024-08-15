@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clients;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,11 @@ class POSController extends Controller
     public function index()
     {
         $products = Products::getAllProducts();
+        $customers = Clients::getAllClients();
 
-        return view('pos.pos', ["products" => $products]);
+        // dd(json_encode($customers));
+
+        return view('pos.pos', ["products" => $products, "customers" => $customers]);
     }
 
     /**
