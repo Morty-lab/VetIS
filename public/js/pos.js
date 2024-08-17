@@ -1,20 +1,23 @@
 Items = [];
-discount = 0;
+discount = 5;
 qty = 1;
-
 customer = "";
-
+customerID = 0;
 
 function initTransaction() {
-    discountText = document.getElementById("discount");
-    discountText.textContent = `${discount}%`;
+    discountText = document.querySelectorAll(".discount");
+    discountText.forEach((element) => {
+        element.textContent = `${discount}%`;
+    });
 
-    customerText = document.getElementById("customer");
-    customerText.textContent = customer;
+    var customerElements = document.querySelectorAll(".customer");
 
+    customerElements.forEach(function (element) {
+        element.textContent = customer;
+    });
 }
 
-function initItems(){
+function initItems() {
     const itemsContainer = document.getElementById("ItemContainer");
     const tableRowsHTML = generateTableRows(Items);
     itemsContainer.innerHTML = tableRowsHTML;
@@ -39,16 +42,77 @@ function setQuantity(q) {
     qty = q;
 }
 
-function setCustomer(c) {
+function setCustomer(c, cid) {
     customer = c;
+    customerID = cid;
 
     initTransaction();
 
     console.log(customer);
 }
 
-function addItem(item) {
+function generateTransactionDetails(
+    cashGiven,
+    grandTotal,
+    customerId,
+    transactionDateTime,
+    totalDiscount,
+    subtotal,
+    products
+) {
 
+    if (products.length === 0) {
+        alert("No items in cart.");
+        return null;
+    }
+    // Assuming products is an array of objects where each object contains productId and currentPrice
+    const productIdsAndPrices = products.map((product) => ({
+        productId: product.sku,
+        currentPrice: product.price,
+        quantity: product.qtys,
+    }));
+
+
+
+    if (cashGiven >= grandTotal) {
+        return {
+            customerId: customerId,
+            transactionDateTime: transactionDateTime,
+            totalDiscount: `${totalDiscount}%`,
+            subtotal: subtotal,
+            productIdsAndPrices: productIdsAndPrices,
+        };
+    } else {
+        alert("Insufficient cash given.");
+        return null; // Return null or throw an error if cash given is less than grand total
+    }
+}
+
+function handlePayment() {
+    event.preventDefault();
+
+    const cashGivenInput = document.getElementById("cashGivenInput");
+    const grandTotal = document.querySelector(".grand-total").textContent;
+    const customerId = customerID;
+    const transactionDateTime = new Date().toISOString();
+    const totalDiscount = discount;
+    const subtotal = document.querySelector(".sub-total").textContent;
+    const products = Items;
+    const transactionDetails = generateTransactionDetails(
+        cashGivenInput.value,
+        grandTotal,
+        customerId,
+        transactionDateTime,
+        totalDiscount,
+        subtotal,
+        products
+    );
+
+    if (transactionDetails !== null) {
+        document.getElementById("paymentForm").submit();
+    }
+}
+function addItem(item) {
     Items.push({
         sku: item.sku,
         name: item.name,
@@ -59,9 +123,8 @@ function addItem(item) {
     qty = 1;
     initItems();
     calculateTotal();
-
+    calculateGrandTotal();
 }
-
 
 function calculateTotal() {
     let total = 0;
@@ -69,10 +132,24 @@ function calculateTotal() {
         total += item.price * item.qty;
     });
 
-    subTotal = document.getElementById("subTotal");
-    subTotal.textContent = parseFloat(total.toFixed(2));
+    subTotal = document.querySelectorAll(".sub-total");
+
+    subTotal.forEach((element) => {
+        element.textContent = new Intl.NumberFormat().format(total);
+    });
 }
 
+function calculateGrandTotal() {
+    let total = 0;
+    Items.forEach((item) => {
+        total += item.price * item.qty;
+    });
+    total = total - total * (discount / 100);
+    grandTotal = document.querySelectorAll(".grand-total");
+    grandTotal.forEach((element) => {
+        element.textContent = new Intl.NumberFormat().format(total);
+    });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     initTransaction();
@@ -84,3 +161,7 @@ function newTransaction() {
     initItems();
     calculateTotal();
 }
+
+document
+    .getElementById("paymentForm")
+    .addEventListener("submit", handlePayment);

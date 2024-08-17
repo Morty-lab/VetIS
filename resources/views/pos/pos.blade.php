@@ -167,7 +167,7 @@
                             <tbody>
 
                                 @foreach ($customers as $customer)
-                                    <tr style="cursor: pointer;" onclick="setCustomer('{{ $customer->client_name }}')" data-bs-dismiss="modal">
+                                    <tr style="cursor: pointer;" onclick="setCustomer('{{ $customer->client_name }}' , {{ $customer->id }})" data-bs-dismiss="modal">
                                         <td>{{ $customer->client_name }}</td>
                                         <td>{{ $customer->id }}</td>
                                     </tr>
@@ -268,23 +268,23 @@
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Customer</p>
-                                            <p class="text-md text-grey mb-0">Juan Dela Cruz</p>
+                                            <p class="text-md text-grey mb-0 customer">Juan Dela Cruz</p>
                                         </div>
                                         <hr>
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Sub Total</p>
-                                            <p class="text-lg text-grey mb-0">1000</p>
+                                            <p class="text-lg text-grey mb-0 sub-total">1000</p>
                                         </div>
                                         <div
                                             class="discount-section d-flex justify-content-between align-items-center">
-                                            <p class="mb-0">Discount %</p>
-                                            <p class="text-lg text-grey mb-0" ></p>
+                                            <p class="mb-0 ">Discount %</p>
+                                            <p class="text-lg text-grey mb-0 discount" ></p>
                                         </div>
                                         <hr>
                                         <div class="total-section d-flex justify-content-between align-items-center">
-                                            <p class="mb-0">Total</p>
-                                            <p class="text-xl text-blue mb-0">0</p>
+                                            <p class="mb-0 ">Total</p>
+                                            <p class="text-xl text-blue mb-0 grand-total">0</p>
                                         </div>
                                     </div>
                                     <div class="receipt-cutout"></div>
@@ -293,14 +293,17 @@
                         </div>
                         <div class="col-6 p-2 mx-auto">
                             <!-- Mawala ni pag ma bayran na -->
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <label for="">Cash Given</label>
-                                    <input type="text" class="form-control">
-                                    <a href="" class="btn btn-primary mt-3 w-100">Enter</a>
-                                    <hr class="mt-3">
+                            <form action="" id="paymentForm">
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <label for="">Cash Given</label>
+                                        <input type="text" class="form-control" id="cashGivenInput">
+                                        <button type="submit" class="btn btn-primary mt-3 w-100">Enter</button>
+                                        <hr class="mt-3">
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
+
                             <!-- --- -->
 
                             <!-- Mo gawas rani sila if nabayaran na -->
@@ -408,21 +411,21 @@
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Customer</p>
-                                <p class="text-md text-grey mb-0" id="customer">Juan Dela Cruz</p>
+                                <p class="text-md text-grey mb-0 customer">Juan Dela Cruz</p>
                             </div>
                             <hr>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
-                                <p class="mb-0">Sub Total</p>
-                                <p class="text-lg text-grey mb-0" id="subTotal">0</p>
+                                <p class="mb-0 " >Sub Total</p>
+                                <p class="text-lg text-grey mb-0 sub-total" >0</p>
                             </div>
                             <div class="discount-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Discount %</p>
-                                <p class="text-lg text-grey mb-0" id="discount">5%</p>
+                                <p class="text-lg text-grey mb-0 discount" >5%</p>
                             </div>
                             <hr>
                             <div class="total-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Total</p>
-                                <p class="text-xl text-blue mb-0" id="grandTotal">0</p>
+                                <p class="text-xl text-blue mb-0 grand-total">0</p>
                             </div>
                         </div>
                         <div class="receipt-cutout"></div>
