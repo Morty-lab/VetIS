@@ -213,7 +213,51 @@ Route::middleware('auth')->group(function () {
     Route::post('/units/add', [UnitController::class, 'store'])->name("units.add");
     Route::post('/units/update/{id}', [UnitController::class, 'update'])->name("units.update");
     Route::get('/units/{id}', [UnitController::class, 'destroy'])->name("units.delete");
+
+    // User Management
+    // Admin
+    Route::get('/um/admin', function () {
+        return view('user_management.admins.manage');
+    });
+    Route::get('/um/admin/add', function () {
+        return view('user_management.admins.add');
+    });
+    Route::get('/um/admin/profile', function () {
+        return view('user_management.admins.profile');
+    });
+    Route::get('/um/admin/profile/options', function () {
+        return view('user_management.admins.options');
+    });
+
+    // Pet Owner
+    Route::get('/um/client', function () {
+        return view('user_management.pet_owners.manage');
+    });
+    Route::get('/um/client/add', function () {
+        return view('user_management.pet_owners.add');
+    });
+    Route::get('/um/client/profile', function () {
+        return view('user_management.pet_owners.profile');
+    });
+    Route::get('/um/client/profile/options', function () {
+        return view('user_management.pet_owners.options');
+    });
+
+    // Pet Owner
+    Route::get('/um/staff', function () {
+        return view('user_management.staffs.manage');
+    });
+    Route::get('/um/staff/add', function () {
+        return view('user_management.staffs.add');
+    });
+    Route::get('/um/staff/profile', function () {
+        return view('user_management.staffs.profile');
+    });
+    Route::get('/um/staff/profile/options', function () {
+        return view('user_management.staffs.options');
+    });
 });
+
 
 
 require __DIR__ . '/auth.php';
