@@ -57,26 +57,31 @@
                 @endif
 
                 <a class="nav-link @if(Request::is('manageappointments')) active @endif" href="{{route('appointments.index')}}">
-                    <div class="nav-link-icon"><i class="fa-regular fa-calendar-plus"></i></div>
+                    <div class="nav-link-icon"><i class="fa-solid fa-calendar-plus"></i></div>
                     Appointments
                 </a>
 
                 <a class="nav-link @if(Request::is('manageschedules')) active @endif" href="/manageschedules">
                     <div class="nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                    Schedule
+                    Calendar
                 </a>
+
+                <!-- <a class="nav-link" href="#">
+                    <div class="nav-link-icon"><i class="fa-solid fa-bell"></i></div>
+                    Notifications
+                </a>
+
+                <a class="nav-link" href="#">
+                    <div class="nav-link-icon"><i class="fa-solid fa-message"></i></div>
+                    Messages
+                </a> -->
 
                 @if (auth()->user()->role == "staff" || auth()->user()->role == "admin")
-                <div class="sidenav-menu-heading">Sales</div>
+                <div class="sidenav-menu-heading">Point of Sales</div>
 
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/pos">
                     <div class="nav-link-icon"><i class="fa-solid fa-table-columns"></i></div>
                     POS Dashboard
-                </a>
-
-                <a class="nav-link" href="tables.html">
-                    <div class="nav-link-icon"><i class="fa-regular fa-credit-card"></i></div>
-                    Billing and Payment
                 </a>
                 @endif
 
@@ -142,30 +147,17 @@
 
                 <div class="sidenav-menu-heading">User Management</div>
 
-                <a class="nav-link" href="tables.html">
-                    <div class="nav-link-icon"><i class="fa-regular fa-user"></i></div>
-                    Admin/Owner
+                <a class="nav-link @if(Request::is('um/admin*')) active @endif" href="/um/admin">
+                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                    Administrator
                 </a>
-                <a class="nav-link" href="tables.html">
-                    <div class="nav-link-icon"><i class="fa-regular fa-user"></i></div>
+                <a class="nav-link @if(Request::is('um/client*')) active @endif" href="/um/client">
+                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Client/Pet Owners
                 </a>
-                <a class="nav-link" href="tables.html">
-                    <div class="nav-link-icon"><i class="fa-regular fa-user"></i></i></div>
+                <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="/um/staff">
+                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></i></div>
                     Staffs
-                </a>
-                @endif
-
-                @if (auth()->user()->role == "admin" || auth()->user()->role == "secretary")
-
-                <div class="sidenav-menu-heading">Reports</div>
-                <a class="nav-link" href="tables.html">
-                    <div class="nav-link-icon"><i class="fa-solid fa-dog"></i></div>
-                    Pets
-                </a>
-                <a class="nav-link" href="tables.html">
-                    <div class="nav-link-icon"><i class="fa-solid fa-syringe"></i></div>
-                    Vaccination
                 </a>
                 @endif
             </div>
