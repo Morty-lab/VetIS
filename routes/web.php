@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
+use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
@@ -183,9 +184,9 @@ Route::middleware('auth')->group(function () {
         return view('owners.profile');
     });
 
-    Route::get('/pos', function () {
-        return view('pos.pos');
-    });
+    // POS Routes
+
+    Route::get('/pos', [POSController::class, 'index'])->name('pos');
     // Inventory Routes
 
     //products Sub Routes
