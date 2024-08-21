@@ -122,6 +122,24 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id();
+            $table->integer("client_id");
+            $table->float("sub_total");
+            $table->integer("total_discount");
+            $table->timestamps();
+        });
+
+        Schema::create('transaction_details', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("transaction_id");
+            $table->integer("product_id");
+            $table->integer("quantity");
+            $table->float("price");
+            $table->foreign("transaction_id")->references("id")->on("transactions")->onDelete("cascade");
+            $table->timestamps();
+        });
+
 
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
@@ -201,12 +219,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
         Schema::dropIfExists('prescriptions');
         Schema::dropIfExists('pet_records');
         Schema::dropIfExists('pets');
+        Schema::dropIfExists('transaction_details');
+        Schema::dropIfExists('transactions');
         Schema::dropIfExists('stocks');
         Schema::dropIfExists('products');
         Schema::dropIfExists('clients');

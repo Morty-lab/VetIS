@@ -112,7 +112,7 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control mb-4" placeholder="Enter Product Name, SKU">
+                    <input type="text" class="form-control mb-4" placeholder="Enter Product Name, SKU" oninput="search()">
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover">
                             <thead>
@@ -293,12 +293,17 @@
                         </div>
                         <div class="col-6 p-2 mx-auto">
                             <!-- Mawala ni pag ma bayran na -->
-                            <form action="" id="paymentForm">
+                            <form action="{{route('pos.pay')}}" id="paymentForm" method="POST">
+                                @csrf
                                 <div class="row mt-3">
                                     <div class="col-12">
                                         <label for="">Cash Given</label>
                                         <input type="text" class="form-control" id="cashGivenInput">
-                                        <button type="submit" class="btn btn-primary mt-3 w-100">Enter</button>
+                                        <input type="hidden" name="customer_id" id="customer_id">
+                                        <input type="hidden" name="sub_total" id="sub_total">
+                                        <input type="hidden" name="discount" id="discount">
+                                        <input type="hidden" name="products" id="products">
+                                        <button type="button" class="btn btn-primary mt-3 w-100" onclick="handlePayment()">Enter</button>
                                         <hr class="mt-3">
                                     </div>
                                 </div>
@@ -367,7 +372,7 @@
                             </svg></div>
                         Account
                     </a>
-                    <a class="dropdown-item" href="account-profile.html#!">
+                    <a class="dropdown-item" href="{{route('dashboard')}}">
                         <div class="dropdown-item-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

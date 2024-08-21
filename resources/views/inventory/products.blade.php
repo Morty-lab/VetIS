@@ -37,8 +37,8 @@
                                 <select class="form-control" id="selectProductCategory" name="category">
                                     <option disabled="" selected="">-- Select Product Category --</option>
                                     @foreach ($categories as $i)
-                                    <option value="{{ $i->id }}">{{ $i->category_name }}</option>
-                                @endforeach
+                                        <option value="{{ $i->id }}">{{ $i->category_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -193,12 +193,13 @@
                                     <select class="form-control" id="selectProductCategory" name="category">
                                         <option disabled="">-- Select Product Category --</option>
                                         @foreach ($categories as $i)
-                                        @if ($i->id == $product->product_category)
-                                            <option value="{{ $i->id }}" selected>{{ $i->category_name }}</option>
-                                        @else
-                                            <option value="{{ $i->id }}">{{ $i->category_name }}</option>
-                                        @endif
-                                    @endforeach
+                                            @if ($i->id == $product->product_category)
+                                                <option value="{{ $i->id }}" selected>{{ $i->category_name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $i->id }}">{{ $i->category_name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -244,7 +245,11 @@
                 <div class="modal-content">
                     <form action="{{ route('products.addStocks', $product->id) }}" method="POST">
                         @csrf
-
+                        @foreach ($units as $u)
+                            @if ($u->id == $product->unit)
+                                <input type="hidden" name="unit" value={{ $u->id }}>
+                            @endif
+                        @endforeach
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalCenterTitle">Add Stocks for
                                 {{ $product->product_name }}</h5>
