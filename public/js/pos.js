@@ -56,7 +56,6 @@ function generateTransactionDetails(
     cashGiven,
     grandTotal,
     customerId,
-    transactionDateTime,
     totalDiscount,
     subtotal,
     products
@@ -69,24 +68,26 @@ function generateTransactionDetails(
     const productIdsAndPrices = products.map((product) => ({
         productId: product.sku,
         currentPrice: product.price,
-        quantity: product.qtys,
+        quantity: product.qty,
     }));
 
-    if (grandTotal <= cashGiven) {
-        console.log(grandTotal);
-
-        console.log(cashGiven);
-        return {
-            customerId: customerId,
-            transactionDateTime: transactionDateTime,
-            totalDiscount: `${totalDiscount}%`,
-            subtotal: subtotal,
-            productIdsAndPrices: productIdsAndPrices,
-        };
-    } else {
+    if ( grandTotal >= cashGiven) {
         alert("Insufficient cash given.");
-        return null; // Return null or throw an error if cash given is less than grand total
+        console.log(grandTotal);
+        console.log(cashGiven);
+        return null;
     }
+
+    const customerID = document.getElementById("customer_id");
+    customerID.value = customerId;
+    const sub_total = document.getElementById("sub_total");
+    sub_total.value = calculateTotal();
+    const discount = document.getElementById("discount");
+    discount.value = totalDiscount;
+    const productsInput = document.getElementById("products");
+    productsInput.value = JSON.stringify(productIdsAndPrices);
+
+    return true;
 }
 
 function handlePayment() {
@@ -95,7 +96,6 @@ function handlePayment() {
     const cashGivenInput = document.getElementById("cashGivenInput");
     const grandTotal = grand_total;
     const customerId = customerID;
-    const transactionDateTime = new Date().toISOString();
     const totalDiscount = discount;
     const subtotal = document.querySelector(".sub-total").textContent;
     const products = Items;
@@ -103,14 +103,13 @@ function handlePayment() {
         cashGivenInput.value,
         grandTotal,
         customerId,
-        transactionDateTime,
         totalDiscount,
         subtotal,
         products
     );
 
     if (transactionDetails !== null) {
-        // document.getElementById("paymentForm").submit();
+        document.getElementById("paymentForm").submit();
 
         console.log(transactionDetails);
     }
@@ -129,6 +128,35 @@ function addItem(item) {
     calculateGrandTotal();
 }
 
+function search() {
+    // Get the search input value
+    var searchValue = document.querySelector('.form-control.mb-4').value.toLowerCase();
+
+    // Get all table rows
+    var rows = document.querySelectorAll('.table tbody tr');
+
+    // Loop through each row
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+
+        // Get the text content of each cell in the row
+        var sku = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+        var itemName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+        var category = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+
+        // Check if any cell's text matches the search value
+        if (sku.includes(searchValue) || itemName.includes(searchValue) || category.includes(searchValue)) {
+            // Show the row if it matches the search criteria
+            row.style.display = '';
+        } else {
+            // Hide the row if it doesn't match
+            row.style.display = 'none';
+        }
+    }
+}
+
+
+
 function calculateTotal() {
     let total = 0;
     Items.forEach((item) => {
@@ -140,6 +168,8 @@ function calculateTotal() {
     subTotal.forEach((element) => {
         element.textContent = new Intl.NumberFormat().format(total);
     });
+
+    return total;
 }
 
 function calculateGrandTotal() {

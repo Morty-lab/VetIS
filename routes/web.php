@@ -187,6 +187,7 @@ Route::middleware('auth')->group(function () {
     // POS Routes
 
     Route::get('/pos', [POSController::class, 'index'])->name('pos');
+    Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
     // Inventory Routes
 
     //products Sub Routes

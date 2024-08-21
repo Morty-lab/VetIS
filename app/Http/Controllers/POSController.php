@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients;
 use App\Models\Products;
+use App\Models\TransactionModel;
 use Illuminate\Http\Request;
 
 class POSController extends Controller
@@ -34,7 +35,17 @@ class POSController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            "client_id" => $request->customer_id,
+            "sub_total" => $request->sub_total,
+            "total_discount" => $request->discount,
+        ];
+
+
+
+        TransactionModel::storeTransaction($data);
+
+        return redirect('/pos');
     }
 
     /**
