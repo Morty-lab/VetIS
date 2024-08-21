@@ -3,6 +3,7 @@ discount = 5;
 qty = 1;
 customer = "";
 customerID = 0;
+grand_total = 0;
 
 function initTransaction() {
     discountText = document.querySelectorAll(".discount");
@@ -60,7 +61,6 @@ function generateTransactionDetails(
     subtotal,
     products
 ) {
-
     if (products.length === 0) {
         alert("No items in cart.");
         return null;
@@ -72,9 +72,10 @@ function generateTransactionDetails(
         quantity: product.qtys,
     }));
 
+    if (grandTotal <= cashGiven) {
+        console.log(grandTotal);
 
-
-    if (cashGiven >= grandTotal) {
+        console.log(cashGiven);
         return {
             customerId: customerId,
             transactionDateTime: transactionDateTime,
@@ -92,7 +93,7 @@ function handlePayment() {
     event.preventDefault();
 
     const cashGivenInput = document.getElementById("cashGivenInput");
-    const grandTotal = document.querySelector(".grand-total").textContent;
+    const grandTotal = grand_total;
     const customerId = customerID;
     const transactionDateTime = new Date().toISOString();
     const totalDiscount = discount;
@@ -109,7 +110,9 @@ function handlePayment() {
     );
 
     if (transactionDetails !== null) {
-        document.getElementById("paymentForm").submit();
+        // document.getElementById("paymentForm").submit();
+
+        console.log(transactionDetails);
     }
 }
 function addItem(item) {
@@ -145,10 +148,13 @@ function calculateGrandTotal() {
         total += item.price * item.qty;
     });
     total = total - total * (discount / 100);
+    grand_total = new Intl.NumberFormat().format(total);
     grandTotal = document.querySelectorAll(".grand-total");
     grandTotal.forEach((element) => {
         element.textContent = new Intl.NumberFormat().format(total);
     });
+
+    // console.log(grand_total);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -162,6 +168,6 @@ function newTransaction() {
     calculateTotal();
 }
 
-document
-    .getElementById("paymentForm")
-    .addEventListener("submit", handlePayment);
+// document
+//     .getElementById("paymentForm")
+//     .addEventListener("submit", handlePayment);
