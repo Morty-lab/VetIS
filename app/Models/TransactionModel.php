@@ -17,8 +17,12 @@ class TransactionModel extends Model
         'total_discount',
     ];
 
-    public static function storeTransaction($data) {
+    public static function storeTransaction($data)
+    {
 
-        return self::create($data);
+        $newRecord = self::create($data);
+
+
+        return $newRecord->id;
     }
 }

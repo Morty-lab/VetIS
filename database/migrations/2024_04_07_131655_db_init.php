@@ -133,10 +133,11 @@ return new class extends Migration
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("transaction_id");
-            $table->unsignedBigInteger("product_id");
+            $table->integer("product_id");
             $table->integer("quantity");
             $table->float("price");
             $table->foreign("transaction_id")->references("id")->on("transactions")->onDelete("cascade");
+            $table->timestamps();
         });
 
 

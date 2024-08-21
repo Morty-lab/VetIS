@@ -119,7 +119,7 @@ function addItem(item) {
         sku: item.sku,
         name: item.name,
         price: item.price,
-        qty: qty,
+        qty: parseInt(qty),
     });
 
     qty = 1;

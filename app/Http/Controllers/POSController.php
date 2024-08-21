@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients;
 use App\Models\Products;
+use App\Models\TransactionDetailsModel;
 use App\Models\TransactionModel;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,22 @@ class POSController extends Controller
 
 
 
-        TransactionModel::storeTransaction($data);
+        $transactionID =TransactionModel::storeTransaction($data);
+
+        $productData = json_decode($request->products,true);
+
+
+        foreach ($productData as $product) {
+            $data = [
+                "transaction_id" => $transactionID,
+                "product_id" => $product['productId'],
+                "quantity" => $product['quantity'],
+                "price" => $product['currentPrice']
+            ];
+            TransactionDetailsModel::storeDetails($data);
+        }
+
+
 
         return redirect('/pos');
     }
