@@ -49,7 +49,7 @@ function setCustomer(c, cid) {
 
     initTransaction();
 
-    console.log(customer);
+
 }
 
 function generateTransactionDetails(
@@ -73,8 +73,6 @@ function generateTransactionDetails(
 
     if ( grandTotal >= cashGiven) {
         alert("Insufficient cash given.");
-        console.log(grandTotal);
-        console.log(cashGiven);
         return null;
     }
 
@@ -111,7 +109,7 @@ function handlePayment() {
     if (transactionDetails !== null) {
         document.getElementById("paymentForm").submit();
 
-        console.log(transactionDetails);
+
     }
 }
 function addItem(item) {
@@ -184,7 +182,7 @@ function calculateGrandTotal() {
         element.textContent = new Intl.NumberFormat().format(total);
     });
 
-    // console.log(grand_total);
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
