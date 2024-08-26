@@ -56,7 +56,9 @@ class ProductsController extends Controller
             'stock' => $request->stock,
             'price' => 21,
             'status' => 1,
+
             'unit' => $request->unit
+
         ];
         Stocks::addStock($data);
         Products::updateProduct($id, ['status' => 1]);

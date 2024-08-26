@@ -257,6 +257,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/um/staff/profile/options', function () {
         return view('user_management.staffs.options');
     });
+
+
+    Route::get('/record', function () {
+        return view('pets.record');
+    });
+    Route::get('/petinfo/soap', function () {
+        return view('pets.forms.soap');
+    });
 });
 
 
