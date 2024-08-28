@@ -102,15 +102,14 @@
                     <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
                 </div>
             </div>
-            <div class="card mb-4 mt-4 mb-xl-0">
+            <!-- <div class="card mb-4 mt-4 mb-xl-0">
                 <div class="card-header">Actions</div>
                 <div class="card-body">
-                    <!-- Profile picture image-->
                     <button class="btn btn-primary m-1" type="button">Update Account</button>
                     <button class="btn btn-primary m-1" type="button">Reset Password</button>
                     <button class="btn btn-primary m-1" type="button">Disable Account</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
