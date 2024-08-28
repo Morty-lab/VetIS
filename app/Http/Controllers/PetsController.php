@@ -63,7 +63,7 @@ class PetsController extends Controller
     public function show(Pets $pets)
     {
         $pets->load('client');
-        return view('pets.profile', ['pet' => $pets]);
+        return view('pets.general', ['pet' => $pets]);
     }
 
     /**

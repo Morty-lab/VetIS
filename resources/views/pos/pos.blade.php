@@ -62,44 +62,44 @@
     <!-- Modals -->
     <!-- Quantity Modal -->
     @foreach ($products as $product)
-        <div class="modal fade" id="enterQty{{ $product->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="enterQty" aria-hidden="true" data-bs-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="enterQtyLabel">Enter Quantity</h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="item-description ps-2">
-                            <div class="row">
-                                <div class="col">
-                                    Item: {{ $product->product_name }}
-                                    <br>
-                                    Category: {{ $product->category->category_name }}
-                                </div>
-                                <div class="col">
-                                    SKU: {{ $product->id }}
-                                    <br>
-                                    Price: <span class="text-primary">{{ $product->price }}</span>
-                                </div>
+    <div class="modal fade" id="enterQty{{ $product->id }}" tabindex="-1" role="dialog"
+        aria-labelledby="enterQty" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enterQtyLabel">Enter Quantity</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="item-description ps-2">
+                        <div class="row">
+                            <div class="col">
+                                Item: {{ $product->product_name }}
+                                <br>
+                                Category: {{ $product->category->category_name }}
+                            </div>
+                            <div class="col">
+                                SKU: {{ $product->id }}
+                                <br>
+                                Price: <span class="text-primary">{{ $product->price }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" oninput="setQuantity(this.value)">
-                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
-                            onclick="addItem({
+                </div>
+                <div class="modal-footer">
+                    <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" oninput="setQuantity(this.value)">
+                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
+                        onclick="addItem({
                         'sku' : {{ $product->id }},
                         'name' : '{{ $product->product_name }}',
                         'price' : {{ $product->price }},
                         'qty' : document.getElementById('quantityInput').value
                         })">Add
-                            Product</button>
-                    </div>
+                        Product</button>
                 </div>
             </div>
         </div>
+    </div>
     @endforeach
 
     <!-- Select Product Modal -->
@@ -127,14 +127,14 @@
                             <tbody>
 
                                 @foreach ($products as $product)
-                                    <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"
-                                        style="cursor: pointer;">
-                                        <td>{{ $product->id }}</td>
-                                        <td>{{ $product->product_name }}</td>
-                                        <td>{{ $product->category->category_name }}</td>
-                                        <td>{{ $product->stock }}</td>
-                                        <td>{{ $product->price }}</td>
-                                    </tr>
+                                <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"
+                                    style="cursor: pointer;">
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->product_name }}</td>
+                                    <td>{{ $product->category->category_name }}</td>
+                                    <td>{{ $product->stock }}</td>
+                                    <td>{{ $product->price }}</td>
+                                </tr>
                                 @endforeach
 
                             </tbody>
@@ -167,10 +167,10 @@
                             <tbody>
 
                                 @foreach ($customers as $customer)
-                                    <tr style="cursor: pointer;" onclick="setCustomer('{{ $customer->client_name }}' , {{ $customer->id }})" data-bs-dismiss="modal">
-                                        <td>{{ $customer->client_name }}</td>
-                                        <td>{{ $customer->id }}</td>
-                                    </tr>
+                                <tr style="cursor: pointer;" onclick="setCustomer('{{ $customer->client_name }}' , {{ $customer->id }})" data-bs-dismiss="modal">
+                                    <td>{{ $customer->client_name }}</td>
+                                    <td>{{ $customer->id }}</td>
+                                </tr>
                                 @endforeach
 
                             </tbody>
@@ -263,7 +263,7 @@
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Date</p>
-                                            <p class="text-md text-grey mb-0">   {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
+                                            <p class="text-md text-grey mb-0"> {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
                                         </div>
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
@@ -279,7 +279,7 @@
                                         <div
                                             class="discount-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0 ">Discount %</p>
-                                            <p class="text-lg text-grey mb-0 discount" ></p>
+                                            <p class="text-lg text-grey mb-0 discount"></p>
                                         </div>
                                         <hr>
                                         <div class="total-section d-flex justify-content-between align-items-center">
@@ -420,12 +420,12 @@
                             </div>
                             <hr>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
-                                <p class="mb-0 " >Sub Total</p>
-                                <p class="text-lg text-grey mb-0 sub-total" >0</p>
+                                <p class="mb-0 ">Sub Total</p>
+                                <p class="text-lg text-grey mb-0 sub-total">0</p>
                             </div>
                             <div class="discount-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Discount %</p>
-                                <p class="text-lg text-grey mb-0 discount" >5%</p>
+                                <p class="text-lg text-grey mb-0 discount">5%</p>
                             </div>
                             <hr>
                             <div class="total-section d-flex justify-content-between align-items-center">
