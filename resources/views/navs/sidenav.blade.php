@@ -152,11 +152,11 @@
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Administrator
                 </a>
-                <a class="nav-link @if(Request::is('um/client*')) active @endif" href="/um/client">
+                <a class="nav-link @if(Request::is('um/client*')) active @endif" href="{{route('clients.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Client/Pet Owners
                 </a>
-                <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="/um/staff">
+                <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{route('staffs.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></i></div>
                     Staffs
                 </a>

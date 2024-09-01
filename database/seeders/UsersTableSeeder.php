@@ -5,9 +5,12 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory;
 
 class UsersTableSeeder extends Seeder
 {
+
+
     /**
      * Run the database seeds.
      *
@@ -21,27 +24,77 @@ class UsersTableSeeder extends Seeder
         // Insert users
         DB::table('users')->insert([
             ['name' => 'Admin', 'email' => 'admin@example.com','role' => 'admin', 'password' => $hashedPassword],
-            ['name' => 'Veterinary', 'email' => 'veterinary@example.com','role' => 'veterenarian', 'password' => $hashedPassword],
             ['name' => 'Secretary', 'email' => 'secretary@example.com','role' => 'secretary', 'password' => $hashedPassword],
-            ['name' => 'Staff', 'email' => 'staff@example.com','role' => 'staff', 'password' => $hashedPassword],
             ['name' => 'User', 'email' => 'user@example.com','role' => 'client', 'password' => $hashedPassword],
-            ['name' => 'Yawa Ko', 'email' => 'yawasacisc@gmail.com', 'role' => 'doctor', 'password' => $hashedPassword],
+
         ]);
 
-        $lastInsertedId = DB::getPdo()->lastInsertId();
 
-        // DB::table('doctors')->insert([
-        //     [
-        //         'user_id' => $lastInsertedId,
-        //         'firstname' => 'Enrico',
-        //         'lastname' => 'Nacua',
-        //         'address' => 'Purok 18 College Park Musuan Dologon',
-        //         'phone_number' => '09383007781',
-        //         'birthday' => '0001-01-01',
-        //         'position' => 'Final Boss Sa CISC',
-        //         'created_at' => '2024-04-11 14:01:43',
-        //         'updated_at' => '2024-04-11 14:01:43',
-        //     ]
-        // ]);
+        $faker = Factory::create();
+
+        while (DB::table('doctors')->count() < 10) {
+            $position = [
+                'Veterinarian',
+                'Veterinary Technician/Technologist',
+                'Veterinary Assistant',
+                'Laboratory Technician',
+                'Kennel Worker',
+                'Receptionist',
+                'Practice Manager'
+            ];
+            DB::table('users')->insert([
+                'name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'role' => 'veterinary',
+                'password' => $hashedPassword,
+                'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+            ]);
+
+            $VetlastInsertedId = DB::getPdo()->lastInsertId();
+
+
+
+
+            DB::table('doctors')->insert([
+                'user_id' => $VetlastInsertedId,
+                'firstname' => $faker->firstName,
+                'lastname' => $faker->lastName,
+                'address' => $faker->address,
+                'phone_number' => $faker->phoneNumber,
+                'birthday' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'position' => $position[random_int(0, 6)],
+                'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+            ]);
+        }
+
+        while (DB::table('staffs')->count() < 10) {
+            DB::table('users')->insert([
+                'name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'role' => 'staff',
+                'password' => $hashedPassword,
+                'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+            ]);
+
+            $stafflastInsertedId = DB::getPdo()->lastInsertId();
+
+            DB::table('staffs')->insert([
+                'user_id' => $stafflastInsertedId,
+                'firstname' => $faker->firstName,
+                'lastname' => $faker->lastName,
+                'address' => $faker->address,
+                'phone_number' => $faker->phoneNumber,
+                'position' => $position[random_int(0, 6)],
+                'birthday' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+            ]);
+
+
+        }
+
     }
 }
