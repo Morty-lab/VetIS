@@ -36,22 +36,22 @@
             <div class="card mb-4">
                 <div class="card-header">Account Registration</div>
                 <div class="card-body">
-                    <form method="POST" action="{{route('doctor.add')}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('admin.add')}}" >
                         @csrf
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
+                            <!-- form group (first name)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <input class="form-control @error('firstname') is-invalid @enderror" id="inputFirstName" name="firstname" type="text" placeholder="First Name" />
+                                <label class="small mb-1" for="inputfirstname">first name</label>
+                                <input class="form-control @error('firstname') is-invalid @enderror" id="inputfirstname" name="firstname" type="text" placeholder="first name" />
                                 @error('firstname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <!-- Form Group (last name)-->
+                            <!-- form group (last name)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                <input class="form-control @error('lastname') is-invalid @enderror" id="inputLastName" name="lastname" type="text" placeholder="Last Name" />
+                                <label class="small mb-1" for="inputlastname">last name</label>
+                                <input class="form-control @error('lastname') is-invalid @enderror" id="inputlastname" name="lastname" type="text" placeholder="last name" />
                                 @error('lastname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -102,13 +102,13 @@
                             @enderror
                         </div>
                         <!-- Form Group (username)-->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username</label>
-                            <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />
-                            @error('username')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+{{--                        <div class="mb-3">--}}
+{{--                            <label class="small mb-1" for="inputUsername">Username</label>--}}
+{{--                            <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />--}}
+{{--                            @error('username')--}}
+{{--                            <div class="invalid-feedback">{{ $message }}</div>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
                             <!-- Form Group (password)-->

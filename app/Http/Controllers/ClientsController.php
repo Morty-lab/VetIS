@@ -12,7 +12,9 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
+        $clients  =  Clients::getAllClients();
+        return view('user_management.pet_owners.manage', ["clients" => $clients]);
+
     }
 
     /**

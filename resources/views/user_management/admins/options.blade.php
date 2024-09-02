@@ -32,8 +32,8 @@
 
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href="/um/admin/profile">Profile</a>
-        <a class="nav-link active" href="/um/admin/profile/options">Options</a>
+        <a class="nav-link ms-0" href="{{route('admin.profile', ['id'=> $admin->id])}}">Profile</a>
+        <a class="nav-link active" href="{{route('admin.profile.options', ['id'=> $admin->id])}}">Options</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row">

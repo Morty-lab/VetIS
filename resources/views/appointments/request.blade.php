@@ -167,7 +167,6 @@
 
                                     Pending
 
-
                                 </div>
                             </td>
                             <td>

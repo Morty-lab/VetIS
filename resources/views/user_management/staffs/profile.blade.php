@@ -32,8 +32,8 @@
 
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0 active" href="/um/staff/profile">Profile</a>
-        <a class="nav-link" href="/um/staff/profile/options">Options</a>
+        <a class="nav-link ms-0 active" href="{{route('staffs.profile', ['id' => $staff->id] )}}">Profile</a>
+        <a class="nav-link" href="{{route('staffs.options', ['id' => $staff->id] )}}">Options</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row">
@@ -61,33 +61,33 @@
                             <!-- Form Group (first name)-->
                             <div class="col-md-6">
                                 <p class="small mb-1">First name</p>
-                                <p>Kent</p>
+                                <p>{{$staff->firstname}}</p>
                             </div>
                             <!-- Form Group (last name)-->
                             <div class="col-md-6">
                                 <p class="small mb-1">Last name</p>
-                                <p>Invento</p>
+                                <p>{{$staff->lastname}}</p>
                             </div>
                         </div>
                         <div>
                             <p class="small mb-1">Address (Street, Barangay, City/Municipality, Province)</p>
-                            <p>Purok - 3, Batangan, Valencia City, Bukidnon</p>
+                            <p>{{$staff->address}}</p>
                         </div>
                         <!-- Form Row-->
                         <div class="row gx-3">
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
                                 <p class="small mb-1">Phone number</p>
-                                <p>09942194953</p>
+                                <p>{{$staff->phone_number}}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="small mb-1">Email Address</p>
-                                <p>kentinvento@gmail.com</p>
+                                <p>{{$staff->getEmailAttribute($staff->user_id)}}</p>
                             </div>
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">
                                 <p class="small mb-1">Birthday</p>
-                                <p>August 11, 2002</p>
+                                <p>{{ \Carbon\Carbon::parse($staff->birthday)->format('M d, Y') }}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="small mb-1">Position</p>
@@ -95,10 +95,10 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <p class="small mb-1">Username</p>
                             <p>KentTheStaff</p>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
             </div>
