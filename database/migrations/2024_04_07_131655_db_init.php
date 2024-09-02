@@ -36,6 +36,20 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->date('birthday');
+            $table->string('position');
+            $table->string('profile_picture')->nullable();
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
         Schema::create('staffs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
@@ -231,6 +245,7 @@ return new class extends Migration
         Schema::dropIfExists('clients');
         Schema::dropIfExists('doctors');
         Schema::dropIfExists('secretaries');
+        Schema::dropIfExists('admins');
         Schema::dropIfExists('staffs');
         Schema::dropIfExists('users');
         Schema::dropIfExists('category');

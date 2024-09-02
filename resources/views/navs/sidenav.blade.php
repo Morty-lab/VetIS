@@ -21,7 +21,7 @@
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Main</div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link  @if(Request::is('dashboard')) active @endif"" href=" /dashboard">
+                <a class="nav-link  @if(Request::is('dashboard')) active @endif" href=" /dashboard">
                     <div class="nav-link-icon"><i class="fa-solid fa-bolt"></i></div>
                     Dashboard
                 </a>
@@ -41,7 +41,7 @@
                 </a>
 
                 @if (auth()->user()->role == "admin")
-                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif" " href=" {{route('doctor.index')}}">
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif"  href=" {{route('doctor.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
                     Veterinarians
                 </a>
@@ -148,7 +148,7 @@
 
                 <div class="sidenav-menu-heading">User Management</div>
 
-                <a class="nav-link @if(Request::is('um/admin*')) active @endif" href="/um/admin">
+                <a class="nav-link @if(Request::is('um/admin*')) active @endif" href="{{route("admin.manage")}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Administrator
                 </a>
@@ -157,7 +157,7 @@
                     Client/Pet Owners
                 </a>
                 <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{route('staffs.index')}}">
-                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></i></div>
+                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Staffs
                 </a>
                 @endif

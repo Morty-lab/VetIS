@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientsController;
@@ -34,15 +35,6 @@ use App\Models\Appointments;
 Route::get('/', function () {
     return view('auth.login');
 });
-
-Route::get('/test', function () {
-
-    $response = "test suceeded";
-
-    return $response;
-});
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -219,18 +211,13 @@ Route::middleware('auth')->group(function () {
 
     // User Management
     // Admin
-    Route::get('/um/admin', function () {
-        return view('user_management.admins.manage');
-    });
+    Route::get('/um/admin',  [AdminController::class, 'index'])->name("admin.manage");
     Route::get('/um/admin/add', function () {
         return view('user_management.admins.add');
     });
-    Route::get('/um/admin/profile', function () {
-        return view('user_management.admins.profile');
-    });
-    Route::get('/um/admin/profile/options', function () {
-        return view('user_management.admins.options');
-    });
+    Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
+    Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
+    Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
 
     // Pet Owner
     Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");

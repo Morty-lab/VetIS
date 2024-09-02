@@ -32,6 +32,53 @@ class UsersTableSeeder extends Seeder
 
         $faker = Factory::create();
 
+        while (DB::table('admins')->count() < 10){
+            $adminPositions = [
+                "Practice Manager",
+                "Office Manager",
+                "Receptionist",
+                "Client Services Coordinator",
+                "Scheduling Coordinator",
+                "Medical Records Clerk",
+                "Billing Specialist",
+                "Insurance Coordinator",
+                "Human Resources Manager",
+                "Marketing Manager",
+                "IT Support Specialist",
+                "Facilities Manager",
+                "Supply Chain Manager",
+                "Financial Controller",
+                "Compliance Officer",
+                "Risk Management Specialist"
+            ];
+            DB::table('users')->insert([
+                'name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'role' => 'veterinary',
+                'password' => $hashedPassword,
+                'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+            ]);
+
+            $adminLastInsertID = DB::getPdo()->lastInsertId();
+
+
+            DB::table('admins')->insert([
+                'user_id' => $adminLastInsertID,
+                'firstname' => $faker->firstName,
+                'lastname' => $faker->lastName,
+                'address' => $faker->address,
+                'phone_number' => $faker->phoneNumber,
+                'birthday' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'position' => $adminPositions[random_int(0, 6)],
+                'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+
+
+            ]);
+
+        }
+
         while (DB::table('doctors')->count() < 10) {
             $position = [
                 'Veterinarian',
