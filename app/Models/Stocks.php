@@ -13,6 +13,7 @@ class Stocks extends Model
     'unit',
     'status',
     'products_id',
+    'expiry_date'
 ];
 
 

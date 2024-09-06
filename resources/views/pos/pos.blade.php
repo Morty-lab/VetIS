@@ -127,6 +127,9 @@
                             <tbody>
 
                                 @foreach ($products as $product)
+                                    @if($product->status == 0)
+                                        @continue
+                                    @endif
                                 <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"
                                     style="cursor: pointer;">
                                     <td>{{ $product->id }}</td>

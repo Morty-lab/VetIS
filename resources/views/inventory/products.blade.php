@@ -319,6 +319,33 @@
                         <div class="datatable-search">
                             <input class="datatable-input" placeholder="Search..." type="search" name="search"
                                 title="Search within table" aria-controls="datatablesSimple">
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const searchInput = document.querySelector('.datatable-input');
+                                    const tableRows = document.querySelectorAll('.datatable-table tbody tr');
+
+                                    searchInput.addEventListener('keyup', function() {
+                                        const searchTerm = this.value.toLowerCase();
+
+                                        tableRows.forEach(function(row) {
+                                            const productNameCell = row.cells[0];
+                                            const productName = productNameCell.textContent.toLowerCase();
+
+                                            if (productName.includes(searchTerm)) {
+                                                row.style.display = '';
+                                            } else {
+                                                row.style.display = 'none';
+                                            }
+                                        });
+                                    });
+
+                                    // Show all rows initially
+                                    tableRows.forEach(function(row) {
+                                        row.style.display = '';
+                                    });
+                                });
+
+                            </script>
                         </div>
                     </div>
                     <div class="datatable-container">
