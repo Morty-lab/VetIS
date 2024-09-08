@@ -131,6 +131,7 @@ return new class extends Migration
             $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
+            $table->date("expiry_date")->nullable();
             $table->foreign("products_id")->references("id")->on("products")->onDelete("cascade");
             $table->foreign("unit")->references("id")->on("units");
             $table->timestamps();

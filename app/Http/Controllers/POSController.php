@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients;
 use App\Models\Products;
+use App\Models\Stocks;
 use App\Models\TransactionDetailsModel;
 use App\Models\TransactionModel;
 use Illuminate\Http\Request;
@@ -56,7 +57,10 @@ class POSController extends Controller
                 "quantity" => $product['quantity'],
                 "price" => $product['currentPrice']
             ];
+            Stocks::subtractStock($product['productId'], $product['quantity']);
             TransactionDetailsModel::storeDetails($data);
+
+
         }
 
 

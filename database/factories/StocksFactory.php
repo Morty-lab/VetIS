@@ -29,6 +29,7 @@ class StocksFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 100),
             'unit' => Unit::factory(),
             'status' => $this->faker->randomElement([0, 1]),
+            'expiry_date' => $this->faker->dateTimeBetween("now", "+1 year"),
         ];
     }
 }
