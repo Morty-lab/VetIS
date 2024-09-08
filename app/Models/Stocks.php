@@ -35,4 +35,25 @@ class Stocks extends Model
 
         return self::create($data);
     }
+
+    public static function subtractStock($product_id, $stock){
+        $productStock = Stocks::where('products_id', $product_id)->orderBy('expiry_date', 'asc')->first();
+
+        $newStock = $productStock->stock - $stock;
+
+        $productStock->stock = $newStock;
+        $productStock->save();
+
+        if ($productStock->stock == 0){
+
+            $productStock->delete();
+            $product = Products::where('id', $product_id)->firstOrFail();
+            $product->status = 0;
+            $product->save();
+
+        }
+
+        return $productStock;
+
+    }
 }

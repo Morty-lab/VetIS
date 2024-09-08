@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,8 +127,33 @@
                             </thead>
                             <tbody>
 
+
                                 @foreach ($products as $product)
-                                    @if($product->status == 0)
+                                    @php
+                                        $stock = 0;
+                                        $expiredStocks = 0;
+                                           if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){
+                                               $allStocks = $product->stocks;
+
+                                                  foreach ($allStocks as $i){
+                                                      if( $i->expiry_date == null ){
+                                                       $stock += $i->stock;
+                                                      }
+
+                                                      if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){
+                                                       $stock += $i->stock;
+                                                      }
+
+                                                      if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){
+                                                       $expiredStocks += $i->stock;
+                                                      }
+
+                                                  }
+
+
+                                           }
+                                    @endphp
+                                    @if($product->status == 0 || $stock == 0)
                                         @continue
                                     @endif
                                 <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"
@@ -135,7 +161,8 @@
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->product_name }}</td>
                                     <td>{{ $product->category->category_name }}</td>
-                                    <td>{{ $product->stock }}</td>
+                                    <td> {{ $stock." stocks Available "}} <br> @if($expiredStocks != 0) {{$expiredStocks." stock Expired"}} @endif
+                                    </td>
                                     <td>{{ $product->price }}</td>
                                 </tr>
                                 @endforeach

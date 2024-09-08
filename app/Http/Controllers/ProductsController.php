@@ -56,8 +56,8 @@ class ProductsController extends Controller
             'stock' => $request->stock,
             'price' => 21,
             'status' => 1,
-
-            'unit' => $request->unit
+            'unit' => $request->unit,
+            'expiry_date' => $request->expiry_date
 
         ];
         Stocks::addStock($data);
