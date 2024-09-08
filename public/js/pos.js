@@ -71,7 +71,12 @@ function generateTransactionDetails(
         quantity: product.qty,
     }));
 
-    if ( grandTotal >= cashGiven) {
+    const GRAND_TOTAL_CENTS = Math.round(grandTotal * 100);
+    const CASH_GIVEN_CENTS = Math.round(cashGiven * 100);
+
+
+    if ( CASH_GIVEN_CENTS < GRAND_TOTAL_CENTS) {
+        console.log(grandTotal,cashGiven);
         alert("Insufficient cash given.");
         return null;
     }
@@ -106,8 +111,23 @@ function handlePayment() {
         products
     );
 
+
+
+
+
     if (transactionDetails !== null) {
-        document.getElementById("paymentForm").submit();
+        var change = document.getElementById("change");
+        var cash = document.getElementById("cash");
+        var change_cash = document.getElementById("change-cash");
+        cash.textContent = cashGivenInput.value
+        change.style.display = "block"
+        change_cash.textContent = cashGivenInput.value  - grand_total;
+
+
+        setTimeout(()=>{
+            document.getElementById("paymentForm").submit();
+        },5000);
+
 
 
     }
