@@ -79,6 +79,12 @@
                 @if (auth()->user()->role == "staff" || auth()->user()->role == "admin")
                 <div class="sidenav-menu-heading">Point of Sales</div>
 
+                <a class="nav-link" href="">
+
+                    <div class="nav-link-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                    Billing
+                </a>
+
                 <a class="nav-link" href="{{route('pos')}}">
 
                     <div class="nav-link-icon"><i class="fa-solid fa-table-columns"></i></div>
