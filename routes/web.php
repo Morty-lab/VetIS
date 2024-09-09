@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PetsController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Models\Clients;
@@ -32,15 +35,6 @@ use App\Models\Appointments;
 Route::get('/', function () {
     return view('auth.login');
 });
-
-Route::get('/test', function () {
-
-    $response = "test suceeded";
-
-    return $response;
-});
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -217,23 +211,16 @@ Route::middleware('auth')->group(function () {
 
     // User Management
     // Admin
-    Route::get('/um/admin', function () {
-        return view('user_management.admins.manage');
-    });
+    Route::get('/um/admin',  [AdminController::class, 'index'])->name("admin.manage");
     Route::get('/um/admin/add', function () {
         return view('user_management.admins.add');
     });
-    Route::get('/um/admin/profile', function () {
-        return view('user_management.admins.profile');
-    });
-    Route::get('/um/admin/profile/options', function () {
-        return view('user_management.admins.options');
-    });
+    Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
+    Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
+    Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
 
     // Pet Owner
-    Route::get('/um/client', function () {
-        return view('user_management.pet_owners.manage');
-    });
+    Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");
     Route::get('/um/client/add', function () {
         return view('user_management.pet_owners.add');
     });
@@ -244,19 +231,14 @@ Route::middleware('auth')->group(function () {
         return view('user_management.pet_owners.options');
     });
 
-    // Pet Owner
-    Route::get('/um/staff', function () {
-        return view('user_management.staffs.manage');
-    });
+    // Staff
+    Route::get('/um/staff', [StaffController::class , "index"])->name("staffs.index");
     Route::get('/um/staff/add', function () {
         return view('user_management.staffs.add');
     });
-    Route::get('/um/staff/profile', function () {
-        return view('user_management.staffs.profile');
-    });
-    Route::get('/um/staff/profile/options', function () {
-        return view('user_management.staffs.options');
-    });
+    Route::post('/um/staff/add', [StaffController::class , "store"])->name("staffs.add");
+    Route::get('/um/staff/profile/{id}', [StaffController::class , "show"])->name("staffs.profile");
+    Route::get('/um/staff/profile/{id}/options',[StaffController::class, "edit"])->name("staffs.options");
 
 
     Route::get('/record', function () {

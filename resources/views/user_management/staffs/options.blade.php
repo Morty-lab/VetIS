@@ -32,8 +32,8 @@
 
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href="/um/staff/profile">Profile</a>
-        <a class="nav-link active" href="/um/staff/profile/options">Options</a>
+        <a class="nav-link " href="{{route('staffs.profile', ['id' => $staff->id] )}}">Profile</a>
+        <a class="nav-link ms-0 active" href="{{route('staffs.options', ['id' => $staff->id] )}}">Options</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row">

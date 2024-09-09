@@ -43,16 +43,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Kent Invento</td>
-            <td>22</td>
-            <td>Administrator</td>
-            <td>09942194953</td>
-            <td>kentinvento@gmail.com</td>
-            <td>
-              <a class="btn btn-primary" href="/um/admin/profile">Open</a>
-            </td>
-          </tr>
+        @foreach($admins as $admin)
+            <tr>
+                <td>{{$admin->firstname." ".$admin->lastname}}</td>
+                <td>{{$admin->age}}</td>
+                <td>Administrator</td>
+                <td>{{$admin->phone_number}}</td>
+                <td>{{$admin->getEmailAttribute($admin->id)}}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{route('admin.profile', ["id" => $admin->id])}}">Open</a>
+                </td>
+            </tr>
+
+        @endforeach
+
         </tbody>
       </table>
     </div>

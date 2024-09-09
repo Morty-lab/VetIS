@@ -28,6 +28,16 @@
                                 <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
                                 <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" />
                             </div>
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputEmailAddress">Veterinarian</label>
+                                <select class="form-control" id="vetSelect"  name="doctor_ID" >
+                                    @foreach ($vets as $vet)
+                                    <option class="form-control" value={{ $vet->id }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                         </div>
 
                         <div class="row gx-3 mb-3">

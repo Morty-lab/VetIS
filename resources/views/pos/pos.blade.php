@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,13 +127,42 @@
                             </thead>
                             <tbody>
 
+
                                 @foreach ($products as $product)
+                                    @php
+                                        $stock = 0;
+                                        $expiredStocks = 0;
+                                           if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){
+                                               $allStocks = $product->stocks;
+
+                                                  foreach ($allStocks as $i){
+                                                      if( $i->expiry_date == null ){
+                                                       $stock += $i->stock;
+                                                      }
+
+                                                      if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){
+                                                       $stock += $i->stock;
+                                                      }
+
+                                                      if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){
+                                                       $expiredStocks += $i->stock;
+                                                      }
+
+                                                  }
+
+
+                                           }
+                                    @endphp
+                                    @if($product->status == 0 || $stock == 0)
+                                        @continue
+                                    @endif
                                 <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"
                                     style="cursor: pointer;">
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->product_name }}</td>
                                     <td>{{ $product->category->category_name }}</td>
-                                    <td>{{ $product->stock }}</td>
+                                    <td> {{ $stock." stocks Available "}} <br> @if($expiredStocks != 0) {{$expiredStocks." stock Expired"}} @endif
+                                    </td>
                                     <td>{{ $product->price }}</td>
                                 </tr>
                                 @endforeach
@@ -312,24 +342,27 @@
                             <!-- --- -->
 
                             <!-- Mo gawas rani sila if nabayaran na -->
-                            <!-- <div class="thank-you-purchase fw-500 mt-3">
-                                Thank you for your Purchase!
+                            <div style="display:none" id="change">
+                                <div class="thank-you-purchase fw-500 mt-3">
+                                    Thank you for your Purchase!
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <p class="mb-0">Total:</p>
+                                    <p class="text-lg mb-0 fw-400 grand-total"></p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="mb-0">Cash Given:</p>
+                                    <p class="text-lg mb-0 fw-400 " id="cash"></p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="mb-0">Change:</p>
+                                    <p class="display-6 text-blue mb-0 h5 fw-500 " id="change-cash"></p>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <p class="mb-0">Total:</p>
-                                <p class="text-lg mb-0 fw-400">950</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">Cash Given:</p>
-                                <p class="text-lg mb-0 fw-400">1000</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">Change:</p>
-                                <p class="display-6 text-blue mb-0 h5 fw-500">50</p>
-                            </div>
-                            <hr class="mt-3">
-                            <a href="" class="btn btn-outline-primary mt-3 w-100">New Transaction</a> -->
+
+{{--                            <hr class="mt-3">--}}
+{{--                            <a href="" class="btn btn-outline-primary mt-3 w-100">New Transaction</a> --}}
                             <!-- ---- -->
                         </div>
                     </div>
