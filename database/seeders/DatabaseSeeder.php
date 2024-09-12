@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Appointments;
 use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\Suppliers;
@@ -22,7 +23,10 @@ class DatabaseSeeder extends Seeder
 
 
 
+
         $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, PetSeeder::class]);
+
+        Appointments::factory()->count(10)->create();
 
 
         // \App\Models\User::factory(10)->create();

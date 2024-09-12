@@ -36,11 +36,11 @@
     <hr class="mt-0 mb-4" /> -->
     <div class="row">
         <!-- <div class="col-xl-4">
-          
+
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Pet Photo</div>
                 <div class="card-body text-center">
-                
+
                     <img class="img-account-profile rounded-circle mb-2" src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg" alt="" />
                 </div>
                 <div class="card-footer text-center">
@@ -194,20 +194,42 @@
                         <thead>
                             <tr>
                                 <th>Date & Time</th>
-                                <th>Type</th>
+{{--                                <th>Type</th>--}}
                                 <th>Subject</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>08/11/2024 10:00AM</td>
-                                <td>Consultation</td>
-                                <td>Pet Consultation</td>
-                                <td>Pending</td>
-                                <td><a href="" class="btn btn-primary">Open</a></td>
-                            </tr>
+                            @foreach( $appointments as $appointment)
+                                @if($appointment->pet_ID == $pet->id && $appointment->status != 1)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+{{--                                        <td>Consultation</td>--}}
+                                        <td>{{$appointment->purpose}}</td>
+                                        @if(is_null($appointment->status) == true)
+
+                                            <td>Pending</td>
+
+                                        @elseif($appointment->status == 0)
+
+                                            <td>Scheduled</td>
+
+                                        @elseif($appointment->status == 2)
+
+                                            <td>Cancelled</td>
+
+                                        @endif
+                                        <td><a href="{{route('appointments.view',['id'=>$appointment->id])}}" class="btn btn-primary">Open</a></td>
+                                    </tr>
+
+                                @else
+                                    @continue
+                                @endif
+
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -227,20 +249,26 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Type</th>
+{{--                                <th>Type</th>--}}
                                 <th>Subject</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>08/11/2024</td>
-                                <td>Vaccination</td>
-                                <td>Pet Vaccination</td>
-                                <td>Completed</td>
-                                <td><a href="" class="btn btn-primary">Open</a></td>
-                            </tr>
+                        @foreach($appointments as $appointment)
+                            @if($appointment->pet_ID == $pet->id && $appointment->status == 1)
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                                    {{--                                        <td>Consultation</td>--}}
+                                    <td>{{$appointment->purpose}}</td>
+                                    <td>Completed</td>
+                                    <td><a href="{{route('appointments.view',['id'=>$appointment->id])}}" class="btn btn-primary">Open</a></td>
+                                </tr>
+                            @endif
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>

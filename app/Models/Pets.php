@@ -29,6 +29,11 @@ class Pets extends Model
         return $this->belongsTo(Clients::class, 'owner_ID');
     }
 
+    public function appointment()
+    {
+        return $this->hasMany(Appointments::class, 'pet_ID');
+    }
+
     public function pet()
     {
         return $this->hasMany(Appointments::class, 'pet_ID');

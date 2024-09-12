@@ -45,7 +45,7 @@
                                             <div class="card-body py-4">
                                                 <h5 class="card-title">Appointment ID</h5>
                                                 <p class="card-text">
-                                                    VETIS-00001
+                                                    {{ sprintf("VETIS-%05d", $appointment->id) }}
                                                 </p>
                                             </div>
                                         </div>
@@ -151,8 +151,10 @@
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Update
                                         Status</button>
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
-                                        <a class="dropdown-item" href="#!">Done Appointment</a>
-                                        <a class="dropdown-item" href="#!">Cancel Appointment</a>
+                                       @if( $appointment->status != 1)
+                                            <a class="dropdown-item" href="{{route('appointments.done', ['id' => $appointment->id])}}">Done Appointment</a>
+                                            <a class="dropdown-item" href="{{route('appointments.cancel', ['id' => $appointment->id])}}">Cancel Appointment</a>
+                                       @endif
                                     </div>
                                 </div>
                             </div>
