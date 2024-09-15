@@ -19,7 +19,7 @@ class AppointmentsController extends Controller
         // return view('appointments.view');
         $clients = Clients::all();
         $pets = Pets::all();
-        $appointments = Appointments::with('client')->get();
+        $appointments = Appointments::with('client')->orderBy('appointment_date', 'asc')->get();
         $vets = Doctor::getAllDoctors();
 
         return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
@@ -30,6 +30,24 @@ class AppointmentsController extends Controller
         $appointment = Appointments::with(['client', 'pet'])->find($id);
 
         return view('appointments.view', ["appointment" => $appointment]);
+    }
+
+    public function appointmentDone($id){
+        $appointment = Appointments::with(['client', 'pet'])->find($id);
+
+        $appointment->status = 1;
+        $appointment->save();
+
+        return redirect()->route('appointments.view', ['id' => $id]);
+    }
+
+    public function appointmentCancel($id){
+        $appointment = Appointments::with(['client', 'pet'])->find($id);
+
+        $appointment->status = 2;
+        $appointment->save();
+
+        return redirect()->route('appointments.view', ['id' => $id]);
     }
 
     /**
