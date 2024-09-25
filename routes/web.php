@@ -163,6 +163,10 @@ Route::middleware('auth')->group(function () {
         return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
     });
 
+    Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
+    Route::get('/viewappointments/{id}/cancell', [AppointmentsController::class, 'appointmentCancel'])->name('appointments.cancel');
+
+
     Route::get('/manageschedules', function () {
         return view('schedule.calendar');
     });
