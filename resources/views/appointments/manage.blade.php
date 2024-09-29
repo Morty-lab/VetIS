@@ -28,6 +28,16 @@
                                 <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
                                 <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" />
                             </div>
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputEmailAddress">Veterinarian</label>
+                                <select class="form-control" id="vetSelect"  name="doctor_ID" >
+                                    @foreach ($vets as $vet)
+                                    <option class="form-control" value={{ $vet->id }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                         </div>
 
                         <div class="row gx-3 mb-3">
@@ -231,7 +241,7 @@
                                     $cancelledCount = 0;
                                     foreach ($appointments as $appointment) {
                                         if (
-                                            $appointment->status == 4 &&
+                                            $appointment->status == 2 &&
                                             \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
                                         ) {
                                             $cancelledCount++;
@@ -272,11 +282,11 @@
                     </thead>
                     <tbody>
                         @foreach ($appointments as $appointment)
-                            @if ($appointment->status == 0)
+                            @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                                         {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
-                                    <td>VETIS-00001</td>
+                                    <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
                                     <td>{{ $appointment->client->client_name }}</td>
                                     <td>{{ $appointment->pet->pet_type }}</td>
                                     <td>
@@ -308,7 +318,12 @@
                                 </tr>
                             @else
                                 @continue
+
                             @endif
+
+
+
+
                         @endforeach
 
                     </tbody>

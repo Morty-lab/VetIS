@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -91,7 +92,11 @@
                             </div>
                             <div class="px-1">
                                 <label class="small mb-1" for="selectProductCategory">Product Category</label>
-                                <p>{{ $product->product_category }}</p>
+                                @foreach ($categories as $i)
+                                    @if ($i->id == $product->product_category)
+                                        <p>{{ $i->category_name }}</p>
+                                    @endif
+                                @endforeach
                             </div>
                             <div class="px-1">
                                 <label class="small mb-1" for="productSupplier">Supplier</label>
@@ -205,7 +210,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="selectUnitType">Unit Type</label>
                                     <select class="form-control" id="selectUnitType" name="unit">
-                                        <option disabled="" selected="">-- Select Unit Type --</option>
+{{--                                        <option disabled="" selected="">-- Select Unit Type --</option>--}}
                                         @foreach ($units as $i)
                                             @if ($i->id == $product->unit_id)
                                                 <option value="{{ $i->id }}" selected>{{ $i->unit_name }}</option>
@@ -261,6 +266,11 @@
                                 <label class="small mb-1" for="inputAddStockAmount">Enter Stocks</label>
                                 <input class="form-control" id="inputAddStockAmount" type="number"
                                     placeholder="Enter Stock Amount" value="" name="stock">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputAddStockAmount">Expiry Date</label>
+                                <input class="form-control" id="inputAddStockAmount" type="date"
+                                       placeholder="Enter Stock Amount" value="" name="expiry_date">
                             </div>
 
                         </div>
@@ -319,6 +329,33 @@
                         <div class="datatable-search">
                             <input class="datatable-input" placeholder="Search..." type="search" name="search"
                                 title="Search within table" aria-controls="datatablesSimple">
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const searchInput = document.querySelector('.datatable-input');
+                                    const tableRows = document.querySelectorAll('.datatable-table tbody tr');
+
+                                    searchInput.addEventListener('keyup', function() {
+                                        const searchTerm = this.value.toLowerCase();
+
+                                        tableRows.forEach(function(row) {
+                                            const productNameCell = row.cells[0];
+                                            const productName = productNameCell.textContent.toLowerCase();
+
+                                            if (productName.includes(searchTerm)) {
+                                                row.style.display = '';
+                                            } else {
+                                                row.style.display = 'none';
+                                            }
+                                        });
+                                    });
+
+                                    // Show all rows initially
+                                    tableRows.forEach(function(row) {
+                                        row.style.display = '';
+                                    });
+                                });
+
+                            </script>
                         </div>
                     </div>
                     <div class="datatable-container">
@@ -360,18 +397,51 @@
                                         <td>
                                             @if ($product->status == 1)
                                                 <div class="badge bg-primary text-white rounded-pill">Available</div>
+
                                             @else
+{{--                                                @if($products->stocks->) @endif--}}
                                                 <div class="badge bg-danger text-white rounded-pill">Unavailable</div>
                                             @endif
 
 
                                         </td>
                                         <td>
-                                            @if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1)
-                                                {{ $product->stocks->first()->stock }}
-                                            @else
-                                                No stocks available
-                                            @endif
+                                            @php
+                                            if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){
+                                                $allStocks = $product->stocks;
+                                                $stock = 0;
+                                                $expiredStocks = 0;
+                                                   foreach ($allStocks as $i){
+                                                       if( $i->expiry_date == null ){
+                                                        $stock += $i->stock;
+                                                       }
+
+                                                       if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){
+                                                        $stock += $i->stock;
+                                                       }
+
+                                                       if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){
+                                                        $expiredStocks += $i->stock;
+                                                       }
+
+
+
+                                                   }
+                                                   echo $stock." stocks Available ";
+                                                   if( $expiredStocks != 0){
+                                                       echo $expiredStocks." stock Expired";
+                                                   }
+
+
+                                            }
+
+                                            else{
+                                                 echo "No stocks available";
+                                            }
+
+
+
+                                            @endphp
                                         </td>
                                         <td>
                                             <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"

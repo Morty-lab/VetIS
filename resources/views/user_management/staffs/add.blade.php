@@ -36,7 +36,7 @@
             <div class="card mb-4">
                 <div class="card-header">Account Registration</div>
                 <div class="card-body">
-                    <form method="POST" action="{{route('doctor.add')}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('staffs.add')}}" >
                         @csrf
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
@@ -102,13 +102,13 @@
                             @enderror
                         </div>
                         <!-- Form Group (username)-->
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username</label>
                             <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />
                             @error('username')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
                             <!-- Form Group (password)-->

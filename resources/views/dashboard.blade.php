@@ -172,9 +172,20 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+
             initialView: 'dayGridMonth',
+            events: [
+                { date: '2024-09-15', backgroundColor: '#ff9f89', borderColor: '#ff9f89' },
+                { date: '2024-09-07', backgroundColor: '#ff9f89', borderColor: '#ff9f89' ,  title: 'Important Meeting'},
+
+                // Add more dates here...
+            ],
+            eventDisplay: 'block',
+            eventBackgroundColor: '#ff9f89',
+            eventBorderColor: '#ff9f89',
         });
         calendar.render();
     });

@@ -115,7 +115,7 @@
                             @php
                                 $cancelledCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 4 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
                                         $cancelledCount++;
                                     } else {
                                         continue;
@@ -166,7 +166,6 @@
                                 <div class="badge bg-warning text-white rounded-pill">
 
                                     Pending
-
 
                                 </div>
                             </td>
