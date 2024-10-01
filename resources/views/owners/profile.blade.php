@@ -20,7 +20,7 @@
         <div class="page-header-content">
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                    <li class="breadcrumb-item"><a href="/managedoctor">Manage Pet Owner</a></li>
+                    <li class="breadcrumb-item"><a href="/manageowners">Manage Pet Owner</a></li>
                     <li class="breadcrumb-item active">Owner Profile</li>
                 </ol>
             </nav>
@@ -29,6 +29,11 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
+    <nav class="nav nav-borders">
+        <a class="nav-link ms-0 active" href="profileowner">Profile</a>
+        <a class="nav-link" href="profileowner/umsettings">UM Settings</a>
+    </nav>
+    <hr class="mt-0 mb-4" />
     <!-- Account page navigation-->
     <div class="row">
         <div class="col-xl-8">

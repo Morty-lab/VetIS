@@ -251,6 +251,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/petinfo/soap', function () {
         return view('pets.forms.soap');
     });
+
+    Route::get('/profileowner/umsettings', function () {
+        return view('owners.options');
+    });
 });
 
 
