@@ -29,17 +29,24 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
-    <nav class="nav nav-borders">
-        <a class="nav-link ms-0 active" href="profileowner">Profile</a>
-        <a class="nav-link" href="profileowner/umsettings">UM Settings</a>
-    </nav>
-    <hr class="mt-0 mb-4" />
     <!-- Account page navigation-->
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Pet Owner Information</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Owner Information</span>
+                    <!-- Three-dot (kebab) menu button -->
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Update Information</a></li>
+                            <!-- You can add more items here -->
+                        </ul>
+                    </div>
+                </div>
                 <div class="card-body">
                     <!-- Form Row-->
                     <div class="row gx-3 mb-3">
@@ -101,20 +108,36 @@
         <div class="col-xl-4">
             <!-- Profile picture card-->
             <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Profile Picture</span>
+                    <!-- Three-dot (kebab) menu button -->
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Update Photo</a></li>
+                            <!-- You can add more items here -->
+                        </ul>
+                    </div>
+                </div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
                     <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
                 </div>
-            </div>
-            <!-- <div class="card mb-4 mt-4 mb-xl-0">
-                <div class="card-header">Actions</div>
-                <div class="card-body">
-                    <button class="btn btn-primary m-1" type="button">Update Account</button>
-                    <button class="btn btn-primary m-1" type="button">Reset Password</button>
-                    <button class="btn btn-primary m-1" type="button">Disable Account</button>
+                <div class="card-footer text-center">
                 </div>
-            </div> -->
+            </div>
+            <div class="card mb-4 mt-4 mb-xl-0">
+                <div class="card-header">UM Settings</div>
+                <div class="card-body">
+                    <div class="row gy-2 gx-2">
+                        <div class="col-md-12"><button class="btn btn-primary w-100" type="button">Edit Account</button></div>
+                        <div class="col-md-6"><button class="btn btn-primary w-100" type="button">Reset Password</button></div>
+                        <div class="col-md-6"><button class="btn btn-primary w-100" type="button">Disable Account</button></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
