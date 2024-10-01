@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clients;
+use App\Models\Pets;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -13,7 +14,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients  =  Clients::getAllClients();
-        return view('user_management.pet_owners.manage', ["clients" => $clients]);
+        return view('owners.manage', ["clients" => $clients]);
 
     }
 
@@ -30,15 +31,18 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Clients $clients)
+    public function show(string $id)
     {
-        //
+        $client = Clients::getClientById($id);
+        $pets = Clients::petsOwned($id);
+//dd($clients);
+        return view('owners.profile', ["client" => $client, "pets" => $pets]);
     }
 
     /**
