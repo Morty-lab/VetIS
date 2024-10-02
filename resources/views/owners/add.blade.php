@@ -36,7 +36,7 @@
             <div class="card mb-4">
                 <div class="card-header">Pet Owner Registration</div>
                 <div class="card-body">
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('owners.add')}}" enctype="multipart/form-data">
                         @csrf
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
@@ -93,10 +93,10 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Pets Owned</label>
-                            <input class="form-control @error('petsowned') is-invalid @enderror" id="inputPetsOwned" name="petsowned" type="text" placeholder="Pets Owned" value="" />
-                        </div>
+{{--                        <div class="mb-3">--}}
+{{--                            <label class="small mb-1" for="inputUsername">Pets Owned</label>--}}
+{{--                            <input class="form-control @error('petsowned') is-invalid @enderror" id="inputPetsOwned" name="petsowned" type="text" placeholder="Pets Owned" value="" />--}}
+{{--                        </div>--}}
                         <!-- Form Group (username)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username</label>
@@ -149,28 +149,28 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get the register button
-        var registerButton = document.getElementById('regbtn');
+{{--<script>--}}
+{{--    document.addEventListener("DOMContentLoaded", function() {--}}
+{{--        // Get the register button--}}
+{{--        var registerButton = document.getElementById('regbtn');--}}
 
-        // Add event listener to the register button
-        registerButton.addEventListener('click', function() {
-            // Show the success alert
-            var successAlert = document.getElementById('successAlert');
-            successAlert.style.display = 'flex';
+{{--        // Add event listener to the register button--}}
+{{--        registerButton.addEventListener('click', function() {--}}
+{{--            // Show the success alert--}}
+{{--            var successAlert = document.getElementById('successAlert');--}}
+{{--            successAlert.style.display = 'flex';--}}
 
-            setTimeout(function() {
-                window.location.href = '/managedoctor';
-            }, 4000);
+{{--            setTimeout(function() {--}}
+{{--                window.location.href = '/managedoctor';--}}
+{{--            }, 4000);--}}
 
-            // Optionally, hide the alert after a certain period (e.g., 3 seconds)
-            setTimeout(function() {
-                successAlert.style.display = 'none';
-            }, 3000);
-        });
-    });
-</script>
+{{--            // Optionally, hide the alert after a certain period (e.g., 3 seconds)--}}
+{{--            setTimeout(function() {--}}
+{{--                successAlert.style.display = 'none';--}}
+{{--            }, 3000);--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
 @endsection
 
 @section('scripts')

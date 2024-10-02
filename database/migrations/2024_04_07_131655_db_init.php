@@ -80,10 +80,13 @@ return new class extends Migration
 
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string("client_name");
             $table->string("client_no");
             $table->string("client_address");
-            $table->string("client_email_address");
+            $table->date("client_birthday");
+            $table->string("client_profile_picture")->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 

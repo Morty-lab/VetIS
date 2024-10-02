@@ -176,6 +176,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/addowner', function () {
         return view('owners.add');
     });
+    Route::post('/profileowner/add', [ClientsController::class , 'store'])->name('owners.add');
     Route::get('/profileowner/{id}',[ClientsController::class, 'show'])->name('owners.show');
 
     // POS Routes

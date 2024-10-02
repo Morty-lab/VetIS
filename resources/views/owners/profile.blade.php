@@ -51,19 +51,19 @@
                     <!-- Form Row-->
                     <div class="row gx-3 mb-3">
                         <div class="mb-3">
-                            <label class="small mb-1"">Owner ID</label>
-                            <p>OWN0001</p>
+                            <label class="small mb-1">Owner ID</label>
+                            <p>{{ sprintf("OWN-%05d", $client->id) }}</p>
                         </div>
                         <!-- Form Group (first name)-->
                         <div class=" col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <p>Kent</p>
+                                <label class="small mb-1" for="inputFirstName">Client name</label>
+                                <p>{{$client->client_name}}</p>
                         </div>
                         <!-- Form Group (last name)-->
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="inputLastName">Last name</label>
-                            <p>Invento</p>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1" for="inputLastName">Last name</label>--}}
+{{--                            <p>Invento</p>--}}
+{{--                        </div>--}}
                     </div>
                     <!-- Form Group (email address)-->
                     <div class="mb-3">
@@ -86,7 +86,7 @@
                         <!-- Form Group (birthday)-->
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBirthday">Birthday</label>
-                            <p>August 11, 2002</p>
+                            <p>{{ \Carbon\Carbon::parse($client->client_birthday)->format('M d, Y') }}</p>
                         </div>
                     </div>
                     <!-- Form Row-->

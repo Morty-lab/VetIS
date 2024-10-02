@@ -11,10 +11,11 @@ class Clients extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'client_name',
         'client_no',
         'client_address',
-        'client_FB_account',
+        'client_birthday'
     ];
 
     public function pets()
@@ -35,6 +36,10 @@ class Clients extends Model
     public static function getClientById($id)
     {
         return self::find($id);
+    }
+
+    public static function createClient($data){
+        return self::create($data);
     }
     public static function updateClient($id, $data)
     {

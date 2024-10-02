@@ -87,7 +87,7 @@
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">
                                 <p class="small mb-1">Birthday</p>
-                                <p>August 11, 2002</p>
+                                <p>{{$client->client_birthday}}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="small mb-1">Position</p>
