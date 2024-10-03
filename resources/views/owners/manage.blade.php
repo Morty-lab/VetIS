@@ -36,7 +36,7 @@
                     <tr>
                         <th>OwnerID</th>
                         <th>Name</th>
-                        <th>Age</th>
+{{--                        <th>Age</th>--}}
                         <th>Address</th>
                         <th>Contact Number</th>
                         <th>Pets Owned</th>
@@ -44,18 +44,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($clients as $client)
+                        <tr>
+                            <td>{{ sprintf("OWN-%05d", $client->id) }}</td>
+                            <td>{{$client->client_name}}</td>
+{{--                            <td>{{$client->age}}</td>--}}
+                            <td>{{$client->client_address}}</td>
+                            <td>{{$client->client_no}}</td>
+                            <td>{{$client->petsOwned($client->id)->count()}}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{route('owners.show',  $client->id)}}">Open</a>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                    <tr>
-                        <td>OWN0001</td>
-                        <td>Kent Invento</td>
-                        <td>21</td>
-                        <td>Purok - 3, Batangan, Valencia City, Bukidnon</td>
-                        <td>09942194953</td>
-                        <td>1</td>
-                        <td>
-                            <a class="btn btn-primary" href="/profileowner">Open</a>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>

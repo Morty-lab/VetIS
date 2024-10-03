@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,10 +11,11 @@ class Clients extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'client_name',
         'client_no',
         'client_address',
-        'client_FB_account',
+        'client_birthday'
     ];
 
     public function pets()
@@ -34,6 +36,10 @@ class Clients extends Model
     public static function getClientById($id)
     {
         return self::find($id);
+    }
+
+    public static function createClient($data){
+        return self::create($data);
     }
     public static function updateClient($id, $data)
     {
@@ -56,4 +62,19 @@ class Clients extends Model
         }
         return false;
     }
+
+    public static function petsOwned($ownerID = null){
+        $query = Pets::where('owner_id', $ownerID);
+
+        if ($ownerID === null) {
+            return $query->get();
+        } else {
+            return $query->where('owner_ID', $ownerID)->get();
+        }
+    }
+
+//    public function getAgeAttribute()
+//    {
+//        return Carbon::parse($this->attributes['birthday'])->age;
+//    }
 }

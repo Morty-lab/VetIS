@@ -172,15 +172,12 @@ Route::middleware('auth')->group(function () {
     });
 
     // Pet Owners
-    Route::get('/manageowners', function () {
-        return view('owners.manage');
-    });
+    Route::get('/manageowners',[ClientsController::class , 'index'])->name('owners.index');
     Route::get('/addowner', function () {
         return view('owners.add');
     });
-    Route::get('/profileowner', function () {
-        return view('owners.profile');
-    });
+    Route::post('/profileowner/add', [ClientsController::class , 'store'])->name('owners.add');
+    Route::get('/profileowner/{id}',[ClientsController::class, 'show'])->name('owners.show');
 
     // POS Routes
 
