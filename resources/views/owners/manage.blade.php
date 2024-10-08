@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
 <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
     <div class="container-xl px-4">
         <div class="page-header-content pt-4">
@@ -36,7 +37,7 @@
                     <tr>
                         <th>OwnerID</th>
                         <th>Name</th>
-{{--                        <th>Age</th>--}}
+                        {{-- <th>Age</th>--}}
                         <th>Address</th>
                         <th>Contact Number</th>
                         <th>Pets Owned</th>
@@ -45,17 +46,17 @@
                 </thead>
                 <tbody>
                     @foreach($clients as $client)
-                        <tr>
-                            <td>{{ sprintf("OWN-%05d", $client->id) }}</td>
-                            <td>{{$client->client_name}}</td>
-{{--                            <td>{{$client->age}}</td>--}}
-                            <td>{{$client->client_address}}</td>
-                            <td>{{$client->client_no}}</td>
-                            <td>{{$client->petsOwned($client->id)->count()}}</td>
-                            <td>
-                                <a class="btn btn-primary" href="{{route('owners.show',  $client->id)}}">Open</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ sprintf("OWN-%05d", $client->id) }}</td>
+                        <td>{{$client->client_name}}</td>
+                        {{-- <td>{{$client->age}}</td>--}}
+                        <td>{{$client->client_address}}</td>
+                        <td>{{$client->client_no}}</td>
+                        <td>{{$client->petsOwned($client->id)->count()}}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{route('owners.show',  $client->id)}}">Open</a>
+                        </td>
+                    </tr>
                     @endforeach
 
                 </tbody>
