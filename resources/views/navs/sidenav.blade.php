@@ -28,13 +28,13 @@
 
 
                 @if (auth()->user()->role == "admin")
-                <a class="nav-link  @if(Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="/manageowners">
+                <a class="nav-link  @if(Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="{{route('owners.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Pet Owners
                 </a>
                 @endif
 
-                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet') || Request::is('editpet')) active @endif" href="/managepet">
+                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet/*') || Request::is('editpet')) active @endif" href="/managepet">
 
                     <div class="nav-link-icon"><i class="fa-solid fa-paw"></i></div>
                     Pets
@@ -158,10 +158,10 @@
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Administrator
                 </a>
-                <a class="nav-link @if(Request::is('um/client*')) active @endif" href="{{route('clients.index')}}">
-                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
-                    Client/Pet Owners
-                </a>
+{{--                <a class="nav-link @if(Request::is('um/client*')) active @endif" href="{{route('clients.index')}}">--}}
+{{--                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>--}}
+{{--                    Client/Pet Owners--}}
+{{--                </a>--}}
                 <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{route('staffs.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Staffs

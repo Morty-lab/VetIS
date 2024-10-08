@@ -20,7 +20,7 @@
         <div class="page-header-content">
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                    <li class="breadcrumb-item"><a href="/managedoctor">Manage Pet Owner</a></li>
+                    <li class="breadcrumb-item"><a href="/manageowners">Manage Pet Owner</a></li>
                     <li class="breadcrumb-item active">Owner Profile</li>
                 </ol>
             </nav>
@@ -34,24 +34,36 @@
         <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Pet Owner Information</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Owner Information</span>
+                    <!-- Three-dot (kebab) menu button -->
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Update Information</a></li>
+                            <!-- You can add more items here -->
+                        </ul>
+                    </div>
+                </div>
                 <div class="card-body">
                     <!-- Form Row-->
                     <div class="row gx-3 mb-3">
                         <div class="mb-3">
-                            <label class="small mb-1"">Owner ID</label>
-                            <p>OWN0001</p>
+                            <label class="small mb-1">Owner ID</label>
+                            <p>{{ sprintf("OWN-%05d", $client->id) }}</p>
                         </div>
                         <!-- Form Group (first name)-->
                         <div class=" col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <p>Kent</p>
+                                <label class="small mb-1" for="inputFirstName">Client name</label>
+                                <p>{{$client->client_name}}</p>
                         </div>
                         <!-- Form Group (last name)-->
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="inputLastName">Last name</label>
-                            <p>Invento</p>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1" for="inputLastName">Last name</label>--}}
+{{--                            <p>Invento</p>--}}
+{{--                        </div>--}}
                     </div>
                     <!-- Form Group (email address)-->
                     <div class="mb-3">
@@ -62,19 +74,19 @@
                     <!-- Form Group (address)-->
                     <div class="mb-3">
                         <label class="small mb-1" for="inputAddress">Address</label>
-                        <p>Purok - 3, Batangan, Valencia City, Bukidnon</p>
+                        <p>{{$client->client_address}}</p>
                     </div>
                     <!-- Form Row-->
                     <div class="row gx-3 mb-3">
                         <!-- Form Group (phone number)-->
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputPhone">Phone number</label>
-                            <p>09942194953</p>
+                            <p>{{$client->client_no}}</p>
                         </div>
                         <!-- Form Group (birthday)-->
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBirthday">Birthday</label>
-                            <p>August 11, 2002</p>
+                            <p>{{ \Carbon\Carbon::parse($client->client_birthday)->format('M d, Y') }}</p>
                         </div>
                     </div>
                     <!-- Form Row-->
@@ -82,13 +94,13 @@
                         <!-- Form Group (password)-->
                         <div class="col-md-6">
                             <label class="small mb-1">Pets Owned</label>
-                            <p>1</p>
+                            <p>{{$client->petsOwned($client->id)->count()}}</p>
                         </div>
                         <!-- Form Group (confirm password)-->
-                        <div class="col-md-6">
-                            <label class="small mb-1">Username</label>
-                            <p>revltn</p>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1">Username</label>--}}
+{{--                            <p>revltn</p>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -96,20 +108,36 @@
         <div class="col-xl-4">
             <!-- Profile picture card-->
             <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Profile Picture</span>
+                    <!-- Three-dot (kebab) menu button -->
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Update Photo</a></li>
+                            <!-- You can add more items here -->
+                        </ul>
+                    </div>
+                </div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
                     <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
                 </div>
-            </div>
-            <!-- <div class="card mb-4 mt-4 mb-xl-0">
-                <div class="card-header">Actions</div>
-                <div class="card-body">
-                    <button class="btn btn-primary m-1" type="button">Update Account</button>
-                    <button class="btn btn-primary m-1" type="button">Reset Password</button>
-                    <button class="btn btn-primary m-1" type="button">Disable Account</button>
+                <div class="card-footer text-center">
                 </div>
-            </div> -->
+            </div>
+            <div class="card mb-4 mt-4 mb-xl-0">
+                <div class="card-header">UM Settings</div>
+                <div class="card-body">
+                    <div class="row gy-2 gx-2">
+                        <div class="col-md-12"><button class="btn btn-primary w-100" type="button">Edit Account</button></div>
+                        <div class="col-md-6"><button class="btn btn-primary w-100" type="button">Reset Password</button></div>
+                        <div class="col-md-6"><button class="btn btn-primary w-100" type="button">Disable Account</button></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -127,27 +155,36 @@
                         <th>Breed</th>
                         <th>Age</th>
                         <th>Gender</th>
-                        <th>Owner</th>
+{{--                        <th>Owner</th>--}}
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($pets as $pet)
                     <tr>
-                        <td>00001</td>
-                        <td>Lexie</td>
-                        <td>Dog</td>
-                        <td>Japanese Spitz</td>
-                        <td>7 Months</td>
-                        <td>Female</td>
-                        <td>Kent Invento</td>
+                        <td>{{ sprintf("%05d", $pet->id) }}</td>
+                        <td>{{ $pet->pet_name }}</td>
+                        <td>{{ $pet->pet_type }}</td>
+                        <td>{{ $pet->pet_breed }}</td>
+                        <td>{{ $pet->age }} Months</td>
+                        <td>{{ $pet->pet_gender }}</td>
+{{--                        <td>{{ $pet->client->client_name }}</td>--}}
                         <td>
-                            <div class="badge bg-primary text-white rounded-pill">Vaccinated</div>
+                            @if ($pet->vaccinated)
+                                <div class="badge bg-primary text-white rounded-pill">Vaccinated</div>
+                            @elseif ($pet->sterilized)
+                                <div class="badge bg-primary text-white rounded-pill">Sterilized</div>
+                            @else
+                                <div class="badge bg-primary text-white rounded-pill">Unvaccinated</div>
+                            @endif
                         </td>
                         <td>
-                            <a class="btn btn-primary" href="/profilepet">Open</a>
+                            <a class="btn btn-primary" href="{{ route('pets.show', $pet->id) }}">Open</a>
                         </td>
                     </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>

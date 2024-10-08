@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clients;
+use App\Models\Pets;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ClientsController extends Controller
 {
@@ -13,7 +17,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients  =  Clients::getAllClients();
-        return view('user_management.pet_owners.manage', ["clients" => $clients]);
+        return view('owners.manage', ["clients" => $clients]);
 
     }
 
@@ -30,15 +34,52 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'address' => 'required',
+            'phone_number' => 'required',
+            'birthday' => 'required|date',
+            'username' => 'required',
+            'password' => 'required|min:8',
+            'profile_picture' => 'nullable|image',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::create([
+            'name' => $request->username,
+            'email' => $request->email,
+            'role' => "user",
+            'password' => Hash::make($request->password),
+        ]);
+
+        Clients::createClient(
+            ['user_id' => $user->id,
+            'client_name' => $request->firstname." ".$request->lastname,
+            'client_address' => $request->address,
+            'client_no' => $request->phone_number,
+            'client_birthday' => $request->birthday,
+            ]);
+
+
+        return redirect()->route('owners.index');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Clients $clients)
+    public function show(string $id)
     {
-        //
+        $client = Clients::getClientById($id);
+        $pets = Clients::petsOwned($id);
+//dd($clients);
+        return view('owners.profile', ["client" => $client, "pets" => $pets]);
     }
 
     /**
