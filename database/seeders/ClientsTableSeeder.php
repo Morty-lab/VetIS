@@ -25,7 +25,7 @@ class ClientsTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
-                'role' => 'staff',
+                'role' => 'client',
                 'password' => $hashedPassword,
                 'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
