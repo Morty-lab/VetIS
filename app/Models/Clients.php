@@ -43,17 +43,9 @@ class Clients extends Model
     }
     public static function updateClient($id, $data)
     {
-        $client = self::find($id);
-        if ($client) {
-            $client->client_name = $data['client_name'];
-            $client->client_no = $data['client_no'];
-            $client->client_address = $data['client_address'];
-            $client->client_FB_account = $data['client_FB_account'];
-            $client->save();
-            return $client;
-        }
-        return null;
+        return self::find($id)->update($data);
     }
+
     public static function deleteClient($id)
     {
         $client = self::find($id);
@@ -77,4 +69,11 @@ class Clients extends Model
 //    {
 //        return Carbon::parse($this->attributes['birthday'])->age;
 //    }
+
+    public function getEmailAttribute($id)
+    {
+        $email = User::where('id', $id)->value('email');
+
+        return $this->attributes['owner_email'] = $email;
+    }
 }

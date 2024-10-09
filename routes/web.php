@@ -178,6 +178,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::post('/profileowner/add', [ClientsController::class , 'store'])->name('owners.add');
     Route::get('/profileowner/{id}',[ClientsController::class, 'show'])->name('owners.show');
+    Route::post('/profileowner/{id}',[ClientsController::class, 'update'])->name('owners.update');
+    Route::post('/profileowner/{id}/disable',[ClientsController::class, 'disable'])->name('owners.disable');
 
     // POS Routes
 
