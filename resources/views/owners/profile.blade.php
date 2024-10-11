@@ -26,17 +26,13 @@
             <div class="modal-body">
                 <div class="row gx-3 mb-3">
                     <div class=" col-md-6 mb-2">
-                        <label class="small mb-1" for="editFirstName">First Name</label>
-                        <input type="text" class="form-control" name="" id="" value="John">
-                    </div>
-                    <div class=" col-md-6 mb-2">
-                        <label class="small mb-1" for="editLastName">Last Name</label>
-                        <input type="text" class="form-control" name="" id="" value="Doe">
+                        <label class="small mb-1" for="editFirstName">Owner Name</label>
+                        <input type="text" class="form-control" name="" id="" value="{{$client->client_name}}">
                     </div>
 
                     <div class="col-md-12 mb-2">
                         <label class="small mb-1" for="editEmailAddress">Email address</label>
-                        <input type="text" class="form-control" name="" id="" value="princeinventorevltn89@gmail.com">
+                        <input type="text" class="form-control" name="" id="" value="{{$client->getEmailAttribute($client->id)}}">
                     </div>
                     <div class="col-md-12 mb-2">
                         <label class="small mb-1" for="editAddress">Address</label>
@@ -88,65 +84,66 @@
 <!-- UM Modals -->
 <div class="modal fade" id="umEditAccount" tabindex="-1" role="dialog" aria-labelledby="umEditAccount" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-primary" id="umEditAccount">Edit Account</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row gx-3 mb-3">
-                    <div class=" col-md-6 mb-2">
-                        <label class="small mb-1" for="editFirstName">First Name</label>
-                        <input type="text" class="form-control" name="" id="" value="John">
-                    </div>
-                    <div class=" col-md-6 mb-2">
-                        <label class="small mb-1" for="editLastName">Last Name</label>
-                        <input type="text" class="form-control" name="" id="" value="Doe">
-                    </div>
+        <form action="{{route('owners.update',['id' => $client->id])}}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="umEditAccount">Edit Account</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gx-3 mb-3">
+                        <div class=" col-md-6 mb-2">
+                            <label class="small mb-1" for="editFirstName">Owner Name</label>
+                            <input type="text" class="form-control" name="owner_name" id="" value="{{$client->client_name}}">
+                        </div>
 
-                    <div class="col-md-12 mb-2">
-                        <label class="small mb-1" for="editEmailAddress">Email address</label>
-                        <input type="email" class="form-control" name="" id="" value="princeinventorevltn89@gmail.com">
+                        <div class="col-md-6 mb-2">
+                            <label class="small mb-1" for="editEmailAddress">Email address</label>
+                            <input type="text" class="form-control" name="owner_email" id="" value="{{$client->getEmailAttribute($client->user_id)}}">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label class="small mb-1" for="editAddress">Address</label>
+                            <input type="text" class="form-control" name="owner_address" id="" value="{{$client->client_address}}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="editPhone">Phone number</label>
+                            <input type="text" class="form-control" name="owner_no" id="" value="{{$client->client_no}}">
+                        </div>
+                        <!-- Form Group (birthday)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="editBirthday">Birthday</label>
+                            <input type="date" class="form-control" name="owner_bday" id="editBirthday" value="{{ \Carbon\Carbon::parse($client->client_birthday)->format('Y-m-d') }}">
+                        </div>
                     </div>
-                    <div class="col-md-12 mb-2">
-                        <label class="small mb-1" for="editAddress">Address</label>
-                        <input type="text" class="form-control" name="" id="" value="{{$client->client_address}}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="editPhone">Phone number</label>
-                        <input type="number" class="form-control" name="" id="" value="{{$client->client_no}}">
-                    </div>
-                    <!-- Form Group (birthday)-->
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="editBirthday">Birthday</label>
-                        <input type="date" class="form-control" name="birthday" id="editBirthday" value="{{ \Carbon\Carbon::parse($client->client_birthday)->format('Y-m-d') }}">
-                    </div>
+                    <hr>
+                    {{--                <div class="row">--}}
+                    {{--                    <div class="col-md-6 mb-2">--}}
+                    {{--                        <label class="small mb-1" for="editUsername">Username</label>--}}
+                    {{--                        <input type="text" class="form-control" name="" id="" value="princeinventorevltn89@gmail.com">--}}
+                    {{--                    </div>--}}
+                    {{--                    <div class="col-md-6 mb-2">--}}
+                    {{--                        <label class="small mb-1" for="editPassword">Password</label>--}}
+                    {{--                        <input type="password" class="form-control" name="" id="" value="usfjdlfhdalks">--}}
+                    {{--                    </div>--}}
+                    {{--                    <div class="col-md-12">--}}
+                    {{--                        <label class="small mb-1" for="editRole">Role</label>--}}
+                    {{--                        <select class="form-control" id="roleSelect" name="role">--}}
+                    {{--                            <option value="Owner" selected>Pet Owner</option>--}}
+                    {{--                            <option value="Doctor">Veterinarian</option>--}}
+                    {{--                            <option value="Owner">Owner</option>--}}
+                    {{--                            <option value="Administrator">Administrator</option>--}}
+                    {{--                            <option value="Secretary">Secretary</option>--}}
+                    {{--                            <option value="Staff">Staff</option>--}}
+                    {{--                        </select>--}}
+                    {{--                    </div>--}}
+                    {{--                </div>--}}
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <label class="small mb-1" for="editUsername">Username</label>
-                        <input type="text" class="form-control" name="" id="" value="princeinventorevltn89@gmail.com">
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <label class="small mb-1" for="editPassword">Password</label>
-                        <input type="password" class="form-control" name="" id="" value="usfjdlfhdalks">
-                    </div>
-                    <div class="col-md-12">
-                        <label class="small mb-1" for="editRole">Role</label>
-                        <select class="form-control" id="roleSelect" name="role">
-                            <option value="Owner" selected>Pet Owner</option>
-                            <option value="Doctor">Veterinarian</option>
-                            <option value="Owner">Owner</option>
-                            <option value="Administrator">Administrator</option>
-                            <option value="Secretary">Secretary</option>
-                            <option value="Staff">Staff</option>
-                        </select>
-                    </div>
-                </div>
+                <div class="modal-footer"><button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" type="submit">Update</button></div>
             </div>
-            <div class="modal-footer"><button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" type="button">Update</button></div>
-        </div>
+
+        </form>
+
     </div>
 </div>
 
@@ -183,19 +180,22 @@
 
 <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-labelledby="disableAccountModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="disableAccountModalLabel">Disable Account</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        <form action="{{route('owners.disable', $client->id)}}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="disableAccountModalLabel">Disable Account</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to disable this account?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" type="submit">Disable Account</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Are you sure you want to disable this account?</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-danger" type="button">Disable Account</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -268,6 +268,15 @@
                             <label class="small mb-1">Pets Owned</label>
                             <p>{{$client->petsOwned($client->id)->count()}}</p>
                         </div>
+                        {{-- Update when schema is changed
+                        Client(Status attribute)
+                        Client(Model Fillable)
+                        Client(Controller function add)
+                        --}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1">Status</label>--}}
+{{--                            <p>{{$client->status}}</p>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>

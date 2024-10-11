@@ -93,14 +93,27 @@ class ClientsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Clients $clients)
+    public function update(Request $request, $id)
     {
-        //
+        $data = ([
+            'client_name' => $request->input('owner_name'),
+            'client_address' => $request->input('owner_address'),
+            'client_no' => $request->input('owner_no'),
+            'client_birthday' => $request->input('owner_bday'),
+        ]);
+
+        Clients::updateClient($id, $data);
+
+        return redirect()->route('owners.show',$id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
+    public function disable($id){
+        Clients::find($id)->update(['status' => false]);
+    }
     public function destroy(Clients $clients)
     {
         //
