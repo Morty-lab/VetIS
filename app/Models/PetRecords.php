@@ -10,19 +10,20 @@ class PetRecords extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pet_ID',
+        'petID',
+        'ownerID',
+        'doctorID',
         'record_date',
-        'pet_weight',
-        'pet_temperature',
-        'medication_given',
-        'procedure_given',
-        'remarks',
+        'consultation_type',
+        'complaint',
+        'interpretation',
+        'status',
     ];
 
-    // public function pet()
-    // {
-    //     return $this->belongsTo(Pet::class);
-    // }
+     public function pet()
+     {
+         return $this->belongsTo(Pets::class);
+     }
 
     public static function getAllPetRecords()
     {

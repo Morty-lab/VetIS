@@ -196,14 +196,56 @@ return new class extends Migration
         Schema::create('pet_records', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("petID");
+            $table->unsignedBigInteger("ownerID");
+            $table->unsignedBigInteger("doctorID");
+            $table->foreign("doctorID")->references("id")->on("doctors")->onDelete("cascade");
+            $table->foreign("ownerID")->references("id")->on("clients")->onDelete("cascade");
             $table->foreign("petID")->references("id")->on("pets")->onDelete("cascade");
             $table->date("record_date");
-            $table->float("pet_weight");
-            $table->float("pet_temperature");
-            $table->string("procedure_given");
+            $table->integer("consultation_type");
+            $table->string("complaint")->nullable();
+            $table->string("interpretation")->nullable();
+            $table->integer("status")->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create("examination", function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_record_id");
+            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
+            $table->float("heart_rate")->nullable();
+            $table->float("respiration_rate")->nullable();
+            $table->float("weight")->nullable();
+            $table->float("length")->nullable();
+            $table->float("crt")->nullable();
+            $table->float("bcs")->nullable();
+            $table->float("lymph_nodes")->nullable();
+            $table->float("palpebral_reflex")->nullable();
+            $table->float("temperature")->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create("laboratory", function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_record_id");
+            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
+            $table->binary("file_content"); // This stores the file content as a blob
+            $table->string("file_extension");
             $table->string("remarks");
             $table->timestamps();
         });
+
+        Schema::create('pet_plan', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_record_id");
+            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
+            $table->string("service_name");
+            $table->date("date_return");
+            $table->string("reason_for_return");
+            $table->integer("status");
+            $table->timestamps();
+        });
+
 
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
@@ -214,6 +256,18 @@ return new class extends Migration
             $table->string("treatment");
             $table->string("dose");
             $table->timestamps();
+        });
+
+        Schema::create("pet_diagnosis", function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_record_id");
+            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
+            $table->string("diagnosis");
+            $table->string("treatment");
+            $table->string("prescription");
+            $table->string("client_communication");
+            $table->timestamps();
+
         });
 
         Schema::create('medications', function (Blueprint $table) {
@@ -240,6 +294,10 @@ return new class extends Migration
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
         Schema::dropIfExists('prescriptions');
+        Schema::dropIfExists('pet_diagnosis');
+        Schema::dropIfExists('pet_plan');
+        Schema::dropIfExists('laboratory');
+        Schema::dropIfExists('examination');
         Schema::dropIfExists('pet_records');
         Schema::dropIfExists('pets');
         Schema::dropIfExists('transaction_details');

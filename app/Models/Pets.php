@@ -39,6 +39,11 @@ class Pets extends Model
         return $this->hasMany(Appointments::class, 'pet_ID');
     }
 
+    public function record()
+    {
+        return $this->hasMany(PetRecords::class, 'petID');
+    }
+
     public static function getAllPets()
     {
         return self::all();

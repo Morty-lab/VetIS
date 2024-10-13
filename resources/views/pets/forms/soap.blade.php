@@ -37,30 +37,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($vets as $vet)
                             <tr data-bs-toggle="modal" data-bs-target=""
                                 style="cursor: pointer;">
-                                <td>23</td>
-                                <td>Kent Invento</td>
+                                <td>  {{ sprintf("VETIS-%05d", $vet->id) }}</td>
+                                <td>{{$vet->firstname." ".$vet->lastname}}</td>
                                 <td>Veterinarian</td>
                             </tr>
-                            <tr data-bs-toggle="modal" data-bs-target=""
-                                style="cursor: pointer;">
-                                <td>23</td>
-                                <td>Kent Invento</td>
-                                <td>Veterinarian</td>
-                            </tr>
-                            <tr data-bs-toggle="modal" data-bs-target=""
-                                style="cursor: pointer;">
-                                <td>23</td>
-                                <td>Kent Invento</td>
-                                <td>Veterinarian</td>
-                            </tr>
-                            <tr data-bs-toggle="modal" data-bs-target=""
-                                style="cursor: pointer;">
-                                <td>23</td>
-                                <td>Kent Invento</td>
-                                <td>Veterinarian</td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -347,7 +331,7 @@
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
     <div class="container-xl px-4">
-        <div classage-header-content">
+        <div class="page-header-content">
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('pet.index') }}">Manage Pets</a></li>
@@ -438,11 +422,11 @@
                                         </div>
                                         <div class="col-12">
                                             <label for="">Pet Owner</label>
-                                            <button class="form-control d-flex justify-content-between" type="button" data-bs-toggle="modal" data-bs-target="#petOwnerListModal"><span>Select Pet Owner</span> <i class="fa-solid fa-user"></i></button>
+                                            <button class="form-control d-flex justify-content-between" type="button" data-bs-toggle="modal" data-bs-target="#petOwnerListModal" disabled><span>{{$owner->client_name}}</span> <i class="fa-solid fa-user"></i></button>
                                         </div>
                                         <div class="col-12">
                                             <label for="">Pet</label>
-                                            <button class="form-control d-flex justify-content-between" type="button" data-bs-toggle="modal" data-bs-target="#petListModal"><span>Select Pet</span> <i class="fa-solid fa-cat"></i></button>
+                                            <button class="form-control d-flex justify-content-between" type="button" data-bs-toggle="modal" data-bs-target="#petListModal" disabled><span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -459,7 +443,7 @@
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center"><span>Examination</span> <button class="btn-outline-primary btn">Fill Template</button></div>
-                                <!--    
+                                <!--
                                     --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
                                     Heart Rate (BPM):
                                     Respiration Rate (BRPM):
@@ -471,15 +455,15 @@
                                     Palpebral Reflex:
                                     Temperature:
                                 -->
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full">Heart Rate (BPM): 
-Respiration Rate (BRPM): 
-Weight (KG): 
-Length (CM): 
-CRT: 
-BCS: 
-Lymph Nodes: 
-Palpebral Reflex: 
-Temperature: 
+                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full">Heart Rate (BPM):
+Respiration Rate (BRPM):
+Weight (KG):
+Length (CM):
+CRT:
+BCS:
+Lymph Nodes:
+Palpebral Reflex:
+Temperature:
                                 </textarea></div>
                             </div>
                         </div>
@@ -565,31 +549,31 @@ Temperature:
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center"><span>Diagnosis</span> <button class="btn-outline-primary btn">Fill Template</button></div>
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full">Heart Rate (BPM): 
-Differential Diagnosis: 
-Notes: 
-Test Results: 
-Final Diagnosis: 
-Prognosis: 
+                                <div class="card-body"><textarea name="diagnosis" id="" cols="30" rows="10" class="form-control w-full">Heart Rate (BPM):
+Differential Diagnosis:
+Notes:
+Test Results:
+Final Diagnosis:
+Prognosis:
 Category:</textarea></div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header">Treatment</div>
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
+                                <div class="card-body"><textarea name="treatment" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card shadow-none">
                                 <div class="card-header">Prescription</div>
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
+                                <div class="card-body"><textarea name="prescription" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card shadow-none">
                                 <div class="card-header">Client Communication</div>
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
+                                <div class="card-body"><textarea name="client_communication" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
                             </div>
                         </div>
                     </div>

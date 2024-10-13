@@ -51,9 +51,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profilepet/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
     Route::put('/editpet/{pets}', [PetsController::class, 'update'])->name('pets.update');
-
-
     Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store');
+
+    //sub routes Pet Medical Records
+
+//    Route::get('/record', function () {
+//        return view('pets.record');
+//    });
+    Route::get('/petinfo/{id}/soap',[\App\Http\Controllers\SoapController::class, 'index'])->name('soap.index');
+    Route::get('/petinfo/{id}/soap/create',[\App\Http\Controllers\SoapController::class, 'create'])->name('soap.create');
+
+    Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
 
 
     // Doctors
@@ -244,12 +252,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/um/staff/profile/{id}/options',[StaffController::class, "edit"])->name("staffs.options");
 
 
-    Route::get('/record', function () {
-        return view('pets.record');
-    });
-    Route::get('/petinfo/soap', function () {
-        return view('pets.forms.soap');
-    });
 
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');

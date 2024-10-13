@@ -278,7 +278,7 @@
             <div class="card mb-4 shadow-none">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Records</span>
-                    <a class="btn btn-primary" type="button" href="/petinfo/soap">New</a>
+                    <a class="btn btn-primary" type="button" href="{{route('soap.create', ['id' =>$pet->id])}}">New</a>
                 </div>
                 <div class="card-body">
                     <!-- only shows if there is no record -->
