@@ -39,7 +39,7 @@
                         <tbody>
                         @foreach($vets as $vet)
                             <tr data-bs-toggle="modal" data-bs-target=""
-                                style="cursor: pointer;">
+                                style="cursor: pointer;" onclick="selectVeterinarian({{$vet}})">
                                 <td>  {{ sprintf("VETIS-%05d", $vet->id) }}</td>
                                 <td>{{$vet->firstname." ".$vet->lastname}}</td>
                                 <td>Veterinarian</td>
@@ -235,7 +235,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-bs-toggle="modal" data-bs-target="" style="cursor: pointer;">
+                            <tr data-bs-toggle="modal" data-bs-target="" style="cursor: pointer;" onclick="addService({
+                            service: 'Deworming',
+                            date_return: '{{\Carbon\Carbon::now()}}',
+                            reason_for_return: 'dummy reaseon',
+                            status: 'ongoing'
+                            })">
                                 <td>1</td>
                                 <td>Deworming</td>
                                 <td>500.00</td>
@@ -382,7 +387,7 @@
                                     <div class="row gy-3">
                                         <div class="col-12">
                                             <label for="">SOAP ID</label>
-                                            <input type="text" class="form-control bg-gray-100" value="VETISSOAP------" readonly disabled>
+                                            <input type="text" class="form-control bg-gray-100" value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::count()+1)}}"  disabled>
                                         </div>
                                         <div class=" col-12">
                                             <div class="dropdown">
@@ -396,7 +401,7 @@
                                         </div>
                                         <div class="col-12">
                                             <label for="">Date</label>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" name="date">
                                         </div>
                                     </div>
                                 </div>
@@ -407,7 +412,7 @@
                                         <div class="col-12">
                                             <div class="dropdown">
                                                 <label for="">Type</label>
-                                                <button class="form-select d-flex justify-between" id="soapType" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type</button>
+                                                <button class="form-select d-flex justify-between" id="soapType" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Type</button>
                                                 <div class="dropdown-menu select-dropdown-menu" aria-labelledby="soapType">
                                                     <a class="dropdown-item select-dropdown-item" href="#" data-value="1">Walk-In</a>
                                                     <a class="dropdown-item select-dropdown-item" href="#" data-value="2">Consultation</a>
@@ -418,7 +423,7 @@
                                         </div>
                                         <div class="col-12">
                                             <label for="">Attending Veterinarian</label>
-                                            <button class="form-control d-flex justify-content-between" type="button" data-bs-toggle="modal" data-bs-target="#veterinarianListModal"><span>Select Veterinarian</span> <i class="fa-solid fa-user-doctor"></i></button>
+                                            <button class="form-control d-flex justify-content-between" type="button" data-bs-toggle="modal" data-bs-target="#veterinarianListModal"><span id="vet">Select Veterinarian</span> <i class="fa-solid fa-user-doctor"></i></button>
                                         </div>
                                         <div class="col-12">
                                             <label for="">Pet Owner</label>
@@ -437,12 +442,12 @@
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header">Primary Complaint/History</div>
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
+                                <div class="card-body"><textarea name="complaint" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="card shadow-none">
-                                <div class="card-header d-flex justify-content-between align-items-center"><span>Examination</span> <button class="btn-outline-primary btn">Fill Template</button></div>
+                                <div class="card-header d-flex justify-content-between align-items-center"><span>Examination</span> <button class="btn-outline-primary btn" type="button" onclick="fillTemplate('examination')">Fill Template</button></div>
                                 <!--
                                     --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
                                     Heart Rate (BPM):
@@ -455,62 +460,55 @@
                                     Palpebral Reflex:
                                     Temperature:
                                 -->
-                                <div class="card-body"><textarea name="" id="" cols="30" rows="10" class="form-control w-full">Heart Rate (BPM):
-Respiration Rate (BRPM):
-Weight (KG):
-Length (CM):
-CRT:
-BCS:
-Lymph Nodes:
-Palpebral Reflex:
-Temperature:
-                                </textarea></div>
+                                <div class="card-body"><textarea name="examination" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="card shadow-none">
-                                <div class="card-header d-flex justify-content-between align-items-center"><span>Laboratory/Interpretation</span> <button class="btn-outline-primary btn">Add</button></div>
-                                <div class="row gy-3 mt-2 mb-4">
-                                    <!-- Laboratory File -->
-                                    <div class="col-12">
-                                        <div class="card shadow-none mx-3">
-                                            <div class="row p-3">
-                                                <div class="col-md-4">
-                                                    <div class="mb-3">
-                                                        <label for="formFile" class="form-label">Upload</label>
-                                                        <input class="form-control" type="file" id="formFile">
+
+                        @if(Request::is('soap.create'))
+                            <div class="col-md-12">
+                                <div class="card shadow-none">
+                                    <div class="card-header d-flex justify-content-between align-items-center"><span>Laboratory/Interpretation</span> <button class="btn-outline-primary btn">Add</button></div>
+                                    <div class="row gy-3 mt-2 mb-4">
+                                        <!-- Laboratory File -->
+                                        <div class="col-12">
+                                            <div class="card shadow-none mx-3">
+                                                <div class="row p-3">
+                                                    <div class="col-md-4">
+                                                        <div class="mb-3">
+                                                            <label for="formFile" class="form-label">Upload</label>
+                                                            <input class="form-control" type="file" id="formFile">
+                                                        </div>
+                                                        <div class="card shadow-none p-2 d-flex justify-content-center align-items-center">
+                                                            <img src="https://t3.ftcdn.net/jpg/07/23/05/68/360_F_723056816_irMoAo8SFXjh9PNlT9kb7FUePA73JzK7.jpg" alt="" style="max-width: auto; max-height: 200px; object-fit: contain;">
+                                                        </div>
                                                     </div>
-                                                    <div class="card shadow-none p-2 d-flex justify-content-center align-items-center">
-                                                        <img src="https://t3.ftcdn.net/jpg/07/23/05/68/360_F_723056816_irMoAo8SFXjh9PNlT9kb7FUePA73JzK7.jpg" alt="" style="max-width: auto; max-height: 200px; object-fit: contain;">
-                                                    </div>
-                                                </div>
-                                                <div class=" col-md-8">
-                                                    <div class="row">
-                                                        <label class="form-label">Remark</label>
-                                                        <div class="col">
-                                                            <textarea name="" id="" cols="30" rows="18" class="form-control"></textarea>
+                                                    <div class=" col-md-8">
+                                                        <div class="row">
+                                                            <label class="form-label">Remark</label>
+                                                            <div class="col">
+                                                                <textarea name="" id="" cols="30" rows="18" class="form-control"></textarea>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="card-footer d-flex py-3 justify-content-end align-items-center bg-white">
-                                                <button class="btn btn-outline-danger">Remove</button>
+                                                <div class="card-footer d-flex py-3 justify-content-end align-items-center bg-white">
+                                                    <button class="btn btn-outline-danger">Remove</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mx-3 mb-4 px-1">
-                                    <span class="text-primary fw-500">Interpretation</span>
-                                    <textarea name="" id="" cols="30" rows="10" class="form-control mt-2"></textarea>
+                                    <div class="mx-3 mb-4 px-1">
+                                        <span class="text-primary fw-500">Interpretation</span>
+                                        <textarea name="" id="" cols="30" rows="10" class="form-control mt-2"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card shadow-none">
-                                <div class="card-header d-flex justify-content-between align-items-center"><span>Plan</span> <button class="btn-outline-primary btn" type="button" data-bs-toggle="modal" data-bs-target="#serviceListModal">Add Services</button></div>
-                                <div class="px-4">
-                                    <table id="treatmentPlanTable">
-                                        <thead>
+                            <div class="col-md-12">
+                                <div class="card shadow-none">
+                                    <div class="card-header d-flex justify-content-between align-items-center"><span>Plan</span> <button class="btn-outline-primary btn" type="button" data-bs-toggle="modal" data-bs-target="#serviceListModal">Add Services</button></div>
+                                    <div class="px-4">
+                                        <table id="treatmentPlanTable">
+                                            <thead>
                                             <tr>
                                                 <th>Service</th>
                                                 <th>Date Return</th>
@@ -518,44 +516,30 @@ Temperature:
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <!-- sample if no need na mag return -->
-                                                <td>Deworming</td>
-                                                <td>...</td>
-                                                <td>...</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <button class="btn btn-success" href="#" type="button" data-bs-toggle="modal" data-bs-target="#servicePlanEditModal"><i class="fa-solid fa-edit"></i></button>
-                                                    <button class="btn btn-danger" href="#" type="button" data-bs-toggle="modal" data-bs-target="#serviceDeleteConfirmationModal"><i class="fa-solid fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Vaccination</td>
-                                                <td>12/12/24</td>
-                                                <td>2nd Dose Anti-Rabies Vaccine</td>
-                                                <td>Upcoming</td>
-                                                <td>
-                                                    <button class="btn btn-success" href="#" type="button" data-bs-toggle="modal" data-bs-target="#servicePlanEditModal"><i class="fa-solid fa-edit"></i></button>
-                                                    <button class="btn btn-danger" href="#" type="button" data-bs-toggle="modal" data-bs-target="#serviceDeleteConfirmationModal"><i class="fa-solid fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="treatmentPlanTableBody">
+                                            {{--                                            <tr>--}}
+                                            {{--                                                <!-- sample if no need na mag return -->--}}
+                                            {{--                                                <td>Deworming</td>--}}
+                                            {{--                                                <td>...</td>--}}
+                                            {{--                                                <td>...</td>--}}
+                                            {{--                                                <td>...</td>--}}
+                                            {{--                                                <td>--}}
+                                            {{--                                                    <button class="btn btn-success" href="#" type="button" data-bs-toggle="modal" data-bs-target="#servicePlanEditModal"><i class="fa-solid fa-edit"></i></button>--}}
+                                            {{--                                                    <button class="btn btn-danger" href="#" type="button" data-bs-toggle="modal" data-bs-target="#serviceDeleteConfirmationModal"><i class="fa-solid fa-trash"></i></button>--}}
+                                            {{--                                                </td>--}}
+                                            {{--                                            </tr>--}}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
+
                         <div class="col-md-12">
                             <div class="card shadow-none">
-                                <div class="card-header d-flex justify-content-between align-items-center"><span>Diagnosis</span> <button class="btn-outline-primary btn">Fill Template</button></div>
-                                <div class="card-body"><textarea name="diagnosis" id="" cols="30" rows="10" class="form-control w-full">Heart Rate (BPM):
-Differential Diagnosis:
-Notes:
-Test Results:
-Final Diagnosis:
-Prognosis:
-Category:</textarea></div>
+                                <div class="card-header d-flex justify-content-between align-items-center"><span>Diagnosis</span> <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">Fill Template</button></div>
+                                <div class="card-body"><textarea name="diagnosis" id="" cols="30" rows="10" class="form-control w-full"></textarea></div>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -591,6 +575,7 @@ Category:</textarea></div>
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/soap.js') }}"></script>
 <script>
     document.querySelectorAll('.select-dropdown-menu').forEach(menu => {
         // Handle dropdown item clicks
@@ -635,4 +620,5 @@ Category:</textarea></div>
         }
     });
 </script>
+
 @endsection
