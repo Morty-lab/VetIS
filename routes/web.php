@@ -5,6 +5,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PetPlanController;
 use App\Http\Controllers\PetsController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
@@ -65,6 +66,11 @@ Route::middleware('auth')->group(function () {
     Route::post('petinfo/{id}/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
+
+    // sub routes Pet Plan
+    Route::post('/soap/plan/{recordID}/addservice', [PetPlanController::class, 'store'])->name('plan.store');
+    Route::post('/soap/plan/{recordID}/{id}/update', [PetPlanController::class, 'update'])->name('plan.update');
+    Route::get('/soap/plan/{recordID}/{id}/delete', [PetPlanController::class, 'destroy'])->name('plan.delete');
 
 
     // Doctors

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
 use Illuminate\Http\Request;
@@ -84,8 +85,9 @@ class SoapController extends Controller
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
         $record = PetRecords::getPetRecordById($id);
+        $petPlan = PetPlan::getAllByRecordID($id);
 
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ,'petPlan' => $petPlan]);
     }
 
     /**

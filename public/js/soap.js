@@ -3,6 +3,21 @@ services = []
 //fillbles
 //soapType , status
 
+
+function addService(service){
+    const jsonString  =  JSON.stringify(service)
+    const form  =  document.getElementById('serviceForm');
+
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'service';
+    hiddenInput.value = jsonString;
+
+    form.appendChild(hiddenInput);
+
+    // Submit the form
+    form.submit();
+}
 function selectVeterinarian(vet){
     let vetDisplay = document.getElementById('vet');
     let vetInput = document.getElementById('vetInput');

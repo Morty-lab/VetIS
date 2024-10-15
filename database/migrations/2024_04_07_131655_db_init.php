@@ -241,7 +241,7 @@ return new class extends Migration
             $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
             $table->string("service_name");
             $table->date("date_return");
-            $table->string("reason_for_return");
+            $table->string("reason_for_return")->nullable();
             $table->integer("status");
             $table->timestamps();
         });
