@@ -83,8 +83,9 @@ class SoapController extends Controller
         $pet = Pets::find($id);
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
+        $record = PetRecords::getPetRecordById($id);
 
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record]);
     }
 
     /**
@@ -100,7 +101,7 @@ class SoapController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request->all());
     }
 
     /**

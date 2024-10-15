@@ -61,6 +61,30 @@ function fillTemplate(textarea){
 }
 
 
+function submitTextFields(){
+    const updateForm = document.getElementById("updateForm");
+
+    // Define your custom data
+    let customData = {
+        'examination': document.getElementById('examinationTextArea').value,
+        'interpretation' : document.getElementById('interpretationTextField').value,
+        'diagnosis' : document.getElementById('diagnosisTextArea').value,
+        'treatment' : document.getElementById('treatmentTextArea').value,
+        'prescription': document.getElementById('treatmentTextArea').value,
+        'client_communication': document.getElementById('clientCommunicationTextArea').value
+    };
+
+    for (let key in customData){
+        let formfield = document.getElementById(key)
+        formfield.value = customData[key]
+    }
+
+    updateForm.submit()
+
+
+
+}
+
 function fillDiagnosisTemplate(){
 
 }

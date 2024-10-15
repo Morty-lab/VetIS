@@ -372,120 +372,138 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- Account details card-->
-                <div class="card mb-4 shadow-none">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>SOAP Record</span>
-                        <!-- Mo gawas rang print dropdown if ma save na -->
-                        <div class="dropdown">
-                            <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Print Record
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="printMenuButton">
-                                <a class="dropdown-item" href="dropdowns.html#!">SOAP</a>
-                                <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
+                    <div class="card mb-4 shadow-none">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>SOAP Record</span>
+                            <!-- Mo gawas rang print dropdown if ma save na -->
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Print
+                                    Record
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="printMenuButton">
+                                    <a class="dropdown-item" href="dropdowns.html#!">SOAP</a>
+                                    <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card mb-4 shadow-none">
-                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                                <span>General</span>
-                            </div>
-                            <div class="card-body bg-white">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <span class="text-primary fw-500">Information</span>
-                                        <hr class="mt-0">
-                                        <div class="row gy-3">
-                                            <div class="col-12">
-                                                <label for="">SOAP ID</label>
-                                                <input type="text" class="form-control bg-gray-100"
-                                                       value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::count()+1)}}"
-                                                       disabled>
-                                            </div>
-                                            <div class=" col-12">
-                                                <div class="dropdown">
-                                                    <label for="">Status</label>
-                                                    <button class="form-select d-flex justify-between"
-                                                            id="dropdownMenuButton" type="button"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">Status
-                                                    </button>
-                                                    <div class="select-dropdown-menu dropdown-menu"
-                                                         aria-labelledby="dropdownMenuButton">
-                                                        <a class="select-dropdown-item dropdown-item" href="#"
-                                                           data-selected="true" data-value="1">Filed</a>
-                                                        <a class="select-dropdown-item dropdown-item" href="#"
-                                                           data-value="2">Ongoing</a>
+                        <div class="card-body">
+                            <div class="card mb-4 shadow-none">
+                                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                    <span>General</span>
+                                </div>
+                                <div class="card-body bg-white">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <span class="text-primary fw-500">Information</span>
+                                            <hr class="mt-0">
+                                            <div class="row gy-3">
+                                                <div class="col-12">
+                                                    <label for="">SOAP ID</label>
+                                                    <input type="text" class="form-control bg-gray-100"
+                                                           value="{{sprintf("VETISSOAP-%05d",$record->id)}}"
+                                                           disabled>
+                                                </div>
+                                                <div class=" col-12">
+                                                    <div class="dropdown">
+                                                        <label for="">Status</label>
+                                                        <button class="form-select d-flex justify-between"
+                                                                id="dropdownMenuButton" type="button"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false"
+                                                                disabled>{{($record->status == 1) ? "Filled" : "Ongoing"}}
+                                                        </button>
+                                                        <div class="select-dropdown-menu dropdown-menu"
+                                                             aria-labelledby="dropdownMenuButton">
+                                                            <a class="select-dropdown-item dropdown-item" href="#"
+                                                               data-selected="true" data-value="1">Filed</a>
+                                                            <a class="select-dropdown-item dropdown-item" href="#"
+                                                               data-value="2">Ongoing</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Date</label>
-                                                <input type="date" class="form-control" name="date">
+                                                <div class="col-12">
+                                                    <label for="">Date</label>
+                                                    <input type="date" class="form-control" name="date"
+                                                           value="{{$record->record_date}}" disabled>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="text-primary fw-500">Patient Information</span>
-                                        <hr class="mt-0">
-                                        <div class="row gy-3">
-                                            <div class="col-12">
-                                                <div class="dropdown">
-                                                    <label for="">Type</label>
-                                                    <button class="form-select d-flex justify-between" id="soapType"
-                                                            type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">Type
-                                                    </button>
-                                                    <div class="dropdown-menu select-dropdown-menu"
-                                                         aria-labelledby="soapType">
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="1">Walk-In</a>
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="2">Consultation</a>
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="3">Vaccination</a>
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="4">Surgery</a>
+                                        <div class="col-md-6">
+                                            <span class="text-primary fw-500">Patient Information</span>
+                                            <hr class="mt-0">
+                                            <div class="row gy-3">
+                                                <div class="col-12">
+                                                    <div class="dropdown">
+                                                        <label for="">Type</label>
+                                                        @php
+                                                            $consultation_type =  [
+                                                                1=> "Walk-In"  ,
+                                                                2=> "Consultation"  ,
+                                                                3=> "Vaccination",
+                                                                4=> "Surgery"
+                                                            ];
+                                                        @endphp
+                                                        <button class="form-select d-flex justify-between" id="soapType"
+                                                                type="button" data-bs-toggle="dropdown"
+                                                                aria-haspopup="true"
+                                                                aria-expanded="false"
+                                                                disabled>{{$consultation_type[$record->consultation_type] }}
+                                                        </button>
+                                                        <div class="dropdown-menu select-dropdown-menu"
+                                                             aria-labelledby="soapType">
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="1">Walk-In</a>
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="2">Consultation</a>
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="3">Vaccination</a>
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="4">Surgery</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Attending Veterinarian</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#veterinarianListModal"><span id="vet">Select Veterinarian</span>
-                                                    <i class="fa-solid fa-user-doctor"></i></button>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Pet Owner</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#petOwnerListModal" disabled>
-                                                    <span>{{$owner->client_name}}</span> <i
-                                                        class="fa-solid fa-user"></i></button>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Pet</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#petListModal" disabled>
-                                                    <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
-                                                </button>
+                                                <div class="col-12">
+                                                    @php
+                                                        $doctor = \App\Models\Doctor::getDoctorById($record->doctorID)
+                                                    @endphp
+                                                    <label for="">Attending Veterinarian</label>
+                                                    <button class="form-control d-flex justify-content-between"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#veterinarianListModal" disabled><span
+                                                            id="vet">{{$doctor->firstname." ".$doctor->lastname}}</span>
+                                                        <i class="fa-solid fa-user-doctor"></i></button>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="">Pet Owner</label>
+                                                    <button class="form-control d-flex justify-content-between"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#petOwnerListModal" disabled>
+                                                        <span>{{$owner->client_name}}</span> <i
+                                                            class="fa-solid fa-user"></i></button>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="">Pet</label>
+                                                    <button class="form-control d-flex justify-content-between"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#petListModal" disabled>
+                                                        <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row gy-3">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Primary Complaint/History</div>
-                                    <div class="card-body"><textarea name="complaint" id="" cols="30" rows="10"
-                                                                     class="form-control w-full"></textarea></div>
+                            <div class="row gy-3">
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Primary Complaint/History</div>
+                                        <div class="card-body"><textarea name="complaint" id="" cols="30" rows="10"
+                                                                         class="form-control w-full">{{$record->complaint}}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -506,11 +524,10 @@
                                             Palpebral Reflex:
                                             Temperature:
                                         -->
-                                        <div class="card-body"><textarea name="examination" id="" cols="30" rows="10"
+                                        <div class="card-body"><textarea name="examination" id="examinationTextArea" cols="30" rows="10"
                                                                          class="form-control w-full"></textarea></div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -554,7 +571,7 @@
                                         </div>
                                         <div class="mx-3 mb-4 px-1">
                                             <span class="text-primary fw-500">Interpretation</span>
-                                            <textarea name="" id="" cols="30" rows="10"
+                                            <textarea name="" id="interpretationTextField" cols="30" rows="10"
                                                       class="form-control mt-2"></textarea>
                                         </div>
                                     </div>
@@ -595,7 +612,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -604,42 +620,52 @@
                                                 Fill Template
                                             </button>
                                         </div>
-                                        <div class="card-body"><textarea name="diagnosis" id="" cols="30" rows="10"
+                                        <div class="card-body"><textarea name="diagnosis" id="diagnosisTextArea" cols="30" rows="10"
                                                                          class="form-control w-full"></textarea></div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header">Treatment</div>
-                                        <div class="card-body"><textarea name="treatment" id="" cols="30" rows="10"
+                                        <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30" rows="10"
                                                                          class="form-control w-full"></textarea></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card shadow-none">
                                         <div class="card-header">Prescription</div>
-                                        <div class="card-body"><textarea name="prescription" id="" cols="30" rows="10"
+                                        <div class="card-body"><textarea name="prescription" id="prescriptionTextArea" cols="30" rows="10"
                                                                          class="form-control w-full"></textarea></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card shadow-none">
                                         <div class="card-header">Client Communication</div>
-                                        <div class="card-body"><textarea name="client_communication" id="" cols="30"
+                                        <div class="card-body"><textarea name="client_communication" id="clientCommunicationTextArea" cols="30"
                                                                          rows="10"
                                                                          class="form-control w-full"></textarea></div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <form action="{{route('soap.update', ['id' => $pet->id,'recordID' => $record->id ])}}" method="post" id="updateForm" >
+                                @csrf
+                                <input type="hidden" value="" name="examination" id="examination" >
+                                <input type="hidden" value="" name="interpretation" id="interpretation">
+                                <input type="hidden" value="" name="diagnosis" id="diagnosis">
+                                <input type="hidden" value="" name="treatment" id="treatment">
+                                <input type="hidden" value="" name="prescription" id="prescription">
+                                <input type="hidden" value="" name="client_communication" id="client_communication">
+                            <button class="btn btn-primary" type="button" onclick="submitTextFields()"><i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
+                            </button>
+                            </form>
+                            <!-- Only shows pag na save na -->
+                            <!-- <button class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i> <span class="ms-2">Update Record</span></button> -->
                         </div>
                     </div>
 
-                    <div class="card-footer">
-                        <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
-                        </button>
-                        <!-- Only shows pag na save na -->
-                        <!-- <button class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i> <span class="ms-2">Update Record</span></button> -->
-                    </div>
-                </div>
             </div>
         </div>
     </div>

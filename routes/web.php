@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/petinfo/{id}/soap/create',[SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view', [SoapController::class, 'show'])->name('soap.view');
     Route::post('petinfo/{id}/soap/add', [SoapController::class, 'store'])->name('soap.add');
+    Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
 
 
