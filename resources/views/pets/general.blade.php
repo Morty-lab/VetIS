@@ -298,26 +298,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>08/11/2024</td>
-                                <td>VETIS-2032</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>
-                                    <a class="btn btn-primary" href="/petinfo/soap">Open</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>08/11/2024</td>
-                                <td>VETIS-2032</td>
-                                <td>Consultation</td>
-                                <td>Pet Consultation</td>
-                                <td>Pending</td>
-                                <td>
-                                    <a class="btn btn-primary" href="/petinfo/soap">Open</a>
-                                </td>
-                            </tr>
+                            @foreach($pet_records as $record)
+                                <tr>
+                                    <td>08/11/2024</td>
+                                    <td>VETIS-2032</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{route('soap.view', ['id' =>$record->id])}}">Open</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\PetsController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SoapController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
@@ -58,9 +59,10 @@ Route::middleware('auth')->group(function () {
 //    Route::get('/record', function () {
 //        return view('pets.record');
 //    });
-    Route::get('/petinfo/{id}/soap',[\App\Http\Controllers\SoapController::class, 'index'])->name('soap.index');
-    Route::get('/petinfo/{id}/soap/create',[\App\Http\Controllers\SoapController::class, 'create'])->name('soap.create');
-
+    Route::get('/petinfo/{id}/soap',[SoapController::class, 'index'])->name('soap.index');
+    Route::get('/petinfo/{id}/soap/create',[SoapController::class, 'create'])->name('soap.create');
+    Route::get('/petinfo/{id}/soap/view', [SoapController::class, 'show'])->name('soap.view');
+    Route::post('petinfo/{id}/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
 
 

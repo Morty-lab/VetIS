@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
+use App\Models\PetRecords;
 use App\Models\Pets;
 use App\Models\Clients;
 use Illuminate\Http\Request;
@@ -64,8 +65,9 @@ class PetsController extends Controller
     public function show(Pets $pets)
     {
         $appointments = Appointments::all();
+        $pet_records = Petrecords::findByPetId($pets->id);
         $pets->load('client');
-        return view('pets.general', ['pet' => $pets, 'appointments' => $appointments]);
+        return view('pets.general', ['pet' => $pets, 'appointments' => $appointments , 'pet_records' => $pet_records]);
     }
 
     /**

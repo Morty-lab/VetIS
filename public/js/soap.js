@@ -4,11 +4,26 @@ services = []
 //soapType , status
 
 function selectVeterinarian(vet){
-    console.log(vet)
-    let vetDisplay = document.getElementById('vet')
-    vetDisplay.textContent = `${vet['firstname']} ${vet['lastname']}`
+    let vetDisplay = document.getElementById('vet');
+    let vetInput = document.getElementById('vetInput');
+    vetDisplay.textContent = `${vet['firstname']} ${vet['lastname']}`;
+    vetInput.value = vet['id'];
 }
 
+function fillSoapTypeValue(){
+    let soapType = document.getElementById('soapType');
+    let soapTypeInput = document.getElementById('soapTypeInput');
+    var text = soapType.innerText;
+    soapTypeInput.value = text;
+}
+
+function fillSoapStatusValue(){
+    let soapStatus = document.getElementById('dropdownMenuButton');
+    let soapStatusInput = document.getElementById('statusInput');
+
+    var text = soapStatus.innerText;
+    soapStatusInput.value = text;
+}
 function fillTemplate(textarea){
     const examinationTemplateContent = `
     Heart Rate (BPM):
@@ -44,6 +59,7 @@ function fillTemplate(textarea){
 
     // Set the textarea content
 }
+
 
 function fillDiagnosisTemplate(){
 

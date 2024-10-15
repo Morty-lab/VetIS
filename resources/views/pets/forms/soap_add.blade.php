@@ -386,310 +386,173 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="card mb-4 shadow-none">
-                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                                <span>General</span>
+                    <form action="{{route('soap.add',['id' => $pet->id])}}" method="POST">
+                        @csrf
+                        <div class="card-body">
+                            <div class="card mb-4 shadow-none">
+                                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                    <span>General</span>
+                                </div>
+                                <div class="card-body bg-white">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <span class="text-primary fw-500">Information</span>
+                                            <hr class="mt-0">
+                                            <div class="row gy-3">
+                                                <div class="col-12">
+                                                    <label for="">SOAP ID</label>
+                                                    <input type="text" class="form-control bg-gray-100"
+                                                           value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::count()+1)}}"
+                                                           disabled>
+                                                </div>
+                                                <div class=" col-12">
+                                                    <div class="dropdown">
+                                                        <label for="">Status</label>
+                                                        <button class="form-select d-flex justify-between"
+                                                                id="dropdownMenuButton" type="button"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false" onclick="setTimeout(fillSoapStatusValue,3000)">Status
+                                                        </button>
+                                                        <input type="hidden" name="consultation_status" value="" id="statusInput">
+                                                        <div class="select-dropdown-menu dropdown-menu"
+                                                             aria-labelledby="dropdownMenuButton">
+                                                            <a class="select-dropdown-item dropdown-item" href="#"
+                                                               data-selected="true" data-value="1">Filed</a>
+                                                            <a class="select-dropdown-item dropdown-item" href="#"
+                                                               data-value="2">Ongoing</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="">Date</label>
+                                                    <input type="date" class="form-control" name="date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="text-primary fw-500">Patient Information</span>
+                                            <hr class="mt-0">
+                                            <div class="row gy-3">
+                                                <div class="col-12">
+                                                    <div class="dropdown">
+                                                        <label for="">Type</label>
+                                                        <button class="form-select d-flex justify-between" id="soapType"
+                                                                type="button" data-bs-toggle="dropdown"
+                                                                aria-haspopup="true"
+                                                                aria-expanded="false" onclick="setTimeout(fillSoapTypeValue, 3000)">Type
+                                                        </button>
+                                                        <input type="hidden" name="consultation_type" value="" id="soapTypeInput">
+                                                        <div class="dropdown-menu select-dropdown-menu"
+                                                             aria-labelledby="soapType">
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="1">Walk-In</a>
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="2">Consultation</a>
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="3">Vaccination</a>
+                                                            <a class="dropdown-item select-dropdown-item" href="#"
+                                                               data-value="4">Surgery</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="">Attending Veterinarian</label>
+                                                    <button class="form-control d-flex justify-content-between"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#veterinarianListModal"><span id="vet">Select Veterinarian</span>
+                                                        <i class="fa-solid fa-user-doctor"></i>
+                                                    </button>
+                                                    <input name="doctorID" type="hidden" value="" id="vetInput">
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="">Pet Owner</label>
+                                                    <button class="form-control d-flex justify-content-between"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#petOwnerListModal" disabled>
+                                                        <span>{{$owner->client_name}}</span> <i
+                                                            class="fa-solid fa-user"></i></button>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="">Pet</label>
+                                                    <button class="form-control d-flex justify-content-between"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#petListModal" disabled>
+                                                        <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body bg-white">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <span class="text-primary fw-500">Information</span>
-                                        <hr class="mt-0">
-                                        <div class="row gy-3">
-                                            <div class="col-12">
-                                                <label for="">SOAP ID</label>
-                                                <input type="text" class="form-control bg-gray-100"
-                                                       value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::count()+1)}}"
-                                                       disabled>
-                                            </div>
-                                            <div class=" col-12">
-                                                <div class="dropdown">
-                                                    <label for="">Status</label>
-                                                    <button class="form-select d-flex justify-between"
-                                                            id="dropdownMenuButton" type="button"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">Status
-                                                    </button>
-                                                    <div class="select-dropdown-menu dropdown-menu"
-                                                         aria-labelledby="dropdownMenuButton">
-                                                        <a class="select-dropdown-item dropdown-item" href="#"
-                                                           data-selected="true" data-value="1">Filed</a>
-                                                        <a class="select-dropdown-item dropdown-item" href="#"
-                                                           data-value="2">Ongoing</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Date</label>
-                                                <input type="date" class="form-control" name="date">
-                                            </div>
-                                        </div>
+                            <div class="row gy-3">
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Primary Complaint/History</div>
+                                        <div class="card-body"><textarea name="complaint" id="" cols="30" rows="10"
+                                                                         class="form-control w-full"></textarea></div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <span class="text-primary fw-500">Patient Information</span>
-                                        <hr class="mt-0">
-                                        <div class="row gy-3">
-                                            <div class="col-12">
-                                                <div class="dropdown">
-                                                    <label for="">Type</label>
-                                                    <button class="form-select d-flex justify-between" id="soapType"
-                                                            type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">Type
-                                                    </button>
-                                                    <div class="dropdown-menu select-dropdown-menu"
-                                                         aria-labelledby="soapType">
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="1">Walk-In</a>
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="2">Consultation</a>
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="3">Vaccination</a>
-                                                        <a class="dropdown-item select-dropdown-item" href="#"
-                                                           data-value="4">Surgery</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Attending Veterinarian</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#veterinarianListModal"><span id="vet">Select Veterinarian</span>
-                                                    <i class="fa-solid fa-user-doctor"></i></button>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Pet Owner</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#petOwnerListModal" disabled>
-                                                    <span>{{$owner->client_name}}</span> <i
-                                                        class="fa-solid fa-user"></i></button>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Pet</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#petListModal" disabled>
-                                                    <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> <span
+                                            class="ms-2">Save Record</span></button>
+                                    <!-- Only shows pag na save na -->
+                                    <!-- <button class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i> <span class="ms-2">Update Record</span></button> -->
                                 </div>
                             </div>
                         </div>
-                        <div class="row gy-3">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Primary Complaint/History</div>
-                                    <div class="card-body"><textarea name="complaint" id="" cols="30" rows="10"
-                                                                     class="form-control w-full"></textarea></div>
-                                </div>
-                            </div>
-                                <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Examination</span>
-                                            <button class="btn-outline-primary btn" type="button"
-                                                    onclick="fillTemplate('examination')">Fill Template
-                                            </button>
-                                        </div>
-                                        <!--
-                                            --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                            Heart Rate (BPM):
-                                            Respiration Rate (BRPM):
-                                            Weight (KG):
-                                            Length (CM):
-                                            CRT:
-                                            BCS:
-                                            Lymph Nodes:
-                                            Palpebral Reflex:
-                                            Temperature:
-                                        -->
-                                        <div class="card-body"><textarea name="examination" id="" cols="30" rows="10"
-                                                                         class="form-control w-full"></textarea></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Laboratory/Interpretation</span>
-                                            <button class="btn-outline-primary btn">Add</button>
-                                        </div>
-                                        <div class="row gy-3 mt-2 mb-4">
-                                            <!-- Laboratory File -->
-                                            <div class="col-12">
-                                                <div class="card shadow-none mx-3">
-                                                    <div class="row p-3">
-                                                        <div class="col-md-4">
-                                                            <div class="mb-3">
-                                                                <label for="formFile" class="form-label">Upload</label>
-                                                                <input class="form-control" type="file" id="formFile">
-                                                            </div>
-                                                            <div
-                                                                class="card shadow-none p-2 d-flex justify-content-center align-items-center">
-                                                                <img
-                                                                    src="https://t3.ftcdn.net/jpg/07/23/05/68/360_F_723056816_irMoAo8SFXjh9PNlT9kb7FUePA73JzK7.jpg"
-                                                                    alt=""
-                                                                    style="max-width: auto; max-height: 200px; object-fit: contain;">
-                                                            </div>
-                                                        </div>
-                                                        <div class=" col-md-8">
-                                                            <div class="row">
-                                                                <label class="form-label">Remark</label>
-                                                                <div class="col">
-                                                                    <textarea name="" id="" cols="30" rows="18"
-                                                                              class="form-control"></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        class="card-footer d-flex py-3 justify-content-end align-items-center bg-white">
-                                                        <button class="btn btn-outline-danger">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mx-3 mb-4 px-1">
-                                            <span class="text-primary fw-500">Interpretation</span>
-                                            <textarea name="" id="" cols="30" rows="10"
-                                                      class="form-control mt-2"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Plan</span>
-                                            <button class="btn-outline-primary btn" type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#serviceListModal">Add Services
-                                            </button>
-                                        </div>
-                                        <div class="px-4">
-                                            <table id="treatmentPlanTable">
-                                                <thead>
-                                                <tr>
-                                                    <th>Service</th>
-                                                    <th>Date Return</th>
-                                                    <th>Reason for Return</th>
-                                                    <th>Status</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="treatmentPlanTableBody">
-                                                {{--                                            <tr>--}}
-                                                {{--                                                <!-- sample if no need na mag return -->--}}
-                                                {{--                                                <td>Deworming</td>--}}
-                                                {{--                                                <td>...</td>--}}
-                                                {{--                                                <td>...</td>--}}
-                                                {{--                                                <td>...</td>--}}
-                                                {{--                                                <td>--}}
-                                                {{--                                                    <button class="btn btn-success" href="#" type="button" data-bs-toggle="modal" data-bs-target="#servicePlanEditModal"><i class="fa-solid fa-edit"></i></button>--}}
-                                                {{--                                                    <button class="btn btn-danger" href="#" type="button" data-bs-toggle="modal" data-bs-target="#serviceDeleteConfirmationModal"><i class="fa-solid fa-trash"></i></button>--}}
-                                                {{--                                                </td>--}}
-                                                {{--                                            </tr>--}}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Diagnosis</span>
-                                            <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">
-                                                Fill Template
-                                            </button>
-                                        </div>
-                                        <div class="card-body"><textarea name="diagnosis" id="" cols="30" rows="10"
-                                                                         class="form-control w-full"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header">Treatment</div>
-                                        <div class="card-body"><textarea name="treatment" id="" cols="30" rows="10"
-                                                                         class="form-control w-full"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card shadow-none">
-                                        <div class="card-header">Prescription</div>
-                                        <div class="card-body"><textarea name="prescription" id="" cols="30" rows="10"
-                                                                         class="form-control w-full"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card shadow-none">
-                                        <div class="card-header">Client Communication</div>
-                                        <div class="card-body"><textarea name="client_communication" id="" cols="30"
-                                                                         rows="10"
-                                                                         class="form-control w-full"></textarea></div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
-                        </button>
-                        <!-- Only shows pag na save na -->
-                        <!-- <button class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i> <span class="ms-2">Update Record</span></button> -->
-                    </div>
+                    </form>
                 </div>
+
+
             </div>
-        </div>
-    </div>
-@endsection
+            @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/soap.js') }}"></script>
-    <script>
-        document.querySelectorAll('.select-dropdown-menu').forEach(menu => {
-            // Handle dropdown item clicks
-            menu.querySelectorAll('.select-dropdown-item').forEach(item => {
-                item.addEventListener('click', function (event) {
-                    event.preventDefault(); // Prevent the default anchor behavior
+            @section('scripts')
+                <script src="{{ asset('js/soap.js') }}"></script>
+                <script>
+                    document.querySelectorAll('.select-dropdown-menu').forEach(menu => {
+                        // Handle dropdown item clicks
+                        menu.querySelectorAll('.select-dropdown-item').forEach(item => {
+                            item.addEventListener('click', function (event) {
+                                event.preventDefault(); // Prevent the default anchor behavior
 
-                    // Find the related button using the aria-labelledby attribute
-                    const buttonId = menu.getAttribute('aria-labelledby');
-                    const button = document.querySelector(`#${buttonId}`);
+                                // Find the related button using the aria-labelledby attribute
+                                const buttonId = menu.getAttribute('aria-labelledby');
+                                const button = document.querySelector(`#${buttonId}`);
 
-                    if (button) {
-                        // Remove the data-selected attribute from all items
-                        menu.querySelectorAll('.select-dropdown-item').forEach(i => i.setAttribute('data-selected', 'false'));
+                                if (button) {
+                                    // Remove the data-selected attribute from all items
+                                    menu.querySelectorAll('.select-dropdown-item').forEach(i => i.setAttribute('data-selected', 'false'));
 
-                        // Set the selected item and update the button text
-                        this.setAttribute('data-selected', 'true');
-                        button.textContent = this.textContent;
+                                    // Set the selected item and update the button text
+                                    this.setAttribute('data-selected', 'true');
+                                    button.textContent = this.textContent;
 
-                        // Optionally, you can close the dropdown after selection
-                        $(button).dropdown('toggle');
-                    } else {
-                        console.error('Button not found for the dropdown menu.');
-                    }
-                });
-            });
+                                    // Optionally, you can close the dropdown after selection
+                                    $(button).dropdown('toggle');
+                                } else {
+                                    console.error('Button not found for the dropdown menu.');
+                                }
+                            });
+                        });
 
-            // Set the default selected item based on data-selected attribute
-            const buttonId = menu.getAttribute('aria-labelledby');
-            const button = document.querySelector(`#${buttonId}`);
+                        // Set the default selected item based on data-selected attribute
+                        const buttonId = menu.getAttribute('aria-labelledby');
+                        const button = document.querySelector(`#${buttonId}`);
 
-            if (button) {
-                const defaultItem = menu.querySelector('.select-dropdown-item[data-selected="true"]');
+                        if (button) {
+                            const defaultItem = menu.querySelector('.select-dropdown-item[data-selected="true"]');
 
-                if (defaultItem) {
-                    button.textContent = defaultItem.textContent;
-                } else {
-                    console.error('Default selected item not found in the dropdown menu.');
-                }
-            } else {
-                console.error('Button not found for the dropdown menu.');
-            }
-        });
-    </script>
+                            if (defaultItem) {
+                                button.textContent = defaultItem.textContent;
+                            } else {
+                                console.error('Default selected item not found in the dropdown menu.');
+                            }
+                        } else {
+                            console.error('Button not found for the dropdown menu.');
+                        }
+                    });
+                </script>
 
 @endsection

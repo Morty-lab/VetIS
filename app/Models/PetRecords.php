@@ -37,7 +37,7 @@ class PetRecords extends Model
 
     public static function findByPetId($petId)
     {
-        return self::where('pet_ID', $petId)->get();
+        return self::where('petID', $petId)->get();
     }
     public static function createPetRecord($data)
     {
