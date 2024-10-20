@@ -70,57 +70,49 @@
                             <li><a class="dropdown-item" href="">Print</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="row gx-5 px-3">
-                        <div class="col d-flex justify-content-center align-items-center card shadow-none">
-                            <img class="img-account-profile rounded-circle mb-2 p-1"
-                                src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg"
-                                alt="" />
-                        </div>
-                        <div class="col-md-9">
-                            <div class="row gx-3">
-                                <div class="col-md-12">
-                                    <h6 class="mb-2 text-primary">Pet Information</h6>
-                                    <hr class="mt-1 mb-3">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputPetName">Pet Name</label>
-                                    <p>{{$pet->pet_name}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputPetName">PetID</label>
-                                    <p>{{$pet->id}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                    <p>{{$pet->pet_type}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBreed">Breed</label>
-                                    <p>{{$pet->pet_breed}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputColor">Color</label>
-                                    <p>{{$pet->pet_color}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputWeight">Weight</label>
-                                    <p>{{$pet->pet_weight}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                    <p>{{$pet->pet_birthdate}}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="selectGender">Gender</label>
-                                    <p>{{$pet->pet_gender}}</p>
-                                </div>
+                    <div class="col-md-9">
+                        <div class="row gx-3">
+                            <div class="col-md-12">
+                                <h6 class="mb-2 text-primary">Pet Information</h6>
+                                <hr class="mt-1 mb-3">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Pet Name</label>
+                                <p>{{$pet->pet_name}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">PetID</label>
+                                <p>{{$pet->id}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="selectPetType">Pet Type</label>
+                                <p>{{$pet->pet_type}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBreed">Breed</label>
+                                <p>{{$pet->pet_breed}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputColor">Color</label>
+                                <p>{{$pet->pet_color}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputWeight">Weight</label>
+                                <p>{{$pet->pet_weight}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthdate">Birthdate</label>
+                                <p>{{$pet->pet_birthdate}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="selectGender">Gender</label>
+                                <p>{{$pet->pet_gender}}</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="row gx-5">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-12 mt-4">
                                     <h6 class="mb-2 text-primary">Other Information</h6>
@@ -136,94 +128,46 @@
                                     <div class="col small">
                                         Last Date Vaccinated: 08/11/2024
                                     </div>
+                                </div> -->
+                                <div class="col-md-6">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="neuteredCheckbox"
+                                                value="option1" @checked($pet->neutered) disabled>
+                                            <label class="" for="neuteredCheckbox">Spayed/Neutered</label>
+                                        </div>
+                                    </div>
+                                    <div class="col small">
+                                        Date Spayed/Neutered: N/A
+                                    </div>
                                 </div>
-                                    <div class="col-md-6">
-                                        <div class="col">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="neuteredCheckbox"
-                                                       value="option1" @checked($pet->neutered) disabled>
-                                                <label class="" for="neuteredCheckbox">Spayed/Neutered</label>
-                                            </div>
-                                        </div>
-                                        <div class="col small">
-                                            Date Spayed/Neutered: N/A
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mt-3">
-                                        <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                                        <p>{{$pet->pet_description}}</p>
-                                    </div> -->
-                                <div class="row gx-3">
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Vacciantion Record</label>
-                                        <p>No Vaccination Record</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Spayed/Neutered</label>
-                                        <p>Yes</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Vaccinated with Anti-Rabies?</label>
-                                        <p>Yes</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
-                                        <p>08/11/2002</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Okay to use photos online?</label>
-                                        <p>Yes</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Date of Last Groom</label>
-                                        <p>08/11/2002</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="small mb-1">Okay to give treats?</label>
-                                        <p>Yes</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">Food</label>
-                                        <p class="form-control">---</>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">History of Aggression</label>
-                                        <p class="form-control">No History of Agression</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">Food Allergies</label>
-                                        <p class="form-control">No Food Allergies</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">Pet Condition</label>
-                                        <p class="form-control">No Illness or other condition</p>
-                                    </div>
+                                <div class="col-md-12 mt-3">
+                                    <label class="small mb-1" for="inputPetDescription">Pet Description</label>
+                                    <p>{{$pet->pet_description}}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-12 mt-4">
                                     <h6 class="mb-2 text-primary">Owner Information</h6>
                                     <hr class="mt-1 mb-3">
-                                    <div class="row gx-3">
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputOwnerName">Owner Name</label>
-                                            <p>{{$pet->client->client_name}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                            <p>{{$pet->client->client_address}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                            <p>{{$pet->client->client_no}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                                            <p>{{$pet->client->client_email_address}}</p>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputOwnerName">Owner Name</label>
+                                        <p>{{$pet->client->client_name}}</p>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
+                                    <p>{{$pet->client->client_address}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="ownerContact">Contact Number</label>
+                                    <p>{{$pet->client->client_no}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
+                                    <p>{{$pet->client->client_email_address}}</p>
                                 </div>
                             </div>
                         </div>
