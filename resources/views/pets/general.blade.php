@@ -334,40 +334,40 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-12">
-                <div class="card mb-4 shadow-none">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Vaccination</span>
-                        <button class="btn btn-primary" type="button">New</button>
-                    </div>
-                    <div class="card-body">
-                        <table id="vaccinationTable">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Code</th>
-                                    <th>Type</th>
-                                    <th>Subject</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>08/11/2024</td>
-                                    <td>VETIS-2032</td>
-                                    <td>Consultation</td>
-                                    <td>Pet Consultation</td>
-                                    <td>Pending</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="/um/admin/profile">Open</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
+{{--            <div class="col-md-12">--}}
+{{--                <div class="card mb-4 shadow-none">--}}
+{{--                    <div class="card-header d-flex justify-content-between align-items-center">--}}
+{{--                        <span>Vaccination</span>--}}
+{{--                        <button class="btn btn-primary" type="button">New</button>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <table id="vaccinationTable">--}}
+{{--                            <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th>Date</th>--}}
+{{--                                    <th>Code</th>--}}
+{{--                                    <th>Type</th>--}}
+{{--                                    <th>Subject</th>--}}
+{{--                                    <th>Status</th>--}}
+{{--                                    <th>Actions</th>--}}
+{{--                                </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody>--}}
+{{--                                <tr>--}}
+{{--                                    <td>08/11/2024</td>--}}
+{{--                                    <td>VETIS-2032</td>--}}
+{{--                                    <td>Consultation</td>--}}
+{{--                                    <td>Pet Consultation</td>--}}
+{{--                                    <td>Pending</td>--}}
+{{--                                    <td>--}}
+{{--                                        <a class="btn btn-primary" href="/um/admin/profile">Open</a>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div> --}}
         </div>
     </div>
 
