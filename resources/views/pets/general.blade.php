@@ -388,7 +388,7 @@
                                         <td>{{$record->complaint}}</td>
                                         <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="{{route('soap.view', ['id' =>$record->id])}}">Open</a>
+                                            <a class="btn btn-primary" href="{{route('soap.view', ['id' => $pet->id, 'recordID' => $record->id])}}">Open</a>
                                         </td>
                                     </tr>
                                     @endforeach

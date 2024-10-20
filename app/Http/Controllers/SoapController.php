@@ -41,6 +41,8 @@ class SoapController extends Controller
      */
     public function store(Request $request,int $id)
     {
+        $recordID = PetRecords::latest('id')->first()->id +1 ;
+
         $ownerID = Pets::find($id)->owner_ID;
         $consultation_types = [
             "Walk-In" => 1,
@@ -73,18 +75,18 @@ class SoapController extends Controller
 
         PetRecords::createPetRecord($data);
 
-        return redirect()->route('soap.view', ['id' => $id]);
+        return redirect()->route('soap.view', ['id' => $id, 'recordID' => $recordID ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, int $recordID)
     {
         $pet = Pets::find($id);
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
-        $record = PetRecords::getPetRecordById($id);
+        $record = PetRecords::getPetRecordById($recordID);
         $petPlan = PetPlan::getAllByRecordID($id);
 
         return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ,'petPlan' => $petPlan]);

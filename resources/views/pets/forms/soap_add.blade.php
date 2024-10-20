@@ -379,7 +379,7 @@
                                             <div class="col-12">
                                                 <label for="">SOAP ID</label>
                                                 <input type="text" class="form-control bg-gray-100"
-                                                    value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::count()+1)}}"
+                                                    value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::latest('id')->first()->id +1)}}"
                                                     disabled>
                                             </div>
                                             <div class=" col-12">
