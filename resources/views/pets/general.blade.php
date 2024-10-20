@@ -70,52 +70,44 @@
                                 <li><a class="dropdown-item" href="">Print</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row gx-5 px-3">
-                            <div class="col d-flex justify-content-center align-items-center card shadow-none">
-                                <img class="img-account-profile rounded-circle mb-2 p-1"
-                                     src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg"
-                                     alt=""/>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="row">
-                                    <div class="col-md-12 mt-2">
-                                        <h6 class="mb-2 text-primary">Pet Information</h6>
-                                        <hr class="mt-1 mb-3">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputPetName">Pet Name</label>
-                                        <p>{{$pet->pet_name}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputPetName">PetID</label>
-                                        <p>{{$pet->id}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                        <p>{{$pet->pet_type}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputBreed">Breed</label>
-                                        <p>{{$pet->pet_breed}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputColor">Color</label>
-                                        <p>{{$pet->pet_color}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputWeight">Weight</label>
-                                        <p>{{$pet->pet_weight}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                        <p>{{$pet->pet_birthdate}}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="selectGender">Gender</label>
-                                        <p>{{$pet->pet_gender}}</p>
-                                    </div>
+                        <div class="col-md-9">
+                            <div class="row gx-3">
+                                <div class="col-md-12">
+                                    <h6 class="mb-2 text-primary">Pet Information</h6>
+                                    <hr class="mt-1 mb-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputPetName">Pet Name</label>
+                                    <p>{{$pet->pet_name}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputPetName">PetID</label>
+                                    <p>{{$pet->id}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="selectPetType">Pet Type</label>
+                                    <p>{{$pet->pet_type}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputBreed">Breed</label>
+                                    <p>{{$pet->pet_breed}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputColor">Color</label>
+                                    <p>{{$pet->pet_color}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputWeight">Weight</label>
+                                    <p>{{$pet->pet_weight}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputBirthdate">Birthdate</label>
+                                    <p>{{$pet->pet_birthdate}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="selectGender">Gender</label>
+                                    <p>{{$pet->pet_gender}}</p>
+
                                 </div>
                             </div>
                         </div>
