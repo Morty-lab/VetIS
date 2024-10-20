@@ -71,8 +71,8 @@
                             </ul>
                         </div>
                         <div class="col-md-9">
-                            <div class="row gx-3">
-                                <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 mt-2">
                                     <h6 class="mb-2 text-primary">Pet Information</h6>
                                     <hr class="mt-1 mb-3">
                                 </div>
