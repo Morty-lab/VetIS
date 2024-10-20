@@ -40,12 +40,12 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
-                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="" name="pet_name"/>
+                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="" name="pet_name" />
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                <select class="form-control" id="selectPetType" name="pet_type" >
+                                <select class="form-control" id="selectPetType" name="pet_type">
                                     <option disabled selected>-- Select Pet Type --</option>
                                     <option>Dog</option>
                                     <option>Cat</option>
@@ -55,24 +55,24 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputBreed" >Breed</label>
-                                <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="" name="pet_breed"/>
+                                <label class="small mb-1" for="inputBreed">Breed</label>
+                                <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="" name="pet_breed" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputColor" >Color</label>
-                                <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color"/>
+                                <label class="small mb-1" for="inputColor">Color</label>
+                                <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color" />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight" >Weight</label>
-                                <input class="form-control" id="inputWeight" type="text" value="" placeholder="Weight" name="pet_weight"/>
+                                <label class="small mb-1" for="inputWeight">Weight</label>
+                                <input class="form-control" id="inputWeight" type="text" value="" placeholder="Weight" name="pet_weight" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate"/>
+                                <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" />
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
@@ -85,23 +85,72 @@
                         </div>
                         <h6 class="mb-2 mt-5 text-primary">Other Information</h6>
                         <hr class="mt-1 mb-3">
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-3">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="pet_vaccinated">
-                                    <label class="small" for="inlineCheckbox1">Vaccinated</label>
-                                </div>
+                        <div class="row gx-3 gy-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
+                                <select class="form-control" id="inputSelectVaccinationRecord">
+                                    <option disabled selected>-- Select Record --</option>
+                                    <option>No Vaccination Record</option>
+                                    <option>Complete</option>
+                                    <option>Incomplete</option>
+                                </select>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="pet_neutered">
-                                    <label class="small" for="inlineCheckbox1">Spayed/Neutered</label>
-                                </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
+                                <select class="form-control" id="inputSelectSpayedNeutered">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                            <textarea name="pet_description" id="inputPetDescription" class="form-control form-control-solid" cols="30" rows="5"></textarea>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
+                                <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
+                                <input type="month" id="inputAntiRabiesDate" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
+                                <textarea name="historyOfAggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here.."></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputFoodAllergies">Any Food Allergies?</label>
+                                <textarea name="foodAllergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here.."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetFood">Food?</label>
+                                <input type="text" name="petFood" id="inputPetFood" class="form-control" placeholder="Enter pet's food here..">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
+                                <select class="form-control" id="inputTreats">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastGroom">When was his/her last groom?</label>
+                                <input type="month" id="inputLastGroom" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhotosOnline">Okay to use photos online?</label>
+                                <select class="form-control" id="inputPhotosOnline">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputCondition">Prone to any seizure, illness, ect.? If so please list:</label>
+                                <textarea name="petCondition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here..."></textarea>
+                            </div>
                         </div>
                         <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
                         <hr class="mt-1 mb-3">
@@ -110,7 +159,7 @@
                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
                             <select class="form-control" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
                                 @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                                <option value="{{ $client->id }}">{{ $client->client_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -152,9 +201,6 @@
 </div>
 
 <script>
-
-
-
     var clients = @json($clients);
 
 
@@ -174,12 +220,7 @@
 
     window.addEventListener("load", function() {
         handleClientSelect();
-});
-
-
-
-
-
+    });
 </script>
 
 
