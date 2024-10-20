@@ -67,7 +67,7 @@ class PetsController extends Controller
         $appointments = Appointments::all();
         $pet_records = Petrecords::findByPetId($pets->id);
         $pets->load('client');
-        return view('pets.general', ['pet' => $pets, 'appointments' => $appointments , 'pet_records' => $pet_records]);
+        return view('pets.general', ['pet' => $pets, 'appointments' => $appointments, 'pet_records' => $pet_records]);
     }
 
     /**

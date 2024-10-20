@@ -346,7 +346,7 @@
                             <i class="fa-solid fa-hippo"></i>
                             No Records Yet
                         </div> -->
-                    <table id="datatablesSimple">
+                    <table id="soapRecordTable">
                         <thead>
                             <tr>
                                 <th>Date Created</th>

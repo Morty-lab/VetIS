@@ -23,6 +23,39 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (vaccinationTable) {
         new simpleDatatables.DataTable(vaccinationTable, {});
     }
+    const soapRecordTable = document.getElementById("soapRecordTable");
+    if (soapRecordTable) {
+        new simpleDatatables.DataTable(soapRecordTable, {
+            perPage: 5,
+            columns: [
+                // Sort the second column (index 1) in ascending order
+                { select: 0, sort: "desc" },
+            ],
+        });
+    }
+    const soapVetListTable = document.getElementById("soapVetListTable");
+    if (soapVetListTable) {
+        new simpleDatatables.DataTable(soapVetListTable, {
+            perPage: 5,
+        });
+
+        // Add a click event listener to the table body using event delegation
+        soapVetListTable
+            .querySelector("tbody")
+            .addEventListener("click", function (event) {
+                const row = event.target.closest("tr"); // Get the clicked row
+                if (row) {
+                    // Get the data from the clicked row
+                    const vet = {
+                        id: row.cells[0].textContent.replace("VETIS-", ""), // Extract the ID without the prefix
+                        firstname: row.cells[1].textContent.split(" ")[0], // Get the first name
+                        lastname: row.cells[1].textContent.split(" ")[1], // Get the last name
+                    };
+                    selectVeterinarian(vet);
+                }
+            });
+    }
+
     const treatmentPlanTable = document.getElementById("treatmentPlanTable");
     if (treatmentPlanTable) {
         new simpleDatatables.DataTable(treatmentPlanTable, {
