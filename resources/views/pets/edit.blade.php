@@ -102,6 +102,74 @@
                         </div>
                         <h6 class="mb-2 mt-5 text-primary">Other Information</h6>
                         <hr class="mt-1 mb-3">
+                        <div class="row gx-3 gy-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
+                                <select class="form-control" id="inputSelectVaccinationRecord">
+                                    <option disabled selected>-- Select Record --</option>
+                                    <option>No Vaccination Record</option>
+                                    <option>Complete</option>
+                                    <option>Incomplete</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
+                                <select class="form-control" id="inputSelectSpayedNeutered">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
+                                <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
+                                <input type="month" id="inputAntiRabiesDate" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
+                                <textarea name="historyOfAggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here.."></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputFoodAllergies">Any Food Allergies?</label>
+                                <textarea name="foodAllergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here.."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetFood">Food?</label>
+                                <input type="text" name="petFood" id="inputPetFood" class="form-control" placeholder="Enter pet's food here..">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
+                                <select class="form-control" id="inputTreats">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastGroom">When was his/her last groom?</label>
+                                <input type="month" id="inputLastGroom" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhotosOnline">Okay to use photos online?</label>
+                                <select class="form-control" id="inputPhotosOnline">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputCondition">Prone to any seizure, illness, ect.? If so please list:</label>
+                                <textarea name="petCondition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here..."></textarea>
+                            </div>
+                        </div>
+                        <!--                         
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
                                 <div class="form-check form-check-inline">
@@ -122,7 +190,7 @@
                             <label class="small mb-1" for="inputPetDescription">Pet Description</label>
                             <textarea name="pet_description" id="inputPetDescription" class="form-control form-control-solid" cols="30"
                                 rows="5">{{ $pet->pet_description }}</textarea>
-                        </div>
+                        </div> -->
                         <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
                         <hr class="mt-1 mb-3">
 
