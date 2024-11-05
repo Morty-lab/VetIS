@@ -1,3 +1,5 @@
+@php use App\Models\Clients; @endphp
+
 @extends('layouts.app')
 
 @section('styles')
@@ -15,6 +17,11 @@
     </div>
 </div>
 
+
+
+@php
+    Clients::setEmailAttribute($client, $client->user_id);
+@endphp
 <!-- Modals -->
 <div class="modal fade" id="updateOwnerInfo" tabindex="-1" role="dialog" aria-labelledby="updateOwnerInfoTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -32,7 +39,7 @@
 
                     <div class="col-md-12 mb-2">
                         <label class="small mb-1" for="editEmailAddress">Email address</label>
-                        <input type="text" class="form-control" name="" id="" value="{{$client->getEmailAttribute($client->id)}}">
+                        <input type="text" class="form-control" name="" id="" value="{{$client->client_email}}">
                     </div>
                     <div class="col-md-12 mb-2">
                         <label class="small mb-1" for="editAddress">Address</label>
@@ -100,7 +107,7 @@
 
                         <div class="col-md-6 mb-2">
                             <label class="small mb-1" for="editEmailAddress">Email address</label>
-                            <input type="text" class="form-control" name="owner_email" id="" value="{{$client->getEmailAttribute($client->user_id)}}">
+                            <input type="text" class="form-control" name="owner_email" id="" value="{{$client->client_email}}">
                         </div>
                         <div class="col-md-12 mb-2">
                             <label class="small mb-1" for="editAddress">Address</label>
