@@ -257,7 +257,7 @@
                         {{-- </div>--}}
                         <div class="col-md-12 mb-2">
                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            <p>princeinventorevltn89@gmail.com</p>
+                            <p>{{$client->client_email}}</p>
                         </div>
                         <div class="col-md-12 mb-2">
                             <label class="small mb-1" for="inputAddress">Address</label>
