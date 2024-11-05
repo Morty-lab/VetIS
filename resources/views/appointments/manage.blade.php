@@ -282,7 +282,7 @@
                     </thead>
                     <tbody>
                         @foreach ($appointments as $appointment)
-                            @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))
+{{--                            @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))--}}
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                                         {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
@@ -316,10 +316,10 @@
                                     </td>
 
                                 </tr>
-                            @else
-                                @continue
+{{--                            @else--}}
+{{--                                @continue--}}
 
-                            @endif
+{{--                            @endif--}}
 
 
 

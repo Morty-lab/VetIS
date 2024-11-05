@@ -70,10 +70,17 @@ class Clients extends Model
 //        return Carbon::parse($this->attributes['birthday'])->age;
 //    }
 
-    public function getEmailAttribute($id)
+    public static function setEmailAttribute(Clients $client, $id)
     {
         $email = User::where('id', $id)->value('email');
 
-        return $this->attributes['owner_email'] = $email;
+        // Set the client's email attribute
+        $client->client_email = $email;
+
+        // Optionally, you could save the client if needed
+        // $client->save();
+
+        return $client;
     }
+
 }

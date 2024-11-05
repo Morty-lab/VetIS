@@ -154,7 +154,11 @@
                                        @if( $appointment->status != 1)
                                             <a class="dropdown-item" href="{{route('appointments.done', ['id' => $appointment->id])}}">Done Appointment</a>
                                             <a class="dropdown-item" href="{{route('appointments.cancel', ['id' => $appointment->id])}}">Cancel Appointment</a>
+
                                        @endif
+                                        @if( is_null($appointment->status))
+                                               <a class="dropdown-item" href="{{route('appointments.schedule', ['id' => $appointment->id])}}">Schedule Appointment</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
