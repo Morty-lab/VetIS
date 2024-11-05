@@ -40,6 +40,7 @@ Route::get('/', function () {
         return redirect()->route('dashboard');
     }
     return redirect()->route('login');
+
 });
 
 Auth::routes(['login' => false]);

@@ -43,7 +43,7 @@ return [
     */
 
     'debug' => (bool) env('APP_DEBUG', false),
-
+    'log_level' => env('LOG_LEVEL', 'error'),
     /*
     |--------------------------------------------------------------------------
     | Application URL
