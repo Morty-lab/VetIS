@@ -1,4 +1,4 @@
-    <nav class="sidenav shadow-right sidenav-light">
+    <nav class="sidenav shadow-none border-end sidenav-light">
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 <!-- Sidenav Menu Heading (Account)-->
@@ -41,7 +41,7 @@
                 </a>
 
                 @if (auth()->user()->role == "admin")
-                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif"  href=" {{route('doctor.index')}}">
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif" href=" {{route('doctor.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
                     Veterinarians
                 </a>
@@ -94,20 +94,6 @@
 
                 <div class="sidenav-menu-heading">Inventory</div>
 
-                <a class="nav-link collapsed  @if(Request::is('suppliers')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapsePages">
-                    <div class="nav-link-icon"><i class="fa-solid fa-truck-field"></i></div>
-                    Manage Suppliers
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="{{route('suppliers.index')}}">
-                            All Suppliers
-                        </a>
-                    </nav>
-                </div>
-
                 <a class="nav-link collapsed @if(Request::is('products')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapsePages">
                     <div class="nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
                     Manage Products
@@ -122,16 +108,16 @@
                     </nav>
                 </div>
 
-                <a class="nav-link collapsed @if(Request::is('units')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUnits" aria-expanded="false" aria-controls="collapsePages">
-                    <div class="nav-link-icon"><i class="fa-solid fa-balance-scale"></i></div>
-                    Manage Units
+                <a class="nav-link collapsed  @if(Request::is('suppliers')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-truck-field"></i></div>
+                    Manage Suppliers
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseUnits" data-bs-parent="#accordionSidenav">
+                <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="{{route('units.index')}}">
-                            All Units
+                        <a class="nav-link" href="{{route('suppliers.index')}}">
+                            All Suppliers
                         </a>
                     </nav>
                 </div>
@@ -150,6 +136,20 @@
                     </nav>
                 </div>
 
+                <a class="nav-link collapsed @if(Request::is('units')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUnits" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-balance-scale"></i></div>
+                    Manage Units
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseUnits" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                        <a class="nav-link" href="{{route('units.index')}}">
+                            All Units
+                        </a>
+                    </nav>
+                </div>
+
                 @if (auth()->user()->role == "admin")
 
                 <div class="sidenav-menu-heading">User Management</div>
@@ -158,10 +158,10 @@
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Administrator
                 </a>
-{{--                <a class="nav-link @if(Request::is('um/client*')) active @endif" href="{{route('clients.index')}}">--}}
-{{--                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>--}}
-{{--                    Client/Pet Owners--}}
-{{--                </a>--}}
+                {{-- <a class="nav-link @if(Request::is('um/client*')) active @endif" href="{{route('clients.index')}}">--}}
+                {{-- <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>--}}
+                {{-- Client/Pet Owners--}}
+                {{-- </a>--}}
                 <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{route('staffs.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Staffs
