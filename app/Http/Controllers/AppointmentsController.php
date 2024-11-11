@@ -24,7 +24,6 @@ class AppointmentsController extends Controller
         $pets = Pets::all();
         $appointments = Appointments::with('client')->orderBy('appointment_date', 'asc')->get();
         $vets = Doctor::getAllDoctors();
-
         return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     }
 

@@ -1,3 +1,4 @@
+@php use App\Models\Clients;use App\Models\Pets; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -5,7 +6,7 @@
 
 @section('content')
     <div class="modal fade" id="exampleModalXl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
-        style="display: none;" aria-hidden="true">
+         style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form action="{{ route('appointments.add') }}" method="POST">
                 @csrf
@@ -22,18 +23,19 @@
                             <hr class="mt-1 mb-2">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                                <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" />
+                                <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date"/>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                                <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" />
+                                <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time"/>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputEmailAddress">Veterinarian</label>
-                                <select class="form-control" id="vetSelect"  name="doctor_ID" >
+                                <select class="form-control" id="vetSelect" name="doctor_ID">
                                     @foreach ($vets as $vet)
-                                    <option class="form-control" value={{ $vet->id }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                        <option class="form-control"
+                                                value={{ $vet->id }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
                                     @endforeach
 
                                 </select>
@@ -47,8 +49,11 @@
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Name</label>
                                     <select class="form-control" id="inputOwnerName" type="select" placeholder="Name"
-                                        onchange="handleClientSelect()" value="" name="owner_ID">
+                                            onchange="handleClientSelect()" value="" name="owner_ID">
                                         @foreach ($clients as $client)
+                                            @php
+                                                Clients::setEmailAttribute($client, $client->user_id);
+                                            @endphp
                                             <option value="{{ $client->id }}">{{ $client->client_name }}</option>
                                         @endforeach
                                     </select>
@@ -56,17 +61,17 @@
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Contact Number</label>
                                     <input class="form-control" id="ownerContact" type="text"
-                                        placeholder="Contact Number" value="" />
+                                           placeholder="Contact Number" value=""/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Email</label>
                                     <input class="form-control" id="inputOwnerEmail" type="text" placeholder="Email"
-                                        value="" />
+                                           value=""/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Address</label>
                                     <input class="form-control" id="inputOwnerAddress" type="text" placeholder="Address"
-                                        value="" />
+                                           value=""/>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -75,28 +80,28 @@
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Pet Name</label>
                                     <select class="form-control" id="inputPetName" type="select" placeholder="Name"
-                                        value="" name="pet_ID" onchange="handlePetSelect()">
+                                            value="" name="pet_ID" onchange="handlePetSelect()">
                                         <option value="">None Selected</option>
                                         @foreach ($pets as $pet)
                                             <option value="{{ $pet->id }}" id="{{ $pet->owner_ID }}" class="pets"
-                                                style="display:none">{{ $pet->pet_name }}</option>
+                                                    style="display:none">{{ $pet->pet_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Pet Type</label>
                                     <input class="form-control" id="inputPetype" type="text" placeholder="Pet Type"
-                                        value="" />
+                                           value=""/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Breed</label>
                                     <input class="form-control" id="inputPetBreed" type="text" placeholder="Breed"
-                                        value="" />
+                                           value=""/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Age</label>
                                     <input class="form-control" id="inputPetAge" type="text" placeholder="Address"
-                                        value="" />
+                                           value=""/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Service</label>
@@ -136,7 +141,8 @@
                     </div>
                     <div class="col-auto mt-4">
                         <button class="btn btn-white text-primary" type="button" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalXl">Add Appointment</button>
+                                data-bs-target="#exampleModalXl">Add Appointment
+                        </button>
                     </div>
                 </div>
             </div>
@@ -185,7 +191,7 @@
                                     foreach ($appointments as $appointment) {
                                         if (
                                             $appointment->status == 1 &&
-                                            \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                            \Carbon\Carbon::parse($appointment->updated_at)->isToday()
                                         ) {
                                             $finishedCount++;
                                         } else {
@@ -242,7 +248,7 @@
                                     foreach ($appointments as $appointment) {
                                         if (
                                             $appointment->status == 2 &&
-                                            \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                            \Carbon\Carbon::parse($appointment->updated_at)->isToday()
                                         ) {
                                             $cancelledCount++;
                                         } else {
@@ -257,7 +263,8 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="/cancelledappointments">View Cancelled Appointments</a>
+                        <a class="text-white stretched-link" href="/cancelledappointments">View Cancelled
+                            Appointments</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -271,60 +278,58 @@
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Owner</th>
-                            <th>Pet Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Appointment ID</th>
+                        <th>Owner</th>
+                        <th>Pet Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($appointments as $appointment)
-{{--                            @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))--}}
-                                <tr>
-                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
-                                    <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
-                                    <td>{{ $appointment->client->client_name }}</td>
-                                    <td>{{ $appointment->pet->pet_type }}</td>
-                                    <td>
+                    @foreach ($appointments as $appointment)
+                        {{--                            @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))--}}
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
+                            <td>{{ $appointment->client->client_name }}</td>
+                            <td>{{ $appointment->pet->pet_type }}</td>
+                            <td>
 
-                                        @if (is_null($appointment->status) == true)
-                                            <div class="badge bg-warning text-white rounded-pill">
-                                                Pending
-                                            </div>
-                                        @elseif ($appointment->status == 0)
-                                            <div class="badge bg-primary text-white rounded-pill">
-                                                scheduled
-                                            </div>
-                                        @elseif ($appointment->status == 2)
-                                            <div class="badge bg-danger text-white rounded-pill">
-                                                Canceled
-                                            </div>
-                                        @elseif ($appointment->status == 1)
-                                            <div class="badge bg-success text-white rounded-pill">
-                                                Finished
-                                            </div>
-                                        @endif
-
-
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
-                                    </td>
-
-                                </tr>
-{{--                            @else--}}
-{{--                                @continue--}}
-
-{{--                            @endif--}}
+                                @if (is_null($appointment->status) == true)
+                                    <div class="badge bg-warning text-white rounded-pill">
+                                        Pending
+                                    </div>
+                                @elseif ($appointment->status == 0)
+                                    <div class="badge bg-primary text-white rounded-pill">
+                                        scheduled
+                                    </div>
+                                @elseif ($appointment->status == 2)
+                                    <div class="badge bg-danger text-white rounded-pill">
+                                        Canceled
+                                    </div>
+                                @elseif ($appointment->status == 1)
+                                    <div class="badge bg-success text-white rounded-pill">
+                                        Finished
+                                    </div>
+                                @endif
 
 
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary"
+                                   href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                            </td>
 
+                        </tr>
+                        {{--                            @else--}}
+                        {{--                                @continue--}}
 
-                        @endforeach
+                        {{--                            @endif--}}
+
+                    @endforeach
 
                     </tbody>
                 </table>
@@ -337,49 +342,30 @@
         var pets = @json($pets);
 
 
-        function calculatePetAge(birthdate) {
-            // Parse the birthdate string into a Date object
-            var birthDate = new Date(birthdate);
-            // Get the current date
-            var currentDate = new Date();
-
-            // Calculate the difference in months
-            var age = currentDate.getMonth() - birthDate.getMonth();
-            var y = currentDate.getFullYear() - birthDate.getFullYear();
-
-            // Adjust the age if the current month is less than the birth month
-            if (age < 0) {
-                age += 12;
-                y--;
-            } else if (currentDate.getDate() < birthDate.getDate()) {
-                age--;
-            }
-
-            return age;
-        }
-
-
-
         function handleClientSelect() {
 
             var selectedClientId = document.getElementById('inputOwnerName').value;
             var petOptions = document.querySelectorAll('#inputPetName option');
             var selectedClient = clients.find(client => client.id == selectedClientId);
 
-            petOptions.forEach(function(option) {
+            petOptions.forEach(function (option) {
                 option.style.display = 'none';
             });
 
-            petOptions.forEach(function(option) {
+            petOptions.forEach(function (option) {
                 if (option.id === selectedClientId) {
                     option.style.display = 'block';
                 }
             });
 
             if (selectedClient) {
+                document.getElementById("inputPetype").value = '';
+                document.getElementById("inputPetBreed").value = '';
+                document.getElementById("inputPetAge").value = '';
+                document.getElementById('inputPetName').value = '';
                 document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
                 document.getElementById('ownerContact').value = selectedClient.client_no;
-                document.getElementById('inputOwnerEmail').value = selectedClient.client_email_address;
+                document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
 
                 // document.getElementById(selectedClientId).style.display = 'block';
 
@@ -400,15 +386,19 @@
             if (selectedPetId) {
                 document.getElementById("inputPetype").value = selectedPet.pet_type;
                 document.getElementById("inputPetBreed").value = selectedPet.pet_breed;
-                var petAge = calculatePetAge(selectedPet.pet_brithdate)
-                console.log(selectedPet.pet_birthdate, petAge)
-                document.getElementById("inputPetAge").value = petAge;
+                @foreach ($pets as $pet)
+                if (selectedPetId == {{ $pet->id }}) {
+                    document.getElementById("inputPetAge").value = '{{ $pet->age }}'; // Using the getAgeAttribute function
+
+                }
+                @endforeach
+
 
             }
 
         }
 
-        window.addEventListener("load", function() {
+        window.addEventListener("load", function () {
             handleClientSelect();
         });
     </script>

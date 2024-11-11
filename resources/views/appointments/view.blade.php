@@ -1,3 +1,4 @@
+@php use App\Models\Clients; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -94,6 +95,9 @@
                             <div class="col-md-6">
                                 <h6 class="mb-2 mt-3 text-primary">Owner Information</h6>
                                 <hr class="mt-1 mb-2">
+                                @php
+                                    Clients::setEmailAttribute($appointment->client, $appointment->client->user_id);
+                                @endphp
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Name</label>
                                     <p>{{$appointment->client->client_name}}</p>
@@ -104,7 +108,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Email</label>
-                                    <p>{{$appointment->client->client_email_address}}</p>
+                                    <p>{{$appointment->client->client_email}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPetName">Address</label>

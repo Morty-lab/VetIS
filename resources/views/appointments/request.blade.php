@@ -57,7 +57,7 @@
                             @php
                                 $finishedCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
                                         $finishedCount++;
                                     } else {
                                         continue;
@@ -115,7 +115,7 @@
                             @php
                                 $cancelledCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
                                         $cancelledCount++;
                                     } else {
                                         continue;
@@ -159,7 +159,7 @@
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                                 {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
-                            <td>VETIS-00001</td>
+                            <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
                             <td>{{$appointment->client->client_name}}</td>
                             <td>{{$appointment->pet->pet_type}}</td>
                             <td>

@@ -1,3 +1,4 @@
+@php use App\Models\Clients; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -211,6 +212,9 @@
                                     <h6 class="mb-2 text-primary">Owner Information</h6>
                                     <hr class="mt-1 mb-3">
                                     <div class="row gx-3">
+                                        @php
+                                            Clients::setEmailAttribute($pet->client, $pet->client->user_id);
+                                        @endphp
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
                                             <p>{{$pet->client->client_name}}</p>
@@ -225,23 +229,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                                            <p>{{$pet->client->client_email_address}}</p>
+                                            <p>{{$pet->client->client_email}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                <p>{{$pet->client->client_address}}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                <p>{{$pet->client->client_no}}</p>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                                <p>{{$pet->client->client_email_address}}</p>
-                            </div>
+
                         </div>
                     </div>
                 </div>

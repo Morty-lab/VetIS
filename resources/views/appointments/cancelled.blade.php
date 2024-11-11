@@ -57,7 +57,7 @@
                             @php
                                 $finishedCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
                                         $finishedCount++;
                                     } else {
                                         continue;
@@ -115,7 +115,7 @@
                             @php
                                 $cancelledCount = 0;
                                 foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                                    if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
                                         $cancelledCount++;
                                     } else {
                                         continue;
@@ -154,18 +154,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>April 7, 2024 | 12:00PM</td>
-                        <td>VETIS-00001</td>
-                        <td>Kent Invento</td>
-                        <td>Dog</td>
-                        <td>
-                            <div class="badge bg-danger text-white rounded-pill">Cancelled</div>
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-danger" href="/viewappointments">Open</a>
-                        </td>
-                    </tr>
+                @foreach ($appointments as $appointment)
+                    @if (  $appointment->status == 2  &&  \Carbon\Carbon::parse($appointment->updated_at)->isToday() )
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>VETIS-00001</td>
+                            <td>{{$appointment->client->client_name}}</td>
+                            <td>{{$appointment->pet->pet_type}}</td>
+                            <td>
+                                <div class="badge bg-danger text-white rounded-pill">Cancelled</div>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                            </td>
+
+                        </tr>
+                    @else
+                        @continue
+                    @endif
+
+                @endforeach
                 </tbody>
             </table>
         </div>
