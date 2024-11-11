@@ -1,3 +1,4 @@
+@php use App\Models\Clients; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -14,6 +15,8 @@
         Doctor Registered Successfully!
     </div>
 </div>
+
+
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
     <div class="container-xl px-4">
@@ -159,6 +162,9 @@
                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
                             <select class="form-control" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
                                 @foreach ($clients as $client)
+                                    @php
+                                        Clients::setEmailAttribute($client, $client->user_id);
+                                    @endphp
                                 <option value="{{ $client->id }}">{{ $client->client_name }}</option>
                                 @endforeach
                             </select>
@@ -209,13 +215,15 @@
         var selectedClientId = document.getElementById('inputOwnerName').value;
         var selectedClient = clients.find(client => client.id == selectedClientId);
 
+
+
         if (selectedClient) {
+            console.log(selectedClient)
             document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
             document.getElementById('ownerContact').value = selectedClient.client_no;
-            document.getElementById('inputOwnerEmail').value = selectedClient.client_email_address;
+            document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
         }
 
-        console.log(selectedClientId);
     };
 
     window.addEventListener("load", function() {

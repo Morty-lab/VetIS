@@ -62,10 +62,7 @@
 
                         </div>
                         <!-- Form Group (last name)-->
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="inputLastName">Last name</label>
-                            <input class="form-control" id="inputLastName" type="text" name="lastname" placeholder="Last Name" value="{{ $doctor->lastname }}" />
-                        </div>
+
                         <div class="mb-3">
                             <label class="small mb-1" for="inputAddress">Address (Street, Barangay, City/Municipality,
                                 Province)</label>
