@@ -7,7 +7,9 @@ use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\Suppliers;
 use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -16,14 +18,23 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::with(['stocks' => function ($query) {
-            $query->orderBy('created_at', 'desc');
-        }])->get();
-        $supplier = Suppliers::with('products.stocks')->get();
+        $products = Products::getAllProducts();
+        $suppliers = Suppliers::getAllSuppliers();
         $units = Unit::getAllUnits();
         $categories = Category::getAllCategories();
-        return view('inventory.products', ["products" => $products, "suppliers" => $supplier, "units" => $units, 'categories' => $categories]);
+        $users = User::all();
+
+        return view('inventory.products', [
+            "products" => $products,
+            "suppliers" => $suppliers,
+            "units" => $units,
+            'categories' => $categories,
+            'users' => $users,
+        ]);
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,10 +49,11 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = [
+
             'product_name' => $request->product_name,
             'price' => $request->price,
-            'supplier_id' => $request->supplier,
             'product_category' => $request->category,
             'unit' => $request->unit
         ];
@@ -52,7 +64,9 @@ class ProductsController extends Controller
     public function addStocks(Request $request, $id)
     {
         $data = [
+            'user_id' =>  Auth::user()->id,
             'products_id' => $id,
+            'supplier_id' => $request->supplier,
             'stock' => $request->stock,
             'price' => 21,
             'status' => 1,
@@ -89,7 +103,6 @@ class ProductsController extends Controller
         $data = [
             'product_name' => $request->product_name,
             'price' => $request->price,
-            'supplier_id' => $request->supplier
         ];
         Products::updateProduct($id, $data);
         return redirect()->route('products.index');

@@ -18,16 +18,9 @@ class Products extends Model
         'price',
         'unit',
         'status',
-        'stock',
-        'supplier_id'
+        'stock'
     ];
 
-
-
-    public function suppliers(): BelongsToMany
-    {
-        return $this->belongsToMany(Suppliers::class);
-    }
 
     public function stocks(): HasMany
     {
@@ -42,7 +35,7 @@ class Products extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class,'id');
-    }   
+    }
 
     public static function getAllProducts()
     {

@@ -347,7 +347,6 @@ class ProductsFactory extends Factory
             "Turkey Vulture Repellent",
         ];
         return [
-            'supplier_id' => Suppliers::factory(),
             'product_name' => $this->faker->randomElement($petProducts),
             'product_category' => Category::factory(),
             'price' => $this->faker->randomFloat(2, 1, 100),
