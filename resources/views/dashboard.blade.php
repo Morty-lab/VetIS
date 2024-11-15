@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-primary stretched-link" href="dashboard-1.html#!">View Appointments</a>
+                    <a class="text-primary stretched-link" href="{{ route('appointments.today') }}">View Appointments</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-success stretched-link" href="dashboard-1.html#!">View Finished Appointments</a>
+                    <a class="text-success stretched-link" href="{{ route('appointments.finished') }}">View Finished Appointments</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-secondary stretched-link" href="dashboard-1.html#!">View Pets</a>
+                    <a class="text-secondary stretched-link" href="{{route('pet.index')}}">View Pets</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-warning stretched-link" href="dashboard-1.html#!">View Requests</a>
+                    <a class="text-warning stretched-link" href="{{ route('appointments.pending') }}">View Requests</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>

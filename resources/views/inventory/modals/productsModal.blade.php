@@ -117,7 +117,7 @@
                                         <div class="dropdown">
                                             <button class="btn btn-outline-gray me-2" id="productInfoMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
                                             <div class="dropdown-menu animated--fade-in" aria-labelledby="productInfoMenuButton">
-                                                <a class="dropdown-item" href="dropdowns.html#!">Edit Product</a>
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editProductModal">Edit Product</a>
                                                 <a class="dropdown-item" href="dropdowns.html#!">Delete Product</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="dropdowns.html#!">Print</a>
@@ -332,7 +332,7 @@
                         <input class="form-control" id="inputProductName" type="text"
                             placeholder="Product Name" value="{{ $product->product_name }}" name="product_name">
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label class="small mb-1" for="selectSupplier">Supplier</label>
                         <select class="form-control" id="selectSupplier" name="supplier">
                             <option disabled="">-- Select Supplier --</option>
@@ -343,9 +343,8 @@
                             <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
                             @endif
                             @endforeach
-
                         </select>
-                    </div>
+                    </div> -->
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectProductCategory">Product Category</label>

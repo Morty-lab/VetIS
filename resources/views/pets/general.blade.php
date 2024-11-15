@@ -31,31 +31,14 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
-    <!-- <nav class="nav nav-borders">
-        <a class="nav-link active ms-0" href="{{ route('pets.show', $pet->id) }}">General</a>
-        <a class="nav-link ms-0" href="{{ route('pets.show', $pet->id) }}">Records</a>
+    <nav class="nav nav-borders">
+        <a class="nav-link nav-tab{{ request()->is('pet-profile') ? 'active' : '' }}" href="#pet-profile">Pet Profile</a>
+        <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
+        <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">History</a>
+        <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Records</a>
     </nav>
-    <hr class="mt-0 mb-4" /> -->
-    <div class="row">
-        <!-- <div class="col-xl-4">
-
-                    <div class="card mb-4 mb-xl-0">
-                        <div class="card-header">Pet Photo</div>
-                        <div class="card-body text-center">
-
-                            <img class="img-account-profile rounded-circle mb-2" src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg" alt="" />
-                        </div>
-                        <div class="card-footer text-center">
-                            <button class="btn btn-primary" type="button">Update Profile Picture</button>
-                        </div>
-                    </div>
-                    <div class="card mb-4 mt-5 mb-xl-0">
-                        <div class="card-header">Pet Schedule</div>
-                        <div class="card-body">
-
-                        </div>
-                    </div>
-                </div> -->
+    <hr class="mt-0 mb-4" />
+    <div class="row" id="petProfileCard" style="display:none;">
         <div class="col-md-12">
             <!-- Account details card-->
             <div class="card mb-4 shadow-none">
@@ -127,33 +110,6 @@
                                     <h6 class="mb-2 text-primary">Other Information</h6>
                                     <hr class="mt-1 mb-3">
                                 </div>
-                                <!-- <div class="col-md-6">
-                                    <div class="col">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="vaccinatedCheckbox" value="option1" @checked($pet->vaccinated) disabled>
-                                            <label class="" for="vaccinatedCheckbox">Vaccinated</label>
-                                        </div>
-                                    </div>
-                                    <div class="col small">
-                                        Last Date Vaccinated: 08/11/2024
-                                    </div>
-                                </div>
-                                    <div class="col-md-6">
-                                        <div class="col">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="neuteredCheckbox"
-                                                       value="option1" @checked($pet->neutered) disabled>
-                                                <label class="" for="neuteredCheckbox">Spayed/Neutered</label>
-                                            </div>
-                                        </div>
-                                        <div class="col small">
-                                            Date Spayed/Neutered: N/A
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mt-3">
-                                        <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                                        <p>{{$pet->pet_description}}</p>
-                                    </div> -->
                                 <div class="row gx-3">
                                     <div class="col-md-3">
                                         <label class="small mb-1">Vacciantion Record</label>
@@ -213,7 +169,7 @@
                                     <hr class="mt-1 mb-3">
                                     <div class="row gx-3">
                                         @php
-                                            Clients::setEmailAttribute($pet->client, $pet->client->user_id);
+                                        Clients::setEmailAttribute($pet->client, $pet->client->user_id);
                                         @endphp
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
@@ -243,7 +199,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="card mb-4 shadow-none">
+            <div class="card mb-4 shadow-none" id="schedulesCard" style="display:none;">
                 <div class="card-header">
                     Schedules
                 </div>
@@ -300,7 +256,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card mb-4 shadow-none">
+                <div class="card mb-4 shadow-none" id="historyCard" style="display:none;">
                     <div class="card-header">
                         History
                     </div>
@@ -341,7 +297,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="card mb-4 shadow-none">
+                    <div class="card mb-4 shadow-none" id="recordsCard" style="display:none;">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Records</span>
                             <a class="btn btn-primary" type="button"
@@ -391,49 +347,49 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-12">
-                    <div class="card mb-4 shadow-none">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <span>Vaccination</span>
-                            <button class="btn btn-primary" type="button">New</button>
-                        </div>
-                        <div class="card-body">
-                            <table id="vaccinationTable">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Code</th>
-                                        <th>Type</th>
-                                        <th>Subject</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>08/11/2024</td>
-                                        <td>VETIS-2032</td>
-                                        <td>Consultation</td>
-                                        <td>Pet Consultation</td>
-                                        <td>Pending</td>
-                                        <td>
-                                            <a class="btn btn-primary" href="/um/admin/profile">Open</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
-
-        <script>
-            var pet = @json($pet);
-            console.log(pet);
-        </script>
         @endsection
 
         @section('scripts')
+        <script>
+            var pet = @json($pet);
+            console.log(pet);
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const tabs = document.querySelectorAll('.nav-tab');
+                const cards = {
+                    'pet-profile': document.getElementById('petProfileCard'),
+                    'schedules': document.getElementById('schedulesCard'),
+                    'history': document.getElementById('historyCard'),
+                    'records': document.getElementById('recordsCard')
+                };
+
+                // Ensure Pet Profile is active initially
+                document.querySelector('.nav-link[href="#pet-profile"]').classList.add('active');
+                cards['pet-profile'].style.display = 'block'; // Show Pet Profile Card by default
+
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // Remove active class from all tabs
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+
+                        // Hide all cards
+                        Object.values(cards).forEach(card => card.style.display = 'none');
+
+                        // Show the clicked tab's corresponding card
+                        const targetCard = tab.getAttribute('href').substring(1);
+                        if (cards[targetCard]) {
+                            cards[targetCard].style.display = 'block';
+                        }
+                    });
+                });
+
+                // Trigger the click on the Pet Profile tab to show it initially
+                document.querySelector('.nav-link.active').click();
+            });
+        </script>
 
         @endsection
