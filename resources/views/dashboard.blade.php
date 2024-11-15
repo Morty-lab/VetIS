@@ -37,13 +37,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-primary">Upcoming Appointments</div>
-                            <div class="text-xl fw-bold">25</div>
+                            <div class="text-xl fw-bold">{{$appointmentCount}}</div>
                         </div>
                         <i class="fa-regular fa-calendar text-gray-400 fa-2x"></i>
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-primary stretched-link" href="dashboard-1.html#!">View Appointments</a>
+                    <a class="text-primary stretched-link" href="/todayappointments">View Appointments</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -54,13 +54,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-success">Finished Appointments</div>
-                            <div class="text-xl fw-bold">15</div>
+                            <div class="text-xl fw-bold">{{$finishedAppointments}}</div>
                         </div>
                         <i class="fa-regular fa-calendar-check text-gray-400 fa-2x"></i>
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-success stretched-link" href="dashboard-1.html#!">View Finished Appointments</a>
+                    <a class="text-success stretched-link" href="/finishedappointments">View Finished Appointments</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -71,13 +71,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-secondary">Registered Pets</div>
-                            <div class="text-xl fw-bold">24</div>
+                            <div class="text-xl fw-bold">{{$petCount}}</div>
                         </div>
                         <i class="fa-solid fa-paw text-gray-400 fa-2x"></i>
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-secondary stretched-link" href="dashboard-1.html#!">View Pets</a>
+                    <a class="text-secondary stretched-link" href="{{route('pet.index')}}">View Pets</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-warning">Appointment Requests</div>
-                            <div class="text-xl fw-bold">17</div>
+                            <div class="text-xl fw-bold">{{$appointmentRequests}}</div>
                         </div>
                         <i class="feather-xl text-gray-400" data-feather="message-circle"></i>
                     </div>
