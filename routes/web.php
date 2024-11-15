@@ -35,8 +35,13 @@ use App\Models\Appointments;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
+
+Auth::routes(['login' => false]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
