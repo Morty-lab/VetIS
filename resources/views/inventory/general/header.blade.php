@@ -15,9 +15,9 @@
                         <a href="{{route('suppliers.index')}}" class=" btn @if(Request::is('suppliers')) btn-primary @else btn-outline-primary @endif me-2"><i class="fa-solid fa-truck-field me-1"></i> Suppliers</a>
                         <!-- <a href="{{route('categories.index')}}" class=" btn @if(Request::is('categories')) btn-primary @else btn-outline-primary @endif me-2"><i class="fa-solid fa-tags me-1"></i> Stocks</a> -->
                         <!-- <a href="{{route('units.index')}}" class=" btn @if(Request::is('units')) btn-primary @else btn-outline-primary @endif me-2">Units</a> -->
-                        <a href="{{route('units.index')}}" class=" btn btn-outline-primary me-2"><i class="fa-solid fa-chart-simple me-1"></i> Sales</a>
+                        <!-- <a href="{{route('units.index')}}" class=" btn btn-outline-primary me-2"><i class="fa-solid fa-chart-simple me-1"></i> Sales</a> -->
                         <div class="dropdown">
-                            <button href="" class="btn btn-outline-primary @if(Request::is('units') || Request::is('categories')) active @endif" id="dropdownInventory" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                            <button href="" class="btn btn-outline-primary @if(Request::is('units') || Request::is('categories')) active @endif" id="dropdownInventory" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>:</b></button>
                             <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownInventory">
                                 <a href="{{route('categories.index')}}" class="dropdown-item @if(Request::is('categories')) text-primary @endif"><i class="fa-solid fa-tags me-1"></i> Categories</a>
                                 <a href="{{route('units.index')}}" class="dropdown-item @if(Request::is('units')) text-primary @endif" href=""><i class="fa-solid fa-balance-scale me-1"></i>Units</a>
