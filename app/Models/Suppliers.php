@@ -19,15 +19,20 @@ class Suppliers extends Model
         'supplier_contact_person'
     ];
 
-    public function products(): HasMany
+
+    public function stocks(): HasMany
     {
-        return $this->hasMany(Products::class, "supplier_id");
+        return $this->hasMany(Stocks::class);
     }
+
+
 
     public static function getAllSuppliers()
     {
         return self::all();
     }
+
+
 
     public static function getSupplier($id)
     {

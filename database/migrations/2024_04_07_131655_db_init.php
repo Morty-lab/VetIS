@@ -115,14 +115,12 @@ return new class extends Migration
 
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("supplier_id");
             $table->string("product_name");
             $table->unsignedBigInteger("product_category");
             $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
             $table->foreign("unit")->references("id")->on("units");
-            $table->foreign("supplier_id")->references("id")->on("suppliers")->onDelete("cascade");
             $table->foreign("product_category")->references("id")->on("category");
             $table->timestamps();
         });
@@ -130,13 +128,17 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("products_id");
+            $table->unsignedBigInteger("supplier_id");
+            $table->unsignedBigInteger("user_id");
             $table->integer("stock");
             $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
             $table->date("expiry_date")->nullable();
             $table->foreign("products_id")->references("id")->on("products")->onDelete("cascade");
+            $table->foreign("supplier_id")->references("id")->on("suppliers")->onDelete("cascade");
             $table->foreign("unit")->references("id")->on("units");
+            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->timestamps();
         });
 

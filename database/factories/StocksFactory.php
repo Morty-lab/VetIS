@@ -4,7 +4,9 @@ namespace Database\Factories;
 
 use App\Models\Products;
 use App\Models\Stocks;
+use App\Models\Suppliers;
 use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StocksFactory extends Factory
@@ -24,6 +26,8 @@ class StocksFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => User::factory(),
+            'supplier_id' => Suppliers::factory(),
             'products_id' => Products::factory(),
             'stock' => $this->faker->numberBetween(1, 100),
             'price' => $this->faker->randomFloat(2, 1, 100),

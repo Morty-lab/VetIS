@@ -80,7 +80,7 @@
                         <tbody>
                             @foreach ($products as $product)
                             <tr>
-                                <td>2393084232</td>
+                                <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
                                 <td>{{ $product->product_name }}</td>
                                 <td>
                                     @foreach ($categories as $i)

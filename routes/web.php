@@ -16,6 +16,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Models\Clients;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
 use App\Models\User;
@@ -35,11 +36,20 @@ use App\Models\Appointments;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 
+Auth::routes(['login' => false]);
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $appointmentCount = Appointments::where('status', 0)->where('appointment_date','>=',now())->count();
+    $finishedAppointments = Appointments::where('status', 2)->where('updated_at',now())->count();
+    $appointmentRequests = Appointments::where('status', null)->count();
+    $petCount = Pets::count();
+    return view('dashboard',['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

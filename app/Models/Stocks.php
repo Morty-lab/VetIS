@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Stocks extends Model
 {protected $fillable = [
@@ -13,6 +14,8 @@ class Stocks extends Model
     'unit',
     'status',
     'products_id',
+    'supplier_id',
+    'user_id',
     'expiry_date'
 ];
 
@@ -22,8 +25,14 @@ class Stocks extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Products::class,'product_id');
+        return $this->belongsTo(Products::class,'id');
     }
+
+    public function suppliers(): BelongsTo
+    {
+        return $this->belongsTo(Suppliers::class);
+    }
+
 
     public function unit():BelongsTo
     {
