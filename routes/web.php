@@ -67,11 +67,11 @@ Route::middleware('auth')->group(function () {
 
     //sub routes Pet Medical Records
 
-//    Route::get('/record', function () {
-//        return view('pets.record');
-//    });
-    Route::get('/petinfo/{id}/soap',[SoapController::class, 'index'])->name('soap.index');
-    Route::get('/petinfo/{id}/soap/create',[SoapController::class, 'create'])->name('soap.create');
+    //    Route::get('/record', function () {
+    //        return view('pets.record');
+    //    });
+    Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
+    Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');
     Route::post('petinfo/{id}/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
@@ -167,28 +167,28 @@ Route::middleware('auth')->group(function () {
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
-    });
+    })->name('appointments.today');
     Route::get('/finishedappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
-    });
+    })->name('appointments.finished');
     Route::get('/pendingappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
-    });
+    })->name('appointments.pending');
     Route::get('/cancelledappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
-    });
+    })->name('appointments.cancelled');
 
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
     Route::get('/viewappointments/{id}/cancell', [AppointmentsController::class, 'appointmentCancel'])->name('appointments.cancel');
@@ -200,14 +200,14 @@ Route::middleware('auth')->group(function () {
     });
 
     // Pet Owners
-    Route::get('/manageowners',[ClientsController::class , 'index'])->name('owners.index');
+    Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
     Route::get('/addowner', function () {
         return view('owners.add');
     });
-    Route::post('/profileowner/add', [ClientsController::class , 'store'])->name('owners.add');
-    Route::get('/profileowner/{id}',[ClientsController::class, 'show'])->name('owners.show');
-    Route::post('/profileowner/{id}',[ClientsController::class, 'update'])->name('owners.update');
-    Route::post('/profileowner/{id}/disable',[ClientsController::class, 'disable'])->name('owners.disable');
+    Route::post('/profileowner/add', [ClientsController::class, 'store'])->name('owners.add');
+    Route::get('/profileowner/{id}', [ClientsController::class, 'show'])->name('owners.show');
+    Route::post('/profileowner/{id}', [ClientsController::class, 'update'])->name('owners.update');
+    Route::post('/profileowner/{id}/disable', [ClientsController::class, 'disable'])->name('owners.disable');
 
     // POS Routes
 
@@ -263,18 +263,22 @@ Route::middleware('auth')->group(function () {
     });
 
     // Staff
-    Route::get('/um/staff', [StaffController::class , "index"])->name("staffs.index");
+    Route::get('/um/staff', [StaffController::class, "index"])->name("staffs.index");
     Route::get('/um/staff/add', function () {
         return view('user_management.staffs.add');
     });
-    Route::post('/um/staff/add', [StaffController::class , "store"])->name("staffs.add");
-    Route::get('/um/staff/profile/{id}', [StaffController::class , "show"])->name("staffs.profile");
-    Route::get('/um/staff/profile/{id}/options',[StaffController::class, "edit"])->name("staffs.options");
+    Route::post('/um/staff/add', [StaffController::class, "store"])->name("staffs.add");
+    Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
+    Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
 
 
 
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');
+    });
+
+    Route::get('/print/sales', function () {
+        return view('printable.sales');
     });
 });
 
