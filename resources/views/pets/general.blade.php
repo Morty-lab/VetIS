@@ -155,12 +155,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1">Food</label>
-                                        <p class="form-control">{{$pet->pet_food}}</p>
+                                        <p class="form-control">{{$pet->pet_food != null ? $pet->pet_food : "No Specific Food Identified"}}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1">History of Aggression</label>
                                         <p class="form-control">
-                                            {{$pet->history_of_aggression}}
+                                            {{$pet->history_of_aggression != null ? $pet->history_of_aggression : 'No History of Aggression Identified'}}
                                         </p>
                                     </div>
                                     <div class="col-md-6">
@@ -173,10 +173,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 mt-3">
-                                <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                                <p>{{$pet->pet_description}}</p>
-                            </div>
+{{--                            <div class="col-md-12 mt-3">--}}
+{{--                                <label class="small mb-1" for="inputPetDescription">Pet Description</label>--}}
+{{--                                <p>{{$pet->pet_description}}</p>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12">
                             <div class="row">
