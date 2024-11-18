@@ -18,6 +18,15 @@ function initTransaction() {
     });
 }
 
+function enforceMaxValue(input) {
+    const max = parseInt(input.max, 10); // Get the max value from the attribute
+    const value = parseInt(input.value, 10); // Get the current input value
+
+    if (value > max) {
+        input.value = max; // Set the value to the maximum allowed value
+    }
+}
+
 function initItems() {
     const itemsContainer = document.getElementById("ItemContainer");
     const tableRowsHTML = generateTableRows(Items);
