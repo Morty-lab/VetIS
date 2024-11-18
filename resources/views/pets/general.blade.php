@@ -113,47 +113,63 @@
                                 <div class="row gx-3">
                                     <div class="col-md-3">
                                         <label class="small mb-1">Vacciantion Record</label>
-                                        <p>No Vaccination Record</p>
+                                        <p>
+                                            @if($pet->vaccinated == 1)
+                                                Complete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
+                                            @elseif($pet->vaccinated == 0)
+                                                Incomplete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
+                                            @else
+                                                No Vaccination record
+                                            @endif
+                                        </p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Spayed/Neutered</label>
-                                        <p>Yes</p>
+                                        <p>
+                                            {{$pet->neutered == 1 ? 'Yes' : 'No'}}
+                                        </p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Vaccinated with Anti-Rabies?</label>
-                                        <p>Yes</p>
+                                        <p>
+                                            {{$pet->vaccinated_anti_rabies == 1 ? 'Yes' : 'No'}}
+                                        </p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
-                                        <p>08/11/2002</p>
+                                        <p>{{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}</p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Okay to use photos online?</label>
-                                        <p>Yes</p>
+                                        <p>
+                                            {{$pet->okay_to_use_photos_online == 1 ? 'Yes' : 'No'}}
+                                        </p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Date of Last Groom</label>
-                                        <p>08/11/2002</p>
+                                        <p>{{ \Carbon\Carbon::parse($pet->last_groom_date)->format('F j, Y') }}</p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Okay to give treats?</label>
-                                        <p>Yes</p>
+                                        <p> {{$pet->okay_to_give_treats == 1 ? 'Yes' : 'No'}}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1">Food</label>
-                                        <p class="form-control">---</>
+                                        <p class="form-control">{{$pet->pet_food}}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1">History of Aggression</label>
-                                        <p class="form-control">No History of Agression</p>
+                                        <p class="form-control">
+                                            {{$pet->history_of_aggression}}
+                                        </p>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1">Food Allergies</label>
-                                        <p class="form-control">No Food Allergies</p>
+                                        <p class="form-control">{{$pet->food_allergies !=  null ? $pet->food_allergies : "No Allergies Recorded"}}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1">Pet Condition</label>
-                                        <p class="form-control">No Illness or other condition</p>
+                                        <p class="form-control">{{$pet->pet_condition != null ? $pet->pet_condition : "No Conditions Recorded"}}</p>
                                     </div>
                                 </div>
                             </div>

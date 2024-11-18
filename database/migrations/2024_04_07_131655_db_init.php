@@ -175,6 +175,18 @@ return new class extends Migration
             $table->float("pet_weight");
             $table->boolean("vaccinated")->nullable();
             $table->boolean("neutered")->nullable();
+
+            // Add new fields for the additional form information
+            $table->boolean("vaccinated_anti_rabies")->nullable();  // Anti-Rabies vaccination
+            $table->date("anti_rabies_vaccination_date")->nullable();  // Date of Anti-Rabies vaccination
+            $table->text("history_of_aggression")->nullable();  // History of aggression
+            $table->text("food_allergies")->nullable();  // Food allergies
+            $table->string("pet_food")->nullable();  // Pet's food
+            $table->boolean("okay_to_give_treats")->nullable();  // Can give treats?
+            $table->date("last_groom_date")->nullable();  // Last groom date
+            $table->boolean("okay_to_use_photos_online")->nullable();  // Can use photos online?
+            $table->text("pet_condition")->nullable();  // Seizures/Illnesses/Conditions
+
             $table->timestamps();
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
         });

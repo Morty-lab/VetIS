@@ -12,7 +12,7 @@
     </div>
     <div class="alert-icon-content">
         <h6 class="alert-heading">Success</h6>
-        Doctor Registered Successfully!
+        Pet Registered Successfully!
     </div>
 </div>
 
@@ -91,7 +91,7 @@
                         <div class="row gx-3 gy-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
-                                <select class="form-control" id="inputSelectVaccinationRecord">
+                                <select class="form-control" id="inputSelectVaccinationRecord" name="vaccinated">
                                     <option disabled selected>-- Select Record --</option>
                                     <option>No Vaccination Record</option>
                                     <option>Complete</option>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
-                                <select class="form-control" id="inputSelectSpayedNeutered">
+                                <select class="form-control" id="inputSelectSpayedNeutered" name="neutered">
                                     <option disabled selected>-- Select [Yes/No] --</option>
                                     <option>Yes</option>
                                     <option>No</option>
