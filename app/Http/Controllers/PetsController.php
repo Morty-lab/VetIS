@@ -43,20 +43,38 @@ class PetsController extends Controller
             'pet_birthdate' => 'required|date',
             'pet_color' => 'required',
             'pet_weight' => 'required|numeric',
-            'pet_vaccinated' => 'nullable',
-            'pet_neutered' => 'nullable',
-            'pet_description' => 'nullable',
+            'pet_vaccinated' => 'nullable|boolean',
+            'pet_neutered' => 'nullable|boolean',
+            'pet_description' => 'nullable|string',
             'owner_name' => 'required|exists:clients,id',
+            'vaccinated_anti_rabies' => 'nullable|boolean', // Add validation for anti-rabies vaccination
+            'anti_rabies_vaccination_date' => 'nullable|date', // Add validation for anti-rabies vaccination date
+            'history_of_aggression' => 'nullable|string', // Add validation for aggression history
+            'food_allergies' => 'nullable|string', // Add validation for food allergies
+            'pet_food' => 'nullable|string', // Add validation for pet food type
+            'okay_to_give_treats' => 'nullable|boolean', // Add validation for treat permission
+            'last_groom_date' => 'nullable|date', // Add validation for last grooming date
+            'okay_to_use_photos_online' => 'nullable|boolean', // Add validation for photo permission
+            'pet_condition' => 'nullable|string', // Add validation for pet condition description
         ]);
 
+        // Create a new Pet record with the validated data
         $pet = new Pets($validatedData);
+
+        // Set the owner ID from the request data
         $pet->owner_ID = $request->owner_name;
+
+        // Handle boolean values for vaccinated and neutered fields
         $pet->vaccinated = $request->has('pet_vaccinated');
         $pet->neutered = $request->has('pet_neutered');
+
+        // Save the new pet to the database
         $pet->save();
 
+        // Redirect back with success message
         return redirect()->route('pet.index')->with('success', 'Pet has been added successfully.');
     }
+
 
 
     /**
@@ -84,9 +102,8 @@ class PetsController extends Controller
      */
     public function update(Request $request, Pets $pets)
     {
-
-
-        $request->validate([
+        // Validate the incoming request data
+        $validatedData = $request->validate([
             'pet_name' => 'required|string|max:255',
             'pet_type' => 'required|string|max:255',
             'pet_breed' => 'required|string|max:255',
@@ -94,13 +111,19 @@ class PetsController extends Controller
             'pet_birthdate' => 'required|date',
             'pet_color' => 'required|string|max:255',
             'pet_weight' => 'required|numeric',
-            'vaccinated' => 'nullable|boolean',
-            'neutered' => 'nullable|boolean',
+            'pet_vaccinated' => 'nullable|boolean',
+            'pet_neutered' => 'nullable|boolean',
             'pet_description' => 'nullable|string',
-            // Add any other fields you want to validate here
+            'vaccinated_anti_rabies' => 'nullable|boolean',
+            'anti_rabies_vaccination_date' => 'nullable|date',
+            'history_of_aggression' => 'nullable|string',
+            'food_allergies' => 'nullable|string',
+            'pet_food' => 'nullable|string',
+            'okay_to_give_treats' => 'nullable|boolean',
+            'last_groom_date' => 'nullable|date',
+            'okay_to_use_photos_online' => 'nullable|boolean',
+            'pet_condition' => 'nullable|string',
         ]);
-
-        // dd($request, $pets);
 
         // Update the pet's information
         $pets->update([
@@ -111,16 +134,25 @@ class PetsController extends Controller
             'pet_birthdate' => $request->input('pet_birthdate'),
             'pet_color' => $request->input('pet_color'),
             'pet_weight' => $request->input('pet_weight'),
-            'vaccinated' => $request->input('vaccinated'),
-            'neutered' => $request->input('neutered'),
+            'vaccinated' => $request->has('pet_vaccinated'), // Handle the boolean as a checkbox
+            'neutered' => $request->has('pet_neutered'), // Handle the boolean as a checkbox
             'pet_description' => $request->input('pet_description'),
-            // Update any other fields here
+            'vaccinated_anti_rabies' => $request->has('vaccinated_anti_rabies'), // Handle anti-rabies vaccination status
+            'anti_rabies_vaccination_date' => $request->input('anti_rabies_vaccination_date'),
+            'history_of_aggression' => $request->input('history_of_aggression'),
+            'food_allergies' => $request->input('food_allergies'),
+            'pet_food' => $request->input('pet_food'),
+            'okay_to_give_treats' => $request->has('okay_to_give_treats'), // Handle as a boolean checkbox
+            'last_groom_date' => $request->input('last_groom_date'),
+            'okay_to_use_photos_online' => $request->has('okay_to_use_photos_online'), // Handle as a boolean checkbox
+            'pet_condition' => $request->input('pet_condition'),
         ]);
 
-        // Redirect the user
+        // Redirect the user with a success message
         return redirect()->route('pets.show', $pets->id)
             ->with('success', 'Pet information updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
