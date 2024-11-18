@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" oninput="setQuantity(this.value)">
+                    <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" min="1" max="10" step="1"  oninput="setQuantity(this.value); enforceMaxValue(this.value);" >
                     <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
                         onclick="addItem({
                         'sku' : {{ $product->id }},

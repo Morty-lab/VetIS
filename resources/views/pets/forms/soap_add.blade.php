@@ -378,8 +378,11 @@
                                         <div class="row gy-3">
                                             <div class="col-12">
                                                 <label for="">SOAP ID</label>
+                                                @php
+                                                    $latestRecord = App\Models\PetRecords::latest('id')->first();
+                                                @endphp
                                                 <input type="text" class="form-control bg-gray-100"
-                                                    value="{{sprintf("VETISSOAP-%05d",\App\Models\PetRecords::latest('id')->first()->id +1)}}"
+                                                    value="@if($latestRecord != null) {{sprintf("VETISSOAP-%05d",$petID +1)}} @else 1 @endif"
                                                     disabled>
                                             </div>
                                             <div class=" col-12">
