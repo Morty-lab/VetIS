@@ -26,7 +26,6 @@
         <div id="layoutSidenav_nav" class="">
             @include('navs.sidenav')
         </div>
-
         <div id="layoutSidenav_content" class="">
             <main>
                 @yield('content')
