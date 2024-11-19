@@ -40,17 +40,16 @@ Route::get('/', function () {
         return redirect()->route('dashboard');
     }
     return redirect()->route('login');
-
 });
 
 Auth::routes(['login' => false]);
 
 Route::get('/dashboard', function () {
-    $appointmentCount = Appointments::where('status', 0)->where('appointment_date','>=',now())->count();
-    $finishedAppointments = Appointments::where('status', 2)->where('updated_at',now())->count();
+    $appointmentCount = Appointments::where('status', 0)->where('appointment_date', '>=', now())->count();
+    $finishedAppointments = Appointments::where('status', 2)->where('updated_at', now())->count();
     $appointmentRequests = Appointments::where('status', null)->count();
     $petCount = Pets::count();
-    return view('dashboard',['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests]);
+    return view('dashboard', ['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -272,8 +271,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
     Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
 
-
-
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');
     });
@@ -282,6 +279,47 @@ Route::middleware('auth')->group(function () {
         return view('printable.sales');
     });
 });
+
+
+
+// Portal Section
+Route::get('/portal/login', function () {
+    return view('portal.auth.login');
+})->name("portal.login");
+Route::get('/portal/register', function () {
+    return view('portal.auth.register');
+})->name(name: "portal.register");
+
+Route::get('/portal/dashboard', function () {
+    return view('portal.main.dashboard');
+})->name(name: "portal.dashboard");
+
+Route::get('/portal/mypets', function () {
+    return view('portal.main.pets.petsList');
+})->name(name: "portal.mypets");
+
+Route::get('/portal/mypets/register', function () {
+    return view('portal.main.pets.add');
+})->name(name: "portal.mypets.register");
+
+
+Route::get('/portal/mypets/edit', function () {
+    return view('portal.main.pets.edit');
+})->name(name: "portal.mypets.edit");
+
+
+Route::get('/portal/mypets/view', function () {
+    return view('portal.main.pets.view');
+})->name(name: "portal.mypets.view");
+
+
+Route::get('/portal/appointments', function () {
+    return view('portal.main.scheduling.appointments');
+})->name(name: "portal.appointments");
+
+Route::get('/portal/appointments/view', function () {
+    return view('portal.main.scheduling.view');
+})->name(name: "portal.appointments.view");
 
 
 
