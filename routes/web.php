@@ -290,36 +290,39 @@ Route::get('/portal/register', function () {
     return view('portal.auth.register');
 })->name(name: "portal.register");
 
-Route::get('/portal/dashboard', function () {
-    return view('portal.main.dashboard');
-})->name(name: "portal.dashboard");
+Route::middleware('auth')->group(function () {
+    Route::get('/portal/dashboard', function () {
+        return view('portal.main.dashboard');
+    })->name(name: "portal.dashboard");
 
-Route::get('/portal/mypets', function () {
-    return view('portal.main.pets.petsList');
-})->name(name: "portal.mypets");
+    Route::get('/portal/mypets', function () {
+        return view('portal.main.pets.petsList');
+    })->name(name: "portal.mypets");
 
-Route::get('/portal/mypets/register', function () {
-    return view('portal.main.pets.add');
-})->name(name: "portal.mypets.register");
-
-
-Route::get('/portal/mypets/edit', function () {
-    return view('portal.main.pets.edit');
-})->name(name: "portal.mypets.edit");
+    Route::get('/portal/mypets/register', function () {
+        return view('portal.main.pets.add');
+    })->name(name: "portal.mypets.register");
 
 
-Route::get('/portal/mypets/view', function () {
-    return view('portal.main.pets.view');
-})->name(name: "portal.mypets.view");
+    Route::get('/portal/mypets/edit', function () {
+        return view('portal.main.pets.edit');
+    })->name(name: "portal.mypets.edit");
 
 
-Route::get('/portal/appointments', function () {
-    return view('portal.main.scheduling.appointments');
-})->name(name: "portal.appointments");
+    Route::get('/portal/mypets/view', function () {
+        return view('portal.main.pets.view');
+    })->name(name: "portal.mypets.view");
 
-Route::get('/portal/appointments/view', function () {
-    return view('portal.main.scheduling.view');
-})->name(name: "portal.appointments.view");
+
+    Route::get('/portal/appointments', function () {
+        return view('portal.main.scheduling.appointments');
+    })->name(name: "portal.appointments");
+
+    Route::get('/portal/appointments/view', function () {
+        return view('portal.main.scheduling.view');
+    })->name(name: "portal.appointments.view");
+});
+
 
 
 
