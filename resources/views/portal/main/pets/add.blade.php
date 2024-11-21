@@ -3,9 +3,11 @@
 <div class="row gx-4">
     <div class="col-xl-8">
         <div class="card shadow-none border mb-4">
+            <form action="{{route('portal.mypets.add')}}" method="POST">
             <div class="card-header">Register Pet</div>
             <div class="card-body">
-                <form action="" method="">
+
+                    @csrf
                     <div class="row gx-3 gy-2 mb-3">
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
@@ -47,11 +49,12 @@
                             </select>
                         </div>
                     </div>
-                </form>
+
             </div>
             <div class="card-footer ">
-                <button class="btn btn-primary" id="regbtn" type="submit">Register Pet</button>
+                <button class="btn btn-primary" type="submit">Register Pet</button>
             </div>
+            </form>
         </div>
     </div>
     <div class="col-xl-4">

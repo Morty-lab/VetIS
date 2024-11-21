@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Clients extends Model
 {
@@ -31,6 +32,11 @@ class Clients extends Model
     public static function getAllClients()
     {
         return self::all();
+    }
+
+    public static function getClientByUserID($user_id)
+    {
+        return self::where('user_id',$user_id)->first();
     }
 
     public static function getClientById($id)

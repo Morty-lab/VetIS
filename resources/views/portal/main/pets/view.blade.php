@@ -27,7 +27,7 @@
                         </svg><!-- <i class="fa fa-ellipsis-v"></i> Font Awesome fontawesome.com -->
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="{{ route('portal.mypets.edit')}}">Edit Pet</a></li>
+                        <li><a class="dropdown-item" href="{{ route('portal.mypets.edit',['petid' => $pet->id])}}">Edit Pet</a></li>
                         <li><a class="dropdown-item" href="">Print</a></li>
                     </ul>
                 </div>
@@ -45,35 +45,35 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetName">Pet Name</label>
-                                <p>Miller</p>
+                                <p>{{$pet->pet_name}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetName">PetID</label>
-                                <p>1</p>
+                                <p>{{sprintf("VetIS-%05d", $pet->id)}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                <p>Cat</p>
+                                <p>{{$pet->pet_type}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBreed">Breed</label>
-                                <p>Beagle</p>
+                                <p>{{$pet->pet_breed}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputColor">Color</label>
-                                <p>Silver</p>
+                                <p>{{$pet->pet_color}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputWeight">Weight</label>
-                                <p>54.5</p>
+                                <p>{{$pet->pet_weight}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                <p>2019-09-08</p>
+                                <p>{{$pet->pet_birthdate}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
-                                <p>Female</p>
+                                <p>{{$pet->pet_gender}}</p>
                             </div>
                         </div>
                     </div>

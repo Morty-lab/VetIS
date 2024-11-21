@@ -34,6 +34,12 @@ class Appointments extends Model
         return self::all();
     }
 
+    public static function getAppointmentByClient($client)
+    {
+        return self::where('owner_ID', $client)->get();
+    }
+
+
     public static function getAppointmentById($id)
     {
         return self::find($id);
