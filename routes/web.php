@@ -304,10 +304,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/portal/mypets/edit', [PortalController::class, 'editMyPet'])->name(name: "portal.mypets.edit");
     Route::post('/portal/mypets/update', [PortalController::class, 'updateMyPet'])->name(name: "portal.mypets.update");
 
-
-    Route::get('/portal/appointments', function () {
-        return view('portal.main.scheduling.appointments');
-    })->name(name: "portal.appointments");
+    Route::get('/portal/appointments', [PortalController::class,'myAppointments'])->name(name: "portal.appointments");
+    Route::post('/portal/appoinments/add' ,[PortalController::class,'addMyAppointment'])->name(name: "portal.appointments.add");
 
     Route::get('/portal/appointments/view', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments.view");
 });

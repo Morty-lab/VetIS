@@ -195,19 +195,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2 September, 2024 | 14:39</td>
-                            <td>Laborum error reiciendis aut labore porro eos.</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
-                        </tr>
-                        <tr>
-                            <td>29 June, 2024 | 22:05
-                            </td>
-                            <td>Veniam ipsum odio sed saepe placeat porro eos.</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
-                        </tr>
+                        @foreach($appointments as $appointment)
+                            @if($appointmet->status == 2)
+                                <tr>
+                                    <td>2 September, 2024 | 14:39</td>
+                                    <td>Laborum error reiciendis aut labore porro eos.</td>
+                                    <td>Completed</td>
+                                    <td><a href="" class="btn btn-primary">Open</a></td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -234,14 +231,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>VETIS-00004 </td>
-                        <td>2 May, 2024 | 07:25</td>
-                        <td>Kent Invento</td>
-                        <td>My cat is sick</td>
-                        <td><span class="badge bg-success-soft text-success text-sm rounded-pill">Scheduled</span></td>
-                        <td><a href="" class="btn btn-outline-primary">Open</a></td>
-                    </tr>
+                @foreach($appointments as $appointment)
+                    @if($appointmet->status == 0)
+                        <tr>
+                            <td>2 September, 2024 | 14:39</td>
+                            <td>Laborum error reiciendis aut labore porro eos.</td>
+                            <td>Completed</td>
+                            <td><a href="" class="btn btn-primary">Open</a></td>
+                        </tr>
+                    @endif
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -263,13 +262,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2 May, 2024 | 07:25</td>
-                        <td>VETIS-00004 </td>
-                        <td>My cat is sick</td>
-                        <td>Kent Invento</td>
-                        <td><a href="" class="btn btn-outline-primary">Open</a></td>
-                    </tr>
+                @foreach($appointments as $appointment)
+                    @if($appointmet->status == 2)
+                        <tr>
+                            <td>2 September, 2024 | 14:39</td>
+                            <td>Laborum error reiciendis aut labore porro eos.</td>
+                            <td>Completed</td>
+                            <td><a href="" class="btn btn-primary">Open</a></td>
+                        </tr>
+                    @endif
+                @endforeach
                 </tbody>
             </table>
         </div>

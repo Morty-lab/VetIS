@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AppointmentSet;
 use App\Models\Appointments;
 use App\Models\Clients;
+use App\Models\Doctor;
 use App\Models\Pets;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PortalController extends Controller
 {
@@ -50,8 +54,9 @@ class PortalController extends Controller
     public function viewMyPet(Request $request){
         $id = request('petid');
         $pet = Pets::getPetByID($id);
+        $appointments = Appointments::where('pet_ID',$id)->get();
 
-        return view('portal.main.pets.view',['pet'=>$pet]);
+        return view('portal.main.pets.view',['pet'=>$pet, 'appointments'=>$appointments]);
     }
 
     public function editMyPet(Request $request){
@@ -83,9 +88,46 @@ class PortalController extends Controller
     }
 
     public function myAppointments(){
-        $appointments = Appointments::getAppointmentByClient(auth()->user()->id);
+        $client = Clients::getClientByUserID(auth()->user()->id);
+        $appointments = Appointments::getAppointmentByClient($client->id);
+        $pets = Pets::getPetByClient($client->id);
+        $vets = Doctor::getAllDoctors();
 
-        return view('portal.main.scheduling.view',['appointments'=>$appointments]);
+        return view('portal.main.scheduling.appointments',['appointments'=>$appointments , 'pets'=>$pets, 'vets'=>$vets]);
+    }
+
+    public function addMyAppointment(Request $request){
+
+        $validatedData = $request->validate([
+            'owner_ID' => 'required',
+            'pet_ID' => 'required',
+            'doctor_ID' => 'required',
+            'appointment_date' => 'required|date',
+            'purpose' => 'required',
+        ]);
+
+        $appointment = new Appointments($validatedData);
+        $result = $appointment->save();
+
+
+        $date = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
+        $time = Carbon::parse($request->input('appointment_time'))->format('g:i A'); // E.g., 3:00 PM
+        $name = Auth::user()->name;
+
+
+        $data = [
+            'subject' => 'Appointment Request Submitted',
+            'content' => "Dear $name,\n\n" .
+                "Your appointment request for $date at $time has been submitted successfully. " .
+                "Our vet secretary will evaluate your request and get back to you shortly.\n\n" .
+                "Thank you for your patience!",
+            'status' => 'Pending'
+        ];
+
+
+
+        Mail::to(Auth::user()->email)->send(new AppointmentSet($data));
+        return redirect()->route('portal.appointments');
     }
 
 
