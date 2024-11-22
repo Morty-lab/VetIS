@@ -9,7 +9,7 @@
 <div class="container-xl px-4 mt-4">
     <div class="card shadow-none mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">Billing History
-            <a href="{{route('billing.add')}}" class=" btn btn-primary me-2"><i class="fa-solid fa-file-invoice me-1"></i>Add Billing</a>
+            <a href="{{route('billing.add')}}" class=" btn btn-primary me-2">Add Billing</a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -23,13 +23,14 @@
                         <th>Payable</th>
                         <th>Remaining Balance</th>
                         <th>Payment Status</th>
+                        <th>Due Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($billings as $billing)
+                    @foreach($billings as $billing)
                     <tr>
-                        <td>{{sprintf("VETISBill-%05d",$billing->id)}}</td>
+                        <td>{{sprintf("VETISBILL-%05d",$billing->id)}}</td>
                         <td>{{$billing->created_at}}</td>
                         <td>
                             {{ $clients->firstWhere('id', $billing->user_id)?->client_name ?? 'Unknown' }}
@@ -45,19 +46,19 @@
 
                         <td>
                             @if ($billing->total_paid >= $billing->total_payable)
-                                <div class="badge bg-success text-white rounded-pill">Fully Paid</div>
+                            <div class="badge bg-success text-white rounded-pill">Fully Paid</div>
                             @elseif ($billing->total_paid > 0)
-                                <div class="badge bg-secondary text-white rounded-pill">Partially Paid</div>
+                            <div class="badge bg-secondary text-white rounded-pill">Partially Paid</div>
                             @else
-                                <div class="badge bg-danger text-white rounded-pill">Pending Payment</div>
+                            <div class="badge bg-danger text-white rounded-pill">Pending Payment</div>
                             @endif
                         </td>
-
+                        <td>10/23/2025</td>
                         <td>
                             <a href="" class="btn btn-datatable btn-primary px-5 py-3">Open</a>
                         </td>
                     </tr>
-                @endforeach
+                    @endforeach
 
                 </tbody>
             </table>

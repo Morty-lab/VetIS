@@ -20,6 +20,10 @@
 <div class="container-xl px-4 mt-4">
     <div class="row justify-content-center">
         <div class="col-lg-10 col-md-12">
+            <nav class="nav nav-borders">
+                <a class="nav-link ms-0" href="{{route('billing')}}"><span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back</a>
+            </nav>
+            <hr class="mt-0 mb-4">
             <div class="card shadow-none mb-4">
                 <div class="card-header">Billing Form</div>
                 <div class="card-body">
@@ -42,7 +46,7 @@
                                                 @endphp
                                                 <div class="col-md-7 mt-1 mt-md-0">
                                                     <label for="billing_number" class="form-label mb-0  text-primary">Billing Number</label>
-                                                    <p class="mb-0">#@if($latestRecord != null) {{sprintf("VETISBILL-%05d",$latestRecord->id +1)}} @else {{sprintf("VETISBill-%05d",1)}} @endif</p>
+                                                    <p class="mb-0">#@if($latestRecord != null){{sprintf("VETISBILL-%05d",$latestRecord->id +1)}} @else {{sprintf("VETISBill-%05d",1)}} @endif</p>
                                                 </div>
                                                 <!-- Billing Date -->
                                                 <div class="col-md-5 mt-1 mt-md-0">
@@ -110,7 +114,8 @@
                             <!-- Due Date Field -->
                             <div class="col-12 mt-3" id="due-date-container" style="display: none;">
                                 <label for="due_date" class="form-label">Due Date</label>
-                                <input type="date" class="form-control" id="due_date" name="due_date" min="{{ \Carbon\Carbon::today()->toDateString() }}" required>
+                                <input type="date" class="form-control" id="due_date" name="due_date"
+                                    min="{{ \Carbon\Carbon::today()->toDateString() }}" required>
                             </div>
 
                             <!-- Amount Paid -->
@@ -167,6 +172,13 @@
 
 @section('scripts')
 <script>
+    const dueDateInput = document.getElementById('due_date');
+
+    // Prevent typing in the input field
+    dueDateInput.addEventListener('keydown', function(e) {
+        e.preventDefault(); // Block keyboard input
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         const paymentType = document.getElementById('paymentType');
         const dueDateContainer = document.getElementById('due-date-container');
