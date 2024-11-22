@@ -260,6 +260,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('services', function (Blueprint $table) {
+            $table->id();
+            $table->string("service_name");
+            $table->double("service_price");
+            $table->timestamps();
+        });
+
 
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
@@ -307,6 +314,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
+        Schema::dropIfExists('services');
         Schema::dropIfExists('prescriptions');
         Schema::dropIfExists('pet_diagnosis');
         Schema::dropIfExists('pet_plan');

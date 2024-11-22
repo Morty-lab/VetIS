@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, PetSeeder::class]);
-
+        $this->call(ServicesTableSeeder::class);
         Appointments::factory()->count(10)->create();
 
 

@@ -24,17 +24,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($services as $service)
                     <tr>
-                        <td>Consultation</td>
-                        <td>50</td>
+                        <td>{{$service->service_name}}</td>
+                        <td >PHP {{$service->service_price}}</td>
                         <td>
                             <!-- Open modal with service details -->
-                            <a href="#" class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#serviceModal"
-                                data-name="Consultation" data-price="50">
+                            <a href="#" class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#serviceModal-{{$service->id}}"
+                               data-name="Consultation" data-price="50">
                                 Open
                             </a>
                         </td>
                     </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -42,73 +45,80 @@
 </div>
 
 <!-- Modal for viewing service details -->
-<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="serviceModalLabel">Service Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Service details form -->
-                <form action="" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="serviceName" class="form-label">Service Name</label>
-                        <input type="text" class="form-control" id="serviceName" name="service_name" required readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="servicePrice" class="form-label">Service Price</label>
-                        <input type="number" class="form-control" id="servicePrice" name="price" required readonly>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <!-- Edit Price Button -->
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editPriceModal">Edit Price</button>
-                <!-- Delete Button -->
-                <button type="button" class="btn btn-danger" id="deleteService">Delete</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+@foreach($services as $service)
+    <div class="modal fade" id="serviceModal-{{$service->id}}" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="serviceModalLabel">Service Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Service details form -->
+                    <form action="" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="serviceName" class="form-label">Service Name</label>
+                            <input type="text" class="form-control" id="serviceName" value="{{$service->service_name}}" name="service_name" required readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="servicePrice" class="form-label">Service Price</label>
+                            <input type="number" class="form-control" id="servicePrice" value="{{$service->service_price}}" name="price" required readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- Edit Price Button -->
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editPriceModal-{{$service->id}}">Edit Price</button>
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-danger" id="deleteService">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal for editing service price -->
-<div class="modal fade" id="editPriceModal" tabindex="-1" aria-labelledby="editPriceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editPriceModalLabel">Edit Service Price</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="newServicePrice" class="form-label">New Price</label>
-                        <input type="number" class="form-control" id="newServicePrice" name="new_price" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="savePriceBtn">Save Price</button>
+
+    <!-- Modal for editing service price -->
+    <div class="modal fade" id="editPriceModal-{{$service->id}}" tabindex="-1" aria-labelledby="editPriceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPriceModalLabel">Edit Service Price</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="newServicePrice" class="form-label">New Price For {{$service->service_name}}</label>
+                            <input type="number" class="form-control" id="newServicePrice" name="new_price" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="savePriceBtn">Save Price</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endforeach
+
+
+
 
 <!-- Modal for adding new service -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            <form action="{{route('billing.services.add')}}" method="POST">
+
             <div class="modal-header">
                 <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="serviceName" class="form-label">Service Name</label>
@@ -116,14 +126,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="servicePrice" class="form-label">Service Price</label>
-                        <input type="number" class="form-control" id="servicePrice" name="price" required>
+                        <input type="number" class="form-control" id="servicePrice" name="service_price" required>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Add Service</button>
             </div>
+            </form>
+
         </div>
     </div>
 </div>

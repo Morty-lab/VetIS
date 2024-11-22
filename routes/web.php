@@ -11,6 +11,7 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SoapController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
@@ -287,9 +288,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/billing/add', function () {
         return view('billing.add');
     })->name('billing.add');
-    Route::get('/billing/services', function () {
-        return view('billing.services.list');
-    })->name('billing.services');
+    Route::get('/billing/services', [ServicesController::class , 'index'])->name('billing.services');
+    Route::post('/billing/services/add',[ServicesController::class , 'store'] )->name("billing.services.add");
 });
 
 
