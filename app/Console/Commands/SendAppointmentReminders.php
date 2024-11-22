@@ -37,7 +37,7 @@ class SendAppointmentReminders extends Command
 
 
         try {
-            $tomorrow = Carbon::now()->addDay()->format('Y-m-d');
+            $tomorrow = Carbon::now('UTC')->addDays(2)->format('Y-m-d');
             $startTime = '08:00:00';  // 8 AM
             $endTime = '17:00:00';    // 5 PM
             // Get all appointments scheduled for tomorrow
@@ -78,14 +78,14 @@ class SendAppointmentReminders extends Command
 
                 try {
                     Mail::to($email)->send(new AppointmentSet($data));
-                    $this->info("Email sent to {$email}");
+                    $this->info("Email sent to {$email} ");
                 } catch (\Exception $e) {
                     $this->error("Failed to send email to {$email}: " . $e->getMessage());
                 }
             }
 
 
-            $this->info('Appointment reminders have been sent successfully. ');
+            $this->info("Appointment reminders have been sent successfully. ");
         } catch (\Exception $e) {
             $this->error("Error sending appointment reminders:" . $e->getMessage());
         }
