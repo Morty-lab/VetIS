@@ -21,22 +21,22 @@
 <div class=" container-xl px-4 ">
     <div class="row">
         <div class="col-lg-6 col-xl-3 mb-4">
-            <div class="card bg-primary text-white h-100">
+            <div class="card shadow-none bg-primary text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-white-75 small">Today's Appointments</div>
                             @php
-                                $todayCount = 0;
-                                foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
-                                        $todayCount++;
-                                    } else {
-                                        continue;
-                                    }
+                            $todayCount = 0;
+                            foreach ($appointments as $appointment) {
+                            if ($appointment->status == 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() ) {
+                            $todayCount++;
+                            } else {
+                            continue;
+                            }
 
 
-                                }
+                            }
                             @endphp
                             <div class="text-lg fw-bold">{{$todayCount}}</div>
                         </div>
@@ -50,21 +50,21 @@
             </div>
         </div>
         <div class="col-lg-6 col-xl-3 mb-4">
-            <div class="card bg-success text-white h-100">
+            <div class="card shadow-none bg-success text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             @php
-                                $finishedCount = 0;
-                                foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
-                                        $finishedCount++;
-                                    } else {
-                                        continue;
-                                    }
+                            $finishedCount = 0;
+                            foreach ($appointments as $appointment) {
+                            if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
+                            $finishedCount++;
+                            } else {
+                            continue;
+                            }
 
 
-                                }
+                            }
                             @endphp
                             <div class="text-white-75 small">Finished Appointments</div>
                             <div class="text-lg fw-bold">{{$finishedCount}}</div>
@@ -79,21 +79,21 @@
             </div>
         </div>
         <div class="col-lg-6 col-xl-3 mb-4">
-            <div class="card bg-warning text-white h-100">
+            <div class="card shadow-none bg-warning text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             @php
-                                $requestCount = 0;
-                                foreach ($appointments as $appointment) {
-                                    if (is_null($appointment->status) == true ) {
-                                        $requestCount++;
-                                    } else {
-                                        continue;
-                                    }
+                            $requestCount = 0;
+                            foreach ($appointments as $appointment) {
+                            if (is_null($appointment->status) == true ) {
+                            $requestCount++;
+                            } else {
+                            continue;
+                            }
 
 
-                                }
+                            }
                             @endphp
                             <div class="text-white-75 small">Appointment Requests</div>
                             <div class="text-lg fw-bold">{{$requestCount}}</div>
@@ -108,21 +108,21 @@
             </div>
         </div>
         <div class="col-lg-6 col-xl-3 mb-4">
-            <div class="card bg-danger text-white h-100">
+            <div class="card shadow-none bg-danger text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             @php
-                                $cancelledCount = 0;
-                                foreach ($appointments as $appointment) {
-                                    if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
-                                        $cancelledCount++;
-                                    } else {
-                                        continue;
-                                    }
+                            $cancelledCount = 0;
+                            foreach ($appointments as $appointment) {
+                            if ($appointment->status == 2 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() ) {
+                            $cancelledCount++;
+                            } else {
+                            continue;
+                            }
 
 
-                                }
+                            }
                             @endphp
                             <div class="text-white-75 small">Cancelled Appointments</div>
                             <div class="text-lg fw-bold">{{$cancelledCount}}</div>
@@ -138,7 +138,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Today's Appointments</span>
         </div>
         <div class="card-body">
@@ -155,10 +155,11 @@
                 </thead>
                 <tbody>
                     @foreach ($appointments as $appointment)
-                    @if (  $appointment->status == 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() )
+                    @if ( $appointment->status == 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() )
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                        </td>
                         <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
                         <td>{{$appointment->client->client_name}}</td>
                         <td>{{$appointment->pet->pet_type}}</td>
@@ -172,7 +173,7 @@
 
                     </tr>
                     @else
-                        @continue
+                    @continue
                     @endif
 
                     @endforeach

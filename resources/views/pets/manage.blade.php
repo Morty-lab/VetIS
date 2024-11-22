@@ -25,7 +25,7 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
-    <div class="card">
+    <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
             <a class="btn btn-primary justify-end" href="{{ route('pet.create') }}">Add Pet</a>
         </div>
@@ -64,7 +64,7 @@
                             @endif
                         </td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('pets.show', $pet->id) }}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('pets.show', $pet->id) }}">Open</a>
                         </td>
                     </tr>
                     @endforeach

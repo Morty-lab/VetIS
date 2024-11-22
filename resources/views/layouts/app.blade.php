@@ -19,12 +19,12 @@
 </head>
 
 <body class="nav-fixed">
-@php
+    @php
     if (auth()->check() && auth()->user()->role === 'client') {
-        header('Location: ' . route('portal.dashboard'));
-        exit;
+    header('Location: ' . route('portal.dashboard'));
+    exit;
     }
-@endphp
+    @endphp
     <div class="">
         @include('layouts.navigation')
     </div>

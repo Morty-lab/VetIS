@@ -20,7 +20,7 @@
 
 
 @php
-    Clients::setEmailAttribute($client, $client->user_id);
+Clients::setEmailAttribute($client, $client->user_id);
 @endphp
 <!-- Modals -->
 <div class="modal fade" id="updateOwnerInfo" tabindex="-1" role="dialog" aria-labelledby="updateOwnerInfoTitle" aria-hidden="true">
@@ -124,27 +124,27 @@
                         </div>
                     </div>
                     <hr>
-                    {{--                <div class="row">--}}
-                    {{--                    <div class="col-md-6 mb-2">--}}
-                    {{--                        <label class="small mb-1" for="editUsername">Username</label>--}}
-                    {{--                        <input type="text" class="form-control" name="" id="" value="princeinventorevltn89@gmail.com">--}}
-                    {{--                    </div>--}}
-                    {{--                    <div class="col-md-6 mb-2">--}}
-                    {{--                        <label class="small mb-1" for="editPassword">Password</label>--}}
-                    {{--                        <input type="password" class="form-control" name="" id="" value="usfjdlfhdalks">--}}
-                    {{--                    </div>--}}
-                    {{--                    <div class="col-md-12">--}}
-                    {{--                        <label class="small mb-1" for="editRole">Role</label>--}}
-                    {{--                        <select class="form-control" id="roleSelect" name="role">--}}
-                    {{--                            <option value="Owner" selected>Pet Owner</option>--}}
-                    {{--                            <option value="Doctor">Veterinarian</option>--}}
-                    {{--                            <option value="Owner">Owner</option>--}}
-                    {{--                            <option value="Administrator">Administrator</option>--}}
-                    {{--                            <option value="Secretary">Secretary</option>--}}
-                    {{--                            <option value="Staff">Staff</option>--}}
-                    {{--                        </select>--}}
-                    {{--                    </div>--}}
-                    {{--                </div>--}}
+                    {{-- <div class="row">--}}
+                    {{-- <div class="col-md-6 mb-2">--}}
+                    {{-- <label class="small mb-1" for="editUsername">Username</label>--}}
+                    {{-- <input type="text" class="form-control" name="" id="" value="princeinventorevltn89@gmail.com">--}}
+                    {{-- </div>--}}
+                    {{-- <div class="col-md-6 mb-2">--}}
+                    {{-- <label class="small mb-1" for="editPassword">Password</label>--}}
+                    {{-- <input type="password" class="form-control" name="" id="" value="usfjdlfhdalks">--}}
+                    {{-- </div>--}}
+                    {{-- <div class="col-md-12">--}}
+                    {{-- <label class="small mb-1" for="editRole">Role</label>--}}
+                    {{-- <select class="form-control" id="roleSelect" name="role">--}}
+                    {{-- <option value="Owner" selected>Pet Owner</option>--}}
+                    {{-- <option value="Doctor">Veterinarian</option>--}}
+                    {{-- <option value="Owner">Owner</option>--}}
+                    {{-- <option value="Administrator">Administrator</option>--}}
+                    {{-- <option value="Secretary">Secretary</option>--}}
+                    {{-- <option value="Staff">Staff</option>--}}
+                    {{-- </select>--}}
+                    {{-- </div>--}}
+                    {{-- </div>--}}
                 </div>
                 <div class="modal-footer"><button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" type="submit">Update</button></div>
             </div>
@@ -224,7 +224,7 @@
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Owner Information</span>
                     <!-- Three-dot (kebab) menu button -->
@@ -280,17 +280,17 @@
                         Client(Model Fillable)
                         Client(Controller function add)
                         --}}
-{{--                        <div class="col-md-6">--}}
-{{--                            <label class="small mb-1">Status</label>--}}
-{{--                            <p>{{$client->status}}</p>--}}
-{{--                        </div>--}}
+                        {{-- <div class="col-md-6">--}}
+                        {{-- <label class="small mb-1">Status</label>--}}
+                        {{-- <p>{{$client->status}}</p>--}}
+                        {{-- </div>--}}
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xl-4">
             <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
+            <div class="card shadow-none mb-4 mb-xl-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Profile Picture</span>
                     <!-- Three-dot (kebab) menu button -->
@@ -311,7 +311,7 @@
                 <div class="card-footer text-center">
                 </div>
             </div>
-            <div class="card mb-4 mt-4 mb-xl-0">
+            <div class="card shadow-none mb-4 mt-4 mb-xl-0">
                 <div class="card-header">UM Settings</div>
                 <div class="card-body">
                     <div class="row gy-2 gx-2">
@@ -324,7 +324,7 @@
         </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="card shadow-none mb-4">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
             <a class="btn btn-primary justify-end" href="/addpet">Add Pet</a>
         </div>
@@ -373,7 +373,7 @@
         </div>
     </div>
 
-    <div class="card mb-2">
+    <div class="card shadow-none mb-2">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Billing History</span>
         </div>
         <div class="card-body">

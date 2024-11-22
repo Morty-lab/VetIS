@@ -85,7 +85,7 @@
     <hr class="mt-0 mb-4" />
     <div class="row">
         <div class="col-lg-8">
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header">Role</div>
                 <div class="card-body">
                     <select class="form-control" id="exampleFormControlSelect2" name="role">
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header">Account</div>
                 <div class="card-body">
                     <div class="row gy-2 gx-2">
@@ -114,7 +114,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header">Permissions</div>
                 <div class="card-body">
                     <p class="text-muted">Select the permissions for the user:</p>

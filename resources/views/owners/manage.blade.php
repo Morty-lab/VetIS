@@ -27,7 +27,7 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
-    <div class="card">
+    <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pet Owners List</span>
             <a class="btn btn-primary justify-end" href="/addowner">Add Pet Owner</a>
         </div>
@@ -54,7 +54,7 @@
                         <td>{{$client->client_no}}</td>
                         <td>{{$client->petsOwned($client->id)->count()}}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{route('owners.show',  $client->id)}}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('owners.show',  $client->id)}}">Open</a>
                         </td>
                     </tr>
                     @endforeach
