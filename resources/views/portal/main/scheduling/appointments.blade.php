@@ -135,7 +135,7 @@
                                 </span>
                                     </td>
                                     <td>
-                                        <a class="btn btn-outline-primary" href="{{route('portal.appointments.view')}}">Open</a>
+                                        <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">Open</a>
                                     </td>
                                 </tr>
                                @endif
@@ -186,7 +186,7 @@
 {{--                                        <span class="badge bg-danger-soft text-danger text-sm rounded-pill">Cancelled</span>--}}
                                     </td>
                                     <td>
-                                        <a class="btn btn-outline-primary" href="{{route('portal.appointments.view')}}">Open</a>
+                                        <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$a->id, 'petid'=>$a->pet_ID])}}">Open</a>
                                     </td>
                                 </tr>
                             @endif

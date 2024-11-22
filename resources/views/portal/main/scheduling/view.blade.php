@@ -108,14 +108,31 @@
                             <div class="card-body py-4">
                                 <h5 class="card-title">Appointment ID</h5>
                                 <p class="card-text">
-                                    VETIS-00004
+                                    {{ sprintf("VetIS-%05d", $appointment->id)}}
                                 </p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="card-body py-4">
                                 <h5 class="mb-1 text-dark-90">Appointment Status</h5>
-                                <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>
+                                <span class="badge
+                                    @if(is_null($appointment->status)) bg-warning-soft text-warning
+                                    @elseif($appointment->status === 0) bg-info-soft text-info
+                                    @elseif($appointment->status === 1) bg-success-soft text-success
+                                    @elseif($appointment->status === 2) bg-danger-soft text-danger
+                                    @endif
+                                    text-sm rounded-pill">
+                                    @if(is_null($appointment->status))
+                                        Pending
+                                    @elseif($appointment->status === 0)
+                                        Scheduled
+                                    @elseif($appointment->status === 1)
+                                        Completed
+                                    @elseif($appointment->status === 2)
+                                        Cancelled
+                                    @endif
+                                </span>
+
                             </div>
 
                         </div>
@@ -131,18 +148,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                        <p>2 May, 2024</p>
+                        <p>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y')}}</p>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                        <p>07:25</p>
+                        <p>{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')}}</p>
                     </div>
                 </div>
 
                 <h6 class="mb-2 mt-4 text-primary">Concern/Complaint</h6>
                 <hr class="mt-1 mb-3">
                 <div class="col-md-12">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quo inventore itaque voluptate, consectetur culpa laborum eligendi at aspernatur sint quasi fuga amet eos illo minus rerum esse, a sunt!</p>
+                    <p>{{$appointment->purpose}}</p>
                 </div>
             </div>
             <div class="col-md-6">
@@ -151,19 +168,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputPetName">Pet Name</label>
-                        <p>Carolina</p>
+                        <p>{{$pet->pet_name}}</p>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputPetName">Pet Type</label>
-                        <p>Cat</p>
+                        <p>{{$pet->pet_type}}</p>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputPetName">Breed</label>
-                        <p>Poodle</p>
+                        <p>{{$pet->pet_breed}}</p>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputPetName">Age</label>
-                        <p>22</p>
+                        <p>{{$pet->getAgeAttribute()}}</p>
                     </div>
                 </div>
             </div>

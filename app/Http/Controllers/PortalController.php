@@ -55,8 +55,9 @@ class PortalController extends Controller
         $id = request('petid');
         $pet = Pets::getPetByID($id);
         $appointments = Appointments::where('pet_ID',$id)->get();
+        $vets = Doctor::getAllDoctors();
 
-        return view('portal.main.pets.view',['pet'=>$pet, 'appointments'=>$appointments]);
+        return view('portal.main.pets.view',['pet'=>$pet, 'appointments'=>$appointments, 'vets'=>$vets]);
     }
 
     public function editMyPet(Request $request){
@@ -128,6 +129,24 @@ class PortalController extends Controller
 
         Mail::to(Auth::user()->email)->send(new AppointmentSet($data));
         return redirect()->route('portal.appointments');
+    }
+
+    public function viewMyAppointments(){
+        $petID = request('petid');
+        $appointmentID = request('appid');
+        $appointment = Appointments::getAppointmentById($appointmentID);
+        $pet = Pets::getPetByID($petID);
+
+
+
+        return view('portal.main.scheduling.view',['appointment'=>$appointment, 'pet'=>$pet]);
+    }
+
+
+
+    public function profile(){
+
+        return view('portal.main.profile.profile');
     }
 
 

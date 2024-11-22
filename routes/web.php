@@ -306,8 +306,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/portal/appointments', [PortalController::class,'myAppointments'])->name(name: "portal.appointments");
     Route::post('/portal/appoinments/add' ,[PortalController::class,'addMyAppointment'])->name(name: "portal.appointments.add");
+    Route::get('/portal/appointments/view', [PortalController::class, 'viewMyAppointments'])->name(name: "portal.appointments.view");
 
-    Route::get('/portal/appointments/view', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments.view");
+    Route::get('/portal/profile', [PortalController::class, 'profile'])->name(name: "portal.profile");
 });
 
 

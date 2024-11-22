@@ -196,10 +196,10 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $appointment)
-                            @if($appointmet->status == 2)
+                            @if($appointment->status === 1)
                                 <tr>
-                                    <td>2 September, 2024 | 14:39</td>
-                                    <td>Laborum error reiciendis aut labore porro eos.</td>
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                                    <td>{{$appointment->purpose}}</td>
                                     <td>Completed</td>
                                     <td><a href="" class="btn btn-primary">Open</a></td>
                                 </tr>
@@ -232,12 +232,21 @@
                 </thead>
                 <tbody>
                 @foreach($appointments as $appointment)
-                    @if($appointmet->status == 0)
+                    @if($appointment->status === 0)
                         <tr>
-                            <td>2 September, 2024 | 14:39</td>
-                            <td>Laborum error reiciendis aut labore porro eos.</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
+                            <td>{{ sprintf("VetIS-%05d", $appointment->id)}}</td>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>
+                                @foreach($vets as $vet)
+                                    @if($vet->id == $appointment->doctor_ID)
+                                        {{$vet->firstname . " " . $vet->lastname}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>{{$appointment->purpose}}</td>
+                            <td>Scheduled</td>
+
+                            <td><a href="{{route('portal.appointments.view',['appid'=>$appointment->id, 'petid'=>$appointment->pet_ID])}}" class="btn btn-primary">Open</a></td>
                         </tr>
                     @endif
                 @endforeach
@@ -246,36 +255,36 @@
         </div>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="card shadow-none border mb-4">
-        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Prescriptions</span>
-        </div>
-        <div class="card-body">
-            <table id="petPrescriptionTable">
-                <thead>
-                    <tr>
-                        <th><a href="#">Date Created</a></th>
-                        <th><a href="#">Code</a></th>
-                        <th><a href="#">Subject</a></th>
-                        <th><a href="#">Veterinarian</a></th>
-                        <th><a href="#">Actions</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($appointments as $appointment)
-                    @if($appointmet->status == 2)
-                        <tr>
-                            <td>2 September, 2024 | 14:39</td>
-                            <td>Laborum error reiciendis aut labore porro eos.</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
-                        </tr>
-                    @endif
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
+{{--<div class="col-md-12">--}}
+{{--    <div class="card shadow-none border mb-4">--}}
+{{--        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Prescriptions</span>--}}
+{{--        </div>--}}
+{{--        <div class="card-body">--}}
+{{--            <table id="petPrescriptionTable">--}}
+{{--                <thead>--}}
+{{--                    <tr>--}}
+{{--                        <th><a href="#">Date Created</a></th>--}}
+{{--                        <th><a href="#">Code</a></th>--}}
+{{--                        <th><a href="#">Subject</a></th>--}}
+{{--                        <th><a href="#">Veterinarian</a></th>--}}
+{{--                        <th><a href="#">Actions</a></th>--}}
+{{--                    </tr>--}}
+{{--                </thead>--}}
+{{--                <tbody>--}}
+{{--                @foreach($appointments as $appointment)--}}
+{{--                    @if($appointment->status == 2)--}}
+{{--                        <tr>--}}
+{{--                            <td>2 September, 2024 | 14:39</td>--}}
+{{--                            <td>Laborum error reiciendis aut labore porro eos.</td>--}}
+{{--                            <td>Completed</td>--}}
+{{--                            <td><a href="" class="btn btn-primary">Open</a></td>--}}
+{{--                        </tr>--}}
+{{--                    @endif--}}
+{{--                @endforeach--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
 @endsection
