@@ -54,7 +54,7 @@ class SendAppointmentReminders extends Command
                     continue;
                 }
 
-                $email = User::where('id', $user->id)->value('email');
+                $email = User::where('id', $user->user_id)->value('email');
                 if (!$email) {
                     $this->error("No email found for user ID: {$user->id}");
                     continue;
