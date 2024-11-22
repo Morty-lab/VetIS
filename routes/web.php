@@ -279,6 +279,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/print/sales', function () {
         return view('printable.sales');
     });
+
+    // billing section
+    Route::get('/billing', function () {
+        return view('billing.billing');
+    })->name('billing');
+    Route::get('/billing/add', function () {
+        return view('billing.add');
+    })->name('billing.add');
+    Route::get('/billing/services', function () {
+        return view('billing.services.list');
+    })->name('billing.services');
 });
 
 
@@ -294,18 +305,18 @@ Route::get('/portal/register', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/portal/dashboard', [PortalController::class, 'index'])->name(name: "portal.dashboard");
 
-    Route::get('/portal/mypets', [PortalController::class , 'myPets'])->name(name: "portal.mypets");
+    Route::get('/portal/mypets', [PortalController::class, 'myPets'])->name(name: "portal.mypets");
 
     Route::get('/portal/mypets/register', function () {
         return view('portal.main.pets.add');
     })->name(name: "portal.mypets.register");
-    Route::post('/portal/mypets/add', [PortalController::class , 'addMyPet'])->name(name: "portal.mypets.add");
+    Route::post('/portal/mypets/add', [PortalController::class, 'addMyPet'])->name(name: "portal.mypets.add");
     Route::get('/portal/mypets/view', [PortalController::class, 'viewMyPet'])->name(name: "portal.mypets.view");
     Route::get('/portal/mypets/edit', [PortalController::class, 'editMyPet'])->name(name: "portal.mypets.edit");
     Route::post('/portal/mypets/update', [PortalController::class, 'updateMyPet'])->name(name: "portal.mypets.update");
 
-    Route::get('/portal/appointments', [PortalController::class,'myAppointments'])->name(name: "portal.appointments");
-    Route::post('/portal/appoinments/add' ,[PortalController::class,'addMyAppointment'])->name(name: "portal.appointments.add");
+    Route::get('/portal/appointments', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments");
+    Route::post('/portal/appoinments/add', [PortalController::class, 'addMyAppointment'])->name(name: "portal.appointments.add");
     Route::get('/portal/appointments/view', [PortalController::class, 'viewMyAppointments'])->name(name: "portal.appointments.view");
 
     Route::get('/portal/profile', [PortalController::class, 'profile'])->name(name: "portal.profile");

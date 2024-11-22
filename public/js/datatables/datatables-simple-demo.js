@@ -23,6 +23,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (vaccinationTable) {
         new simpleDatatables.DataTable(vaccinationTable, {});
     }
+    const servicesListTable = document.getElementById("servicesListTable");
+    if (servicesListTable) {
+        new simpleDatatables.DataTable(servicesListTable, {});
+    }
     const soapRecordTable = document.getElementById("soapRecordTable");
     if (soapRecordTable) {
         new simpleDatatables.DataTable(soapRecordTable, {
