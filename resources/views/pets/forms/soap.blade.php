@@ -298,69 +298,69 @@
     </div>
 </div>
 
-@foreach($petPlan as $plan)
-<!-- Service Plan  Edit Modal -->
-<div class="modal fade" id="servicePlanEditModal-{{$plan->id}}" tabindex="-1" role="dialog"
-    aria-labelledby="myExtraLargeModalLabel"
-    style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-            <form action="{{route('plan.update', [ 'recordID' => $record->id,'id' => $plan->id])}}" method="post">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa-solid fa-kit-medical me-1"></i> {{$plan->service_name}}</h5>
-                    <input type="hidden" name="service_name" value="{{$plan->service_name}}">
-                    <input type="hidden" name="status" value=1>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <label for="" class="text-sm fw-400">Date Return</label>
-                    <input type="date" name="date" value="{{$plan->date_return}}" id="" class="form-control">
-                    <label for="" class="mt-3 text-sm fw-400">Reason for Return</label>
-                    <textarea name="reason_for_return" id="" cols="30" rows="5" class="form-control">{{$plan->reason_for_return}}</textarea>
-                    <div class="dropdown mt-3 mb-2">
-                        <label for="" class="text-sm fw-400">Status</label>
-                        <button class="form-select d-flex justify-between" id="serviceStatusMenuButton" type="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status
-                        </button>
-                        <div class="select-dropdown-menu dropdown-menu" aria-labelledby="serviceStatusMenuButton">
-                            <a class="select-dropdown-item dropdown-item" href="#" data-selected="true" data-value="1">Upcoming</a>
-                            <a class="select-dropdown-item dropdown-item" href="#" data-value="2">Completed</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer py-1">
-                    <button class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="serviceDeleteConfirmationModal-{{$plan->id}}" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa-solid fa-trash me-2"></i>Delete
-                    Service</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete the selected service <span
-                        class="text-primary">'{{$plan->service_name}}'</span>?</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="button"
-                    data-bs-dismiss="modal">Cancel
-                </button>
-                <a href="{{route('plan.delete',["id" => $plan->id, "recordID" =>$record->id])}}"
-                    class="btn btn-danger" type="button">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
+{{--@foreach($petPlan as $plan)--}}
+{{--<!-- Service Plan  Edit Modal -->--}}
+{{--<div class="modal fade" id="servicePlanEditModal-{{$plan->id}}" tabindex="-1" role="dialog"--}}
+{{--    aria-labelledby="myExtraLargeModalLabel"--}}
+{{--    style="display: none;" aria-hidden="true">--}}
+{{--    <div class="modal-dialog modal-dialog-centered modal-md" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--            <form action="{{route('plan.update', [ 'recordID' => $record->id,'id' => $plan->id])}}" method="post">--}}
+{{--                @csrf--}}
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title"><i class="fa-solid fa-kit-medical me-1"></i> {{$plan->service_name}}</h5>--}}
+{{--                    <input type="hidden" name="service_name" value="{{$plan->service_name}}">--}}
+{{--                    <input type="hidden" name="status" value=1>--}}
+{{--                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--                </div>--}}
+{{--                <div class="modal-body">--}}
+{{--                    <label for="" class="text-sm fw-400">Date Return</label>--}}
+{{--                    <input type="date" name="date" value="{{$plan->date_return}}" id="" class="form-control">--}}
+{{--                    <label for="" class="mt-3 text-sm fw-400">Reason for Return</label>--}}
+{{--                    <textarea name="reason_for_return" id="" cols="30" rows="5" class="form-control">{{$plan->reason_for_return}}</textarea>--}}
+{{--                    <div class="dropdown mt-3 mb-2">--}}
+{{--                        <label for="" class="text-sm fw-400">Status</label>--}}
+{{--                        <button class="form-select d-flex justify-between" id="serviceStatusMenuButton" type="button"--}}
+{{--                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status--}}
+{{--                        </button>--}}
+{{--                        <div class="select-dropdown-menu dropdown-menu" aria-labelledby="serviceStatusMenuButton">--}}
+{{--                            <a class="select-dropdown-item dropdown-item" href="#" data-selected="true" data-value="1">Upcoming</a>--}}
+{{--                            <a class="select-dropdown-item dropdown-item" href="#" data-value="2">Completed</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="modal-footer py-1">--}}
+{{--                    <button class="btn btn-primary">Save</button>--}}
+{{--                </div>--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+{{--<!-- Delete Confirmation Modal -->--}}
+{{--<div class="modal fade" id="serviceDeleteConfirmationModal-{{$plan->id}}" tabindex="-1" role="dialog"--}}
+{{--    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--    <div class="modal-dialog modal-dialog-centered" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="modal-header">--}}
+{{--                <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa-solid fa-trash me-2"></i>Delete--}}
+{{--                    Service</h5>--}}
+{{--                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                <p>Are you sure you want to delete the selected service <span--}}
+{{--                        class="text-primary">'{{$plan->service_name}}'</span>?</p>--}}
+{{--            </div>--}}
+{{--            <div class="modal-footer">--}}
+{{--                <button class="btn btn-primary" type="button"--}}
+{{--                    data-bs-dismiss="modal">Cancel--}}
+{{--                </button>--}}
+{{--                <a href="{{route('plan.delete',["id" => $plan->id, "recordID" =>$record->id])}}"--}}
+{{--                    class="btn btn-danger" type="button">Delete</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+{{--@endforeach--}}
 
 
 
@@ -596,51 +596,51 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="card shadow-none">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <span>Plan</span>
-                                    <button class="btn-outline-primary btn" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#serviceListModal">Add Services
-                                    </button>
-                                </div>
-                                <div class="px-4">
-                                    <table id="treatmentPlanTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Service</th>
-                                                <th>Date Return</th>
-                                                <th>Reason for Return</th>
-                                                <th>Status</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="treatmentPlanTableBody">
-                                            @foreach($petPlan as $plan)
-                                            <tr>
-                                                <!-- sample if no need na mag return -->
-                                                <td>{{$plan->service_name}}</td>
-                                                <td>{{$plan->date_return}}</td>
-                                                <td>{{$plan->reason_for_return}}</td>
-                                                <td>{{($plan->status == 1)?'Completed':'Upcoming'}}</td>
-                                                <td>
-                                                    <button class="btn btn-success" href="#" type="button"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#servicePlanEditModal-{{$plan->id}}"><i
-                                                            class="fa-solid fa-edit"></i></button>
-                                                    <button class="btn btn-danger" href="#" type="button"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#serviceDeleteConfirmationModal-{{$plan->id}}"><i
-                                                            class="fa-solid fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+{{--                        <div class="col-md-12">--}}
+{{--                            <div class="card shadow-none">--}}
+{{--                                <div class="card-header d-flex justify-content-between align-items-center">--}}
+{{--                                    <span>Plan</span>--}}
+{{--                                    <button class="btn-outline-primary btn" type="button" data-bs-toggle="modal"--}}
+{{--                                        data-bs-target="#serviceListModal">Add Services--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                                <div class="px-4">--}}
+{{--                                    <table id="treatmentPlanTable">--}}
+{{--                                        <thead>--}}
+{{--                                            <tr>--}}
+{{--                                                <th>Service</th>--}}
+{{--                                                <th>Date Return</th>--}}
+{{--                                                <th>Reason for Return</th>--}}
+{{--                                                <th>Status</th>--}}
+{{--                                                <th></th>--}}
+{{--                                            </tr>--}}
+{{--                                        </thead>--}}
+{{--                                        <tbody id="treatmentPlanTableBody">--}}
+{{--                                            @foreach($petPlan as $plan)--}}
+{{--                                            <tr>--}}
+{{--                                                <!-- sample if no need na mag return -->--}}
+{{--                                                <td>{{$plan->service_name}}</td>--}}
+{{--                                                <td>{{$plan->date_return}}</td>--}}
+{{--                                                <td>{{$plan->reason_for_return}}</td>--}}
+{{--                                                <td>{{($plan->status == 1)?'Completed':'Upcoming'}}</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <button class="btn btn-success" href="#" type="button"--}}
+{{--                                                        data-bs-toggle="modal"--}}
+{{--                                                        data-bs-target="#servicePlanEditModal-{{$plan->id}}"><i--}}
+{{--                                                            class="fa-solid fa-edit"></i></button>--}}
+{{--                                                    <button class="btn btn-danger" href="#" type="button"--}}
+{{--                                                        data-bs-toggle="modal"--}}
+{{--                                                        data-bs-target="#serviceDeleteConfirmationModal-{{$plan->id}}"><i--}}
+{{--                                                            class="fa-solid fa-trash"></i></button>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            @endforeach--}}
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+{{--                                        </tbody>--}}
+{{--                                    </table>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center">

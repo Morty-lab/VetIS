@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DoctorController;
@@ -282,13 +283,11 @@ Route::middleware('auth')->group(function () {
     });
 
     // billing section
-    Route::get('/billing', function () {
-        return view('billing.billing');
-    })->name('billing');
-    Route::get('/billing/add', function () {
-        return view('billing.add');
-    })->name('billing.add');
+    Route::get('/billing',[BillingController::class , 'index'])->name('billing');
+    Route::get('/billing/add', [BillingController::class, 'create'])->name('billing.add');
+    Route::post('/billing/add', [BillingController::class, 'store'])->name('billing.store');
     Route::get('/billing/services', [ServicesController::class , 'index'])->name('billing.services');
+
     Route::post('/billing/services/add',[ServicesController::class , 'store'] )->name("billing.services.add");
 });
 
