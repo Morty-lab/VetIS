@@ -260,6 +260,34 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('services', function (Blueprint $table) {
+            $table->id();
+            $table->string("service_name");
+            $table->double("service_price");
+            $table->timestamps();
+        });
+
+        Schema::create('billing', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_id");
+            $table->unsignedBigInteger("user_id");
+            $table->foreign('pet_id')->references("id")->on("pets")->onDelete("cascade");
+            $table->foreign('user_id')->references("id")->on("users")->onDelete("cascade");
+            $table->string("payment_type");
+            $table->double("total_payable");
+            $table->double('total_paid');
+            $table->timestamps();
+        });
+
+        Schema::create('billing_services', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("billing_id");
+            $table->foreign('billing_id')->references("id")->on("billing")->onDelete("cascade");
+            $table->unsignedBigInteger("service_id");
+            $table->foreign('service_id')->references("id")->on("services")->onDelete("cascade");
+            $table->timestamps();
+        });
+
 
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
@@ -307,6 +335,9 @@ return new class extends Migration
     {
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
+        Schema::dropIfExists('billing_services');
+        Schema::dropIfExists('billing');
+        Schema::dropIfExists('services');
         Schema::dropIfExists('prescriptions');
         Schema::dropIfExists('pet_diagnosis');
         Schema::dropIfExists('pet_plan');

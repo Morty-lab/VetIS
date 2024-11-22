@@ -41,7 +41,6 @@ class SoapController extends Controller
      */
     public function store(Request $request,int $id)
     {
-        $recordID = PetRecords::latest('id')->first()->id +1 ;
 
         $ownerID = Pets::find($id)->owner_ID;
         $consultation_types = [
@@ -74,6 +73,8 @@ class SoapController extends Controller
 
 
         PetRecords::createPetRecord($data);
+        $recordID = PetRecords::latest('id')->first()->id;
+
 
         return redirect()->route('soap.view', ['id' => $id, 'recordID' => $recordID ]);
     }

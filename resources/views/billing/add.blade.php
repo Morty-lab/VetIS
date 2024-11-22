@@ -21,12 +21,17 @@
     <div class="card shadow-none mb-4">
         <div class="card-header">Billing Form</div>
         <div class="card-body">
-            <form action="/billing/create" method="POST">
+            <form action="{{route('billing.store')}}" method="POST">
+                @csrf
                 <div class="row g-3">
                     <!-- Billing Number -->
+                    @php
+                        $latestRecord = \App\Models\Billing::latest('id')->first();
+                        $selectedOwnerID = 0;
+                    @endphp
                     <div class="col-md-6">
                         <label for="billing_number" class="form-label">Billing Number</label>
-                        <input type="text" class="form-control" id="billing_number" name="billing_number" required readonly value="#324234">
+                        <input type="text" class="form-control" id="billing_number" name="billing_number" required readonly value="#@if($latestRecord != null) {{sprintf("VETISBill-%05d",$latestRecord->id +1)}} @else {{sprintf("VETISBill-%05d",1)}} @endif">
                     </div>
 
                     <!-- Billing Date -->
@@ -35,25 +40,23 @@
                         <input type="date" class="form-control" id="billing_date" name="billing_date" required>
                     </div>
 
-                    <!-- Owner -->
+                    <!-- Owner Dropdown -->
                     <div class="col-md-6">
                         <label for="owner" class="form-label">Owner</label>
-                        <select class="form-select" id="owner" name="owner" required>
+                        <select class="form-select" id="owner" name="user_id" required>
                             <option value="" disabled selected>Select an owner</option>
-                            <!-- Dynamic options -->
-                            <option value="1">John Doe</option>
-                            <option value="2">Jane Smith</option>
+                            @foreach($owner as $o)
+                                <option value="{{ $o->id }}">{{ $o->client_name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <!-- Pet -->
                     <div class="col-md-6">
                         <label for="pet" class="form-label">Pet</label>
-                        <select class="form-select" id="pet" name="pet" required>
+                        <select class="form-select" id="pet" name="pet_id" required>
                             <option value="" disabled selected>Select a pet</option>
-                            <!-- Dynamic options -->
-                            <option value="1">Buddy</option>
-                            <option value="2">Bella</option>
+                            <!-- Pet options will be dynamically updated by JavaScript -->
                         </select>
                     </div>
 
@@ -65,9 +68,9 @@
                                 <select class="form-select service" name="services[]" required>
                                     <option value="" disabled selected>Select a service</option>
                                     <!-- Dynamic service options with prices -->
-                                    <option value="consultation" data-price="500">Consultation - ₱500</option>
-                                    <option value="vaccination" data-price="800">Vaccination - ₱800</option>
-                                    <option value="grooming" data-price="1000">Grooming - ₱1000</option>
+                                    @foreach($services as $service)
+                                        <option value="{{$service->id}}" data-price="{{$service->service_price}}">{{$service->service_name}} - ₱{{$service->service_price}}</option>
+                                    @endforeach
                                 </select>
                                 <button type="button" class="btn btn-outline-secondary add-service">Add</button>
                             </div>
@@ -81,7 +84,7 @@
                     <!-- Payment Option -->
                     <div class="col-12">
                         <label for="paymentType" class="form-label">Payment Type</label>
-                        <select class="form-select" id="paymentType" name="paymentType" required>
+                        <select class="form-select" id="paymentType" name="payment_type" required>
                             <option value="" disabled selected>Select Payment Type</option>
                             <option value="full_payment">Full Payment</option>
                             <option value="partial_payment">Partial Payment</option>
@@ -93,17 +96,17 @@
                     <!-- Total Payable -->
                     <div class="col-md-6">
                         <label for="payable" class="form-label">Total Payable</label>
-                        <input type="number" class="form-control" id="payable" name="payable" step="0.01" readonly>
+                        <input type="number" class="form-control" id="payable" name="total_payable" step="0.01" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="amount_paid" class="form-label">Amount Paid</label>
-                        <input type="number" class="form-control" id="amount_paid" name="amount_paid" step="0.01" required>
+                        <input type="number" class="form-control" id="amount_paid" name="total_paid" step="0.01" required>
                     </div>
                     <!-- Remaining Balance -->
-                    <div class="col-md-6">
-                        <label for="remaining" class="form-label">Remaining Balance</label>
-                        <input type="number" class="form-control" id="remaining" name="remaining" step="0.01">
-                    </div>
+{{--                    <div class="col-md-6">--}}
+{{--                        <label for="remaining" class="form-label">Remaining Balance</label>--}}
+{{--                        <input type="number" class="form-control" id="remaining" name="remaining" step="0.01">--}}
+{{--                    </div>--}}
 
                     <!-- Submit Button -->
                     <div class="col-12">
@@ -117,6 +120,41 @@
 @endsection
 
 @section('scripts')
+<script>
+    const pets = @json($pet);
+
+    // Ensure the DOM is fully loaded before adding the event listener
+    document.addEventListener('DOMContentLoaded', function () {
+        const ownerDropdown = document.getElementById('owner');
+        ownerDropdown.addEventListener('change', function () {
+            const selectedOwnerId = parseInt(this.value);
+            SelectOwner(selectedOwnerId);
+        });
+    });
+
+
+
+    // Filter pets based on owner ID
+    function SelectOwner(ownerId) {
+        console.log(pets);
+        console.log(`Selected Owner ID: ${ownerId}`); // Debugging
+
+
+        const petDropdown = document.getElementById('pet');
+        petDropdown.innerHTML = `<option value="" disabled selected>Select a pet</option>`; // Reset options
+
+        // Filter pets by ownerId
+        const filteredPets = pets.filter(pet => pet.owner_ID === ownerId);
+
+        // Populate the dropdown with filtered pets
+        filteredPets.forEach(pet => {
+            const option = document.createElement('option');
+            option.value = pet.id;
+            option.textContent = pet.pet_name;
+            petDropdown.appendChild(option);
+        });
+    }
+</script>
 
 <script>
     function updateTotal() {
@@ -139,9 +177,9 @@
             newService.innerHTML = `
                 <select class="form-select service" name="services[]" required>
                     <option value="" disabled selected>Select a service</option>
-                    <option value="consultation" data-price="500">Consultation - ₱500</option>
-                    <option value="vaccination" data-price="800">Vaccination - ₱800</option>
-                    <option value="grooming" data-price="1000">Grooming - ₱1000</option>
+                     @foreach($services as $service)
+                        <option value="{{$service->id}}" data-price="{{$service->service_price}}">{{$service->service_name}} - ₱{{$service->service_price}}</option>
+                    @endforeach
                 </select>
                 <button type="button" class="btn btn-outline-danger remove-service">Remove</button>
             `;

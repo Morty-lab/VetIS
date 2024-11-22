@@ -26,36 +26,39 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Billing #</th>
-                        <th>Date</th>
-                        <th>Owner</th>
-                        <th>Pet</th>
-                        <th>Services Availed</th>
-                        <th>Payable</th>
-                        <th>Remaining</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </tfoot>
                 <tbody>
+                @foreach($billings as $billing)
                     <tr>
-                        <td>PH20324232</td>
-                        <td>04/19/2024</td>
-                        <td>Kent Invento</td>
-                        <td>Lexie</td>
-                        <td>2</td>
-                        <td>₱ 2000</td>
-                        <td>₱ 0.00</td>
+                        <td>{{sprintf("VETISBill-%05d",$billing->id)}}</td>
+                        <td>{{$billing->created_at}}</td>
                         <td>
-                            <!-- <div class="badge bg-success text-white rounded-pill">Fully Paid</div> -->
-                            <div class="badge bg-secondary text-white rounded-pill">Partially Paid</div>
+                            {{ $clients->firstWhere('id', $billing->user_id)?->client_name ?? 'Unknown' }}
                         </td>
+                        <td>
+                            {{ $pets->firstWhere('id', $billing->pet_id)?->pet_name ?? 'Unknown' }}
+                        </td>
+                        <td>
+                            {{ \App\Models\BillingServices::where('billing_id', $billing->id)->count() }}
+                        </td>
+                        <td>₱ {{ number_format($billing->total_payable, 2) }}</td>
+                        <td>₱ {{ number_format($billing->total_payable - $billing->total_paid, 2) }}</td>
+
+                        <td>
+                            @if ($billing->total_paid >= $billing->total_payable)
+                                <div class="badge bg-success text-white rounded-pill">Fully Paid</div>
+                            @elseif ($billing->total_paid > 0)
+                                <div class="badge bg-secondary text-white rounded-pill">Partially Paid</div>
+                            @else
+                                <div class="badge bg-danger text-white rounded-pill">Pending Payment</div>
+                            @endif
+                        </td>
+
                         <td>
                             <a href="" class="btn btn-datatable btn-primary px-5 py-3">Open</a>
                         </td>
                     </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>
