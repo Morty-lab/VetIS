@@ -28,57 +28,54 @@
                                 </div>
                                 <div class="card-body">
                                     <!-- Register form-->
-                                    <form>
+                                    <form action="{{route('register')}}" method="POST">
+                                        @csrf
                                         <!-- Form Row-->
                                         <div class="row gx-3">
                                             <div class="col-md-6">
                                                 <!-- Form Group (first name)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputFirstName">First Name</label>
-                                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Enter first name" />
+                                                    <input class="form-control" id="inputFirstName" type="text" name="first_name" placeholder="Enter first name" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <!-- Form Group (last name)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputLastName">Last Name</label>
-                                                    <input class="form-control" id="inputLastName" type="text" placeholder="Enter last name" />
+                                                    <input class="form-control" id="inputLastName" type="text" name="last_name" placeholder="Enter last name" />
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- Form Group (email address)            -->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" />
+                                            <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" name="email" placeholder="Enter email address" />
                                         </div>
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputAddress">Address</label>
-                                            <input class="form-control" id="inputAddress" type="text" aria-describedby="addressHelp" placeholder="Enter address" />
+                                            <input class="form-control" id="inputAddress" type="text" aria-describedby="addressHelp" name="address" placeholder="Enter address" />
                                         </div>
                                         <div class="row gx-3">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="inputPhoneNumber" class="small mb-1">Phone Number</label>
-                                                    <input type="number" class="form-control" id="inputPhoneNumber" placeholder="Enter phone number">
+                                                    <input type="text" name="phone_number" class="form-control" id="inputPhoneNumber" placeholder="Enter phone number">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="inputBirthday" class="small mb-1">Birthday</label>
-                                                    <input type="date" class="form-control" id="inputBirthday">
+                                                    <input type="date" name="birthday" class="form-control" id="inputBirthday">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1" for="inputUsername">Address</label>
-                                            <input class="form-control" id="inputUsername" type="text" aria-describedby="usernameHelp" placeholder="Enter username" />
                                         </div>
                                         <div class="row gx-3">
                                             <div class="col-md-6">
                                                 <!-- Form Group (password)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputPassword">Password</label>
-                                                    <input class="form-control" id="inputPassword" type="password" placeholder="Enter password" />
+                                                    <input class="form-control" id="inputPassword" type="password" name="password" placeholder="Enter password" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -90,7 +87,7 @@
                                             </div>
                                         </div>
                                         <!-- Form Group (create account submit)-->
-                                        <a class="btn btn-primary btn-block" href="auth-login-basic.html">Create Account</a>
+                                        <button class="btn btn-primary btn-block" type="submit">Create Account</button>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">

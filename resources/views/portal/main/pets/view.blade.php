@@ -27,7 +27,7 @@
                         </svg><!-- <i class="fa fa-ellipsis-v"></i> Font Awesome fontawesome.com -->
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="{{ route('portal.mypets.edit')}}">Edit Pet</a></li>
+                        <li><a class="dropdown-item" href="{{ route('portal.mypets.edit',['petid' => $pet->id])}}">Edit Pet</a></li>
                         <li><a class="dropdown-item" href="">Print</a></li>
                     </ul>
                 </div>
@@ -45,35 +45,35 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetName">Pet Name</label>
-                                <p>Miller</p>
+                                <p>{{$pet->pet_name}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetName">PetID</label>
-                                <p>1</p>
+                                <p>{{sprintf("VetIS-%05d", $pet->id)}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                <p>Cat</p>
+                                <p>{{$pet->pet_type}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBreed">Breed</label>
-                                <p>Beagle</p>
+                                <p>{{$pet->pet_breed}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputColor">Color</label>
-                                <p>Silver</p>
+                                <p>{{$pet->pet_color}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputWeight">Weight</label>
-                                <p>54.5</p>
+                                <p>{{$pet->pet_weight}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                <p>2019-09-08</p>
+                                <p>{{$pet->pet_birthdate}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
-                                <p>Female</p>
+                                <p>{{$pet->pet_gender}}</p>
                             </div>
                         </div>
                     </div>
@@ -195,19 +195,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2 September, 2024 | 14:39</td>
-                            <td>Laborum error reiciendis aut labore porro eos.</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
-                        </tr>
-                        <tr>
-                            <td>29 June, 2024 | 22:05
-                            </td>
-                            <td>Veniam ipsum odio sed saepe placeat porro eos.</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
-                        </tr>
+                        @foreach($appointments as $appointment)
+                            @if($appointment->status === 1)
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                                    <td>{{$appointment->purpose}}</td>
+                                    <td>Completed</td>
+                                    <td><a href="" class="btn btn-primary">Open</a></td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -234,46 +231,60 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>VETIS-00004 </td>
-                        <td>2 May, 2024 | 07:25</td>
-                        <td>Kent Invento</td>
-                        <td>My cat is sick</td>
-                        <td><span class="badge bg-success-soft text-success text-sm rounded-pill">Scheduled</span></td>
-                        <td><a href="" class="btn btn-outline-primary">Open</a></td>
-                    </tr>
+                @foreach($appointments as $appointment)
+                    @if($appointment->status === 0)
+                        <tr>
+                            <td>{{ sprintf("VetIS-%05d", $appointment->id)}}</td>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>
+                                @foreach($vets as $vet)
+                                    @if($vet->id == $appointment->doctor_ID)
+                                        {{$vet->firstname . " " . $vet->lastname}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>{{$appointment->purpose}}</td>
+                            <td>Scheduled</td>
+
+                            <td><a href="{{route('portal.appointments.view',['appid'=>$appointment->id, 'petid'=>$appointment->pet_ID])}}" class="btn btn-primary">Open</a></td>
+                        </tr>
+                    @endif
+                @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="card shadow-none border mb-4">
-        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Prescriptions</span>
-        </div>
-        <div class="card-body">
-            <table id="petPrescriptionTable">
-                <thead>
-                    <tr>
-                        <th><a href="#">Date Created</a></th>
-                        <th><a href="#">Code</a></th>
-                        <th><a href="#">Subject</a></th>
-                        <th><a href="#">Veterinarian</a></th>
-                        <th><a href="#">Actions</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2 May, 2024 | 07:25</td>
-                        <td>VETIS-00004 </td>
-                        <td>My cat is sick</td>
-                        <td>Kent Invento</td>
-                        <td><a href="" class="btn btn-outline-primary">Open</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
+{{--<div class="col-md-12">--}}
+{{--    <div class="card shadow-none border mb-4">--}}
+{{--        <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Prescriptions</span>--}}
+{{--        </div>--}}
+{{--        <div class="card-body">--}}
+{{--            <table id="petPrescriptionTable">--}}
+{{--                <thead>--}}
+{{--                    <tr>--}}
+{{--                        <th><a href="#">Date Created</a></th>--}}
+{{--                        <th><a href="#">Code</a></th>--}}
+{{--                        <th><a href="#">Subject</a></th>--}}
+{{--                        <th><a href="#">Veterinarian</a></th>--}}
+{{--                        <th><a href="#">Actions</a></th>--}}
+{{--                    </tr>--}}
+{{--                </thead>--}}
+{{--                <tbody>--}}
+{{--                @foreach($appointments as $appointment)--}}
+{{--                    @if($appointment->status == 2)--}}
+{{--                        <tr>--}}
+{{--                            <td>2 September, 2024 | 14:39</td>--}}
+{{--                            <td>Laborum error reiciendis aut labore porro eos.</td>--}}
+{{--                            <td>Completed</td>--}}
+{{--                            <td><a href="" class="btn btn-primary">Open</a></td>--}}
+{{--                        </tr>--}}
+{{--                    @endif--}}
+{{--                @endforeach--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
 @endsection

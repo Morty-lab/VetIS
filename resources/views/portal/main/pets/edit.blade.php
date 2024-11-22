@@ -18,55 +18,57 @@
 <div class="row gx-4">
     <div class="col-xl-8">
         <div class="card shadow-none border mb-4">
+            <form action="{{route('portal.mypets.update', ['petid' => $pet->id])}}" method="POST">
+            @csrf
             <div class="card-header">Edit Pet</div>
             <div class="card-body">
-                <form action="" method="">
                     <div class="row gx-3 gy-2 mb-3">
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
-                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="Buddy" name="pet_name">
+                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="{{$pet->pet_name}}" name="pet_name">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectPetType">Pet Type</label>
                             <select class="form-control" id="selectPetType" name="pet_type">
-                                <option disabled="">-- Select Pet Type --</option>
-                                <option selected>Dog</option>
-                                <option>Cat</option>
-                                <option>Bird</option>
-                                <option>Frog</option>
-                                <option>Chicken</option>
+                                <option disabled {{ is_null($pet->pet_type) ? 'selected' : '' }}>-- Select Pet Type --</option>
+                                <option value="Dog" {{ $pet->pet_type === 'Dog' ? 'selected' : '' }}>Dog</option>
+                                <option value="Cat" {{ $pet->pet_type === 'Cat' ? 'selected' : '' }}>Cat</option>
+                                <option value="Bird" {{ $pet->pet_type === 'Bird' ? 'selected' : '' }}>Bird</option>
+                                <option value="Frog" {{ $pet->pet_type === 'Frog' ? 'selected' : '' }}>Frog</option>
+                                <option value="Chicken" {{ $pet->pet_type === 'Chicken' ? 'selected' : '' }}>Chicken</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBreed">Breed</label>
-                            <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="Golden Retriever" name="pet_breed">
+                            <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="{{$pet->pet_breed}}" name="pet_breed">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputColor">Color</label>
-                            <input class="form-control" id="inputColor" type="text" value="Golden" placeholder="Color" name="pet_color">
+                            <input class="form-control" id="inputColor" type="text" value="{{$pet->pet_color}}" placeholder="Color" name="pet_color">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputWeight">Weight</label>
-                            <input class="form-control" id="inputWeight" type="text" value="25 kg" placeholder="Weight" name="pet_weight">
+                            <input class="form-control" id="inputWeight" type="number" value="{{$pet->pet_weight}}" placeholder="Weight" name="pet_weight">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                            <input class="form-control" id="inputBirthdate" type="date" value="2022-01-15" name="pet_birthdate">
+                            <input class="form-control" id="inputBirthdate" type="date" value="{{$pet->pet_birthdate}}" name="pet_birthdate">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectGender">Gender</label>
-                            <select class="form-control" id="selectGender" name="pet_gender">
-                                <option disabled="">-- Select Gender --</option>
-                                <option selected>Male</option>
-                                <option>Female</option>
+                            <select class="form-control" id="selectGender" name="pet_gender" >
+                                <option disabled {{ is_null($pet->pet_gender) ? 'selected' : '' }}>-- Select Gender --</option>
+                                <option  value="Male" {{ $pet->pet_gender === 'Male' ? 'selected' : '' }}>Male</option>
+                                <option  value="Female" {{ $pet->pet_gender === 'Female' ? 'selected' : '' }}>Female</option>
                             </select>
                         </div>
                     </div>
-                </form>
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" id="editbtn" type="submit">Save Changes</button>
             </div>
+            </form>
+
         </div>
     </div>
     <div class="col-xl-4">

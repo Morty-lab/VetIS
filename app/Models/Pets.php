@@ -49,6 +49,11 @@ class Pets extends Model
         return self::all();
     }
 
+    public static function getPetByClient($client)
+    {
+        return self::where('owner_ID', $client)->get();
+    }
+
     public static function getPetById($id)
     {
         return self::find($id);
