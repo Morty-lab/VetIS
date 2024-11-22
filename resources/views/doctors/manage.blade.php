@@ -26,7 +26,7 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
-  <div class="card">
+  <div class="card shadow-none">
     <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Veterinarian List</span>
       <a class="btn btn-primary justify-end" href="/adddoctor">Add Veterinarian</a>
     </div>
@@ -43,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-            @foreach ($doctors as $doctor)
+          @foreach ($doctors as $doctor)
           <tr>
             <td>{{ $doctor->firstname }} {{ $doctor->lastname }}</td>
             <td>{{ $doctor->age }}</td>
