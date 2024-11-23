@@ -25,10 +25,13 @@
                     <tr>
                         <th>Date & Time</th>
                         <th>Appointment ID</th>
-                        <th>Owner</th>
+                        <th>Pet Owner</th>
+                        <th>Pet</th>
                         <th>Pet Type</th>
+                        <th>Veterinarian</th>
+                        <th>Purpose</th>
                         <th>Status</th>
-                        <th>Actions </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,15 +43,16 @@
                         </td>
                         <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
                         <td>{{$appointment->client->client_name}}</td>
+                        <td>{{$appointment->pet->pet_name}}</td>
                         <td>{{$appointment->pet->pet_type}}</td>
+                        <td>The Veterinarian</td>
+                        <td>The Purpose</td>
                         <td>
                             <div class="badge bg-primary-soft text-primary rounded-pill">Scheduled</div>
-
                         </td>
                         <td>
                             <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
                         </td>
-
                     </tr>
                     @else
                     @continue
