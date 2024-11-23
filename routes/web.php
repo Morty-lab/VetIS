@@ -283,12 +283,19 @@ Route::middleware('auth')->group(function () {
     });
 
     // billing section
-    Route::get('/billing',[BillingController::class , 'index'])->name('billing');
+    Route::get('/billing', [BillingController::class, 'index'])->name('billing');
     Route::get('/billing/add', [BillingController::class, 'create'])->name('billing.add');
     Route::post('/billing/add', [BillingController::class, 'store'])->name('billing.store');
-    Route::get('/billing/services', [ServicesController::class , 'index'])->name('billing.services');
+    Route::get('/billing/services', [ServicesController::class, 'index'])->name('billing.services');
 
-    Route::post('/billing/services/add',[ServicesController::class , 'store'] )->name("billing.services.add");
+    Route::post('/billing/services/add', [ServicesController::class, 'store'])->name("billing.services.add");
+
+    Route::get('/billing/view', function () {
+        return view('billing.view');
+    })->name('billing.view');
+    Route::get('/billing/print', function () {
+        return view('billing.print');
+    })->name('billing.print');
 });
 
 

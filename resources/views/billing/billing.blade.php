@@ -46,16 +46,16 @@
 
                         <td>
                             @if ($billing->total_paid >= $billing->total_payable)
-                            <div class="badge bg-success text-white rounded-pill">Fully Paid</div>
+                            <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
                             @elseif ($billing->total_paid > 0)
-                            <div class="badge bg-secondary text-white rounded-pill">Partially Paid</div>
+                            <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
                             @else
-                            <div class="badge bg-danger text-white rounded-pill">Pending Payment</div>
+                            <div class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending Payment</div>
                             @endif
                         </td>
                         <td>10/23/2025</td>
                         <td>
-                            <a href="" class="btn btn-datatable btn-primary px-5 py-3">Open</a>
+                            <a href="{{route('billing.view')}}" class="btn btn-datatable btn-primary px-5 py-3">Open</a>
                         </td>
                     </tr>
                     @endforeach
