@@ -203,6 +203,7 @@
                     <tr>
                         <th>Billing Number</th>
                         <th>Date</th>
+                        <th>Payable</th>
                         <th>Amount Paid</th>
                         <th>Remaining Balance</th>
                     </tr>
@@ -211,6 +212,7 @@
                     <tr>
                         <td>#VETISBILL-00012</td>
                         <td>11/23/2024</td>
+                        <td class="text-primary">₱1,000.00</td>
                         <td class="text-primary">₱500.00</td>
                         <td class="text-primary">₱500.00</td>
                     </tr>
