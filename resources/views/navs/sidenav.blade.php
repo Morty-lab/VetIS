@@ -56,10 +56,36 @@
                 </div>
                 @endif
 
-                <a class="nav-link @if(Request::is('manageappointments')) active @endif" href="{{route('appointments.index')}}">
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['manageappointments', 'todayappointments', 'finishedappointments', 'pendingappointments', 'cancelledappointments', 'viewappointments'])) active @endif" href="{{route('appointments.index')}}">
                     <div class="nav-link-icon"><i class="fa-solid fa-calendar-plus"></i></div>
                     Appointments
                 </a>
+                <!-- <a class="nav-link collapsed @if(Request::is('manageappointments')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAppt" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon"><i class="fa-solid fa-calendar-plus"></i></div>
+                    Appointments
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseAppt" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <a class="nav-link" href="{{route('appointments.index')}}">
+                            Scheduled
+                        </a>
+                        <a class="nav-link" href="">
+                            Today
+                            <span class="badge bg-primary-soft text-primary ms-auto">1</span>
+                        </a>
+                        <a class="nav-link" href="">
+                            Requests
+                            <span class="badge bg-warning-soft text-warning ms-auto">5</span>
+                        </a>
+                        <a class="nav-link" href="">
+                            Finished
+                        </a>
+                        <a class="nav-link" href="">
+                            Cancelled
+                        </a>
+                    </nav>
+                </div> -->
 
                 <a class="nav-link @if(Request::is('manageschedules')) active @endif" href="/manageschedules">
                     <div class="nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
