@@ -53,7 +53,7 @@
               <div class="badge bg-primary text-white rounded-pill">Full-time</div>
             </td>
             <td>
-              <a class="btn btn-primary" href="{{route('doctor.profile', $doctor->user_id)}}">Open</a>
+              <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->user_id)}}">Open</a>
             </td>
           </tr>
           @endforeach

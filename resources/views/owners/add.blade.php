@@ -33,7 +33,7 @@
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header">Pet Owner Registration</div>
                 <div class="card-body">
                     <form method="POST" action="{{route('owners.add')}}" enctype="multipart/form-data">
@@ -93,10 +93,10 @@
                                 @enderror
                             </div>
                         </div>
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="small mb-1" for="inputUsername">Pets Owned</label>--}}
-{{--                            <input class="form-control @error('petsowned') is-invalid @enderror" id="inputPetsOwned" name="petsowned" type="text" placeholder="Pets Owned" value="" />--}}
-{{--                        </div>--}}
+                        {{-- <div class="mb-3">--}}
+                        {{-- <label class="small mb-1" for="inputUsername">Pets Owned</label>--}}
+                        {{-- <input class="form-control @error('petsowned') is-invalid @enderror" id="inputPetsOwned" name="petsowned" type="text" placeholder="Pets Owned" value="" />--}}
+                        {{-- </div>--}}
                         <!-- Form Group (username)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username</label>
@@ -134,7 +134,7 @@
         </div>
         <div class="col-xl-4">
             <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
+            <div class="card shadow-none mb-4 mb-xl-0">
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
@@ -150,26 +150,26 @@
 </div>
 
 {{--<script>--}}
-{{--    document.addEventListener("DOMContentLoaded", function() {--}}
-{{--        // Get the register button--}}
-{{--        var registerButton = document.getElementById('regbtn');--}}
+{{-- document.addEventListener("DOMContentLoaded", function() {--}}
+{{-- // Get the register button--}}
+{{-- var registerButton = document.getElementById('regbtn');--}}
 
-{{--        // Add event listener to the register button--}}
-{{--        registerButton.addEventListener('click', function() {--}}
-{{--            // Show the success alert--}}
-{{--            var successAlert = document.getElementById('successAlert');--}}
-{{--            successAlert.style.display = 'flex';--}}
+{{-- // Add event listener to the register button--}}
+{{-- registerButton.addEventListener('click', function() {--}}
+{{-- // Show the success alert--}}
+{{-- var successAlert = document.getElementById('successAlert');--}}
+{{-- successAlert.style.display = 'flex';--}}
 
-{{--            setTimeout(function() {--}}
-{{--                window.location.href = '/managedoctor';--}}
-{{--            }, 4000);--}}
+{{-- setTimeout(function() {--}}
+{{-- window.location.href = '/managedoctor';--}}
+{{-- }, 4000);--}}
 
-{{--            // Optionally, hide the alert after a certain period (e.g., 3 seconds)--}}
-{{--            setTimeout(function() {--}}
-{{--                successAlert.style.display = 'none';--}}
-{{--            }, 3000);--}}
-{{--        });--}}
-{{--    });--}}
+{{-- // Optionally, hide the alert after a certain period (e.g., 3 seconds)--}}
+{{-- setTimeout(function() {--}}
+{{-- successAlert.style.display = 'none';--}}
+{{-- }, 3000);--}}
+{{-- });--}}
+{{-- });--}}
 {{--</script>--}}
 @endsection
 
