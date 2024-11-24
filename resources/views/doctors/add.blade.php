@@ -5,6 +5,33 @@
 @endsection
 
 @section('content')
+<!-- Modals -->
+<!-- Add Profile Modal -->
+<div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="profilePictureModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Upload Profile Picture</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row justify-content-center align-items-center" style="height: 100%;">
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                    </div>
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
+                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
+                        <input type="file" id="fileInput" class="d-none" accept="image/*" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Upload</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert" style="display: none; z-index: 100;">
     <div class="alert-icon-aside">
         <i class="fa-regular fa-circle-check"></i>
@@ -33,7 +60,7 @@
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header">Account Registration</div>
                 <div class="card-body">
                     <form method="POST" action="{{route('doctor.add')}}" enctype="multipart/form-data">
@@ -138,7 +165,7 @@
         </div>
         <div class="col-xl-4">
             <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
+            <div class="card shadow-none mb-4 mb-xl-0">
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
@@ -146,7 +173,7 @@
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button">Upload Image</button>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#profilePictureModal">Upload Image</button>
                 </div>
             </div>
         </div>

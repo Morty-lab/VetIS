@@ -112,14 +112,13 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-12">
             <div class="card shadow-none mb-4">
                 <div class="card-header">Permissions</div>
                 <div class="card-body">
                     <p class="text-muted">Select the permissions for the user:</p>
                     <div class="row gx-3">
-                        <!-- Column 1 -->
                         <div class="col-md-6">
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="checkbox" id="manageAppointments" name="permissions[]" value="manage_appointments">
@@ -146,7 +145,6 @@
                                 </label>
                             </div>
                         </div>
-                        <!-- Column 2 -->
                         <div class="col-md-6">
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="checkbox" id="editUsers" name="permissions[]" value="edit_users">
@@ -180,7 +178,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 @endsection
 

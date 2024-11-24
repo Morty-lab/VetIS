@@ -5,28 +5,9 @@
 @endsection
 
 @section('content')
+@include('components.header', ['title' => 'Pet Owner'], ['icon' => '<i class="fa-solid fa-paw"></i>'])
 
-<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
-    <div class="container-xl px-4">
-        <div class="page-header-content pt-4">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-auto mt-4">
-                    <h1 class="page-header-title">
-                        <div class="page-header-icon">
-                            <i class="fa-solid fa-user-doctor p-1"></i>
-                        </div>
-                        Manage Pet Owners
-                    </h1>
-                    <div class="page-header-subtitle">
-                        Add and Edit Pet Owners
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-<!-- Main page content-->
-<div class="container-xl px-4 mt-n10">
+<div class="container-xl px-4 mt-4">
     <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pet Owners List</span>
             <a class="btn btn-primary justify-end" href="/addowner">Add Pet Owner</a>
@@ -41,6 +22,7 @@
                         <th>Address</th>
                         <th>Contact Number</th>
                         <th>Pets Owned</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -53,6 +35,10 @@
                         <td>{{$client->client_address}}</td>
                         <td>{{$client->client_no}}</td>
                         <td>{{$client->petsOwned($client->id)->count()}}</td>
+                        <td>
+                            <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>
+                            <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>
+                        </td>
                         <td>
                             <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('owners.show',  $client->id)}}">Open</a>
                         </td>

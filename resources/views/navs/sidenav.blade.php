@@ -1,31 +1,12 @@
     <nav class="sidenav shadow-none border-end sidenav-light no-print">
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
-                <!-- Sidenav Menu Heading (Account)-->
-                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <div class="sidenav-menu-heading d-sm-none">Account</div>
-                <!-- Sidenav Link (Alerts)-->
-                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <a class="nav-link d-sm-none" href="dashboard-1.html#!">
-                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                    Alerts
-                    <span class="badge bg-warning-soft text-warning ms-auto">4 New!</span>
-                </a>
-                <!-- Sidenav Link (Messages)-->
-                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <a class="nav-link d-sm-none" href="dashboard-1.html#!">
-                    <div class="nav-link-icon"><i data-feather="mail"></i></div>
-                    Messages
-                    <span class="badge bg-success-soft text-success ms-auto">2 New!</span>
-                </a>
-                <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Main</div>
                 <!-- Sidenav Accordion (Dashboard)-->
                 <a class="nav-link  @if(Request::is('dashboard')) active @endif" href=" /dashboard">
                     <div class="nav-link-icon"><i class="fa-solid fa-bolt"></i></div>
                     Dashboard
                 </a>
-
 
                 @if (auth()->user()->role == "admin")
                 <a class="nav-link  @if(Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="{{route('owners.index')}}">
@@ -34,7 +15,7 @@
                 </a>
                 @endif
 
-                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet/*') || Request::is('editpet')) active @endif" href="/managepet">
+                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet/*') ||  Request::is('editpet') || Request::is('petinfo/*')) active @endif" href="/managepet">
 
                     <div class="nav-link-icon"><i class="fa-solid fa-paw"></i></div>
                     Pets

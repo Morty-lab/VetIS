@@ -40,12 +40,12 @@
             <footer class="footer-admin mt-auto footer-light">
                 <div class="container-xl px-4">
                     <div class="row">
-                        <div class="col-md-6 small">Copyright © VetIS 2024</div>
-                        <div class="col-md-6 text-md-end small">
+                        <div class="col-md-6 small">Copyright © PetHub 2024</div>
+                        <!-- <div class="col-md-6 text-md-end small">
                             <a href="dashboard-1.html#!">Privacy Policy</a>
                             ·
                             <a href="dashboard-1.html#!">Terms &amp; Conditions</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </footer>

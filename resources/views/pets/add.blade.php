@@ -6,6 +6,33 @@
 @endsection
 
 @section('content')
+<!-- Modals -->
+<!-- Upload Pet Profile Picture -->
+<div class="modal fade" id="petPictureModal" tabindex="-1" role="dialog" aria-labelledby="petPictureModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Upload Pet Picture</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row justify-content-center align-items-center" style="height: 100%;">
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                    </div>
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
+                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
+                        <input type="file" id="fileInput" class="d-none" accept="image/*" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Upload</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert" style="display: none; z-index: 100;">
     <div class="alert-icon-aside">
         <i class="fa-regular fa-circle-check"></i>
@@ -15,8 +42,6 @@
         Pet Registered Successfully!
     </div>
 </div>
-
-
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
     <div class="container-xl px-4">
@@ -36,7 +61,7 @@
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header">Pet Profile</div>
                 <div class="card-body">
                     <form action="{{ route('pets.store') }}" method="POST">
@@ -93,9 +118,9 @@
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
                                 <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
                                     <option disabled selected>-- Select Record --</option>
-                                    <option >No Vaccination Record</option>
+                                    <option>No Vaccination Record</option>
                                     <option value=1>Complete</option>
-                                    <option value=0>  Incomplete</option>
+                                    <option value=0> Incomplete</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -162,9 +187,9 @@
                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
                             <select class="form-control" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
                                 @foreach ($clients as $client)
-                                    @php
-                                        Clients::setEmailAttribute($client, $client->user_id);
-                                    @endphp
+                                @php
+                                Clients::setEmailAttribute($client, $client->user_id);
+                                @endphp
                                 <option value="{{ $client->id }}">{{ $client->client_name }}</option>
                                 @endforeach
                             </select>
@@ -191,7 +216,7 @@
         </div>
         <div class="col-xl-4">
             <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
+            <div class="card shadow-none mb-4 mb-xl-0">
                 <div class="card-header">Pet Photo</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
@@ -199,7 +224,7 @@
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button">Upload Pet Image</button>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#petPictureModal">Upload Pet Image</button>
                 </div>
             </div>
         </div>

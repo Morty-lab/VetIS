@@ -3,8 +3,8 @@
         <div class="page-header-content pt-4 pb-4">
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="d-flex text-primary mb-0">
+                    <div class="nav-link-icon me-2">{!! $icon !!}</div>
                     <p class="mb-0">{{ $title }}</p>
-                    <div class="nav-link-icon ms-2">{!! $icon !!}</div>
                 </h1>
                 <div class="">
                     <div class="d-flex justify-content-end">

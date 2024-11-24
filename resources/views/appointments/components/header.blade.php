@@ -3,8 +3,8 @@
         <div class="page-header-content py-3">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
                 <h1 class="d-flex text-primary mb-0">
+                    <div class="nav-link-icon me-2">{!! $icon !!}</div>
                     <p class="mb-0">{{ $title }}</p>
-                    <div class="nav-link-icon ms-2">{!! $icon !!}</div>
                 </h1>
                 <div class="w-100 w-md-auto">
                     <div class="d-flex flex-column flex-md-row justify-content-md-end">

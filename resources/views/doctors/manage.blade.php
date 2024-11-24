@@ -5,27 +5,10 @@
 @endsection
 
 @section('content')
-<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
-  <div class="container-xl px-4">
-    <div class="page-header-content pt-4">
-      <div class="row align-items-center justify-content-between">
-        <div class="col-auto mt-4">
-          <h1 class="page-header-title">
-            <div class="page-header-icon">
-              <i class="fa-solid fa-user-doctor p-1"></i>
-            </div>
-            Manage Veterinarians
-          </h1>
-          <div class="page-header-subtitle">
-            Add and Edit Veterinary Doctors
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+@include('components.header', ['title' => 'Veterinarians'], ['icon' => '<i class="fa-solid fa-user-doctor"></i>'])
+
 <!-- Main page content-->
-<div class="container-xl px-4 mt-n10">
+<div class="container-xl px-4 mt-4">
   <div class="card shadow-none">
     <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Veterinarian List</span>
       <a class="btn btn-primary justify-end" href="/adddoctor">Add Veterinarian</a>
@@ -35,9 +18,10 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Age</th>
+            <th>Email</th>
+            <th>Contact Number</th>
             <th>Position</th>
-            <th>Start date</th>
+            <th>Schedules</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -46,11 +30,15 @@
           @foreach ($doctors as $doctor)
           <tr>
             <td>{{ $doctor->firstname }} {{ $doctor->lastname }}</td>
-            <td>{{ $doctor->age }}</td>
+            <td>{{ $doctor->email }} testaccount@gmail.com</td>
+            <td>{{ $doctor->phone_number }}</td>
             <td>{{ $doctor->position }}</td>
-            <td>{{ $doctor->created_at->format('Y-m-d') }}</td>
             <td>
-              <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+              <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">5</span> Scheduled</span>
+            </td>
+            <td>
+              <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>
+              <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>
             </td>
             <td>
               <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->user_id)}}">Open</a>
