@@ -1,3 +1,4 @@
+@php use App\Models\Doctor; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -6,7 +7,6 @@
 @section('content')
 
 <!-- Modals -->
-
 <!-- Edit Veterinarian Modal -->
 <div class="modal fade" id="updateVetInfo" tabindex="-1" role="dialog" aria-labelledby="updateVetInfo" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -22,31 +22,31 @@
                     <div class="row g-3">
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editFirstName">First Name</label>
-                            <input type="text" class="form-control" name="firstname" id="editFirstName" placeholder="Enter first name" value="{{ $doctor->doctor->firstname }}">
+                            <input type="text" class="form-control" name="firstname" id="editFirstName" placeholder="Enter first name" value="{{ $doctor->firstname }}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editLastName">Last Name</label>
-                            <input type="text" class="form-control" name="lastname" id="editLastName" placeholder="Enter last name" value="{{ $doctor->doctor->lastname }}">
+                            <input type="text" class="form-control" name="lastname" id="editLastName" placeholder="Enter last name" value="{{ $doctor->lastname }}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editPosition">Position</label>
-                            <input type="text" class="form-control" name="position" id="editPosition" placeholder="Enter Position" value="{{ $doctor->doctor->position }}">
+                            <input type="text" class="form-control" name="position" id="editPosition" placeholder="Enter Position" value="{{ $doctor->position }}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editDOB">Birthdate</label>
-                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->doctor->birthday }}">
+                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
-                            <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter Address" value="{{ $doctor->doctor->address }}">
+                            <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter Address" value="{{ $doctor->address }}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editEmailAddress">Email address</label>
-                            <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter Email Address" value="{{ $doctor->email }}">
+                            <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter Email Address" value="{{ $doctor->doctor_email }}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editPhone">Phone number</label>
-                            <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter Phone Number" value="{{ $doctor->doctor->phone_number }}">
+                            <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter Phone Number" value="{{ $doctor->phone_number }}">
                         </div>
                     </div>
             </div>
@@ -101,31 +101,31 @@
                     <div class="row g-3">
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editFirstName">First Name</label>
-                            <input type="text" class="form-control" name="firstname" id="editFirstName" placeholder="Enter first name" value="{{ $doctor->doctor->firstname }}">
+                            <input type="text" class="form-control" name="firstname" id="editFirstName" placeholder="Enter first name" value="{{ $doctor->firstname }}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editLastName">Last Name</label>
-                            <input type="text" class="form-control" name="lastname" id="editLastName" placeholder="Enter last name" value="{{ $doctor->doctor->lastname }}">
+                            <input type="text" class="form-control" name="lastname" id="editLastName" placeholder="Enter last name" value="{{ $doctor->lastname }}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editPosition">Position</label>
-                            <input type="text" class="form-control" name="position" id="editPosition" placeholder="Enter position" value="{{ $doctor->doctor->position }}">
+                            <input type="text" class="form-control" name="position" id="editPosition" placeholder="Enter position" value="{{ $doctor->position }}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editDOB">Birthdate</label>
-                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->doctor->birthday }}">
+                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
-                            <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter address" value="{{ $doctor->doctor->address }}">
+                            <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter address" value="{{ $doctor->address }}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editEmailAddress">Email address</label>
-                            <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter email address" value="{{ $doctor->email }}">
+                            <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter email address" value="{{ $doctor->doctor_email }}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editPhone">Phone number</label>
-                            <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter phone number" value="{{ $doctor->doctor->phone_number }}">
+                            <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter phone number" value="{{ $doctor->phone_number }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editPhone">Username</label>
@@ -248,6 +248,10 @@
         </div>
     </div>
 </header>
+@php
+    Doctor::setEmailAttribute($doctor,$doctor->id);
+@endphp
+
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
@@ -278,39 +282,39 @@
                             <div class="row g-2">
                                 <div class="col-md-6">
                                     <label class="small mb-1">Veterinarian Name</label>
-                                    <p>{{ $doctor->doctor->firstname }} {{ $doctor->doctor->lastname }}</p>
+                                    <p>{{ $doctor->firstname }} {{ $doctor->lastname }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Veterinarian ID</label>
                                     <div>
-                                        <p class="badge bg-primary-soft text-primary rounded-pill">VETID-{{ str_pad($doctor->doctor->user_id, 5, '0', STR_PAD_LEFT) }}</p>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">VETID-{{ str_pad($doctor->user_id, 5, '0', STR_PAD_LEFT) }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Position</label>
-                                    <p>{{ $doctor->doctor->position }}</p>
+                                    <p>{{ $doctor->position }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Birthday</label>
-                                    <p>{{ $doctor->doctor->birthday }}</p>
+                                    <p>{{ $doctor->birthday }}</p>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="small mb-1">Address</label>
-                                    <p>{{ $doctor->doctor->address }}</p>
+                                    <p>{{ $doctor->address }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Email Address</label>
                                     <p>
-                                        <a href="mailto:{{ $doctor->email }}" class="text-body">
-                                            {{ $doctor->email }}
+                                        <a href="mailto:{{ $doctor->doctor_email }}" class="text-body">
+                                            {{ $doctor->doctor_email }}
                                         </a>
                                     </p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Phone Number</label>
                                     <p>
-                                        <a href="tel:{{ $doctor->doctor->phone_number }}" class="text-body">
-                                            {{ $doctor->doctor->phone_number }}
+                                        <a href="tel:{{ $doctor->phone_number }}" class="text-body">
+                                            {{ $doctor->phone_number }}
                                         </a>
                                     </p>
                                 </div>
@@ -364,20 +368,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1 June, 2024 | 06:30</td>
-                                <td>VETIS-00005</td>
-                                <td>Orlando Von</td>
-                                <td>Dianna</td>
-                                <td>Cat</td>
-                                <td>The Purpose</td>
-                                <td>
-                                    <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
-                                </td>
-                                <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="">Open</a>
-                                </td>
-                            </tr>
+                            @php
+                            $schedules = Doctor::getSchedules($doctor->id)
+                            @endphp
+                            @foreach($schedules as $schedule)
+                                <tr>
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($schedule->appointment_date)->format('j F, Y') }} |
+                                        {{ \Carbon\Carbon::parse($schedule->appointment_time)->format('H:i') }}
+                                    </td>
+                                    <td>{{ sprintf("VetIS-%05d", $schedule->id)}}</td>
+
+                                    <td>
+                                        {{ $clients->firstWhere('id', $schedule->owner_ID)->client_name ?? 'N/A' }}
+                                    </td>
+
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_type ?? 'N/A' }}
+                                    </td>
+                                    <td>
+                                        {{$schedule->purpose}}
+                                    </td>
+                                    <td>
+                                        <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$schedule->id])}}">Open</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>

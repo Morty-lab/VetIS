@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clients;
+use App\Models\Pets;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
@@ -78,17 +80,14 @@ class DoctorController extends Controller
      */
     public function showProfile(string $id)
     {
-        $user = User::with('doctor')->find($id);
+        $doctor = Doctor::getDoctorById($id);
+        $clients = Clients::getAllClients();
+        $pets = Pets::getAllPets();
 
-        // If the user or doctor information is not found, handle it accordingly
-        if (!$user || !$user->doctor) {
-            // Handle the case where the user or doctor is not found
-            // For example, return a 404 error or redirect the user
-            abort(404, 'User or Doctor not found');
-        }
+
 
         // Pass the combined user and doctor information to the view
-        return view('doctors.profile', ['doctor' => $user]);
+        return view('doctors.profile', ['doctor' => $doctor, 'clients' => $clients, 'pets' => $pets]);
     }
 
     public function show(string $id)

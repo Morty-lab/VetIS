@@ -350,7 +350,7 @@
         console.log(selectedClientId);
 
 
-    };
+    }
 
     function handlePetSelect() {
         var selectedPetId = document.getElementById('inputPetName').value;
@@ -362,11 +362,7 @@
             document.getElementById("inputPetype").value = selectedPet.pet_type;
             document.getElementById("inputPetBreed").value = selectedPet.pet_breed;
             @foreach($pets as $pet)
-            if (selectedPetId == {
-                    {
-                        $pet - > id
-                    }
-                }) {
+            if (selectedPetId == '{{$pet->id}}'){
                 document.getElementById("inputPetAge").value = '{{ $pet->age }}'; // Using the getAgeAttribute function
 
             }

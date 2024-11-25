@@ -56,4 +56,22 @@ class Doctor extends Model
     {
         $this->delete();
     }
+
+    public static function getSchedules($id){
+        return Appointments::where('doctor_id', $id)->get();
+    }
+
+
+    public static function setEmailAttribute(Doctor $doctor, $id)
+    {
+        $email = User::where('id', $id)->value('email');
+
+        // Set the client's email attribute
+        $doctor->doctor_email = $email;
+
+        // Optionally, you could save the client if needed
+        // $client->save();
+
+        return $doctor;
+    }
 }

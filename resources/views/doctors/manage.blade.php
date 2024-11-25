@@ -28,20 +28,23 @@
         </thead>
         <tbody>
           @foreach ($doctors as $doctor)
+          @php
+           \App\Models\Doctor::setEmailAttribute($doctor,$doctor->id);
+          @endphp
           <tr>
-            <td>{{ $doctor->firstname }} {{ $doctor->lastname }}</td>
-            <td>{{ $doctor->email }} testaccount@gmail.com</td>
+            <td>{{ $doctor->firstname ." " . $doctor->lastname }}</td>
+            <td>{{ $doctor->doctor_email }} </td>
             <td>{{ $doctor->phone_number }}</td>
             <td>{{ $doctor->position }}</td>
             <td>
-              <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">5</span> Scheduled</span>
+              <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">{{\App\Models\Doctor::getSchedules($doctor->id)->count()}}</span> Scheduled</span>
             </td>
             <td>
               <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>
               <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>
             </td>
             <td>
-              <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->user_id)}}">Open</a>
+              <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->id)}}">Open</a>
             </td>
           </tr>
           @endforeach
