@@ -596,51 +596,22 @@
                                 </div>
                             </div>
                         </div>
-{{--                        <div class="col-md-12">--}}
-{{--                            <div class="card shadow-none">--}}
-{{--                                <div class="card-header d-flex justify-content-between align-items-center">--}}
-{{--                                    <span>Plan</span>--}}
-{{--                                    <button class="btn-outline-primary btn" type="button" data-bs-toggle="modal"--}}
-{{--                                        data-bs-target="#serviceListModal">Add Services--}}
+                        <div class="col-md-12">
+                            <div class="card shadow-none">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <span>Plan</span>
+{{--                                    <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
+{{--                                        Fill Template--}}
 {{--                                    </button>--}}
-{{--                                </div>--}}
-{{--                                <div class="px-4">--}}
-{{--                                    <table id="treatmentPlanTable">--}}
-{{--                                        <thead>--}}
-{{--                                            <tr>--}}
-{{--                                                <th>Service</th>--}}
-{{--                                                <th>Date Return</th>--}}
-{{--                                                <th>Reason for Return</th>--}}
-{{--                                                <th>Status</th>--}}
-{{--                                                <th></th>--}}
-{{--                                            </tr>--}}
-{{--                                        </thead>--}}
-{{--                                        <tbody id="treatmentPlanTableBody">--}}
-{{--                                            @foreach($petPlan as $plan)--}}
-{{--                                            <tr>--}}
-{{--                                                <!-- sample if no need na mag return -->--}}
-{{--                                                <td>{{$plan->service_name}}</td>--}}
-{{--                                                <td>{{$plan->date_return}}</td>--}}
-{{--                                                <td>{{$plan->reason_for_return}}</td>--}}
-{{--                                                <td>{{($plan->status == 1)?'Completed':'Upcoming'}}</td>--}}
-{{--                                                <td>--}}
-{{--                                                    <button class="btn btn-success" href="#" type="button"--}}
-{{--                                                        data-bs-toggle="modal"--}}
-{{--                                                        data-bs-target="#servicePlanEditModal-{{$plan->id}}"><i--}}
-{{--                                                            class="fa-solid fa-edit"></i></button>--}}
-{{--                                                    <button class="btn btn-danger" href="#" type="button"--}}
-{{--                                                        data-bs-toggle="modal"--}}
-{{--                                                        data-bs-target="#serviceDeleteConfirmationModal-{{$plan->id}}"><i--}}
-{{--                                                            class="fa-solid fa-trash"></i></button>--}}
-{{--                                                </td>--}}
-{{--                                            </tr>--}}
-{{--                                            @endforeach--}}
+                                </div>
+                                <div class="card-body"><textarea name="plan" id="planTextArea" cols="30"
+                                                                 rows="10"
+                                                                 class="form-control w-full">
 
-{{--                                        </tbody>--}}
-{{--                                    </table>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\Examination;
+use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
@@ -104,9 +106,42 @@ class SoapController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+    public function splitText($text){
+        $lines = preg_split("/\r\n|\r|\n/",$text);
+
+        foreach ($lines as $line) {
+            // Remove unnecessary whitespace
+            $line = trim($line);
+            if (!empty($line)) {
+                // Check for key-value pairs separated by ":"
+                if (strpos($line, ':') !== false) {
+                    [$key, $value] = array_map('trim', explode(':', $line, 2));
+                    // Normalize the key (convert to snake_case for database fields)
+                    $normalizedKey = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '_', $key));
+                    $data[$normalizedKey] = $value;
+                }
+            }
+        }
+
+        return $data;
+    }
+    public function update(Request $request, int $id,int $recordID)
     {
-        dd($request->all());
+        $examinationData = array_merge(['pet_record_id'=> $id], $this->splitText($request->input('examination')));
+        $diagnosis = $this->splitText($request->input('diagnosis'));
+        $diagnosisData = [
+            'pet_record_id'=> $id,
+            'diagnosis' => json_encode($diagnosis),
+            'treatment' => $request->input('treatment'),
+            'prescription' => $request->input('prescription'),
+            'client_communication' => $request->input('client_communication'),
+        ] ;
+
+        Examination::addExaxmination($examinationData);
+        PetDiagnosis::addDiagnosis($diagnosisData);
+
+        return redirect()->route('soap.view', ['id' => $id ,'recordID' => $recordID]);
     }
 
     /**
