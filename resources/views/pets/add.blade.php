@@ -190,7 +190,7 @@
                                 @php
                                 Clients::setEmailAttribute($client, $client->user_id);
                                 @endphp
-                                <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                                <option value="{{ $client->id }}" @if(isset($clientID ) && $client->id == $clientID) selected @endif>{{ $client->client_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -237,19 +237,32 @@
 
     function handleClientSelect() {
 
-        var selectedClientId = document.getElementById('inputOwnerName').value;
-        var selectedClient = clients.find(client => client.id == selectedClientId);
 
 
 
-        if (selectedClient) {
+        @if(isset($clientID))
+            var selectedClient = clients.find(client => client.id == {{$clientID}});
+
             console.log(selectedClient)
             document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
             document.getElementById('ownerContact').value = selectedClient.client_no;
             document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
-        }
 
-    };
+        @else
+            var selectedClientId = document.getElementById('inputOwnerName').value;
+            var selectedClient = clients.find(client => client.id == selectedClientId);
+
+            if (selectedClient) {
+                console.log(selectedClient)
+                document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
+                document.getElementById('ownerContact').value = selectedClient.client_no;
+                document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
+            }
+        @endif
+
+
+
+    }
 
     window.addEventListener("load", function() {
         handleClientSelect();
