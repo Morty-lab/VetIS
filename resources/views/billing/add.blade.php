@@ -50,7 +50,7 @@
                                                 </div>
                                                 <!-- Billing Date -->
                                                 <div class="col-md-5 mt-1 mt-md-0">
-                                                    <label for="billing_date" class="form-label mb-1 text-primary">Date</label>
+                                                    <label for="billing_date" class="form-label mb-0 text-primary">Date</label>
                                                     <p class="mb-0">11/23/2024</p>
                                                 </div>
                                             </div>

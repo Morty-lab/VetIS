@@ -10,6 +10,21 @@
             <div class="modal-body">
                 <div class="row gy-3 gx-4">
                     <div class="col-md-6">
+                        <!-- Select Schedule -->
+                        <div class="form-group">
+                            <label for="select-schedule" class="mb-1">Select Date</label>
+                            <input type="date" class="form-control" id="select-schedule" name="schedule">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Select Schedule -->
+                        <div class="form-group">
+                            <label for="select-schedule" class="mb-1">Select Time</label>
+                            <input type="time" class="form-control" id="select-schedule"
+                                name="appointment_time">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <!-- Select Pet -->
                         <div class="form-group">
                             <label for="select-pet" class="mb-1">Select Pet</label>
@@ -20,13 +35,6 @@
                                 <option value="bird">Bird</option>
                                 <!-- Add more options as needed -->
                             </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- Select Schedule -->
-                        <div class="form-group">
-                            <label for="select-schedule" class="mb-1">Select Schedule</label>
-                            <input type="date" class="form-control" id="select-schedule" name="schedule">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -43,7 +51,7 @@
                     </div>
                     <div class="col-md-6">
                         <!-- View Veterinarian Schedule -->
-                        <div class="form-group">
+                        <div class="form-group d-flex">
                             <label>&nbsp;</label> <!-- For spacing alignment -->
                             <br>
                             <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>
@@ -52,8 +60,8 @@
                     <div class="col-md-12">
                         <!-- Concern/Complain -->
                         <div class="form-group">
-                            <label for="concern-complain" class="mb-1">Concern/Complain</label>
-                            <textarea class="form-control" id="concern-complain" name="concern_complain" rows="5" placeholder="Enter your concern or complaint"></textarea>
+                            <label for="concern-complain" class="mb-1">Purpose</label>
+                            <textarea class="form-control" id="concern-complain" name="concern_complain" rows="5" placeholder="Enter the purpose of your appointment"></textarea>
                         </div>
                     </div>
                 </div>
@@ -72,7 +80,7 @@
         <div class="page-header-content">
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
-                    <li class="breadcrumb-item"><a href="{{route('portal.appointments.view')}}">Appointments</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('portal.appointments')}}">Appointments</a></li>
                     <li class="breadcrumb-item active">Appointment Details</li>
                 </ol>
             </nav>
@@ -123,13 +131,13 @@
                                     @endif
                                     text-sm rounded-pill">
                                     @if(is_null($appointment->status))
-                                        Pending
+                                    Pending
                                     @elseif($appointment->status === 0)
-                                        Scheduled
+                                    Scheduled
                                     @elseif($appointment->status === 1)
-                                        Completed
+                                    Completed
                                     @elseif($appointment->status === 2)
-                                        Cancelled
+                                    Cancelled
                                     @endif
                                 </span>
 

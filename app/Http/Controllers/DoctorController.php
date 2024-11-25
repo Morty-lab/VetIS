@@ -71,9 +71,6 @@ class DoctorController extends Controller
 
         return redirect()->route('doctor.index')
             ->with('success', 'Doctor created successfully.');
-
-
-
     }
 
     /**
@@ -123,7 +120,7 @@ class DoctorController extends Controller
             'phone_number' => 'required|max:20',
             'birthday' => 'required|date',
             'position' => 'required|max:255',
-            'name' => 'required|max:255',
+            // 'name' => 'required|max:255',
         ]);
 
         // Find the doctor by ID

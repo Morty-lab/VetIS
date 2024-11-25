@@ -4,27 +4,9 @@
 @endsection
 
 @section('content')
-<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
-    <div class="container-xl px-4">
-        <div class="page-header-content pt-4">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-auto mt-4">
-                    <h1 class="page-header-title">
-                        <div class="page-header-icon">
-                            <i class="fa-solid fa-paw p-1"></i>
-                        </div>
-                        Manage Pets
-                    </h1>
-                    <div class="page-header-subtitle">
-                        Add and Edit Pets
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+@include('components.header', ['title' => 'Pets'], ['icon' => '<i class="fa-solid fa-paw"></i>'])
 <!-- Main page content-->
-<div class="container-xl px-4 mt-n10">
+<div class="container-xl px-4 mt-4">
     <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
             <a class="btn btn-primary justify-end" href="{{ route('pet.create') }}">Add Pet</a>
@@ -47,7 +29,7 @@
                 <tbody>
                     @foreach ($pets as $pet)
                     <tr>
-                        <td>{{ $pet->id }}</td>
+                        <td>PETID-{{ str_pad($pet->id, 5, '0', STR_PAD_LEFT) }}</td>
                         <td>{{ $pet->pet_name }}</td>
                         <td>{{ $pet->pet_type }}</td>
                         <td>{{ $pet->pet_breed }}</td>
@@ -56,11 +38,12 @@
                         <td>{{ $pet->client->client_name }}</td>
                         <td>
                             @if ($pet->vaccinated)
-                            <div class="badge bg-primary text-white rounded-pill">Vaccinated</div>
-                            @elseif ($pet->sterilized)
-                            <div class="badge bg-primary text-white rounded-pill">Sterilized</div>
+                            <div class="badge bg-primary-soft text-primary rounded-pill">Vaccinated</div>
                             @else
-                            <div class="badge bg-primary text-white rounded-pill">Unvaccinated</div>
+                            <div class="badge bg-orange-soft text-orange rounded-pill">Unvaccinated</div>
+                            @endif
+                            @if ($pet->sterilized)
+                            <div class="badge bg-secondary-soft text-secondary rounded-pill">Sterilized</div>
                             @endif
                         </td>
                         <td>

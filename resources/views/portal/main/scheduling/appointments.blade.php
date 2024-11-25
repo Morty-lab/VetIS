@@ -19,6 +19,22 @@
                 <div class="modal-body">
                     <div class="row gy-3 gx-4">
                         <div class="col-md-6">
+                            <!-- Select Schedule -->
+                            <div class="form-group">
+                                <label for="select-schedule" class="mb-1">Select Date</label>
+                                <input type="date" class="form-control" id="select-schedule"
+                                    name="appointment_date">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Select Schedule -->
+                            <div class="form-group">
+                                <label for="select-schedule" class="mb-1">Select Time</label>
+                                <input type="time" class="form-control" id="select-schedule"
+                                    name="appointment_time">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <!-- Select Pet -->
                             <div class="form-group">
                                 <label for="select-pet" class="mb-1">Select Pet</label>
@@ -28,14 +44,6 @@
                                     <option value={{$pet->id}}>{{$pet->pet_name}}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Select Schedule -->
-                            <div class="form-group">
-                                <label for="select-schedule" class="mb-1">Select Schedule</label>
-                                <input type="date" class="form-control" id="select-schedule"
-                                    name="appointment_date">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -53,7 +61,7 @@
                         </div>
                         <div class="col-md-6">
                             <!-- View Veterinarian Schedule -->
-                            <div class="form-group">
+                            <div class="form-group d-flex">
                                 <label>&nbsp;</label> <!-- For spacing alignment -->
                                 <br>
                                 <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>
@@ -62,9 +70,9 @@
                         <div class="col-md-12">
                             <!-- Concern/Complain -->
                             <div class="form-group">
-                                <label for="concern-complain" class="mb-1">Concern/Complain</label>
+                                <label for="concern-complain" class="mb-1">Purpose</label>
                                 <textarea class="form-control" id="concern-complain" name="purpose" rows="5"
-                                    placeholder="Enter your concern or complaint"></textarea>
+                                    placeholder="Enter the purpose of your appointment"></textarea>
                             </div>
                         </div>
                     </div>
@@ -109,7 +117,7 @@
                             <th>Appointment ID</th>
                             <th>Pet</th>
                             <th>Veterinarian</th>
-                            <th>Complaint/Concern</th>
+                            <th>Purpose</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>

@@ -32,7 +32,7 @@
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
     <nav class="nav nav-borders">
-        <a class="nav-link nav-tab{{ request()->is('pet-profile') ? 'active' : '' }}" href="#pet-profile">Pet Profile</a>
+        <a class="nav-link nav-tab ms-0{{ request()->is('pet-profile') ? 'active' : '' }}" href="#pet-profile">Pet Profile</a>
         <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
         <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">History</a>
         <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Records</a>
@@ -50,7 +50,7 @@
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Edit Pet</a></li>
+                            <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Update Pet Info</a></li>
                             <li><a class="dropdown-item" href="">Print</a></li>
                         </ul>
                     </div>
@@ -74,7 +74,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPetName">PetID</label>
-                                    <p>{{$pet->id}}</p>
+                                    <div>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">PETID-{{ str_pad($pet->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                    </div>
+
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="selectPetType">Pet Type</label>
@@ -115,11 +118,11 @@
                                         <label class="small mb-1">Vacciantion Record</label>
                                         <p>
                                             @if($pet->vaccinated == 1)
-                                                Complete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
+                                            Complete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
                                             @elseif($pet->vaccinated == 0)
-                                                Incomplete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
+                                            Incomplete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
                                             @else
-                                                No Vaccination record
+                                            No Vaccination record
                                             @endif
                                         </p>
                                     </div>
@@ -173,10 +176,10 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="col-md-12 mt-3">--}}
-{{--                                <label class="small mb-1" for="inputPetDescription">Pet Description</label>--}}
-{{--                                <p>{{$pet->pet_description}}</p>--}}
-{{--                            </div>--}}
+                            {{-- <div class="col-md-12 mt-3">--}}
+                            {{-- <label class="small mb-1" for="inputPetDescription">Pet Description</label>--}}
+                            {{-- <p>{{$pet->pet_description}}</p>--}}
+                            {{-- </div>--}}
                         </div>
                         <div class="col-md-12">
                             <div class="row">
@@ -228,8 +231,8 @@
                         <thead>
                             <tr>
                                 <th>Date & Time</th>
-                                {{-- <th>Type</th>--}}
-                                <th>Subject</th>
+                                <th>Appointment ID</th>
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -242,23 +245,23 @@
                                     |
                                     {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                                 </td>
-                                {{-- <td>Consultation</td>--}}
+                                <td>AppointentID</td>
+
                                 <td>{{$appointment->purpose}}</td>
-                                @if(is_null($appointment->status) == true)
 
-                                <td>Pending</td>
-
-                                @elseif($appointment->status == 0)
-
-                                <td>Scheduled</td>
-
-                                @elseif($appointment->status == 2)
-
-                                <td>Cancelled</td>
-
-                                @endif
-                                <td><a href="{{route('appointments.view',['id'=>$appointment->id])}}"
-                                        class="btn btn-primary">Open</a></td>
+                                <td>
+                                    @if(is_null($appointment->status) == true)
+                                    Pending
+                                    @elseif($appointment->status == 0)
+                                    <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
+                                    @elseif($appointment->status == 2)
+                                    Cancelled
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('appointments.view',['id'=>$appointment->id])}}"
+                                        class="btn btn-datatable btn-primary px-5 py-3">Open</a>
+                                </td>
                             </tr>
 
                             @else
@@ -284,9 +287,9 @@
                         <table id="petHistoryTable">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    {{-- <th>Type</th>--}}
-                                    <th>Subject</th>
+                                    <th>Date & Time</th>
+                                    <th>Appointment ID</th>
+                                    <th>Purpose</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -299,11 +302,13 @@
                                         |
                                         {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                                     </td>
-                                    {{-- <td>Consultation</td>--}}
+                                    <td>Appointment ID</td>
                                     <td>{{$appointment->purpose}}</td>
-                                    <td>Completed</td>
+                                    <td>
+                                        <div class="badge bg-success-soft text-success rounded-pill">Finished</div>
+                                    </td>
                                     <td><a href="{{route('appointments.view',['id'=>$appointment->id])}}"
-                                            class="btn btn-primary">Open</a></td>
+                                            class="btn btn-datatable btn-primary px-5 py-3">Open</a></td>
                                 </tr>
                                 @endif
                                 @endforeach
@@ -353,7 +358,7 @@
                                         <td>{{$record->complaint}}</td>
                                         <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="{{route('soap.view', ['id' => $pet->id, 'recordID' => $record->id])}}">Open</a>
+                                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('soap.view', ['id' => $pet->id, 'recordID' => $record->id])}}">Open</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -404,7 +409,7 @@
                 });
 
                 // Trigger the click on the Pet Profile tab to show it initially
-                document.querySelector('.nav-link.active').click();
+                document.querySelector('.nav-tab.active').click();
             });
         </script>
 

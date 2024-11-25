@@ -36,7 +36,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
-                            <div class="text-primary">Upcoming Appointments</div>
+                            <div class="text-primary">Today's Appointments</div>
                             <div class="text-xl fw-bold">{{$appointmentCount}}</div>
                         </div>
                         <i class="fa-regular fa-calendar text-gray-400 fa-2x"></i>

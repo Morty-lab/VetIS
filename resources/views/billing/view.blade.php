@@ -36,7 +36,7 @@
                                     <p class="mb-0">#VETISBILL-00012</p>
                                 </div>
                                 <div class="col-md-5 mt-1 mt-md-0">
-                                    <label for="billing_date" class="form-label mb-1 text-primary">Date</label>
+                                    <label for="billing_date" class="form-label mb-0 text-primary">Date</label>
                                     <p class="mb-0">11/23/2024</p>
                                 </div>
                             </div>
@@ -178,6 +178,7 @@
                             <tr>
                                 <th>Billing Number</th>
                                 <th>Date</th>
+                                <th>Payable</th>
                                 <th>Amount Paid</th>
                                 <th>Remaining Balance</th>
                                 <th>Status</th>
@@ -188,6 +189,7 @@
                             <tr>
                                 <td>#VETISBILL-00012</td>
                                 <td>11/23/2024</td>
+                                <td>₱1,000.00</td>
                                 <td>₱500.00</td>
                                 <td>₱500.00</td>
                                 <td>

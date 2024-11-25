@@ -4,13 +4,235 @@
 @endsection
 
 @section('content')
-<div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert" style="display: none; z-index: 100;">
-    <div class="alert-icon-aside">
-        <i class="fa-regular fa-circle-check"></i>
+
+<!-- Modals -->
+
+<!-- Edit Veterinarian Modal -->
+<div class="modal fade" id="updateVetInfo" tabindex="-1" role="dialog" aria-labelledby="updateVetInfo" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="updateVetInfoTitle">Update Veterinarian Information</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('doctor.update', $doctor->id) }}" method="POST" id="updateVetForm">
+                    @csrf
+                    @method('PUT')
+                    <div class="row g-3">
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editFirstName">First Name</label>
+                            <input type="text" class="form-control" name="firstname" id="editFirstName" placeholder="Enter first name" value="{{ $doctor->doctor->firstname }}">
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editLastName">Last Name</label>
+                            <input type="text" class="form-control" name="lastname" id="editLastName" placeholder="Enter last name" value="{{ $doctor->doctor->lastname }}">
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editPosition">Position</label>
+                            <input type="text" class="form-control" name="position" id="editPosition" placeholder="Enter Position" value="{{ $doctor->doctor->position }}">
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editDOB">Birthdate</label>
+                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->doctor->birthday }}">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="small mb-1" for="editAddress">Address</label>
+                            <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter Address" value="{{ $doctor->doctor->address }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="editEmailAddress">Email address</label>
+                            <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter Email Address" value="{{ $doctor->email }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="editPhone">Phone number</label>
+                            <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter Phone Number" value="{{ $doctor->doctor->phone_number }}">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+                <!-- Move the submit button inside the form -->
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+            </form>
+        </div>
     </div>
-    <div class="alert-icon-content">
-        <h6 class="alert-heading">Success</h6>
-        Doctor Registered Successfully!
+</div>
+<!-- Update Photo Modal -->
+<div class="modal fade" id="updatePhotoModal" tabindex="-1" role="dialog" aria-labelledby="updatePhotoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Update Profile Picture</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row justify-content-center align-items-center" style="height: 100%;">
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                    </div>
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
+                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
+                        <input type="file" id="fileInput" class="d-none" accept="image/*" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- UM Modals -->
+<!-- Edit Veterinarian Modal -->
+<div class="modal fade" id="updateVetAccount" tabindex="-1" role="dialog" aria-labelledby="updateVetAccount" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="updateVetInfoTitle">Edit Veterinarian Account</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('doctor.update', $doctor->id) }}" method="POST" id="updateVetForm">
+                    @csrf
+                    @method('PUT')
+                    <div class="row g-3">
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editFirstName">First Name</label>
+                            <input type="text" class="form-control" name="firstname" id="editFirstName" placeholder="Enter first name" value="{{ $doctor->doctor->firstname }}">
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editLastName">Last Name</label>
+                            <input type="text" class="form-control" name="lastname" id="editLastName" placeholder="Enter last name" value="{{ $doctor->doctor->lastname }}">
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editPosition">Position</label>
+                            <input type="text" class="form-control" name="position" id="editPosition" placeholder="Enter position" value="{{ $doctor->doctor->position }}">
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="small mb-1" for="editDOB">Birthdate</label>
+                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->doctor->birthday }}">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="small mb-1" for="editAddress">Address</label>
+                            <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter address" value="{{ $doctor->doctor->address }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="editEmailAddress">Email address</label>
+                            <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter email address" value="{{ $doctor->email }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="editPhone">Phone number</label>
+                            <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter phone number" value="{{ $doctor->doctor->phone_number }}">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="small mb-1" for="editPhone">Username</label>
+                            <input type="text" class="form-control" name="username" id="editPhone" placeholder="Enter username" value="">
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <h6 class="text-primary">Change Password</h6>
+                            <hr class="mt-1 mb-0">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="small mb-1" for="editOldPassword">Old Password</label>
+                            <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="updateNewPassword">New Password</label>
+                            <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>
+                            <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+                <!-- Move the submit button inside the form -->
+                <button class="btn btn-primary" type="submit">Update Account</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Update Photo Modal -->
+<div class="modal fade" id="updatePhotoModal" tabindex="-1" role="dialog" aria-labelledby="updatePhotoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Update Profile Picture</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row justify-content-center align-items-center" style="height: 100%;">
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                    </div>
+                    <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
+                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
+                        <input type="file" id="fileInput" class="d-none" accept="image/*" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reset Password -->
+<div class="modal fade" id="umResetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="umResetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="umResetPasswordModalLabel">Reset Password</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="ownerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="ownerEmail" placeholder="Enter owner email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="submit">Reset Password</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Disable Account Modal -->
+<div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-labelledby="disableAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <form action="" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="disableAccountModalLabel">Disable Account</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to disable this account?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" type="submit">Disable Account</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -28,121 +250,261 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
-
-
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0 active" href="{{ route('doctor.profile', $doctor->id) }}">Profile</a>
-        <a class="nav-link" href="{{ route('doctor.admin', $doctor->id) }}">UM Settings</a>
+        <a class="nav-link nav-tab ms-0{{ request()->is('vet-profile') ? 'active' : '' }}" href="#vet-profile">Vet Profile</a>
+        <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
+        <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Records</a>
+        <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">UM Settings</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row">
-        <div class="col-xl-8">
-            <!-- Account details card-->
-            <div class="card shadow-none mb-4">
-                <div class="card-header">Account Registration</div>
-                <div class="card-body">
-                    <form action="{{ route('doctor.update', $doctor->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <input class="form-control" id="inputFirstName" type="text" name="firstname"
-                                    placeholder="First Name" value="{{ $doctor->doctor->firstname }}" />
-                            </div>
-                            <!-- Form Group (last name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                <input class="form-control" id="inputLastName" type="text" name="lastname"
-                                    placeholder="Last Name" value="{{ $doctor->doctor->lastname }}" />
-                            </div>
-
-                        </div>
-                        <!-- Form Group (last name)-->
-
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputAddress">Address (Street, Barangay, City/Municipality,
-                                Province)</label>
-                            <input class="form-control" id="inputAddress" type="text" name="address"
-                                placeholder="Address" value="{{ $doctor->doctor->address }}" />
-                        </div>
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (phone number)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPhone">Phone number</label>
-                                <input class="form-control" id="inputPhone" type="tel" name="phone_number"
-                                    placeholder="Phone Number" value="{{ $doctor->doctor->phone_number }}" />
-                            </div>
-                            <!-- Form Group (birthday)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                <input class="form-control" id="inputBirthday" type="date" name="birthday"
-                                    placeholder="MM/DD/YYYY" value="{{ $doctor->doctor->birthday }}" />
+        <div class="col-md-12" id="vetProfileCard" style="display:none;">
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card shadow-none mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Veterinarian Profile</span>
+                            <div class="dropdown">
+                                <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateVetInfo">Update Information</a></li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputPosition">Position</label>
-                            <input class="form-control" id="inputPosition" type="text" name="position"
-                                placeholder="Position" value="{{ $doctor->doctor->position }}" />
+                        <div class="card-body">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Veterinarian Name</label>
+                                    <p>{{ $doctor->doctor->firstname }} {{ $doctor->doctor->lastname }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Veterinarian ID</label>
+                                    <div>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">VETID-{{ str_pad($doctor->doctor->user_id, 5, '0', STR_PAD_LEFT) }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Position</label>
+                                    <p>{{ $doctor->doctor->position }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Birthday</label>
+                                    <p>{{ $doctor->doctor->birthday }}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="small mb-1">Address</label>
+                                    <p>{{ $doctor->doctor->address }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Email Address</label>
+                                    <p>
+                                        <a href="mailto:{{ $doctor->email }}" class="text-body">
+                                            {{ $doctor->email }}
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Phone Number</label>
+                                    <p>
+                                        <a href="tel:{{ $doctor->doctor->phone_number }}" class="text-body">
+                                            {{ $doctor->doctor->phone_number }}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username</label>
-                            <input class="form-control" id="inputUsername" type="text" name="name"
-                                placeholder="Username" value="{{ $doctor->name }}" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <!-- Profile picture card-->
+                    <div class="card shadow-none mb-4 mb-xl-0">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Profile Picture</span>
+                            <!-- Three-dot (kebab) menu button -->
+                            <div class="dropdown">
+                                <button class="btn btn-link text-muted p-0" type="button" id="updatePhotoBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="updatePhotoBtn">
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updatePhotoModal">Update Photo</a></li>
+                                    <!-- You can add more items here -->
+                                </ul>
+                            </div>
                         </div>
-                        <!-- Save changes button-->
-                        <button class="btn btn-primary" id="regbtn" type="submit">Save
-                            Changes</button>
-                    </form>
-
-
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card shadow-none mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button">Upload new image</button>
+        <!-- Schedules -->
+        <div class="col-md-12" id="schedulesCard" style="display:none;">
+            <div class="card shadow-none">
+                <div class="card-header">
+                    Schedules
+                </div>
+                <div class="card-body">
+                    <table id="petSchedTable">
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Appointment ID</th>
+                                <th>Pet Owner</th>
+                                <th>Pet</th>
+                                <th>Pet Type</th>
+                                <th>Purpose</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1 June, 2024 | 06:30</td>
+                                <td>VETIS-00005</td>
+                                <td>Orlando Von</td>
+                                <td>Dianna</td>
+                                <td>Cat</td>
+                                <td>The Purpose</td>
+                                <td>
+                                    <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="">Open</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Records -->
+        <div class="col-md-12" id="recordsCard" style="display:none;">
+            <div class="card shadow-none">
+                <div class="card-header">
+                    Records
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>Date Created</th>
+                                <th>Code</th>
+                                <th>Pet</th>
+                                <th>Owner</th>
+                                <th>Type</th>
+                                <th>Subjective</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-11-23</td>
+                                <td>VETIS-00001</td>
+                                <td>Lexie</td>
+                                <td>Kent Invento</td>
+                                <td>Consultation</td>
+                                <td>Checkup</td>
+                                <td>Ongoing</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="">Open</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- UM -->
+        <div class="col-md-12" id="umCard" style="display:none;">
+            <!-- UM Settings -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow-none">
+                        <div class="card-header">UM Settings</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Role</div>
+                                        <div class="card-body"><select class="form-control" id="exampleFormControlSelect2" name="role">
+                                                <option value="Owner">Pet Owner</option>
+                                                <option value="Doctor" selected>Veterinarian</option>
+                                                <option value="Owner">Owner</option>
+                                                <option value="Administrator">Administrator</option>
+                                                <option value="Secretary">Secretary</option>
+                                                <option value="Staff">Staff</option>
+                                            </select>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Account</div>
+                                        <div class="card-body">
+                                            <div class="row g-2">
+                                                <div class="col-md-12"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updateVetAccount">Edit Account</button></div>
+                                                <div class="col-md-6"><button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#umResetPasswordModal">Reset Password</button></div>
+                                                <div class="col-md-6"><button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#disableAccountModal">Disable Account</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get the register button
-        var registerButton = document.getElementById('regbtn');
-
-        // Add event listener to the register button
-        registerButton.addEventListener('click', function() {
-            // Show the success alert
-            var successAlert = document.getElementById('successAlert');
-            successAlert.style.display = 'flex';
-
-            setTimeout(function() {
-                window.location.href = '/managedoctor';
-            }, 4000);
-
-            // Optionally, hide the alert after a certain period (e.g., 3 seconds)
-            setTimeout(function() {
-                successAlert.style.display = 'none';
-            }, 3000);
-        });
-    });
-</script>
 @endsection
 
 @section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.nav-tab');
+        const cards = {
+            'vet-profile': document.getElementById('vetProfileCard'),
+            'schedules': document.getElementById('schedulesCard'),
+            'records': document.getElementById('recordsCard'),
+            'um': document.getElementById('umCard')
+        };
+
+        // Ensure Pet Profile is active initially
+        document.querySelector('.nav-link[href="#vet-profile"]').classList.add('active');
+        cards['vet-profile'].style.display = 'block'; // Show Pet Profile Card by default
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Hide all cards
+                Object.values(cards).forEach(card => card.style.display = 'none');
+
+                // Show the clicked tab's corresponding card
+                const targetCard = tab.getAttribute('href').substring(1);
+                if (cards[targetCard]) {
+                    cards[targetCard].style.display = 'block';
+                }
+            });
+        });
+        // Trigger the click on the Pet Profile tab to show it initially
+        document.querySelector('.nav-tab.active').click();
+    });
+</script>
 @endsection
