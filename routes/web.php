@@ -169,28 +169,37 @@ Route::middleware('auth')->group(function () {
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+
+        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     })->name('appointments.today');
     Route::get('/finishedappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+
+        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments,  "vets" => $vets]);
     })->name('appointments.finished');
     Route::get('/pendingappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+
+        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments , "vets" => $vets]);
     })->name('appointments.pending');
     Route::get('/cancelledappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments , "vets" => $vets]);
+
+
     })->name('appointments.cancelled');
 
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');

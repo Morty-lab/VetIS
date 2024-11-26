@@ -137,6 +137,7 @@ class AppointmentsController extends Controller
 
 
 
+
         // Create a new appointment using the validated data
         $appointment = new Appointments($validatedData);
         $result = $appointment->save();

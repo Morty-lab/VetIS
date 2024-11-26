@@ -46,8 +46,8 @@
                         <td>{{$appointment->client->client_name}}</td>
                         <td>{{$appointment->pet->pet_name}}</td>
                         <td>{{$appointment->pet->pet_type}}</td>
-                        <td>The Veterinarian</td>
-                        <td>The Purpose</td>
+                        <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
+                        <td>{{ $appointment->purpose }}</td>
                         <td>
                             <div class="badge bg-warning-soft text-warning rounded-pill">
                                 Pending

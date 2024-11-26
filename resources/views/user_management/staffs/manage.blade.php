@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{$item->firstname . ' ' . $item->lastname}}</td>
                                 <td>{{$item->age}}</td>
-                                <td>Staff</td>
+                                <td>{{ ucfirst($item->position) }}</td>
                                 <td>{{$item->phone_number}}</td>
                                 <td>{{$item->getEmailAttribute($item->user_id)}}</td>
                                 <td>
