@@ -147,23 +147,27 @@
         <hr>
         <!-- Billing Info Section -->
         <div class="details mb-3">
-            <div><strong>Billing Number:</strong> #VETISBILL-00012</div>
-            <div><strong>Date:</strong> 11/23/2024</div>
+            <div><strong>Billing Number:</strong> {{sprintf("#VETISBILL-%05d",$billing->id )}}</div>
+            <div><strong>Date:</strong> {{ \Carbon\Carbon::parse($billing->created_at)->format('F d, Y') }}</div>
         </div>
 
         <!-- Owner and Pet Info Section -->
         <div class="details row mb-4">
             <div class="col-md-6">
                 <strong>Owner Details</strong>
-                <div><strong>Name:</strong> John Doe</div>
-                <div><strong>Address:</strong> 123 Maple Street, Maramag, Bukidnon</div>
-                <div><strong>Phone:</strong> (0917) 123-4567</div>
+                <div><strong>Name:</strong> {{$owner->client_name}}</div>
+                <div><strong>Address:</strong> {{$owner->client_address}}</div>
+                <div><strong>Phone:</strong> {{$owner->client_no}}</div>
             </div>
             <div class="col-md-6">
                 <strong>Pet Details</strong>
-                <div><strong>Name:</strong> Buddy</div>
-                <div><strong>Breed:</strong> Labrador Retriever</div>
-                <div><strong>Age:</strong> 3 years</div>
+                <div><strong>Name:</strong> {{$pet->pet_name}}</div>
+                <div><strong>Breed:</strong> {{$pet->pet_breed}}</div>
+                @php
+                    $pet = \App\Models\Pets::find($pet->id); // Retrieve the specific pet instance
+                    $petage = $pet ? $pet->age : 'Unknown';
+                @endphp
+                <div><strong>Age:</strong> {{$petage}} years</div>
             </div>
         </div>
 
@@ -172,25 +176,26 @@
             <h3>Services Availed</h3>
             <table class="services-table">
                 <tbody>
-                    <tr>
-                        <td>Deworming</td>
-                        <td>x1</td>
-                        <td class="text-primary">₱500.00</td>
-                    </tr>
-                    <tr>
-                        <td>Grooming</td>
-                        <td>x1</td>
-                        <td class="text-primary">₱300.00</td>
-                    </tr>
-                    <tr>
-                        <td>Vaccination</td>
-                        <td>x1</td>
-                        <td class="text-primary">₱200.00</td>
-                    </tr>
-                    <tr class="total">
-                        <td colspan="2" class="text-end"><strong>Total:</strong></td>
-                        <td class="text-primary">₱1,000.00</td>
-                    </tr>
+                @php
+                    $total = 0;
+                @endphp
+                @foreach($services_availed as $s)
+                    @php
+                        // Find the service that matches the current service_id
+                        $service = $services->firstWhere('id', $s->service_id);
+                        $total += $service->service_price;
+                    @endphp
+                    @if($service)
+                        <tr>
+                            <td>{{ $service->service_name }}</td>
+                            <td>x{{ $s->quantity ?? 1 }}</td>
+                            <td class="text-primary">₱{{ number_format($service->service_price, 2) }}</td>
+                        </tr>
+                    @endif
+
+                @endforeach
+
+
                 </tbody>
             </table>
         </div>
@@ -209,22 +214,57 @@
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($payments as $p)
                     <tr>
-                        <td>#VETISBILL-00012</td>
-                        <td>11/23/2024</td>
-                        <td class="text-primary">₱1,000.00</td>
-                        <td class="text-primary">₱500.00</td>
-                        <td class="text-primary">₱500.00</td>
+                        <td>{{ sprintf("#VetIS-%05d", $p->id)}}</td>
+                        <td>{{\Carbon\Carbon::parse($p->created_at)->format('m/d/Y')}}</td>
+                        <td class="text-primary">₱{{$p->amount_to_pay}}</td>
+                        <td class="text-primary">₱{{$p->cash_given}}</td>
+                        <td class="text-primary">₱{{$p->amount_to_pay - $p->cash_given}}</td>
                     </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>
 
         <!-- Payment Info Section -->
         <div class="payment-info mb-4">
-            <div><strong>Payment Type:</strong> Partial Payment</div>
-            <div><strong>Due Date:</strong> 12/01/2024</div>
-            <div><strong>Remaining Balance:</strong> <span class="text-danger">₱500.00</span></div>
+            <div><strong>Payment Type:</strong> {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}</div>
+            <div><strong>Due Date:</strong> {{\Carbon\Carbon::parse($billing->due_date)->format('m/d/Y') ?? ''}}</div>
+
+            @php
+                // Check payment type
+                if ($billing->payment_type === 'full_payment') {
+                    // Full Payment directly shows Fully Paid
+                    $fullyPaid = true;
+                } else {
+                    // Calculate remaining balance
+                    $totalPayable = $billing->total_payable;
+                    $totalPaid = $billing->total_paid;
+
+                    $remainingBalance = $totalPayable - $totalPaid;
+
+                    // Check if payments array is not empty
+                    if (!$payments->isEmpty()) {
+                        $paymentsSum = $payments->sum('cash_given');
+                        $remainingBalance -= $paymentsSum;
+                    }
+
+                    // Determine if fully paid
+                    $fullyPaid = $remainingBalance <= 0;
+                }
+            @endphp
+
+            @if($fullyPaid)
+                <!-- Fully Paid Badge -->
+                <div><strong>Remaining Balance:</strong> <span class="text-danger">0.00</span></div>
+            @else
+                <!-- Remaining Balance -->
+
+                <div><strong>Remaining Balance:</strong> <span class="text-danger">₱{{ number_format($remainingBalance, 2) }}</span></div>
+            @endif
+
         </div>
 
         <!-- Footer Section -->

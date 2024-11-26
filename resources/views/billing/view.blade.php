@@ -33,11 +33,12 @@
                             <div class="row">
                                 <div class="col-md-7 mt-1 mt-md-0">
                                     <label for="billing_number" class="form-label mb-0 text-primary">Billing Number</label>
-                                    <p class="mb-0">#VETISBILL-00012</p>
+                                    <p class="mb-0">{{sprintf("#VETISBILL-%05d",$billing->id )}}</p>
                                 </div>
                                 <div class="col-md-5 mt-1 mt-md-0">
                                     <label for="billing_date" class="form-label mb-0 text-primary">Date</label>
-                                    <p class="mb-0">11/23/2024</p>
+                                    <p class="mb-0">{{ \Carbon\Carbon::parse($billing->created_at)->format('F d, Y') }}</p>
+
                                 </div>
                             </div>
                         </div>
@@ -49,13 +50,13 @@
                         <div class="col-md-6">
                             <label for="owner" class="form-label mb-1 fw-bold text-primary">Owner Details</label>
                             <div class="mb-1">
-                                <span class="fw-semibold">Name:</span> John Doe
+                                <span class="fw-semibold">Name:</span>  {{$owner->client_name}}
                             </div>
                             <div class="mb-1">
-                                <span class="fw-semibold">Address:</span> 123 Maple Street, Maramag, Bukidnon
+                                <span class="fw-semibold">Address:</span> {{$owner->client_address}}
                             </div>
                             <div class="mb-1">
-                                <span class="fw-semibold">Phone:</span> (0917) 123-4567
+                                <span class="fw-semibold">Phone:</span> {{$owner->client_no}}
                             </div>
                         </div>
 
@@ -63,13 +64,17 @@
                         <div class="col-md-6">
                             <label for="pet" class="form-label mb-1 fw-bold text-primary">Pet Details</label>
                             <div class="mb-1">
-                                <span class="fw-semibold">Name:</span> Buddy
+                                <span class="fw-semibold">Name:</span> {{$pet->pet_name}}
                             </div>
                             <div class="mb-1">
-                                <span class="fw-semibold">Breed:</span> Labrador Retriever
+                                <span class="fw-semibold">Breed:</span> {{$pet->pet_breed}}
                             </div>
+                            @php
+                                $pet = \App\Models\Pets::find($pet->id); // Retrieve the specific pet instance
+                                $petage = $pet ? $pet->age : 'Unknown';
+                            @endphp
                             <div class="mb-1">
-                                <span class="fw-semibold">Age:</span> 3 years
+                                <span class="fw-semibold">Age:</span> {{$petage}}
                             </div>
                         </div>
                     </div>
@@ -78,32 +83,31 @@
                     <div class="row mb-3 rounded mx-0">
                         <label class="form-label fw-bold text-primary p-0">Services Availed</label>
                         <ul class="list-group p-0">
-                            <li class="list-group-item border-0 bg-transparent py-1 px-2 text-body">
-                                <div class="row">
-                                    <div class="col-5">Deworming</div>
-                                    <div class="col-3 text-center">x1</div>
-                                    <div class="col-4 text-end text-primary">₱500.00</div>
-                                </div>
-                            </li>
-                            <li class="list-group-item border-0 bg-transparent py-1 px-2 text-body">
-                                <div class="row">
-                                    <div class="col-5">Grooming</div>
-                                    <div class="col-3 text-center">x1</div>
-                                    <div class="col-4 text-end text-primary">₱300.00</div>
-                                </div>
-                            </li>
-                            <li class="list-group-item border-0 bg-transparent py-1 px-2 text-body">
-                                <div class="row">
-                                    <div class="col-5">Vaccination</div>
-                                    <div class="col-3 text-center">x1</div>
-                                    <div class="col-4 text-end text-primary">₱200.00</div>
-                                </div>
-                            </li>
+                            @php
+                            $total = 0;
+                            @endphp
+
+                            @foreach($services_availed as $s)
+                                @php
+                                    // Find the service that matches the current service_id
+                                    $service = $services->firstWhere('id', $s->service_id);
+                                    $total += $service->service_price;
+                                @endphp
+                                @if($service)
+                                    <li class="list-group-item border-0 bg-transparent py-1 px-2 text-body">
+                                        <div class="row">
+                                            <div class="col-5">{{ $service->service_name }}</div>
+                                            <div class="col-3 text-center">x{{ $s->quantity ?? 1 }}</div>
+                                            <div class="col-4 text-end text-primary">₱{{ number_format($service->service_price, 2) }}</div>
+                                        </div>
+                                    </li>
+                                @endif
+                            @endforeach
                             <!-- Total Row -->
                             <li class="list-group-item border-0 bg-transparent py-1 pt-3 px-2 text-body fw-bold">
                                 <div class="row">
                                     <div class="col-md-7 text-end"></div>
-                                    <div class="col-md-5 text-end border-top pt-3">Total: <span class="ms-3 text-primary">₱1,000.00</span></div>
+                                    <div class="col-md-5 text-end border-top pt-3">Total: <span class="ms-3 text-primary">₱{{$total}}</span></div>
                                 </div>
                             </li>
                         </ul>
@@ -141,23 +145,59 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="paymentType" class="form-label fw-bold text-primary">Payment Type</label>
-                            <p class="mb-1 badge bg-secondary-soft text-secondary text-sm rounded-pill">Partial Payment</p>
+                            <p class="mb-1 badge text-sm rounded-pill
+                                @if($billing->payment_type === 'full_payment') bg-success-soft text-success
+                                @elseif($billing->payment_type === 'partial_payment') bg-warning-soft text-warning
+                                @elseif($billing->payment_type === 'pending_payment') bg-danger-soft text-danger
+                                @else bg-secondary-soft text-secondary
+                                @endif">
+                                {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}
+                            </p>
                         </div>
+
                         <div class="col-md-6">
                             <label for="due_date" class="form-label fw-bold text-primary">Due Date</label>
-                            <p class="mb-1">12/01/2024</p>
+                            <p class="mb-1">{{\Carbon\Carbon::parse($billing->due_date)->format('F d,Y') ?? ''}}</p>
                         </div>
                         <hr class="m-0 mt-2">
                         <div class="col-md-6">
                             <label for="service_total" class="form-label fw-bold text-primary">Total</label>
-                            <p class="rounded fw-bold">₱1000.00</p>
+                            <p class="rounded fw-bold">₱{{$total}}</p>
                         </div>
                         <div class="col-md-6">
                             <label for="remaining_balance" class="form-label fw-bold text-primary">Remaining Balance</label>
-                            <p class="rounded text-danger fw-bold">₱500.00</p>
-                            <!-- Fully Paid Sya Mo gawas nani -->
-                            <!-- <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div> -->
+                            @php
+                                // Check payment type
+                                if ($billing->payment_type === 'full_payment') {
+                                    // Full Payment directly shows Fully Paid
+                                    $fullyPaid = true;
+                                } else {
+                                    // Calculate remaining balance
+                                    $totalPayable = $billing->total_payable;
+                                    $totalPaid = $billing->total_paid;
+
+                                    $remainingBalance = $totalPayable - $totalPaid;
+
+                                    // Check if payments array is not empty
+                                    if (!$payments->isEmpty()) {
+                                        $paymentsSum = $payments->sum('cash_given');
+                                        $remainingBalance -= $paymentsSum;
+                                    }
+
+                                    // Determine if fully paid
+                                    $fullyPaid = $remainingBalance <= 0;
+                                }
+                            @endphp
+
+                            @if($fullyPaid)
+                                <!-- Fully Paid Badge -->
+                                <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
+                            @else
+                                <!-- Remaining Balance -->
+                                <p class="rounded text-danger fw-bold">₱{{ number_format($remainingBalance, 2) }}</p>
+                            @endif
                         </div>
+
                         <hr class="m-0">
                         <div class="col-md-12 d-flex justify-content-end">
                             <!-- Trigger Modal -->
@@ -186,18 +226,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($payments as $p)
                             <tr>
-                                <td>#VETISBILL-00012</td>
-                                <td>11/23/2024</td>
-                                <td>₱1,000.00</td>
-                                <td>₱500.00</td>
-                                <td>₱500.00</td>
+                                <td>{{ sprintf("#VetIS-%05d", $p->id)}}</td>
+                                <td>{{\Carbon\Carbon::parse($p->created_at)->format('m/d/Y')}}</td>
+                                <td>₱ {{$p->amount_to_pay}}</td>
+                                <td>₱ {{$p->cash_given}}</td>
+                                <td>₱ {{$p->amount_to_pay - $p->cash_given}}</td>
                                 <td>
-                                    <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
-                                    <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
+                                    @php
+                                        // Calculate the remaining balance
+                                        $remainingBalance = $p->amount_to_pay - $p->cash_given;
+                                    @endphp
+
+                                    @if($remainingBalance <= 0)
+                                        <!-- Fully Paid Badge -->
+                                        <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
+                                    @else
+                                        <!-- Partially Paid Badge -->
+                                        <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
+                                    @endif
                                 </td>
-                                <td><a href="{{ route('billing.print') }}" target="_blank" class="btn btn-datatable"><i class="fa-solid fa-print"></i></a></td>
+
+                                <td><a href="{{ route('billing.print',['billingID' => $billing->id]) }}" target="_blank" class="btn btn-datatable"><i class="fa-solid fa-print"></i></a></td>
                             </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -209,7 +263,7 @@
 <div class="modal fade" id="addPartialPaymentModal" tabindex="-1" aria-labelledby="addPartialPaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="" method="POST">
+            <form action="{{route('billing.addPayment', ['billingID' => $billing->id])}}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addPartialPaymentModalLabel">Add Payment</h5>
@@ -219,22 +273,23 @@
                     <!-- Remaining Balance Section -->
                     <div class="mb-3">
                         <label for="remaining_balance" class="form-label mb-1">Remaining Balance</label>
-                        <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger" placeholder="Remaining Balance">₱00.00</p>
+                        <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger"  placeholder="Remaining Balance">₱{{number_format($remainingBalance, 2) }}</p>
                     </div>
                     <hr class="my-3">
                     <!-- Payment Amount Section -->
                     <div class="mb-3">
                         <label for="amount_given" class="form-label">Cash Given</label>
-                        <input type="number" name="amount_given" id="amount_given" class="form-control" min="1" placeholder="Enter amount given" required>
+                        <input type="number" name="cash_given" id="amount_given" class="form-control" min="1" placeholder="Enter amount given" required>
+                        <input type="hidden" name="amount_to_pay" value={{$remainingBalance}}>
                     </div>
-                    <div class="mb-3">
-                        <label for="partial_payment" class="form-label">Amount to Pay</label>
-                        <input type="number" name="partial_payment" id="partial_payment" class="form-control" min="1" max="500" placeholder="Enter amount to pay" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="change" class="form-label">Change</label>
-                        <input type="number" name="change" id="change" class="form-control" readonly placeholder="Change will be calculated automatically">
-                    </div>
+{{--                    <div class="mb-3">--}}
+{{--                        <label for="partial_payment" class="form-label">Amount to Pay</label>--}}
+{{--                        <input type="number" name="partial_payment" id="partial_payment" class="form-control" min="1" max="500" placeholder="Enter amount to pay" required>--}}
+{{--                    </div>--}}
+{{--                    <div class="mb-3">--}}
+{{--                        <label for="change" class="form-label">Change</label>--}}
+{{--                        <input type="number" name="change" id="change" class="form-control" readonly placeholder="Change will be calculated automatically">--}}
+{{--                    </div>--}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

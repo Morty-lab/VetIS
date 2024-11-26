@@ -169,28 +169,37 @@ Route::middleware('auth')->group(function () {
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+
+        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     })->name('appointments.today');
     Route::get('/finishedappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+
+        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments,  "vets" => $vets]);
     })->name('appointments.finished');
     Route::get('/pendingappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+
+        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments , "vets" => $vets]);
     })->name('appointments.pending');
     Route::get('/cancelledappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
-        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments]);
+        $vets = Doctor::getAllDoctors();
+        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments , "vets" => $vets]);
+
+
     })->name('appointments.cancelled');
 
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
@@ -290,12 +299,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/billing/services/add', [ServicesController::class, 'store'])->name("billing.services.add");
 
-    Route::get('/billing/view', function () {
-        return view('billing.view');
-    })->name('billing.view');
-    Route::get('/billing/print', function () {
-        return view('billing.print');
-    })->name('billing.print');
+    Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
+    Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
+    Route::get('/billing/print', [BillingController::class , 'print'])->name('billing.print');
 });
 
 

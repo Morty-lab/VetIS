@@ -41,7 +41,7 @@
             <div class="card mb-4">
                 <div class="card-header">Role</div>
                 <div class="card-body">
-                    <select class="form-control" id="exampleFormControlSelect2" name="role">
+                    <select disabled class="form-control" id="exampleFormControlSelect2" name="role">
                         <option value="Doctor">Veterinarian</option>
                         <option value="Owner">Owner</option>
                         <option value="Administrator" selected>Administrator</option>
@@ -67,76 +67,76 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card mb-4">
-                <div class="card-header">Permissions</div>
-                <div class="card-body">
-                    <p class="text-muted">Select the permissions for the user:</p>
-                    <div class="row gx-3">
-                        <!-- Column 1 -->
-                        <div class="col-md-6">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="manageAppointments" name="permissions[]" value="manage_appointments">
-                                <label class="form-check-label" for="manageAppointments">
-                                    Manage Appointments
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="manageDoctors" name="permissions[]" value="manage_doctors">
-                                <label class="form-check-label" for="manageDoctors">
-                                    Manage Doctors
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="accessPOS" name="permissions[]" value="access_pos">
-                                <label class="form-check-label" for="accessPOS">
-                                    Access POS
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="viewReports" name="permissions[]" value="view_reports">
-                                <label class="form-check-label" for="viewReports">
-                                    View Reports
-                                </label>
-                            </div>
-                        </div>
-                        <!-- Column 2 -->
-                        <div class="col-md-6">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="editUsers" name="permissions[]" value="edit_users">
-                                <label class="form-check-label" for="editUsers">
-                                    Edit Users
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="manageInventory" name="permissions[]" value="manage_inventory">
-                                <label class="form-check-label" for="manageInventory">
-                                    Manage Inventory
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="configureSettings" name="permissions[]" value="configure_settings">
-                                <label class="form-check-label" for="configureSettings">
-                                    Configure Settings
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="viewAuditLogs" name="permissions[]" value="view_audit_logs">
-                                <label class="form-check-label" for="viewAuditLogs">
-                                    View Audit Logs
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-            </div>
-        </div>
+{{--    <div class="row">--}}
+{{--        <div class="col-lg-12">--}}
+{{--            <div class="card mb-4">--}}
+{{--                <div class="card-header">Permissions</div>--}}
+{{--                <div class="card-body">--}}
+{{--                    <p class="text-muted">Select the permissions for the user:</p>--}}
+{{--                    <div class="row gx-3">--}}
+{{--                        <!-- Column 1 -->--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="manageAppointments" name="permissions[]" value="manage_appointments">--}}
+{{--                                <label class="form-check-label" for="manageAppointments">--}}
+{{--                                    Manage Appointments--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="manageDoctors" name="permissions[]" value="manage_doctors">--}}
+{{--                                <label class="form-check-label" for="manageDoctors">--}}
+{{--                                    Manage Doctors--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="accessPOS" name="permissions[]" value="access_pos">--}}
+{{--                                <label class="form-check-label" for="accessPOS">--}}
+{{--                                    Access POS--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="viewReports" name="permissions[]" value="view_reports">--}}
+{{--                                <label class="form-check-label" for="viewReports">--}}
+{{--                                    View Reports--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- Column 2 -->--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="editUsers" name="permissions[]" value="edit_users">--}}
+{{--                                <label class="form-check-label" for="editUsers">--}}
+{{--                                    Edit Users--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="manageInventory" name="permissions[]" value="manage_inventory">--}}
+{{--                                <label class="form-check-label" for="manageInventory">--}}
+{{--                                    Manage Inventory--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="configureSettings" name="permissions[]" value="configure_settings">--}}
+{{--                                <label class="form-check-label" for="configureSettings">--}}
+{{--                                    Configure Settings--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-check mb-2">--}}
+{{--                                <input class="form-check-input" type="checkbox" id="viewAuditLogs" name="permissions[]" value="view_audit_logs">--}}
+{{--                                <label class="form-check-label" for="viewAuditLogs">--}}
+{{--                                    View Audit Logs--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="card-footer">--}}
+{{--                    <button type="submit" class="btn btn-primary">Save Changes</button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
-    </div>
+{{--    </div>--}}
 </div>
 
 <script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Billing;
 use App\Models\BillingServices;
 use App\Models\Clients;
+use App\Models\Payments;
 use App\Models\Pets;
 use App\Models\Services;
 use Illuminate\Http\Request;
@@ -41,6 +42,8 @@ class BillingController extends Controller
     public function store(Request $request)
     {
         // Validate the incoming data
+//        dd(request()->all());
+
         $validatedData = $request->validate([
             'pet_id' => 'required',
             'user_id' => 'required',
@@ -56,6 +59,10 @@ class BillingController extends Controller
         $billing->payment_type = $validatedData['payment_type'];
         $billing->total_payable = $validatedData['total_payable'];
         $billing->total_paid = $validatedData['total_paid'];
+        $due = $request->input('due_date');
+        if(isset($due)){
+            $billing->due_date = $due;
+        }
         $billing->save(); // This ensures the ID is generated and available
 
         // Check if services are provided
@@ -75,14 +82,51 @@ class BillingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $id = $request->get('billingID');
+
+        $bill = Billing::where('id',$id)->first();
+        $owner = Clients::where('id',$bill->user_id)->first();
+        $pet = Pets::where('id',$bill->pet_id)->first();
+        $services_availed = BillingServices::where('billing_id',$id)->get();
+        $services = Services::getAllServices();
+        $payments = Payments::where('billing_id',$id)->get();
+
+        return view('billing.view',['billing' => $bill,'owner'=>$owner,'pet'=>$pet,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
+    }
+
+    public function print(Request $request){
+        $id = $request->get('billingID');
+
+        $bill = Billing::where('id',$id)->first();
+        $owner = Clients::where('id',$bill->user_id)->first();
+        $pet = Pets::where('id',$bill->pet_id)->first();
+        $services_availed = BillingServices::where('billing_id',$id)->get();
+        $services = Services::getAllServices();
+        $payments = Payments::where('billing_id',$id)->get();
+
+        return view('billing.print',['billing' => $bill,'owner'=>$owner,'pet'=>$pet,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
+
+    }
+
+    public function addPayment(Request $request){
+        $id = $request->get('billingID');
+
+        $payment = new Payments();
+        $payment->billing_id = $id;
+        $payment->amount_to_pay = $request->input('amount_to_pay');
+        $payment->cash_given = $request->input('cash_given');
+        $payment->save();
+
+        return redirect()->route('billing.view',['billingID' => $id])->with('success', 'Payment record created successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
+
+
     public function edit(string $id)
     {
         //

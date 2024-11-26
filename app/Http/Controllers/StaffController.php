@@ -34,7 +34,7 @@ class StaffController extends Controller
         $staffUserData = [
             'name' => $request->firstnae . " " . $request->lastname,
             'email' => $request->email,
-            'role' => 'staff',
+            'role' => $request->position,
             'password' => $request->password,
         ];
 

@@ -96,11 +96,17 @@
                         <!-- Form Group (position)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputPosition">Position</label>
-                            <input class="form-control @error('position') is-invalid @enderror" id="inputPosition" name="position" type="text" placeholder="Position" value="" />
+                            <select class="form-control @error('position') is-invalid @enderror" id="inputPosition" name="position">
+                                <option value="" disabled selected>Select Position</option>
+                                <option value="staff" {{ old('position') == 'staff' ? 'selected' : '' }}>Staff</option>
+                                <option value="secretary" {{ old('position') == 'secretary' ? 'selected' : '' }}>Secretary</option>
+                                <option value="cashier" {{ old('position') == 'cashier' ? 'selected' : '' }}>Cashier</option>
+                            </select>
                             @error('position')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Form Group (username)-->
                         {{-- <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username</label>

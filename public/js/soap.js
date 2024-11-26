@@ -45,10 +45,10 @@ function fillSoapStatusValue() {
 }
 function fillTemplate(textarea) {
     const examinationTemplateContent = `
-    Heart Rate (BPM):
-    Respiration Rate (BRPM):
-    Weight (KG):
-    Length (CM):
+    Heart Rate:
+    Respiration Rate:
+    Weight:
+    Length:
     CRT:
     BCS:
     Lymph Nodes:
@@ -58,7 +58,7 @@ function fillTemplate(textarea) {
     `;
 
     const diagnosisTemplateContent = `
-        Heart Rate (BPM):
+        Heart Rate:
         Differential Diagnosis:
         Notes:
         Test Results:

@@ -27,7 +27,7 @@
             <div class="card shadow-none mb-4">
                 <div class="card-header">Billing Form</div>
                 <div class="card-body">
-                    <form action="{{route('billing.store')}}" method="POST">
+                    <form action="{{route('billing.store')}}" method="POST" id="bill">
                         @csrf
                         <div class="row gx-3">
                             <div class="col-md-12">
@@ -51,7 +51,7 @@
                                                 <!-- Billing Date -->
                                                 <div class="col-md-5 mt-1 mt-md-0">
                                                     <label for="billing_date" class="form-label mb-0 text-primary">Date</label>
-                                                    <p class="mb-0">11/23/2024</p>
+                                                    <p class="mb-0">{{\Carbon\Carbon::now()->format('F d, Y')}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,6 +123,7 @@
                             <div class="col-md-6">
                                 <label for="payable" class="form-label mb-1">Total Payable</label>
                                 <p id="payable" class="p-2 ps-3 text-primary fw-bold text-lg rounded border">₱0.00</p>
+                                <input type="hidden" value="" name="total_payable" id="payableInput">
                             </div>
                             <div class=" col-md-6">
                                 <label for="amount_paid" class="form-label mb-1">Amount Paid</label>
@@ -162,7 +163,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" form="billingForm">Confirm and Submit</button>
+                <button type="submit" class="btn btn-primary" form="bill">Confirm and Submit</button>
             </div>
         </div>
     </div>
@@ -230,6 +231,7 @@
                 }
             });
             document.getElementById('payable').textContent = `₱${total.toFixed(2)}`;
+            document.getElementById('payableInput').value = total.toFixed(2);
         }
 
         // Add or remove services

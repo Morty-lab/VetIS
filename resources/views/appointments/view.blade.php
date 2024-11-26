@@ -271,8 +271,8 @@
                     </button>
                     <hr>
                     @endif
-                    <a href="" class="btn btn-outline-primary mb-2 w-100">View Pet</a>
-                    <a href="" class="btn btn-outline-primary mb-2 w-100">View Pet Owner</a>
+                    <a href="{{route('pets.show', $appointment->pet_ID)}}" class="btn btn-outline-primary mb-2 w-100">View Pet</a>
+                    <a href="{{route('owners.show',  $appointment->owner_ID)}}" class="btn btn-outline-primary mb-2 w-100">View Pet Owner</a>
                 </div>
 
 

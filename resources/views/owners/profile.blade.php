@@ -353,7 +353,7 @@ Clients::setEmailAttribute($client, $client->user_id);
         <div class="col-md-12" id="petsCard" style="display: none;">
             <div class="card shadow-none mb-4">
                 <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
-                    <a class="btn btn-primary justify-end" href="/addpet">Add Pet</a>
+                    <a class="btn btn-primary justify-end" href="{{route('pet.create', ['clientID' => $client->id])}}">Add Pet</a>
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">

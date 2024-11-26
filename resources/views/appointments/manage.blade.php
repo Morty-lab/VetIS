@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputPurpose">Purpose</label>
-                            <textarea class="form-control" name="inputPurpose" id="inputPurpose" cols="20" rows="10"></textarea>
+                            <textarea class="form-control" name="purpose" id="inputPurpose" cols="20" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
@@ -260,7 +260,7 @@
                 </thead>
                 <tbody>
                     @foreach ($appointments as $appointment)
-                    {{-- @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))--}}
+                     @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
@@ -269,8 +269,8 @@
                         <td>{{ $appointment->client->client_name }}</td>
                         <td>{{ $appointment->pet->pet_name }}</td>
                         <td>{{ $appointment->pet->pet_type }}</td>
-                        <td>The Veterinarian</td>
-                        <td>The Purpose</td>
+                        <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
+                        <td>{{ $appointment->purpose }}</td>
                         <td>
 
                             @if (is_null($appointment->status) == true)
@@ -302,7 +302,7 @@
                     {{-- @else--}}
                     {{-- @continue--}}
 
-                    {{-- @endif--}}
+                     @endif
 
                     @endforeach
 
@@ -319,9 +319,14 @@
 
     function handleClientSelect() {
 
+
         var selectedClientId = document.getElementById('inputOwnerName').value;
         var petOptions = document.querySelectorAll('#inputPetName option');
         var selectedClient = clients.find(client => client.id == selectedClientId);
+
+        // Clear the pet selection
+        document.getElementById('inputPetName').value = '';
+
 
         petOptions.forEach(function(option) {
             option.style.display = 'none';
@@ -334,9 +339,7 @@
         });
 
         if (selectedClient) {
-            document.getElementById("inputPetype").value = '';
-            document.getElementById("inputPetBreed").value = '';
-            document.getElementById("inputPetAge").value = '';
+
             document.getElementById('inputPetName').value = '';
             document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
             document.getElementById('ownerContact').value = selectedClient.client_no;
@@ -350,7 +353,7 @@
         console.log(selectedClientId);
 
 
-    };
+    }
 
     function handlePetSelect() {
         var selectedPetId = document.getElementById('inputPetName').value;
@@ -362,11 +365,7 @@
             document.getElementById("inputPetype").value = selectedPet.pet_type;
             document.getElementById("inputPetBreed").value = selectedPet.pet_breed;
             @foreach($pets as $pet)
-            if (selectedPetId == {
-                    {
-                        $pet - > id
-                    }
-                }) {
+            if (selectedPetId == '{{$pet->id}}'){
                 document.getElementById("inputPetAge").value = '{{ $pet->age }}'; // Using the getAgeAttribute function
 
             }

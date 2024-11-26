@@ -25,7 +25,15 @@ class PetsController extends Controller
     public function create()
     {
         $clients = Clients::all();
-        return view('pets.add', ["clients" => $clients]);
+        if(request('clientID') != null){
+
+            return view('pets.add', ["clients" => $clients,"clientID" => request('clientID')]);
+
+
+        }else{
+            return view('pets.add', ["clients" => $clients]);
+        }
+
     }
 
     /**

@@ -16,5 +16,6 @@ class Billing extends Model
         'payment_type',
         'total_payable',
         'total_paid',
+        'due_date',
     ];
 }
