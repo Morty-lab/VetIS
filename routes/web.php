@@ -299,12 +299,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/billing/services/add', [ServicesController::class, 'store'])->name("billing.services.add");
 
-    Route::get('/billing/view', function () {
-        return view('billing.view');
-    })->name('billing.view');
-    Route::get('/billing/print', function () {
-        return view('billing.print');
-    })->name('billing.print');
+    Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
+    Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
+    Route::get('/billing/print', [BillingController::class , 'print'])->name('billing.print');
 });
 
 

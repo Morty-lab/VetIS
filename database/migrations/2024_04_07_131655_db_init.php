@@ -276,6 +276,7 @@ return new class extends Migration
             $table->string("payment_type");
             $table->double("total_payable");
             $table->double('total_paid');
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
 
@@ -286,6 +287,16 @@ return new class extends Migration
             $table->unsignedBigInteger("service_id");
             $table->foreign('service_id')->references("id")->on("services")->onDelete("cascade");
             $table->timestamps();
+        });
+
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("billing_id");
+            $table->foreign('billing_id')->references("id")->on("billing")->onDelete("cascade");
+            $table->float("amount_to_pay");
+            $table->float('cash_given');
+            $table->timestamps();
+
         });
 
 
@@ -335,6 +346,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
+        Schema::dropIfExists('payments');
         Schema::dropIfExists('billing_services');
         Schema::dropIfExists('billing');
         Schema::dropIfExists('services');
