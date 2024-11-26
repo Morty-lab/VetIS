@@ -209,7 +209,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manageschedules', function () {
         return view('schedule.calendar');
-    });
+    })->name('schedules.index');
 
     // Pet Owners
     Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');

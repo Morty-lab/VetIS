@@ -154,7 +154,6 @@
                                 {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}
                             </p>
                         </div>
-
                         <div class="col-md-6">
                             <label for="due_date" class="form-label fw-bold text-primary">Due Date</label>
                             <p class="mb-1">{{\Carbon\Carbon::parse($billing->due_date)->format('F d,Y') ?? ''}}</p>

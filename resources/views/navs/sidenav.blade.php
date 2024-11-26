@@ -1,186 +1,102 @@
-    <nav class="sidenav shadow-none border-end sidenav-light no-print">
-        <div class="sidenav-menu">
-            <div class="nav accordion" id="accordionSidenav">
-                <div class="sidenav-menu-heading">Main</div>
-                <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link  @if(Request::is('dashboard')) active @endif" href=" /dashboard">
-                    <div class="nav-link-icon"><i class="fa-solid fa-bolt"></i></div>
-                    Dashboard
-                </a>
+<nav class="sidenav shadow-none border-end sidenav-light no-print">
+    <div class="sidenav-menu">
+        <div class="nav accordion" id="accordionSidenav">
+            <div class="sidenav-menu-heading">Main</div>
+            <!-- Sidenav Accordion (Dashboard)-->
+            <a class="nav-link @if(Request::is('dashboard')) active @endif" href="{{ route('dashboard') }}">
+                <div class="nav-link-icon"><i class="fa-solid fa-bolt"></i></div>
+                Dashboard
+            </a>
 
-                @if (auth()->user()->role == "admin")
-                <a class="nav-link  @if(Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="{{route('owners.index')}}">
+            @if(auth()->user()->role === "admin")
+                <!-- Admin: Pet Owners -->
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="{{ route('owners.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Pet Owners
                 </a>
-                @endif
 
-                <a class="nav-link @if(Request::is('managepet') || Request::is('addpet') || Request::is('profilepet/*') ||  Request::is('editpet') || Request::is('petinfo/*')) active @endif" href="/managepet">
-
+                <!-- Admin: Pets -->
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['managepet', 'addpet', 'profilepet', 'editpet', 'petinfo'])) active @endif" href="{{ route('pet.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-paw"></i></div>
                     Pets
                 </a>
 
-                @if (auth()->user()->role == "admin")
-                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif" href=" {{route('doctor.index')}}">
+                <!-- Admin: Veterinarians -->
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['managedoctor', 'adddoctor', 'profiledoctor', 'securitydoctor', 'adminsettingsdoctor'])) active @endif" href="{{ route('doctor.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
                     Veterinarians
                 </a>
 
-                <div class="collapse" id="collapseDoctors" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="/managedoctor">
-                            Manage Veterinarians
-                        </a>
-                    </nav>
-                </div>
-                @endif
-
-                <a class="nav-link @if(Str::startsWith(request()->path(), ['manageappointments', 'todayappointments', 'finishedappointments', 'pendingappointments', 'cancelledappointments', 'viewappointments'])) active @endif" href="{{route('appointments.index')}}">
+                <!-- Admin: Appointments -->
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['manageappointments', 'todayappointments', 'finishedappointments', 'pendingappointments', 'cancelledappointments', 'viewappointments'])) active @endif" href="{{ route('appointments.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-calendar-plus"></i></div>
                     Appointments
                 </a>
-                <!-- <a class="nav-link collapsed @if(Request::is('manageappointments')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAppt" aria-expanded="false" aria-controls="collapsePages">
-                    <div class="nav-link-icon"><i class="fa-solid fa-calendar-plus"></i></div>
-                    Appointments
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseAppt" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <a class="nav-link" href="{{route('appointments.index')}}">
-                            Scheduled
-                        </a>
-                        <a class="nav-link" href="">
-                            Today
-                            <span class="badge bg-primary-soft text-primary ms-auto">1</span>
-                        </a>
-                        <a class="nav-link" href="">
-                            Requests
-                            <span class="badge bg-warning-soft text-warning ms-auto">5</span>
-                        </a>
-                        <a class="nav-link" href="">
-                            Finished
-                        </a>
-                        <a class="nav-link" href="">
-                            Cancelled
-                        </a>
-                    </nav>
-                </div> -->
+            @endif
 
-                <a class="nav-link @if(Request::is('manageschedules')) active @endif" href="/manageschedules">
-                    <div class="nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                    Calendar
-                </a>
+            <!-- Calendar -->
+            <a class="nav-link @if(Request::is('manageschedules')) active @endif" href="{{ route('schedules.index') }}">
+                <div class="nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                Calendar
+            </a>
 
-                <!-- <a class="nav-link" href="#">
-                    <div class="nav-link-icon"><i class="fa-solid fa-bell"></i></div>
-                    Notifications
-                </a>
-
-                <a class="nav-link" href="#">
-                    <div class="nav-link-icon"><i class="fa-solid fa-message"></i></div>
-                    Messages
-                </a> -->
-
-                @if (auth()->user()->role == "staff" || auth()->user()->role == "admin")
+            @if(auth()->user()->role === "staff" || auth()->user()->role === "admin")
                 <div class="sidenav-menu-heading">Point of Sales</div>
-
-                <a class="nav-link {{ request()->is('billing*') ? 'active' : '' }}" href="{{route('billing')}}">
-
+                <!-- POS: Billing -->
+                <a class="nav-link @if(Request::is('billing*')) active @endif" href="{{ route('billing') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-file-invoice"></i></div>
                     Billing & Services
                 </a>
-
-                <a class="nav-link" href="{{route('pos')}}">
-
+                <!-- POS Dashboard -->
+                <a class="nav-link @if(Request::is('pos')) active @endif" href="{{ route('pos') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-table-columns"></i></div>
                     POS Dashboard
                 </a>
-                @endif
 
                 <div class="sidenav-menu-heading">Inventory</div>
-
-                <a class="nav-link collapsed @if(Request::is('products')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapsePages">
+                <!-- Inventory: Products -->
+                <a class="nav-link @if(Request::is('products')) active @endif" href="{{ route('products.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
                     Manage Products
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseProduct" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="{{route('products.index')}}">
-                            All Products
-                        </a>
-                    </nav>
-                </div>
-
-                <a class="nav-link collapsed  @if(Request::is('suppliers')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapsePages">
+                <!-- Inventory: Suppliers -->
+                <a class="nav-link @if(Request::is('suppliers')) active @endif" href="{{ route('suppliers.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-truck-field"></i></div>
                     Manage Suppliers
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseSuppliers" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="{{route('suppliers.index')}}">
-                            All Suppliers
-                        </a>
-                    </nav>
-                </div>
+                <!-- Inventory: Categories -->
+                    <a class="nav-link @if(Request::is('categories')) active @endif" href="{{ route('categories.index') }}">
+                        <div class="nav-link-icon"><i class="fa-solid fa-tags"></i></div>
+                        Manage Categories
+                    </a>
 
-                <a class="nav-link collapsed @if(Request::is('categories')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapsePages">
-                    <div class="nav-link-icon"><i class="fa-solid fa-tags"></i></div>
-                    Manage Categories
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseCategory" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="{{route('categories.index')}}">
-                            All Categories
-                        </a>
-                    </nav>
-                </div>
-
-                <a class="nav-link collapsed @if(Request::is('units')) active @endif" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUnits" aria-expanded="false" aria-controls="collapsePages">
+                <!-- Inventory: Units -->
+                <a class="nav-link @if(Request::is('units')) active @endif" href="{{ route('units.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-balance-scale"></i></div>
                     Manage Units
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseUnits" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <!-- Nested Sidenav Accordion (Pages -> Account)-->
-                        <a class="nav-link" href="{{route('units.index')}}">
-                            All Units
-                        </a>
-                    </nav>
-                </div>
+            @endif
 
-                @if (auth()->user()->role == "admin")
-
+            @if(auth()->user()->role === "admin")
                 <div class="sidenav-menu-heading">User Management</div>
-
-                <a class="nav-link @if(Request::is('um/admin*')) active @endif" href="{{route("admin.manage")}}">
+                <!-- User Management: Admin -->
+                <a class="nav-link @if(Request::is('um/admin*')) active @endif" href="{{ route('admin.manage') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Administrator
                 </a>
-                {{-- <a class="nav-link @if(Request::is('um/client*')) active @endif" href="{{route('clients.index')}}">--}}
-                {{-- <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>--}}
-                {{-- Client/Pet Owners--}}
-                {{-- </a>--}}
-                <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{route('staffs.index')}}">
+                <!-- User Management: Staff -->
+                <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{ route('staffs.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
-                    Staffs
+                    Staff
                 </a>
-                @endif
-            </div>
+            @endif
         </div>
-        <!-- Sidenav Footer-->
-        <div class="sidenav-footer">
-            <div class="sidenav-footer-content">
-                <div class="sidenav-footer-subtitle">Logged in as:</div>
-                <div class="sidenav-footer-title">{{Auth::user()->name}}</div>
-            </div>
+    </div>
+    <!-- Sidenav Footer-->
+    <div class="sidenav-footer">
+        <div class="sidenav-footer-content">
+            <div class="sidenav-footer-subtitle">Logged in as:</div>
+            <div class="sidenav-footer-title">{{ Auth::user()->name }}</div>
         </div>
-    </nav>
+    </div>
+</nav>
