@@ -60,17 +60,7 @@
                             </tr>
                         @endif
                     @endforeach
-                @else
-                    <tr>
-                        <td colspan="8">VETIS-00004 </td>
-                        <td>2 May, 2024 | 07:25</td>
-                        <td>Kent Invento</td>
-                        <td>Lexie</td>
-                        <td>Cat</td>
-                        <td>My cat is sick</td>
-                        <td><span class="badge bg-success-soft text-success text-sm rounded-pill">Scheduled</span></td>
-                        <td><a href="{{route('portal.appointments.view')}}" class="btn btn-outline-primary">Open</a></td>
-                    </tr>
+
                 @endif
 
             </tbody>

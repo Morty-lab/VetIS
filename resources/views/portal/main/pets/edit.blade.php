@@ -77,15 +77,45 @@
             <div class="card-header">Pet Photo</div>
             <div class="card-body text-center">
                 <!-- Profile picture image-->
-                <img class="img-account-profile rounded-circle mb-2"
-                    src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg"
-                    alt="Buddy's photo">
+                <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2"
+                     src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) :'https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg'}}"
+                     alt="Buddy's photo">
                 <!-- Profile picture help block-->
                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                <!-- Profile picture upload button-->
-                <button class="btn btn-primary" type="button">Change Pet Image</button>
+                <!-- Profile picture upload form-->
+                <form id="petPhotoForm" action="{{ route('pets.uploadPhoto', $pet->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
+                    <button class="btn btn-primary" type="button" onclick="document.getElementById('petPhotoInput').click();">Change Pet Image</button>
+                </form>
             </div>
         </div>
     </div>
+
+    <script>
+        function uploadPetPhoto() {
+            const form = document.getElementById('petPhotoForm');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('petPhotoPreview').src = data.photo_url;
+                        alert('Pet photo updated successfully!');
+                    } else {
+                        alert('Failed to upload pet photo. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while uploading the pet photo.');
+                });
+        }
+    </script>
+
 </div>
 @endsection

@@ -43,6 +43,7 @@ class PetsController extends Controller
 
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'pet_name' => 'required',
             'pet_type' => 'required',
@@ -65,6 +66,10 @@ class PetsController extends Controller
             'okay_to_use_photos_online' => 'nullable|boolean', // Add validation for photo permission
             'pet_condition' => 'nullable|string', // Add validation for pet condition description
         ]);
+
+
+
+
 
         // Create a new Pet record with the validated data
         $pet = new Pets($validatedData);
@@ -159,6 +164,30 @@ class PetsController extends Controller
         // Redirect the user with a success message
         return redirect()->route('pets.show', $pets->id)
             ->with('success', 'Pet information updated successfully');
+    }
+
+    public function uploadPhoto(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png|max:5120', // Max size 5 MB
+        ]);
+
+        $pet = Pets::find($id);
+
+        if (!$pet) {
+            return response()->json(['success' => false, 'message' => 'Pet not found.'], 404);
+        }
+
+        // Store the photo in the storage
+        $photoPath = $request->file('photo')->store('pet_photos', 'public');
+
+        // Update the pet's photo path in the database
+        $pet->update(['pet_picture' => $photoPath]);
+
+        return response()->json([
+            'success' => true,
+            'photo_url' => asset('storage/' . $photoPath),
+        ]);
     }
 
 
