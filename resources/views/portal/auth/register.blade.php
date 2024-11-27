@@ -27,6 +27,17 @@
                                     <h3 class="fw-light my-1">Create an account</h3>
                                 </div>
                                 <div class="card-body">
+                                    <!-- Display Errors at the Top -->
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul class="mb-0">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
                                     <!-- Register form-->
                                     <form action="{{route('register')}}" method="POST">
                                         @csrf

@@ -51,7 +51,7 @@
     <div class="sidenav-footer">
         <div class="sidenav-footer-content">
             <div class="sidenav-footer-subtitle">Logged in as:</div>
-            <div class="sidenav-footer-title">Valerie Luna</div>
+            <div class="sidenav-footer-title">{{\Illuminate\Support\Facades\Auth::user()->name}}</div>
         </div>
     </div>
 </nav>

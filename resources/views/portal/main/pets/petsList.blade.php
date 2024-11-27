@@ -29,7 +29,7 @@
                     <!-- Card -->
                     <div class="card-body p-0">
                         <div class="d-flex justify-content-center pt-2 px-2">
-                            <img class="img-account-profile mb-2 rounded border custom-img" src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg" alt="Profile Picture" />
+                            <img class="img-account-profile mb-2 rounded border custom-img" src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) :'https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg'}}" alt="Profile Picture" />
                         </div>
                         <div class="pet-info mt-2 py-2 px-4 border-top bg-white">
                             <div class="row">

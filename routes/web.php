@@ -67,6 +67,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
     Route::put('/editpet/{pets}', [PetsController::class, 'update'])->name('pets.update');
     Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store');
+    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+
 
     //sub routes Pet Medical Records
 
@@ -330,6 +332,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/portal/appointments', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments");
     Route::post('/portal/appoinments/add', [PortalController::class, 'addMyAppointment'])->name(name: "portal.appointments.add");
     Route::get('/portal/appointments/view', [PortalController::class, 'viewMyAppointments'])->name(name: "portal.appointments.view");
+    Route::post('/portal/appointments/update', [PortalController::class, 'updateMyAppointment'])->name(name: "portal.appointments.update");
 
     Route::get('/portal/profile', [PortalController::class, 'profile'])->name(name: "portal.profile");
 });

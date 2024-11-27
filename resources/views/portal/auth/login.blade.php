@@ -15,6 +15,12 @@
 </head>
 
 <body class="bg-white">
+@if (Auth::check())
+    <script>
+        window.location.href = "{{ route('portal.dashboard') }}";
+    </script>
+@endif
+
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -30,30 +36,57 @@
                                     <h3 class="fw-light my-1">Login</h3>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Login form-->
+                                    <!-- Display Errors at the Top -->
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul class="mb-0">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
+                                    <!-- Login Form -->
                                     <form action="{{ route('login') }}" method="POST">
                                         @csrf
-                                        <!-- Form Group (email address)-->
+                                        <!-- Form Group (email address) -->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control" id="inputEmailAddress" name="email" type="email" placeholder="Enter email address" />
+                                            <input
+                                                class="form-control"
+                                                id="inputEmailAddress"
+                                                name="email"
+                                                type="email"
+                                                placeholder="Enter email address"
+                                                value="{{ old('email') }}"
+                                            />
                                         </div>
-                                        <!-- Form Group (password)-->
+
+                                        <!-- Form Group (password) -->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputPassword">Password</label>
-                                            <input class="form-control" id="inputPassword" type="password" name="password" placeholder="Enter password" />
+                                            <input
+                                                class="form-control"
+                                                id="inputPassword"
+                                                type="password"
+                                                name="password"
+                                                placeholder="Enter password"
+                                            />
                                         </div>
-                                        <!-- Form Group (remember password checkbox)-->
+
+                                        <!-- Form Group (remember password checkbox) -->
                                         <div class="mb-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" id="rememberPasswordCheck" type="checkbox" value="" />
+                                                <input class="form-check-input" id="rememberPasswordCheck" type="checkbox" name="remember" />
                                                 <label class="form-check-label" for="rememberPasswordCheck">Remember password</label>
                                             </div>
                                         </div>
-                                        <!-- Form Group (login box)-->
+
+                                        <!-- Form Group (login box) -->
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="auth-password-basic.html">Forgot Password?</a>
-                                            <button class="btn btn-primary" type="submit" >Login</button>
+                                            <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
+                                            <button class="btn btn-primary" type="submit">Login</button>
                                         </div>
                                     </form>
                                 </div>
@@ -61,6 +94,7 @@
                                     <div class="small"><a href="{{ route('portal.register')}}">Need an account? Sign up!</a></div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

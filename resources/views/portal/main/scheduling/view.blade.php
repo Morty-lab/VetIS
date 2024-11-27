@@ -3,74 +3,80 @@
 <div class="modal fade" id="editAppointmentRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="appointmentRequestTitle">Edit Request Appointment</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row gy-3 gx-4">
-                    <div class="col-md-6">
-                        <!-- Select Schedule -->
-                        <div class="form-group">
-                            <label for="select-schedule" class="mb-1">Select Date</label>
-                            <input type="date" class="form-control" id="select-schedule" name="schedule">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- Select Schedule -->
-                        <div class="form-group">
-                            <label for="select-schedule" class="mb-1">Select Time</label>
-                            <input type="time" class="form-control" id="select-schedule"
-                                name="appointment_time">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- Select Pet -->
-                        <div class="form-group">
-                            <label for="select-pet" class="mb-1">Select Pet</label>
-                            <select class="form-control" id="select-pet" name="pet">
-                                <option value="" disabled selected>Select a Pet</option>
-                                <option value="dog">Dog</option>
-                                <option value="cat">Cat</option>
-                                <option value="bird">Bird</option>
-                                <!-- Add more options as needed -->
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- Select Veterinarian -->
-                        <div class="form-group">
-                            <label for="select-veterinarian" class="mb-1">Select Veterinarian</label>
-                            <select class="form-control" id="select-veterinarian" name="veterinarian">
-                                <option value="" disabled selected>Select a Veterinarian</option>
-                                <option value="vet1">Dr. Smith</option>
-                                <option value="vet2">Dr. Johnson</option>
-                                <!-- Add more options as needed -->
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- View Veterinarian Schedule -->
-                        <div class="form-group d-flex">
-                            <label>&nbsp;</label> <!-- For spacing alignment -->
-                            <br>
-                            <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <!-- Concern/Complain -->
-                        <div class="form-group">
-                            <label for="concern-complain" class="mb-1">Purpose</label>
-                            <textarea class="form-control" id="concern-complain" name="concern_complain" rows="5" placeholder="Enter the purpose of your appointment"></textarea>
-                        </div>
-                    </div>
+            <form action="{{route('portal.appointments.update', ['appointmentID' => $appointment->id])}}" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentRequestTitle">Edit Request Appointment</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <div class="row gy-3 gx-4">
+                        <div class="col-md-6">
+                            <!-- Select Schedule -->
+                            <div class="form-group">
+                                <label for="select-schedule" class="mb-1">Select Date</label>
+                                <input type="date" class="form-control" id="select-schedule" name="appointment_date" value="{{$appointment->appointment_date}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Select Schedule -->
+                            <div class="form-group">
+                                <label for="select-schedule" class="mb-1">Select Time</label>
+                                <input type="time" class="form-control" id="select-schedule"
+                                    name="appointment_time" value="{{$appointment->appointment_time}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Select Pet -->
+                            <div class="form-group">
+                                <label for="select-pet" class="mb-1">Select Pet</label>
+                                <select class="form-control" id="select-pet" name="pet_ID">
+                                    <option value="" disabled selected>Select a Pet</option>
+                                    @foreach($pets as $p)
+                                        <option value="{{$p->id}}" @if($p->id == $pet->id) selected @endif>{{$p->pet_name}}</option>
+                                    @endforeach
 
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="button">Request Appointment</button>
-            </div>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Select Veterinarian -->
+                            <div class="form-group">
+                                <label for="select-veterinarian" class="mb-1">Select Veterinarian</label>
+                                <select class="form-control" id="select-veterinarian" name="doctor_ID">
+                                    <option value="" disabled selected>Select a Veterinarian</option>
+                                    @foreach($vets as $vet)
+                                        <option value="{{$vet->id}}" @if($vet->id == $appointment->doctor_ID) selected @endif>Dr. {{$vet->firstname . " " . $vet->lastname}}</option>
+                                    @endforeach
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- View Veterinarian Schedule -->
+                            <div class="form-group d-flex">
+                                <label>&nbsp;</label> <!-- For spacing alignment -->
+                                <br>
+                                <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <!-- Concern/Complain -->
+                            <div class="form-group">
+                                <label for="concern-complain" class="mb-1">Purpose</label>
+                                <textarea class="form-control" id="concern-complain" name="purpose" rows="5" placeholder="Enter the purpose of your appointment"> {{$appointment->purpose}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Edit Appointment Request</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
