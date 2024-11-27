@@ -33,18 +33,18 @@
                 Appointment
             </a>
             <div class="sidenav-menu-heading">Others</div>
-            <a class="nav-link" href="">
+            <a class="nav-link {{ request()->routeIs('portal.profile*') ? 'active' : '' }}" href="{{route('portal.profile')}}">
                 <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                 My Profile
             </a>
-            <a class="nav-link" href="">
+            <!-- <a class="nav-link" href="">
                 <div class="nav-link-icon"><i class="fa-solid fa-shield-dog"></i></div>
                 Services
             </a>
             <a class="nav-link" href="">
                 <div class="nav-link-icon"><i class="fa-solid fa-address-book"></i></div>
                 Contact Us
-            </a>
+            </a> -->
         </div>
     </div>
     <!-- Sidenav Footer-->

@@ -19,7 +19,9 @@
 <div class="card shadow-none border mb-4">
     <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span>
         <div class="">
-            <a class="btn btn-primary">Request Appointment</a>
+            <a href="{{ route('portal.appointments') }}?openModal=true" class="btn btn-primary">
+                Request Appointment
+            </a>
         </div>
     </div>
     <div class="card-body">
@@ -38,28 +40,28 @@
             </thead>
             <tbody>
                 @if($appointments->isNotEmpty())
-                    @foreach ($appointments as $appointment)
-                        @if ($appointment->status == 0)
-                            <tr>
-                                <td>{{ $appointment->id }}</td>
-                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ $appointment->appointment_time }}</td>
-                                <td>{{ $appointment->owner->name ?? 'N/A' }}</td>
-                                <td>{{ $appointment->pet->name ?? 'N/A' }}</td>
-                                <td>{{ $appointment->pet->type ?? 'N/A' }}</td>
-                                <td>{{ $appointment->purpose }}</td>
-                                <td>
+                @foreach ($appointments as $appointment)
+                @if ($appointment->status == 0)
+                <tr>
+                    <td>{{ $appointment->id }}</td>
+                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ $appointment->appointment_time }}</td>
+                    <td>{{ $appointment->owner->name ?? 'N/A' }}</td>
+                    <td>{{ $appointment->pet->name ?? 'N/A' }}</td>
+                    <td>{{ $appointment->pet->type ?? 'N/A' }}</td>
+                    <td>{{ $appointment->purpose }}</td>
+                    <td>
                         <span class="badge bg-success-soft text-success text-sm rounded-pill">
                             Scheduled
                         </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('portal.appointments.view', ['id' => $appointment->id]) }}" class="btn btn-outline-primary">
-                                        Open
-                                    </a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
+                    </td>
+                    <td>
+                        <a href="{{ route('portal.appointments.view', ['id' => $appointment->id]) }}" class="btn btn-outline-primary">
+                            Open
+                        </a>
+                    </td>
+                </tr>
+                @endif
+                @endforeach
 
                 @endif
 
