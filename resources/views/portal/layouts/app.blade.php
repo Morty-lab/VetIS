@@ -21,6 +21,13 @@
 </head>
 
 <body class="nav-fixed">
+@php
+    // Check user role
+    if (auth()->check() && auth()->user()->role !== 'client') {
+        header('Location: ' . route('dashboard'));
+        exit;
+    }
+@endphp
     @include('portal.layouts.topNav')
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
