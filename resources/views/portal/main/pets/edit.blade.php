@@ -6,7 +6,7 @@
             <nav class="pb-2 pt-2 rounded" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
                     <li class="breadcrumb-item"><a href="{{route('portal.mypets')}}">My Pets</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('portal.mypets.view')}}">Pet Profile</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('portal.mypets.view',['petid' =>$pet->id])}}">Pet Profile</a></li>
                     <li class="breadcrumb-item active">Edit Pet</li>
                 </ol>
             </nav>

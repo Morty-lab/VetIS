@@ -105,7 +105,9 @@
                 </svg><!-- <i class="fa fa-ellipsis-v"></i> Font Awesome fontawesome.com -->
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                @if($appointment->status === null)
                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editAppointmentRequestModal">Edit Request</a></li>
+                @endif
                 <li><a class=" dropdown-item" href="">Print</a></li>
             </ul>
         </div>
