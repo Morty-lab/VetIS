@@ -108,6 +108,15 @@
                 @if($appointment->status === null)
                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editAppointmentRequestModal">Edit Request</a></li>
                 @endif
+                <li>
+                    <form action="{{ route('portal.appointments.cancel', ['appid' => $appointment->id]) }}" method="POST" class="dropdown-item" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-decoration-none p-0 m-0" style="color: inherit; background: none; border: none; cursor: pointer;">
+                            Cancel Request
+                        </button>
+                    </form>
+                </li>
+
                 <li><a class=" dropdown-item" href="">Print</a></li>
             </ul>
         </div>
@@ -168,7 +177,11 @@
                                 <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
                                 <div class="">
                                     <span class="text-primary fw-bold">
-                                        Veterinarian Name
+                                         @php
+                                             $vet = $vets->firstWhere('id', $appointment->doctor_ID);
+                                             $vetName = $vet ? $vet->firstname . ' ' . $vet->lastname : 'N/A';
+                                         @endphp
+                                        {{ $vetName }}
                                     </span>
                                 </div>
                             </div>
@@ -178,7 +191,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                                <p class="text-primary">{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')}}</p>
+                                <p class="text-primary">{{\Carbon\Carbon::parse($appointment->appointment_time)->format('g:i A')}}</p>
                             </div>
                         </div>
                     </div>

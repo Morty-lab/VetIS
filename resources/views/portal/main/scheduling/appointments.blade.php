@@ -123,7 +123,7 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $s)
-                        @if($s->status === 0)
+                        @if( ($s->status === 0) && (\Carbon\Carbon::parse($s->appointment_date)->isToday() || \Carbon\Carbon::parse($s->appointment_date)->isFuture()))
                         @php
                         $pet = \App\Models\Pets::getPetById($s->pet_ID);
                         $owner = Clients::getClientById($s->owner_ID);
@@ -172,7 +172,7 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $a)
-                        @if($a->status === null)
+                        @if(($a->status === null) && (\Carbon\Carbon::parse($a->appointment_date)->isToday() || \Carbon\Carbon::parse($a->appointment_date)->isFuture()))
                         @php
                         $pet = \App\Models\Pets::getPetById($a->pet_ID);
                         $owner = Clients::getClientById($a->owner_ID);
@@ -223,7 +223,7 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $a)
-                        @if($a->status === null)
+                        @if(\Carbon\Carbon::parse($a->appointment_date)->lt(\Carbon\Carbon::today()) )
                         @php
                         $pet = \App\Models\Pets::getPetById($a->pet_ID);
                         $owner = Clients::getClientById($a->owner_ID);

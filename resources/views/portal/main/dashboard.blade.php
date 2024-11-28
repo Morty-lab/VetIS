@@ -41,26 +41,40 @@
             <tbody>
                 @if($appointments->isNotEmpty())
                 @foreach ($appointments as $appointment)
-                @if ($appointment->status == 0)
-                <tr>
-                    <td>{{ $appointment->id }}</td>
-                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ $appointment->appointment_time }}</td>
-                    <td>{{ $appointment->owner->name ?? 'N/A' }}</td>
-                    <td>{{ $appointment->pet->name ?? 'N/A' }}</td>
-                    <td>{{ $appointment->pet->type ?? 'N/A' }}</td>
-                    <td>{{ $appointment->purpose }}</td>
-                    <td>
-                        <span class="badge bg-success-soft text-success text-sm rounded-pill">
-                            Scheduled
-                        </span>
-                    </td>
-                    <td>
-                        <a href="{{ route('portal.appointments.view', ['id' => $appointment->id]) }}" class="btn btn-outline-primary">
-                            Open
-                        </a>
-                    </td>
-                </tr>
-                @endif
+                    @if ($appointment->status === 0)
+                    <tr>
+                        <td>{{ $appointment->id }}</td>
+                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ $appointment->appointment_time }}</td>
+                        <td>
+                            @php
+                                $vet = $vets->firstWhere('id', $appointment->doctor_ID);
+                                $vetName = $vet ? $vet->firstname . ' ' . $vet->lastname : 'N/A';
+                            @endphp
+                            {{ $vetName }}
+                        </td>
+                        <td>
+                            @php
+                                $pet = $pets->firstWhere('id', $appointment->pet_ID);
+                                $petName = $pet ? $pet->pet_name : 'N/A';
+                            @endphp
+                            {{ $petName }}
+                        </td>
+                        <td>
+                            {{ $pet ? $pet->pet_type : 'N/A' }}
+                        </td>
+                        <td>{{ $appointment->purpose }}</td>
+                        <td>
+                            <span class="badge bg-success-soft text-success text-sm rounded-pill">
+                                Scheduled
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ route('portal.appointments.view', ['appid' => $appointment->id,'petid' => $appointment->pet_ID]) }}" class="btn btn-outline-primary">
+                                Open
+                            </a>
+                        </td>
+                    </tr>
+                    @endif
                 @endforeach
 
                 @endif

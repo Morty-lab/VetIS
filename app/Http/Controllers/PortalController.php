@@ -7,10 +7,12 @@ use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
 use App\Models\Pets;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PortalController extends Controller
@@ -20,9 +22,13 @@ class PortalController extends Controller
      */
     public function index()
     {
-        $appointments = Appointments::getAppointmentByClient(auth()->user()->id);
+        $client = Clients::getClientByUserID(Auth::id());
+        $appointments = Appointments::getAppointmentByClient($client->id);
+        $vets = Doctor::getAllDoctors();
+        $pets = Pets::getAllPets($client->id);
 
-        return view('portal.main.dashboard', ['appointments' => $appointments]);
+
+        return view('portal.main.dashboard', ['appointments' => $appointments, 'vets' => $vets, 'pets' => $pets]);
     }
 
     public function myPets()
@@ -244,11 +250,145 @@ class PortalController extends Controller
         return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
     }
 
+    public function cancelMyAppointments(Request $request){
+        $appointmentID = request('appid');
+
+        $appointment = Appointments::getAppointmentById($appointmentID);
+
+        $appointment->update(['status' => 2]);
+        $appointment->save();
+
+        $name = Auth::user()->name;
+        $pet = Pets::getPetByID($appointment->pet_ID);
+
+
+
+        $date = Carbon::parse($appointment->appointment_date)->format('l, F j, Y');
+        $time = Carbon::parse($appointment->appointment_time)->format('g:i A');
+
+        // Inform the user about the cancellation
+        $userData = [
+            'subject' => 'Appointment Cancelled',
+            'content' => "Dear $name,\n\n" .
+                "Your appointment scheduled for:\n" .
+                "**Date**: $date\n" .
+                "**Time**: $time\n\n" .
+                "has been **cancelled**. If you'd like to reschedule, please visit our portal to set a new appointment.\n\n" .
+                "Thank you for choosing us!",
+            'status' => 'Cancelled'
+        ];
+        Mail::to(Auth::user()->email)->send(new AppointmentSet($userData));
+
+// Notify the vet about the cancellation
+        $doctor = Doctor::getDoctorById($appointment->doctor_ID); // Retrieve the doctor by ID
+        if ($doctor) {
+            $vetEmail = User::where('id', $doctor->user_id)->value('email'); // Get the vet's email using the user_id
+
+            $vetData = [
+                'subject' => 'Appointment Cancelled',
+                'content' => "Dear Dr. {$doctor->firstname} {$doctor->lastname},\n\n" .
+                    "The following appointment has been **cancelled**:\n\n" .
+                    "**Owner**: $name \n" .
+                    "**Pet**: $pet->pet_name  ($pet->pet_type )\n" .
+                    "**Date**: $date\n" .
+                    "**Time**: $time\n\n" .
+                    "If you have any questions, please contact our office.\n\n" .
+                    "Thank you!",
+                'status' => 'Cancelled'
+            ];
+
+            Mail::to($vetEmail)->send(new AppointmentSet($vetData));
+        }
+
+
+        toastr()->addSuccess('Appointment cancelled successfully.');
+
+        return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
+    }
+
 
 
     public function profile()
     {
+        $owner = Clients::getClientByUserID(Auth::id());
+        return view('portal.main.profile.profile',['owner' => $owner]);
+    }
 
-        return view('portal.main.profile.profile');
+    public function updateProfile(Request $request){
+        $id = $request->input('id');
+
+        try {
+            // Validate the request inputs
+            $request->validate([
+                'client_name' => 'required|string|max:255',
+                'client_birthday' => 'required|date',
+                'client_address' => 'required|string|max:255',
+                'client_email' => 'required|email|max:255',
+                'client_no' => 'required|string|max:15',
+            ]);
+
+            // Update the client details in the Clients model
+            $client = Clients::find($id);
+            if (!$client) {
+                toastr()->addError('Client not found.');
+                return redirect()->back()->with('error', 'Client not found.');
+            }
+
+            // Update the client's fields
+            $client->update([
+                'client_name' => $request->input('client_name'),
+                'client_birthday' => $request->input('client_birthday'),
+                'client_address' => $request->input('client_address'),
+                'client_no' => $request->input('client_no'),
+            ]);
+
+            // Update the email in the User model
+            $user = User::find($client->user_id);
+            if ($user) {
+                $user->update([
+                    'email' => $request->input('client_email'),
+                ]);
+            }
+
+
+            return redirect()->back()->with('success', 'Account updated successfully.');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // If validation fails, add an error toast for each validation error
+            foreach ($e->errors() as $field => $messages) {
+                foreach ($messages as $message) {
+                    toastr()->addError($message);
+                }
+            }
+
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+    }
+
+    public function uploadProfile(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the image file
+        ]);
+        $id = request('id');
+        $client = Clients::getClientById($id); // Assuming the client is associated with the logged-in user
+
+
+
+        if ($request->hasFile('photo')) {
+            // Generate a unique filename
+            $photoPath = $request->file('photo')->store('profile_photos', 'public');
+
+            // Delete the old photo if it exists
+            if ($client->client_profile_picture && Storage::disk('public')->exists($client->client_profile_picture)) {
+                Storage::disk('public')->delete($client->client_profile_picture);
+            }
+
+            // Update the client's photo field in the database
+            $client->update(['client_profile_picture' => $photoPath]);
+        }
+
+        toastr()->addSuccess('Profile photo updated successfully.');
+        return redirect()->back();
     }
 }
