@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,23 @@ class UsersTableSeeder extends Seeder
             ['name' => 'Admin', 'email' => 'cabahuganiejoseph@gmail.com','role' => 'admin', 'password' => $hashedPassword],
             //['name' => 'Secretary', 'email' => 'secretary@example.com','role' => 'secretary', 'password' => $hashedPassword],
             //['name' => 'User', 'email' => 'user@example.com','role' => 'client', 'password' => $hashedPassword],
+
+        ]);
+
+        $adminLastInsertID = DB::getPdo()->lastInsertId();
+
+
+        DB::table('admins')->insert([
+            'user_id' => $adminLastInsertID,
+            'firstname' => 'Anie Joseph',
+            'lastname' => 'Cabahug',
+            'address' => 'Dummy Address',
+            'phone_number' => 'Dummy Number',
+            'birthday' => '2002-08-11',
+            'position' => "admin",
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+
 
         ]);
 
