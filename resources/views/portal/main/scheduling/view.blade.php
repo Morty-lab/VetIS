@@ -15,14 +15,14 @@
                             <!-- Select Schedule -->
                             <div class="form-group">
                                 <label for="select-schedule" class="mb-1">Select Date</label>
-                                <input type="date" class="form-control" id="select-schedule" name="appointment_date" value="{{$appointment->appointment_date}}">
+                                <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD" value="{{$appointment->appointment_date}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <!-- Select Schedule -->
                             <div class="form-group">
                                 <label for="select-schedule" class="mb-1">Select Time</label>
-                                <input type="time" class="form-control" id="select-schedule"
+                                <input type="text" class="form-control" id="timePicker"
                                     name="appointment_time" value="{{$appointment->appointment_time}}">
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                                 <select class="form-control" id="select-pet" name="pet_ID">
                                     <option value="" disabled selected>Select a Pet</option>
                                     @foreach($pets as $p)
-                                        <option value="{{$p->id}}" @if($p->id == $pet->id) selected @endif>{{$p->pet_name}}</option>
+                                    <option value="{{$p->id}}" @if($p->id == $pet->id) selected @endif>{{$p->pet_name}}</option>
                                     @endforeach
 
                                     <!-- Add more options as needed -->
@@ -47,7 +47,7 @@
                                 <select class="form-control" id="select-veterinarian" name="doctor_ID">
                                     <option value="" disabled selected>Select a Veterinarian</option>
                                     @foreach($vets as $vet)
-                                        <option value="{{$vet->id}}" @if($vet->id == $appointment->doctor_ID) selected @endif>Dr. {{$vet->firstname . " " . $vet->lastname}}</option>
+                                    <option value="{{$vet->id}}" @if($vet->id == $appointment->doctor_ID) selected @endif>Dr. {{$vet->firstname . " " . $vet->lastname}}</option>
                                     @endforeach
                                     <!-- Add more options as needed -->
                                 </select>
@@ -159,44 +159,66 @@
 
         <div class="row gx-5 mb-3">
             <div class="col-md-6">
-                <h6 class="mb-2 text-primary">Appointment Schedule</h6>
-                <hr class="mt-1 mb-3">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                        <p>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y')}}</p>
+                <div class="card shadow-none">
+                    <div class="card-body">
+                        <h6 class="mb-2 text-primary">Appointment Schedule</h6>
+                        <hr class="mt-1 mb-3">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
+                                <div class="">
+                                    <span class="text-primary fw-bold">
+                                        Veterinarian Name
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
+                                <p class="text-primary">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y')}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
+                                <p class="text-primary">{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')}}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                        <p>{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')}}</p>
-                    </div>
-                </div>
-
-                <h6 class="mb-2 mt-4 text-primary">Concern/Complaint</h6>
-                <hr class="mt-1 mb-3">
-                <div class="col-md-12">
-                    <p>{{$appointment->purpose}}</p>
                 </div>
             </div>
+
             <div class="col-md-6">
-                <h6 class="mb-2 text-primary">Pet Information</h6>
-                <hr class="mt-1 mb-2">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputPetName">Pet Name</label>
-                        <p>{{$pet->pet_name}}</p>
+                <div class="card shadow-none">
+                    <div class="card-body">
+                        <h6 class="mb-2 text-primary">Pet Information</h6>
+                        <hr class="mt-1 mb-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Pet Name</label>
+                                <p class="text-primary fw-bold">{{$pet->pet_name}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Pet Type</label>
+                                <p>{{$pet->pet_type}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Breed</label>
+                                <p>{{$pet->pet_breed}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Age</label>
+                                <p>{{$pet->getAgeAttribute()}}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputPetName">Pet Type</label>
-                        <p>{{$pet->pet_type}}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputPetName">Breed</label>
-                        <p>{{$pet->pet_breed}}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputPetName">Age</label>
-                        <p>{{$pet->getAgeAttribute()}}</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card shadow-none mt-4 mb-4">
+                    <div class="card-body">
+                        <h6 class="mb-2 text-primary">Concern/Complaint</h6>
+                        <hr class="mt-1 mb-3">
+                        <div class="col-md-12">
+                            <p>{{$appointment->purpose}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -204,4 +226,32 @@
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    // Check if the 'openModal' parameter is present in the URL
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('openModal') && urlParams.get('openModal') === 'true') {
+            // Open the modal after the page is loaded
+            var modal = new bootstrap.Modal(document.getElementById('appointmentRequestModal'));
+            modal.show();
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#select-schedule", {
+            dateFormat: "Y-m-d", // Format for the selected date (equivalent to Litepicker's 'YYYY-MM-DD')
+            minDate: "today", // Disallow past dates
+            maxDate: new Date().fp_incr(60), // Limit to 2 months ahead (60 days)
+        });
+    });
+    flatpickr("#timePicker", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i", // Time format with seconds
+        minTime: "08:00",
+        maxTime: "17:00",
+        minuteIncrement: 5, // Optional: set minute increment
+    });
+</script>
 @endsection

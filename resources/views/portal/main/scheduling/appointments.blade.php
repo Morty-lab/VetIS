@@ -22,15 +22,14 @@
                             <!-- Select Schedule -->
                             <div class="form-group">
                                 <label for="select-schedule" class="mb-1">Select Date</label>
-                                <input type="date" class="form-control" id="select-schedule"
-                                    name="appointment_date">
+                                <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <!-- Select Schedule -->
                             <div class="form-group">
                                 <label for="select-schedule" class="mb-1">Select Time</label>
-                                <input type="time" class="form-control" id="select-schedule"
+                                <input type="text" class="form-control" id="timePicker"
                                     name="appointment_time">
                             </div>
                         </div>
@@ -93,7 +92,7 @@
     <div class="container-xl px-4">
         <div class="page-header-content py-4">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="text-primary">Appointments</h1>
+                <h1 class="text-primary mb-0">Appointments</h1>
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                     data-bs-target="#appointmentRequestModal">Request Appointment
                 </button>
@@ -154,7 +153,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 mb-5">
         <div class="card shadow-none border">
             <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Appointment Requests</span>
             </div>
@@ -204,7 +203,86 @@
             </div>
         </div>
     </div>
+
+    <div class="col-md-12 mb-4">
+        <div class="card shadow-none border">
+            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Appointment History</span>
+            </div>
+            <div class="card-body">
+                <table id="appointmentsHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Appointment ID</th>
+                            <th>Pet</th>
+                            <th>Veterinarian</th>
+                            <th>Complaint/Concern</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($appointments as $a)
+                        @if($a->status === null)
+                        @php
+                        $pet = \App\Models\Pets::getPetById($a->pet_ID);
+                        $owner = Clients::getClientById($a->owner_ID);
+                        @endphp
+                        <tr data-index="0">
+                            <td>{{$a->appointment_date}} |
+                                {{$a->appointment_time}}
+                            </td>
+                            <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
+                            <td>{{$pet->pet_name}}</td>
+                            <td>{{$owner->client_name}}</td>
+                            <td>{{$a->purpose}}</td>
+                            <td>
+                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
+                                {{-- Scheduled--}}
+                                {{-- </span>--}}
+                                <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>
+                                {{-- <span class="badge bg-danger-soft text-danger text-sm rounded-pill">Cancelled</span>--}}
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$a->id, 'petid'=>$a->pet_ID])}}">Open</a>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    // Check if the 'openModal' parameter is present in the URL
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('openModal') && urlParams.get('openModal') === 'true') {
+            // Open the modal after the page is loaded
+            var modal = new bootstrap.Modal(document.getElementById('appointmentRequestModal'));
+            modal.show();
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#select-schedule", {
+            dateFormat: "Y-m-d", // Format for the selected date (equivalent to Litepicker's 'YYYY-MM-DD')
+            minDate: "today", // Disallow past dates
+            maxDate: new Date().fp_incr(60), // Limit to 2 months ahead (60 days)
+        });
+    });
+    flatpickr("#timePicker", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i", // Time format with seconds
+        minTime: "08:00",
+        maxTime: "17:00",
+        minuteIncrement: 5, // Optional: set minute increment
+    });
+</script>
 
 
 

@@ -22,14 +22,14 @@ class PortalController extends Controller
     {
         $appointments = Appointments::getAppointmentByClient(auth()->user()->id);
 
-        return view('portal.main.dashboard',['appointments'=>$appointments]);
-
+        return view('portal.main.dashboard', ['appointments' => $appointments]);
     }
 
-    public function myPets(){
+    public function myPets()
+    {
         $client = Clients::getClientByUserID(Auth::user()->id);
         $pets = Pets::getPetByClient($client->id);
-        return view('portal.main.pets.petsList',['pets'=>$pets]);
+        return view('portal.main.pets.petsList', ['pets' => $pets]);
     }
 
     public function addMyPet(Request $request)
@@ -67,24 +67,26 @@ class PortalController extends Controller
     }
 
 
-    public function viewMyPet(Request $request){
+    public function viewMyPet(Request $request)
+    {
         $id = request('petid');
         $pet = Pets::getPetByID($id);
-        $appointments = Appointments::where('pet_ID',$id)->get();
+        $appointments = Appointments::where('pet_ID', $id)->get();
         $vets = Doctor::getAllDoctors();
 
-        return view('portal.main.pets.view',['pet'=>$pet, 'appointments'=>$appointments, 'vets'=>$vets]);
+        return view('portal.main.pets.view', ['pet' => $pet, 'appointments' => $appointments, 'vets' => $vets]);
     }
 
-    public function editMyPet(Request $request){
+    public function editMyPet(Request $request)
+    {
         $id = request('petid');
         $pet = Pets::getPetByID($id);
 
-        return view('portal.main.pets.edit',['pet'=>$pet]);
-
+        return view('portal.main.pets.edit', ['pet' => $pet]);
     }
 
-    public function updateMyPet(Request $request){
+    public function updateMyPet(Request $request)
+    {
         $id = request('petid');
         $pet = Pets::getPetByID($id);
         $validatedData = $request->validate([
@@ -101,19 +103,21 @@ class PortalController extends Controller
         $pet->update($validatedData);
         $pet->save();
 
-        return redirect()->route('portal.mypets.view', ['petid'=>$pet->id]);
+        return redirect()->route('portal.mypets.view', ['petid' => $pet->id]);
     }
 
-    public function myAppointments(){
+    public function myAppointments()
+    {
         $client = Clients::getClientByUserID(auth()->user()->id);
         $appointments = Appointments::getAppointmentByClient($client->id);
         $pets = Pets::getPetByClient($client->id);
         $vets = Doctor::getAllDoctors();
 
-        return view('portal.main.scheduling.appointments',['appointments'=>$appointments , 'pets'=>$pets, 'vets'=>$vets]);
+        return view('portal.main.scheduling.appointments', ['appointments' => $appointments, 'pets' => $pets, 'vets' => $vets]);
     }
 
-    public function addMyAppointment(Request $request){
+    public function addMyAppointment(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'owner_ID' => 'required',
@@ -146,7 +150,10 @@ class PortalController extends Controller
 
         if ($validator->fails()) {
             // Add an error toast message
-            toastr()->addError('Error submitting appointment request please try again.');
+
+            toastr()
+                ->positionClass('toast-bottom-right')
+                ->addError('Error submitting appointment request please try again.');
 
             // Redirect back with the input and validation errors
             return redirect()->back()
@@ -173,17 +180,17 @@ class PortalController extends Controller
             'status' => 'Pending'
         ];
 
-
-
-
         Mail::to(Auth::user()->email)->send(new AppointmentSet($data));
 
-        toastr()->addSuccess('Appointment request submitted successfully.');
+        toastr()
+            ->positionClass('toast-bottom-right')
+            ->addSuccess('Appointment request submitted successfully.');
 
         return redirect()->route('portal.appointments');
     }
 
-    public function viewMyAppointments(){
+    public function viewMyAppointments()
+    {
         $petID = request('petid');
         $appointmentID = request('appid');
         $appointment = Appointments::getAppointmentById($appointmentID);
@@ -193,14 +200,15 @@ class PortalController extends Controller
 
 
 
-        return view('portal.main.scheduling.view',['appointment'=>$appointment, 'pet'=>$pet , 'pets'=>$pets, 'vets'=>$vets]);
+        return view('portal.main.scheduling.view', ['appointment' => $appointment, 'pet' => $pet, 'pets' => $pets, 'vets' => $vets]);
     }
 
-    public function updateMyAppointment(Request $request){
+    public function updateMyAppointment(Request $request)
+    {
         $id = request('appointmentID');
 
         $appointment = Appointments::getAppointmentById($id);
-//        dd($request->all());
+        //        dd($request->all());
 
         $validatedData = $request->validate([
             'doctor_ID' => 'required',
@@ -210,7 +218,7 @@ class PortalController extends Controller
             'purpose' => 'required',
         ]);
 
-        $appointment->updateAppointment($id,$validatedData);
+        $appointment->updateAppointment($id, $validatedData);
 
         $name = Auth::user()->name;
 
@@ -233,15 +241,14 @@ class PortalController extends Controller
         Mail::to(Auth::user()->email)->send(new AppointmentSet($data));
 
 
-        return redirect()->route('portal.appointments.view', ['petid'=>$appointment->pet_ID, 'appid'=>$appointment->id]);
+        return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
     }
 
 
 
-    public function profile(){
+    public function profile()
+    {
 
         return view('portal.main.profile.profile');
     }
-
-
 }

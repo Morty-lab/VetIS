@@ -54,7 +54,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (scheduledAppointmentsTable) {
         new simpleDatatables.DataTable(scheduledAppointmentsTable, {
             searchable: true, // Disable the search box
-            perPage: 10, // Show only 5 rows per page
+            perPage: 5, // Show only 5 rows per page
             pagination: true, // Enable pagination
         });
     }
@@ -64,7 +64,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (appointmentsRequestsTable) {
         new simpleDatatables.DataTable(appointmentsRequestsTable, {
             searchable: true, // Disable the search box
-            perPage: 10, // Show only 5 rows per page
+            perPage: 5, // Show only 5 rows per page
+            pagination: true, // Enable pagination
+        });
+    }
+    if (appointmentsHistoryTable) {
+        new simpleDatatables.DataTable(appointmentsHistoryTable, {
+            searchable: true, // Disable the search box
+            perPage: 5, // Show only 5 rows per page
             pagination: true, // Enable pagination
         });
     }
