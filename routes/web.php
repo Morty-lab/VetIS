@@ -333,8 +333,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/portal/appoinments/add', [PortalController::class, 'addMyAppointment'])->name(name: "portal.appointments.add");
     Route::get('/portal/appointments/view', [PortalController::class, 'viewMyAppointments'])->name(name: "portal.appointments.view");
     Route::post('/portal/appointments/update', [PortalController::class, 'updateMyAppointment'])->name(name: "portal.appointments.update");
+    Route::post('/portal/appointments/cancel', [PortalController::class, 'cancelMyAppointments'])->name(name: "portal.appointments.cancel");
 
     Route::get('/portal/profile', [PortalController::class, 'profile'])->name(name: "portal.profile");
+    Route::post('/portal/profile/update', [PortalController::class, 'updateProfile'])->name('portal.profile.update');
+    Route::post('/portal/profile/upload', [PortalController::class, 'uploadProfile'])->name('portal.profile.upload');
 });
 
 
