@@ -250,7 +250,8 @@ class PortalController extends Controller
         return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
     }
 
-    public function cancelMyAppointments(Request $request){
+    public function cancelMyAppointments(Request $request)
+    {
         $appointmentID = request('appid');
 
         $appointment = Appointments::getAppointmentById($appointmentID);
@@ -279,7 +280,7 @@ class PortalController extends Controller
         ];
         Mail::to(Auth::user()->email)->send(new AppointmentSet($userData));
 
-// Notify the vet about the cancellation
+        // Notify the vet about the cancellation
         $doctor = Doctor::getDoctorById($appointment->doctor_ID); // Retrieve the doctor by ID
         if ($doctor) {
             $vetEmail = User::where('id', $doctor->user_id)->value('email'); // Get the vet's email using the user_id
@@ -301,7 +302,9 @@ class PortalController extends Controller
         }
 
 
-        toastr()->addSuccess('Appointment cancelled successfully.');
+        toastr()
+            ->positionClass('toast-bottom-right')
+            ->addSuccess('Appointment cancelled successfully.');
 
         return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
     }
@@ -311,10 +314,11 @@ class PortalController extends Controller
     public function profile()
     {
         $owner = Clients::getClientByUserID(Auth::id());
-        return view('portal.main.profile.profile',['owner' => $owner]);
+        return view('portal.main.profile.profile', ['owner' => $owner]);
     }
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
         $id = $request->input('id');
 
         try {
@@ -352,12 +356,13 @@ class PortalController extends Controller
 
 
             return redirect()->back()->with('success', 'Account updated successfully.');
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             // If validation fails, add an error toast for each validation error
             foreach ($e->errors() as $field => $messages) {
                 foreach ($messages as $message) {
-                    toastr()->addError($message);
+                    toastr()
+                        ->positionClass('toast-bottom-right')
+                        ->addError($message);
                 }
             }
 
@@ -388,7 +393,9 @@ class PortalController extends Controller
             $client->update(['client_profile_picture' => $photoPath]);
         }
 
-        toastr()->addSuccess('Profile photo updated successfully.');
+        toastr()
+            ->positionClass('toast-bottom-right')
+            ->addSuccess('Profile photo updated successfully.');
         return redirect()->back();
     }
 }

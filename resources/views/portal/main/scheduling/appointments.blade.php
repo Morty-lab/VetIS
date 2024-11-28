@@ -86,8 +86,6 @@
     </div>
 </div>
 
-
-
 <header class="mt-n10 pt-10 bg-white border-bottom">
     <div class="container-xl px-4">
         <div class="page-header-content py-4">
@@ -104,8 +102,70 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-12 mb-5">
-        <div class="card shadow-none border">
+    <div class="col-md-12">
+        <nav class="nav nav-borders">
+            <a class="nav-link ms-0 nav-tab{{ request()->is('today') ? 'active' : '' }}" href="#today">
+                Today's <span class="badge bg-primary-soft text-primary ms-auto">0</span>
+            </a>
+            <a class="nav-link nav-tab{{ request()->is('scheduled') ? 'active' : '' }}" href="#scheduled">
+                Scheduled <span class="badge bg-secondary-soft text-secondary ms-auto">0</span>
+            </a>
+            <a class="nav-link nav-tab{{ request()->is('requests') ? 'active' : '' }}" href="#requests">
+                My Requests <span class="badge bg-warning-soft text-warning ms-auto">0</span>
+            </a>
+            <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">
+                My History
+            </a>
+        </nav>
+        <hr class="mt-0 mb-4">
+        <div class="card shadow-none border mb-5" id="todaysCard" style="display:none;">
+            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Today's Appointments</span>
+            </div>
+            <div class="card-body">
+                <table id="todaysAppointmentsTable">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Appointment ID</th>
+                            <th>Pet</th>
+                            <th>Veterinarian</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($appointments as $s)
+                        @if( ($s->status === 0) && (\Carbon\Carbon::parse($s->appointment_date)->isToday() || \Carbon\Carbon::parse($s->appointment_date)->isFuture()))
+                        @php
+                        $pet = \App\Models\Pets::getPetById($s->pet_ID);
+                        $owner = Clients::getClientById($s->owner_ID);
+                        @endphp
+                        <tr data-index="0">
+                            <td>{{$s->appointment_date}} |
+                                {{$s->appointment_time}}
+                            </td>
+                            <td>{{sprintf("VetIS-%05d", $s->id)}}</td>
+                            <td>{{$pet->pet_name}}</td>
+                            <td>{{$owner->client_name}}</td>
+                            <td>{{$s->purpose}}</td>
+                            <td>
+                                <span class="badge bg-success-soft text-success text-sm rounded-pill">
+                                    Scheduled
+                                </span>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">Open</a>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card shadow-none border mb-5" id="scheduledCard" style="display:none;">
             <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span>
             </div>
             <div class="card-body">
@@ -153,7 +213,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-5 mt-0" id="requestsCard" style="display:none;">
         <div class="card shadow-none border">
             <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Appointment Requests</span>
             </div>
@@ -203,8 +263,7 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-12 mb-4">
+    <div class="col-md-12 mb-4" id="historyCard" style="display:none;">
         <div class="card shadow-none border">
             <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Appointment History</span>
             </div>
@@ -281,6 +340,42 @@
         minTime: "08:00",
         maxTime: "17:00",
         minuteIncrement: 5, // Optional: set minute increment
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.nav-tab');
+        const cards = {
+            'today': document.getElementById('todaysCard'),
+            'scheduled': document.getElementById('scheduledCard'),
+            'requests': document.getElementById('requestsCard'),
+            'history': document.getElementById('historyCard'),
+        };
+
+        // Ensure the default tab and card are visible
+        document.querySelector('.nav-tab[href="#today"]').classList.add('active');
+        cards['today'].style.display = 'block'; // Show Scheduled Card by default
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Hide all cards
+                Object.values(cards).forEach(card => card.style.display = 'none');
+
+                // Show the clicked tab's corresponding card
+                const target = tab.getAttribute('href').substring(1); // Extract target ID (e.g., 'scheduled')
+                if (cards[target]) {
+                    cards[target].style.display = 'block';
+                }
+            });
+        });
+
+        // Trigger the click on the Scheduled tab to show it initially
+        document.querySelector('.nav-tab[href="#today"]').click();
     });
 </script>
 

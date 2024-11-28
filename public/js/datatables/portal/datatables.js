@@ -56,6 +56,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             searchable: true, // Disable the search box
             perPage: 5, // Show only 5 rows per page
             pagination: true, // Enable pagination
+            labels: {
+                noRows: "No scheduled appointments at the moment",
+            },
         });
     }
     const appointmentsRequestsTable = document.getElementById(
@@ -66,6 +69,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             searchable: true, // Disable the search box
             perPage: 5, // Show only 5 rows per page
             pagination: true, // Enable pagination
+            labels: {
+                noRows: "You have no pending appointment requests at the moment",
+            },
         });
     }
     if (appointmentsHistoryTable) {
@@ -73,6 +79,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
             searchable: true, // Disable the search box
             perPage: 5, // Show only 5 rows per page
             pagination: true, // Enable pagination
+            labels: {
+                noRows: "You have no previous appointments in your history",
+            },
+        });
+    }
+    if (todaysAppointmentsTable) {
+        new simpleDatatables.DataTable(todaysAppointmentsTable, {
+            searchable: true, // Disable the search box
+            perPage: 5, // Show only 5 rows per page
+            pagination: true, // Enable pagination
+            labels: {
+                noRows: "You have no appointments for today",
+            },
         });
     }
 });
