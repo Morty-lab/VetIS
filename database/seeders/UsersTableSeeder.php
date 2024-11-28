@@ -23,17 +23,17 @@ class UsersTableSeeder extends Seeder
 
         // Insert users
         DB::table('users')->insert([
-            ['name' => 'Admin', 'email' => 'admin@example.com','role' => 'admin', 'password' => $hashedPassword],
-            ['name' => 'Secretary', 'email' => 'secretary@example.com','role' => 'secretary', 'password' => $hashedPassword],
-            ['name' => 'User', 'email' => 'user@example.com','role' => 'client', 'password' => $hashedPassword],
+            ['name' => 'Admin', 'email' => 'cabahuganiejoseph@gmail.com','role' => 'admin', 'password' => $hashedPassword],
+            //['name' => 'Secretary', 'email' => 'secretary@example.com','role' => 'secretary', 'password' => $hashedPassword],
+            //['name' => 'User', 'email' => 'user@example.com','role' => 'client', 'password' => $hashedPassword],
 
         ]);
 
 
-        $faker = Factory::create();
-
+        //$faker = Factory::create();
+/**
         while (DB::table('admins')->count() < 10){
-            $adminPositions = [
+          $adminPositions = [
                 "Practice Manager",
                 "Office Manager",
                 "Receptionist",
@@ -142,6 +142,8 @@ class UsersTableSeeder extends Seeder
 
 
         }
+
+*/
 
     }
 }

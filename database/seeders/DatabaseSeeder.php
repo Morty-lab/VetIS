@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, PetSeeder::class]);
-        $this->call(ServicesTableSeeder::class);
-        Appointments::factory()->count(10)->create();
+        $this->call([UsersTableSeeder::class]);
+        //$this->call(ServicesTableSeeder::class);
+        //Appointments::factory()->count(10)->create();
 
 
         // \App\Models\User::factory(10)->create();
