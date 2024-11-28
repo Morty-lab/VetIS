@@ -16,6 +16,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
+    <link href="{{ asset('css/custom.css')}}" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -24,13 +25,13 @@
 </head>
 
 <body class="nav-fixed">
-@php
+    @php
     // Check user role
     if (auth()->check() && auth()->user()->role !== 'client') {
-        header('Location: ' . route('dashboard'));
-        exit;
+    header('Location: ' . route('dashboard'));
+    exit;
     }
-@endphp
+    @endphp
     @include('portal.layouts.topNav')
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -40,7 +41,7 @@
             <main>
                 @yield('outerContent')
                 <!-- Main page content-->
-                <div class="container-xl px-4 mt-5">
+                <div class="container-xl px-4 mt-4">
                     @yield('content')
                 </div>
             </main>

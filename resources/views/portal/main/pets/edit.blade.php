@@ -19,9 +19,9 @@
     <div class="col-xl-8">
         <div class="card shadow-none border mb-4">
             <form action="{{route('portal.mypets.update', ['petid' => $pet->id])}}" method="POST">
-            @csrf
-            <div class="card-header">Edit Pet</div>
-            <div class="card-body">
+                @csrf
+                <div class="card-header">Edit Pet</div>
+                <div class="card-body">
                     <div class="row gx-3 gy-2 mb-3">
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
@@ -56,17 +56,17 @@
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectGender">Gender</label>
-                            <select class="form-control" id="selectGender" name="pet_gender" >
+                            <select class="form-control" id="selectGender" name="pet_gender">
                                 <option disabled {{ is_null($pet->pet_gender) ? 'selected' : '' }}>-- Select Gender --</option>
-                                <option  value="Male" {{ $pet->pet_gender === 'Male' ? 'selected' : '' }}>Male</option>
-                                <option  value="Female" {{ $pet->pet_gender === 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Male" {{ $pet->pet_gender === 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ $pet->pet_gender === 'Female' ? 'selected' : '' }}>Female</option>
                             </select>
                         </div>
                     </div>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-primary" id="editbtn" type="submit">Save Changes</button>
-            </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" id="editbtn" type="submit">Save Changes</button>
+                </div>
             </form>
 
         </div>
@@ -78,11 +78,13 @@
             <div class="card-body text-center">
                 <!-- Profile picture image-->
                 <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2"
-                     src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) :'https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg'}}"
-                     alt="Buddy's photo">
+                    src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}"
+                    alt="Buddy's photo">
                 <!-- Profile picture help block-->
-                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                <!-- <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div> -->
                 <!-- Profile picture upload form-->
+            </div>
+            <div class="card-footer text-center">
                 <form id="petPhotoForm" action="{{ route('pets.uploadPhoto', $pet->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
@@ -98,9 +100,9 @@
             const formData = new FormData(form);
 
             fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            })
+                    method: 'POST',
+                    body: formData,
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {

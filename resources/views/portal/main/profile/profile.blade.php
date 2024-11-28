@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-md-6">
                             @php
-                                $owner_email = \App\Models\Clients::setEmailAttribute($owner,$owner->user_id)
+                            $owner_email = \App\Models\Clients::setEmailAttribute($owner,$owner->user_id)
                             @endphp
                             <label class="small mb-1" for="editEmailAddress">Email address</label>
                             <input type="text" class="form-control" name="client_email" id="" value="{{$owner->client_email}}">
@@ -36,22 +36,22 @@
                             <label class="small mb-1" for="editPhone">Phone number</label>
                             <input type="text" class="form-control" name="client_no" id="" value="{{$owner->client_no}}">
                         </div>
-                        {{--                    <div class="col-md-12 mt-4">--}}
-                        {{--                        <h6 class="text-primary">Change Password</h6>--}}
-                        {{--                        <hr class="mt-1 mb-0">--}}
-                        {{--                    </div>--}}
-                        {{--                    <div class="col-md-12">--}}
-                        {{--                        <label class="small mb-1" for="editOldPassword">Old Password</label>--}}
-                        {{--                        <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">--}}
-                        {{--                    </div>--}}
-                        {{--                    <div class="col-md-6">--}}
-                        {{--                        <label class="small mb-1" for="updateNewPassword">New Password</label>--}}
-                        {{--                        <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">--}}
-                        {{--                    </div>--}}
-                        {{--                    <div class="col-md-6">--}}
-                        {{--                        <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>--}}
-                        {{--                        <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">--}}
-                        {{--                    </div>--}}
+                        {{-- <div class="col-md-12 mt-4">--}}
+                        {{-- <h6 class="text-primary">Change Password</h6>--}}
+                        {{-- <hr class="mt-1 mb-0">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-12">--}}
+                        {{-- <label class="small mb-1" for="editOldPassword">Old Password</label>--}}
+                        {{-- <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-6">--}}
+                        {{-- <label class="small mb-1" for="updateNewPassword">New Password</label>--}}
+                        {{-- <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-6">--}}
+                        {{-- <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>--}}
+                        {{-- <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">--}}
+                        {{-- </div>--}}
                         <!-- Form Group (birthday)-->
                     </div>
                 </div>
@@ -67,27 +67,27 @@
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <form id="updateProfilePhotoForm" action="{{ route('portal.profile.upload', ['id' => $owner->id]) }}" method="POST" enctype="multipart/form-data">
-            <div class="modal-header">
-                <h5 class="modal-title text-primary">Update Profile Picture</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary">Update Profile Picture</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-0">
 
                     @csrf
                     <div class="row justify-content-center align-items-center" style="height: 100%;">
                         <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
-                            <img id="currentProfilePhoto" class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                            <img id="currentProfilePhoto" class="img-account-profile img-fluid rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
                         </div>
                         <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
                             <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
                             <input type="file" name="photo" id="fileInput" class="d-none" accept="image/*" onchange="previewImage(event)" />
                         </div>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" type="submit">Update</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </div>
             </form>
         </div>
     </div>
@@ -142,10 +142,9 @@
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
                         <img
-                            class="img-account-profile rounded-circle mb-2"
+                            class="img-account-profile img-fluid rounded-circle mb-2"
                             src="{{ $owner->client_profile_picture ? asset('storage/' . $owner->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}"
-                            alt="Profile Picture"
-                        />
+                            alt="Profile Picture" />
                     </div>
                     <div class="card-footer text-center">
                     </div>
