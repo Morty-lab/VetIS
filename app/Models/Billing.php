@@ -18,4 +18,8 @@ class Billing extends Model
         'total_paid',
         'due_date',
     ];
+
+    public static function getAllBillsByClient($id){
+        return self::where('user_id',$id)->get();
+    }
 }

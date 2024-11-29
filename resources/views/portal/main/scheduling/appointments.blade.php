@@ -116,9 +116,10 @@
 <div class="row">
     <div class="col-md-12">
         @php
-        $today = \App\Models\Appointments::where('status', 0)->where('appointment_date', \Carbon\Carbon::today())->get()->count();
-        $scheduled = \App\Models\Appointments::where('status', 0)->get()->count();
-        $requests = \App\Models\Appointments::where('status', null)->get()->count();
+        $client = Clients::getClientByUserID(Auth::user()->id);
+        $today = \App\Models\Appointments::where('status', 0)->where('owner_ID',$client->id )->where('appointment_date', \Carbon\Carbon::today())->get()->count();
+        $scheduled = \App\Models\Appointments::where('status', 0)->where('owner_ID',$client->id )->get()->count();
+        $requests = \App\Models\Appointments::where('status', null)->where('owner_ID',$client->id )->get()->count();
         @endphp
         <nav class="nav nav-borders">
             <a class="nav-link ms-0 nav-tab{{ request()->is('today') ? 'active' : '' }}" href="#today">

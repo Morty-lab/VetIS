@@ -22,7 +22,7 @@
                         <th>Address</th>
                         <th>Contact Number</th>
                         <th>Pets Owned</th>
-                        <th>Status</th>
+{{--                        <th>Status</th>--}}
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -35,10 +35,10 @@
                         <td>{{$client->client_address}}</td>
                         <td>{{$client->client_no}}</td>
                         <td>{{$client->petsOwned($client->id)->count()}}</td>
-                        <td>
-                            <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>
-                            <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>
-                        </td>
+{{--                        <td>--}}
+{{--                            <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>--}}
+{{--                            <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>--}}
+{{--                        </td>--}}
                         <td>
                             <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('owners.show',  $client->id)}}">Open</a>
                         </td>
