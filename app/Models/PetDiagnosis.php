@@ -25,7 +25,7 @@ class PetDiagnosis extends Model
 
 
     public static function getDiagnosisByPet($id){
-        return self::where('pet_record_id', $id)->get();
+        return self::where('pet_record_id', $id)->get()->first();
     }
 
     public static function addDiagnosis($data){

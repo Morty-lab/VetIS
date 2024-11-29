@@ -39,4 +39,8 @@ class Examination extends Model
         return self::create($data);
     }
 
+    public static function getExaminationByRecordID($id){
+        return self::where('pet_record_id', $id)->get()->first();
+    }
+
 }

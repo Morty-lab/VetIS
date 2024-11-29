@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                     @foreach ($appointments as $appointment)
-                    @if ( is_null($appointment->status) == true )
+                    @if ( $appointment->status === null )
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}

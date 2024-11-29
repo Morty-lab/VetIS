@@ -128,17 +128,7 @@
                         <div class="me-3">
                             <div class="text-primary">Today's Appointments</div>
                             @php
-                            $todayCount = 0;
-                            foreach ($appointments as $appointment) {
-                            if (
-                            $appointment->status == 0 &&
-                            \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
-                            ) {
-                            $todayCount++;
-                            } else {
-                            continue;
-                            }
-                            }
+                            $todayCount = \App\Models\Appointments::where('status', 0)->where('appointment_date', \Carbon\Carbon::today())->count();
                             @endphp
                             <div class="text-lg fw-bold">{{ $todayCount }}</div>
                         </div>
@@ -157,17 +147,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             @php
-                            $finishedCount = 0;
-                            foreach ($appointments as $appointment) {
-                            if (
-                            $appointment->status == 1 &&
-                            \Carbon\Carbon::parse($appointment->updated_at)->isToday()
-                            ) {
-                            $finishedCount++;
-                            } else {
-                            continue;
-                            }
-                            }
+                            $finishedCount = \App\Models\Appointments::where('status', 1)->where('appointment_date', \Carbon\Carbon::today())->count();
                             @endphp
                             <div class="text-success">Finished Appointments</div>
                             <div class="text-lg fw-bold">{{ $finishedCount }}</div>
@@ -187,14 +167,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             @php
-                            $requestCount = 0;
-                            foreach ($appointments as $appointment) {
-                            if (is_null($appointment->status) == true) {
-                            $requestCount++;
-                            } else {
-                            continue;
-                            }
-                            }
+                            $requestCount = \App\Models\Appointments::where('status', null)->count();
                             @endphp
                             <div class="text-warning">Appointment Requests</div>
                             <div class="text-lg fw-bold">{{ $requestCount }}</div>
@@ -214,17 +187,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             @php
-                            $cancelledCount = 0;
-                            foreach ($appointments as $appointment) {
-                            if (
-                            $appointment->status == 2 &&
-                            \Carbon\Carbon::parse($appointment->updated_at)->isToday()
-                            ) {
-                            $cancelledCount++;
-                            } else {
-                            continue;
-                            }
-                            }
+                            $cancelledCount = \App\Models\Appointments::where('status',2)->count();
                             @endphp
                             <div class="text-danger">Cancelled Appointments</div>
                             <div class="text-lg fw-bold">{{ $cancelledCount }}</div>

@@ -50,6 +50,13 @@
 
 <body class="nav-fixed">
 
+@php
+    if (auth()->check() && auth()->user()->role === 'client') {
+    header('Location: ' . route('portal.dashboard'));
+    exit;
+    }
+@endphp
+
     <!-- Modals -->
     <!-- Quantity Modal -->
     @foreach ($products as $product)
@@ -89,7 +96,7 @@
                             <hr class="mt-3 mb-2">
                             <div class="col-md-12">
                                 <h6 class="mb-2 text-primary">Enter Quantity</h6>
-                                <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" min="1" max="10" step="1" oninput="setQuantity(this.value); enforceMaxValue(this.value);">
+                                <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" min="1" max="10" step="1" oninput="setQuantity(this.value, {{\App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock')}}); ">
                             </div>
                         </div>
                     </div>
@@ -327,7 +334,7 @@
                     <input type="number" id="discount" class="form-control" placeholder="Enter percentage (e.g., 5)">
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="button">Add Discount</button>
+                    <button class="btn btn-primary" type="button" onclick="setDiscount(document.getElementById('discount').value)">Add Discount</button>
                 </div>
             </div>
         </div>
@@ -416,7 +423,7 @@
                                         <input type="text" class="form-control" id="cashGivenInput">
                                         <input type="hidden" name="customer_id" id="customer_id">
                                         <input type="hidden" name="sub_total" id="sub_total">
-                                        <input type="hidden" name="discount" id="discount">
+                                        <input type="hidden" name="discount" id="discountInput">
                                         <input type="hidden" name="products" id="products">
                                         <button type="button" class="btn btn-primary mt-3 w-100" onclick="handlePayment()">Enter</button>
                                         <hr class="mt-3">

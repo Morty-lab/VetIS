@@ -119,19 +119,36 @@ class DoctorController extends Controller
             'phone_number' => 'required|max:20',
             'birthday' => 'required|date',
             'position' => 'required|max:255',
-            // 'name' => 'required|max:255',
         ]);
 
+
         // Find the doctor by ID
-        $doctor = User::with('doctor')->find($id);
+        $doctor = Doctor::findOrFail($id);
 
         // Update the doctor's information
-        $doctor->doctor->update($validatedData);
-        $doctor->update($validatedData);
+        $doctor->update([
+            'firstname' => $validatedData['firstname'],
+            'lastname' => $validatedData['lastname'],
+            'address' => $validatedData['address'],
+            'phone_number' => $validatedData['phone_number'],
+            'birthday' => $validatedData['birthday'],
+            'position' => $validatedData['position'],
+        ]);
 
-        // Redirect the user back to the doctor management page with a success message
-        return redirect()->route('doctor.profile', $id)->with('success', 'Doctor information updated successfully');
+        // Find the associated user by user_id
+        $user = User::findOrFail($doctor->user_id); // Use user_id field from Doctor model
+
+        // Update the associated user information
+        $user->update([
+            'name' => $validatedData['firstname'] . ' ' . $validatedData['lastname'],
+            'email' => $validatedData['email'],
+        ]);
+
+        // Redirect the user back to the doctor profile page with a success message
+        return redirect()->route('doctor.profile', $id)->with('success', 'Doctor and user information updated successfully');
     }
+
+
     /**
      * Remove the specified resource from storage.
      */

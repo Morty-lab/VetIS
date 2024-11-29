@@ -37,6 +37,7 @@ class POSController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $data = [
             "client_id" => $request->customer_id,
             "sub_total" => $request->sub_total,

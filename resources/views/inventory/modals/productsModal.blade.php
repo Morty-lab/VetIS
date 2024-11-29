@@ -215,6 +215,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    @if($product->stocks != null)
                                         @foreach($product->stocks as $s)
 
                                             <tr>
@@ -265,6 +266,8 @@
                                             </tr>
 
                                         @endforeach
+                                    @endif
+
 
                                     </tbody>
                                 </table>
@@ -452,7 +455,7 @@
                         <div class="label">Product Category</div>
                         <p>
                             @foreach($categories as $u)
-                                @if($u->id == $s->unit )
+                                @if($u->id == $product->product_category )
                                     {{$u->category_name}}
                                 @endif
                             @endforeach
@@ -466,7 +469,7 @@
                         <div class="label">Product Unit</div>
                         <p>
                             @foreach($units as $u)
-                                @if($u->id == $s->unit )
+                                @if($u->id == $product->unit )
                                     {{$u->unit_name}}
                                 @endif
                             @endforeach
