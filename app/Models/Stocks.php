@@ -45,24 +45,47 @@ class Stocks extends Model
         return self::create($data);
     }
 
-    public static function subtractStock($product_id, $stock){
-        $productStock = Stocks::where('products_id', $product_id)->orderBy('expiry_date', 'asc')->first();
+    public static function subtractStock($product_id, $requiredStock)
+    {
+        // Fetch all stocks for the given product, ordered by expiry date
+        $productStocks = Stocks::where('products_id', $product_id)
+            ->orderBy('expiry_date', 'asc')
+            ->get();
 
-        $newStock = $productStock->stock - $stock;
+        foreach ($productStocks as $productStock) {
+            // If the required stock is less than or equal to the current stock
+            if ($requiredStock <= $productStock->stock) {
+                // Subtract the required stock from the current stock
+                $productStock->stock -= $requiredStock;
+                $productStock->save();
 
-        $productStock->stock = $newStock;
-        $productStock->save();
+                // Mark as inactive if the stock reaches zero
+                if ($productStock->stock == 0) {
+                    $productStock->status = 0;
+                    $productStock->save();
+                }
 
-        if ($productStock->stock == 0){
+                // All stock has been subtracted, so break the loop
+                return true;
+            }
 
-            $productStock->delete();
-            $product = Products::where('id', $product_id)->firstOrFail();
-            $product->status = 0;
-            $product->save();
-
+            // If the required stock exceeds the current stock
+            $requiredStock -= $productStock->stock; // Reduce the remaining required stock
+            $productStock->stock = 0; // Deplete the current stock
+            $productStock->status = 0; // Mark as inactive
+            $productStock->save();
         }
 
-        return $productStock;
+        // If the loop completes but there are still unmet stock requirements, throw an exception
+        if ($requiredStock > 0) {
+            throw new Exception("Not enough stock available to fulfill the request.");
+        }
 
+        return true;
+    }
+
+
+    public static function getAllStocksByProductId($product_id){
+        return self::where('products_id', $product_id)->orderBy('expiry_date', 'asc')->get();
     }
 }

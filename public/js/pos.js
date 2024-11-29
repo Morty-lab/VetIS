@@ -1,5 +1,5 @@
 Items = [];
-discount = 5;
+discount = 0;
 qty = 1;
 customer = "";
 customerID = 0;
@@ -15,6 +15,8 @@ modalElement.addEventListener("hidden.bs.modal", function () {
         customSearchInput.value = "";
     }
 });
+
+
 
 document.addEventListener("hidden.bs.modal", function (event) {
     const modal = event.target; // The modal that was closed
@@ -57,6 +59,16 @@ if (posProdListTable) {
         const searchValue = customSearchInput.value;
         dataTable.search(searchValue);
     });
+}
+
+function setDiscount(d){
+    discount = d
+    discountText = document.querySelectorAll(".discount");
+    discountText.forEach((element) => {
+        element.textContent = `${discount}%`;
+    });
+
+
 }
 
 function initTransaction() {
@@ -127,8 +139,15 @@ const generateTableRows = (items) => {
     return tableRows;
 };
 
-function setQuantity(q) {
-    qty = q;
+function setQuantity(quantity, stock) {
+    inputQ = document.getElementById('quantityInput');
+    if(quantity <= stock){
+        qty = quantity;
+
+    }else{
+        alert('Not Enough Stocks')
+        inputQ.value = null;
+    }
 }
 
 function setCustomer(c, cid) {
@@ -170,8 +189,9 @@ function generateTransactionDetails(
     customerID.value = customerId;
     const sub_total = document.getElementById("sub_total");
     sub_total.value = calculateTotal();
-    const discount = document.getElementById("discount");
+    const discount = document.getElementById("discountInput");
     discount.value = totalDiscount;
+
     const productsInput = document.getElementById("products");
     productsInput.value = JSON.stringify(productIdsAndPrices);
 
@@ -184,14 +204,13 @@ function handlePayment() {
     const cashGivenInput = document.getElementById("cashGivenInput");
     const grandTotal = grand_total;
     const customerId = customerID;
-    const totalDiscount = discount;
     const subtotal = document.querySelector(".sub-total").textContent;
     const products = Items;
     const transactionDetails = generateTransactionDetails(
         cashGivenInput.value,
         grandTotal,
         customerId,
-        totalDiscount,
+        discount,
         subtotal,
         products
     );
@@ -203,6 +222,8 @@ function handlePayment() {
         cash.textContent = cashGivenInput.value;
         change.style.display = "block";
         change_cash.textContent = cashGivenInput.value - grand_total;
+
+
 
         setTimeout(() => {
             document.getElementById("paymentForm").submit();
