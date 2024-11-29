@@ -441,10 +441,10 @@ Clients::setEmailAttribute($client, $client->user_id);
                                 </td>
                                 >
                                 <td>
-                                    10/23/2025
+                                    {{$bill->due_date ?? 'No Due Date'}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="/profilepet">Open</a>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('billing.view',['billingID' => $bill->id])}}">Open</a>
                                 </td>
                             </tr>
                         @endforeach

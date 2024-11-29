@@ -200,9 +200,12 @@
                         <hr class="m-0">
                         <div class="col-md-12 d-flex justify-content-end">
                             <!-- Trigger Modal -->
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartialPaymentModal">
-                                Add Payment
-                            </button>
+                            @if(!$fullyPaid)
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartialPaymentModal">
+                                    Add Payment
+                                </button>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -225,6 +228,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
                         @foreach($payments as $p)
                             <tr>
                                 <td>{{ sprintf("#VetIS-%05d", $p->id)}}</td>
@@ -271,8 +275,19 @@
                 <div class="modal-body">
                     <!-- Remaining Balance Section -->
                     <div class="mb-3">
+                        @php
+
+                            if($payments != null){
+                                $total_paid = 0;
+                                foreach ($payments as $p){
+                                    $total_paid = $p->cash_given;
+                                }
+
+                                $remainingBalance = $total_paid - ($billing->total_payable- $billing->$total_paid);
+                            }
+                        @endphp
                         <label for="remaining_balance" class="form-label mb-1">Remaining Balance</label>
-                        <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger"  placeholder="Remaining Balance">₱{{number_format($remainingBalance, 2) }}</p>
+                        <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger"  placeholder="Remaining Balance">{{'₱' . number_format($remainingBalance, 2) ?? 'No Balance' }}</p>
                     </div>
                     <hr class="my-3">
                     <!-- Payment Amount Section -->

@@ -41,6 +41,9 @@
                             <input type="text" class="form-control" name="address" id="editAddress" placeholder="Enter Address" value="{{ $doctor->address }}">
                         </div>
                         <div class="col-md-6">
+                            @php
+                            $doctormail = Doctor::setEmailAttribute($doctor, $doctor->user_id)
+                            @endphp
                             <label class="small mb-1" for="editEmailAddress">Email address</label>
                             <input type="text" class="form-control" name="email" id="editEmailAddress" placeholder="Enter Email Address" value="{{ $doctor->doctor_email }}">
                         </div>
@@ -249,7 +252,7 @@
     </div>
 </header>
 @php
-    Doctor::setEmailAttribute($doctor,$doctor->id);
+    Doctor::setEmailAttribute($doctor,$doctor->user_id);
 @endphp
 
 <!-- Main page content-->
@@ -384,7 +387,7 @@
                                     </td>
 
                                     <td>
-
+                                        {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_name ?? 'N/A' }}
                                     </td>
                                     <td>
                                         {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_type ?? 'N/A' }}

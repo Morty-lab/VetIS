@@ -91,8 +91,11 @@ class SoapController extends Controller
         $vets = Doctor::all();
         $record = PetRecords::getPetRecordById($recordID);
         $petPlan = PetPlan::getAllByRecordID($id);
+        $examination = Examination::getExaminationByRecordID($recordID);
+        $diagnosis = PetDiagnosis::getDiagnosisByPet($recordID);
 
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ,'petPlan' => $petPlan]);
+//        dd($diagnosis);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ,'petPlan' => $petPlan, 'examination' => $examination, 'diagnosis' => $diagnosis]);
     }
 
     /**
@@ -109,6 +112,7 @@ class SoapController extends Controller
 
     public function splitText($text){
         $lines = preg_split("/\r\n|\r|\n/",$text);
+        $data = [];
 
         foreach ($lines as $line) {
             // Remove unnecessary whitespace
@@ -126,23 +130,51 @@ class SoapController extends Controller
 
         return $data;
     }
-    public function update(Request $request, int $id,int $recordID)
+    public function update(Request $request, int $id, int $recordID)
     {
-        $examinationData = array_merge(['pet_record_id'=> $id], $this->splitText($request->input('examination')));
-        $diagnosis = $this->splitText($request->input('diagnosis'));
-        $diagnosisData = [
-            'pet_record_id'=> $id,
-            'diagnosis' => json_encode($diagnosis),
-            'treatment' => $request->input('treatment'),
-            'prescription' => $request->input('prescription'),
-            'client_communication' => $request->input('client_communication'),
-        ] ;
+        $examinationInput = $request->input('examination');
+        $diagnosisInput = $request->input('diagnosis');
 
-        Examination::addExaxmination($examinationData);
-        PetDiagnosis::addDiagnosis($diagnosisData);
+        // Process and update examination only if it is not null
+        if (!is_null($examinationInput)) {
+            $examinationData = array_merge(['pet_record_id' => $id], $this->splitText($examinationInput));
 
-        return redirect()->route('soap.view', ['id' => $id ,'recordID' => $recordID]);
+            $existingExamination = Examination::where('pet_record_id', $recordID)->first();
+//            dd($examinationData);
+            if ($existingExamination) {
+                // Update existing examination record
+                $existingExamination->update($examinationData);
+            } else {
+                // Add a new examination record
+                Examination::create($examinationData);
+            }
+        }
+
+        // Process and update diagnosis only if it is not null
+        if (!is_null($diagnosisInput)) {
+            $diagnosis = $this->splitText($diagnosisInput);
+            $diagnosisData = [
+                'pet_record_id' => $id,
+                'diagnosis' => json_encode($diagnosis),
+                'treatment' => $request->input('treatment'),
+                'prescription' => $request->input('prescription'),
+                'client_communication' => $request->input('client_communication'),
+            ];
+
+            $existingDiagnosis = PetDiagnosis::where('pet_record_id', $id)->first();
+
+            if ($existingDiagnosis) {
+                // Update existing pet diagnosis record
+                $existingDiagnosis->update($diagnosisData);
+            } else {
+                // Add a new pet diagnosis record
+                PetDiagnosis::create($diagnosisData);
+            }
+        }
+
+        return redirect()->route('soap.view', ['id' => $id, 'recordID' => $recordID]);
     }
+
 
     /**
      * Remove the specified resource from storage.
