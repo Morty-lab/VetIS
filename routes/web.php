@@ -48,7 +48,7 @@ Route::get('/', function () {
 Auth::routes(['login' => false]);
 
 Route::get('/dashboard', function () {
-    $appointmentCount = Appointments::where('status', 0)->where('appointment_date', '>=', now())->count();
+    $appointmentCount = Appointments::where('status', 0)->where('appointment_date', \Carbon\Carbon::today())->count();
     $finishedAppointments = Appointments::where('status', 2)->where('updated_at', now())->count();
     $appointmentRequests = Appointments::where('status', null)->count();
     $petCount = Pets::count();

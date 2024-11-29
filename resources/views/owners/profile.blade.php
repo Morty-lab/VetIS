@@ -71,7 +71,7 @@ Clients::setEmailAttribute($client, $client->user_id);
             <div class="modal-body p-0">
                 <div class="row justify-content-center align-items-center" style="height: 100%;">
                     <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
-                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
                     </div>
                     <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
                         <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
@@ -342,7 +342,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                         </div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
+                            <img class="img-account-profile rounded-circle mb-2" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
                         </div>
                         <div class="card-footer text-center">
                         </div>
@@ -419,16 +419,27 @@ Clients::setEmailAttribute($client, $client->user_id);
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($billing as $bill)
                             <tr>
-                                <td>VETISBILL-00001 </td>
-                                <td>2024-11-22 06:17:31</td>
-                                <td>Delia</td>
-                                <td>1</td>
-                                <td>₱ 25.00</td>
-                                <td>₱ 5.00</td>
+                                <td>{{ sprintf("VetISBILL-%05d", $bill->id)}} </td>
+                                <td>{{$bill->created_at}}</td>
+                                <td>{{$pets->find($bill->pet_id)->pet_name ?? 'Unknown Pet'}}</td>
                                 <td>
-                                    <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
+                                    @php
+                                     $serviceCount = \App\Models\BillingServices::where('billing_id', $bill->id)->count();
+                                    @endphp
+                                    {{$serviceCount}}
                                 </td>
+                                <td>₱ {{$bill->total_payable}}</td>
+                                <td>₱ {{$bill->total_paid}}</td>
+                                <td>
+                                    @if($bill->total_payable - $bill->total_paid == 0)
+                                        <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
+                                    @else
+                                        <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
+                                    @endif
+                                </td>
+                                >
                                 <td>
                                     10/23/2025
                                 </td>
@@ -436,6 +447,8 @@ Clients::setEmailAttribute($client, $client->user_id);
                                     <a class="btn btn-datatable btn-primary px-5 py-3" href="/profilepet">Open</a>
                                 </td>
                             </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>

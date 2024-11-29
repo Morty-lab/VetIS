@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Billing;
 use App\Models\Clients;
 use App\Models\Pets;
 use App\Models\User;
@@ -78,8 +79,9 @@ class ClientsController extends Controller
     {
         $client = Clients::getClientById($id);
         $pets = Clients::petsOwned($id);
+        $billing = Billing::getAllBillsByClient($id);
 //dd($clients);
-        return view('owners.profile', ["client" => $client, "pets" => $pets]);
+        return view('owners.profile', ["client" => $client, "pets" => $pets, "billing" => $billing]);
     }
 
     /**
