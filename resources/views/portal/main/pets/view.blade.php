@@ -218,9 +218,9 @@
 <div class="col-md-12">
     <div class="card shadow-none border mb-4">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span>
-            <div class="">
-                <a class="btn btn-primary">Book Appointment</a>
-            </div>
+{{--            <div class="">--}}
+{{--                <a class="btn btn-primary">Book Appointment</a>--}}
+{{--            </div>--}}
         </div>
         <div class="card-body">
             <table id="petScheduledAppointmentsTable">

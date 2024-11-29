@@ -20,11 +20,11 @@
                     <img class="dropdown-user-img" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">{{$client->client_name}}</div>
-                        <div class="dropdown-user-details-email"><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="3f49534a515e7f5e5053115c5052">[email&#160;protected]</a></div>
+                        <div class="dropdown-user-details-email"><a href="" class="__cf_email__" data-cfemail="3f49534a515e7f5e5053115c5052">[email&#160;protected]</a></div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="dashboard-3.html#!">
+                <a class="dropdown-item" href="{{route('portal.profile')}}">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Account
                 </a>
