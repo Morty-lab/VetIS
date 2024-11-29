@@ -49,7 +49,7 @@ class PortalController extends Controller
             'pet_birthdate' => 'required|date',
             'pet_color' => 'required|string|max:50',
             'pet_weight' => 'required|numeric',
-            'photo' => 'required|image|mimes:jpeg,png|max:5120', // File validation
+            'photo' => 'image|mimes:jpeg,png|max:5120', // File validation
         ]);
 
         // Handle the photo upload

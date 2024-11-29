@@ -79,12 +79,24 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Request Appointment</button>
+                    <button class="btn btn-primary" id="submitAppointment" type="submit">Request Appointment</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector('form[action="{{route('portal.appointments.add')}}"]');
+        const submitButton = document.getElementById('submitAppointment');
+
+        form.addEventListener('submit', () => {
+            submitButton.disabled = true; // Disable the button
+            submitButton.textContent = 'Submitting...'; // Optionally, update the text
+        });
+    });
+</script>
 
 <header class="mt-n10 pt-10 bg-white border-bottom">
     <div class="container-xl px-4">
@@ -103,15 +115,20 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
+        @php
+        $today = \App\Models\Appointments::where('status', 0)->where('appointment_date', \Carbon\Carbon::today())->get()->count();
+        $scheduled = \App\Models\Appointments::where('status', 0)->get()->count();
+        $requests = \App\Models\Appointments::where('status', null)->get()->count();
+        @endphp
         <nav class="nav nav-borders">
             <a class="nav-link ms-0 nav-tab{{ request()->is('today') ? 'active' : '' }}" href="#today">
-                Today's <span class="badge bg-primary-soft text-primary ms-auto">0</span>
+                Today's <span class="badge bg-primary-soft text-primary ms-auto">{{$today}}</span>
             </a>
             <a class="nav-link nav-tab{{ request()->is('scheduled') ? 'active' : '' }}" href="#scheduled">
-                Scheduled <span class="badge bg-secondary-soft text-secondary ms-auto">0</span>
+                Scheduled <span class="badge bg-secondary-soft text-secondary ms-auto">{{$scheduled}}</span>
             </a>
             <a class="nav-link nav-tab{{ request()->is('requests') ? 'active' : '' }}" href="#requests">
-                My Requests <span class="badge bg-warning-soft text-warning ms-auto">0</span>
+                My Requests <span class="badge bg-warning-soft text-warning ms-auto">{{$requests}}</span>
             </a>
             <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">
                 My History
@@ -136,7 +153,7 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $s)
-                        @if( ($s->status === 0) && (\Carbon\Carbon::parse($s->appointment_date)->isToday() || \Carbon\Carbon::parse($s->appointment_date)->isFuture()))
+                        @if( ($s->status === 0) && (\Carbon\Carbon::parse($s->appointment_date)->isToday() ))
                         @php
                         $pet = \App\Models\Pets::getPetById($s->pet_ID);
                         $owner = Clients::getClientById($s->owner_ID);
@@ -186,7 +203,8 @@
                         @if( ($s->status === 0) && (\Carbon\Carbon::parse($s->appointment_date)->isToday() || \Carbon\Carbon::parse($s->appointment_date)->isFuture()))
                         @php
                         $pet = \App\Models\Pets::getPetById($s->pet_ID);
-                        $owner = Clients::getClientById($s->owner_ID);
+                        $vet = \App\Models\Doctor::getDoctorById($s->doctor_ID);
+
                         @endphp
                         <tr data-index="0">
                             <td>{{$s->appointment_date}} |
@@ -194,7 +212,7 @@
                             </td>
                             <td>{{sprintf("VetIS-%05d", $s->id)}}</td>
                             <td>{{$pet->pet_name}}</td>
-                            <td>{{$owner->client_name}}</td>
+                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
                                 <span class="badge bg-success-soft text-success text-sm rounded-pill">
@@ -235,7 +253,8 @@
                         @if(($a->status === null) && (\Carbon\Carbon::parse($a->appointment_date)->isToday() || \Carbon\Carbon::parse($a->appointment_date)->isFuture()))
                         @php
                         $pet = \App\Models\Pets::getPetById($a->pet_ID);
-                        $owner = Clients::getClientById($a->owner_ID);
+                        $vet = \App\Models\Doctor::getDoctorById($a->doctor_ID);
+
                         @endphp
                         <tr data-index="0">
                             <td>{{$a->appointment_date}} |
@@ -243,7 +262,8 @@
                             </td>
                             <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
                             <td>{{$pet->pet_name}}</td>
-                            <td>{{$owner->client_name}}</td>
+                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
+
                             <td>{{$a->purpose}}</td>
                             <td>
                                 {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
@@ -282,10 +302,10 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $a)
-                        @if(\Carbon\Carbon::parse($a->appointment_date)->lt(\Carbon\Carbon::today()) )
+{{--                        @if(\Carbon\Carbon::parse($a->appointment_date)->lt(\Carbon\Carbon::today()) )--}}
                         @php
                         $pet = \App\Models\Pets::getPetById($a->pet_ID);
-                        $owner = Clients::getClientById($a->owner_ID);
+                        $vet = \App\Models\Doctor::getDoctorById($a->doctor_ID);
                         @endphp
                         <tr data-index="0">
                             <td>{{$a->appointment_date}} |
@@ -293,7 +313,7 @@
                             </td>
                             <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
                             <td>{{$pet->pet_name}}</td>
-                            <td>{{$owner->client_name}}</td>
+                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$a->purpose}}</td>
                             <td>
                                 {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
@@ -306,7 +326,7 @@
                                 <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$a->id, 'petid'=>$a->pet_ID])}}">Open</a>
                             </td>
                         </tr>
-                        @endif
+{{--                        @endif--}}
                         @endforeach
                     </tbody>
                 </table>
