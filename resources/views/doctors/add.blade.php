@@ -128,6 +128,13 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputLicenseNumber">License No.</label>
+                            <input class="form-control id=" inputPosition" name="inputLicenseNumber" type="text" placeholder="License No." value="" />
+                            @error('position')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <!-- Form Group (username)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username</label>

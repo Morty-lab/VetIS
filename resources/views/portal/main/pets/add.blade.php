@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                            <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate">
+                            <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->toDateString() }}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="selectGender">Gender</label>

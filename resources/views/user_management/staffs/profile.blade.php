@@ -39,7 +39,7 @@
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
-            <div class="card mb-4">
+            <div class="card shadow-none mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Account Information</span>
                     <!-- Three-dot (kebab) menu button -->
@@ -146,7 +146,7 @@
         </div>
         <div class="col-xl-4">
             <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
+            <div class="card shadow-none mb-4 mb-xl-0">
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->

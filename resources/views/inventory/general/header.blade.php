@@ -21,8 +21,8 @@
                             <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownInventory">
                                 <a href="{{route('categories.index')}}" class="dropdown-item @if(Request::is('categories')) text-primary @endif"><i class="fa-solid fa-tags me-1"></i> Categories</a>
                                 <a href="{{route('units.index')}}" class="dropdown-item @if(Request::is('units')) text-primary @endif" href=""><i class="fa-solid fa-balance-scale me-1"></i>Units</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href=""><i class="fa-solid fa-print me-2"></i>Print</a>
+                                <!-- <div class="dropdown-divider"></div> -->
+                                <!-- <a class="dropdown-item" href=""><i class="fa-solid fa-print me-2"></i>Print</a> -->
                             </div>
                         </div>
                     </div>

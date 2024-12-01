@@ -342,7 +342,9 @@
 <div class="container-xl px-4 mt-4">
 
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href=""><span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back</a>
+        <a class="nav-link ms-0" href="javascript:void(0);" onclick="window.history.back();">
+            <span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back
+        </a>
     </nav>
     <hr class="mt-0 mb-4">
 
@@ -379,7 +381,7 @@
                                             <div class="col-12">
                                                 <label for="">SOAP ID</label>
                                                 @php
-                                                    $latestRecord = App\Models\PetRecords::latest('id')->first();
+                                                $latestRecord = App\Models\PetRecords::latest('id')->first();
                                                 @endphp
                                                 <input type="text" class="form-control bg-gray-100"
                                                     value="@if($latestRecord != null) {{sprintf("VETISSOAP-%05d",$petID +1)}} @else 1 @endif"

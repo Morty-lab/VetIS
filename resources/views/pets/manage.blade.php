@@ -45,6 +45,7 @@
                             @if ($pet->sterilized)
                             <div class="badge bg-secondary-soft text-secondary rounded-pill">Sterilized</div>
                             @endif
+                            <div class="badge bg-primary-soft text-primary rounded-pill"><i class="fa-solid fa-check"></i></div>
                         </td>
                         <td>
                             <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('pets.show', $pet->id) }}">Open</a>

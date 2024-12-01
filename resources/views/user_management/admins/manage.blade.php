@@ -26,7 +26,7 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
-  <div class="card">
+  <div class="card shadow-none">
     <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Admin List</span>
       <a class="btn btn-primary justify-end" href="/um/admin/add">Add Admin</a>
     </div>
@@ -43,19 +43,19 @@
           </tr>
         </thead>
         <tbody>
-        @foreach($admins as $admin)
-            <tr>
-                <td>{{$admin->firstname." ".$admin->lastname}}</td>
-                <td>{{$admin->age}}</td>
-                <td>Administrator</td>
-                <td>{{$admin->phone_number}}</td>
-                <td>{{$admin->getEmailAttribute($admin->id)}}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{route('admin.profile', ["id" => $admin->id])}}">Open</a>
-                </td>
-            </tr>
+          @foreach($admins as $admin)
+          <tr>
+            <td>{{$admin->firstname." ".$admin->lastname}}</td>
+            <td>{{$admin->age}}</td>
+            <td>Administrator</td>
+            <td>{{$admin->phone_number}}</td>
+            <td>{{$admin->getEmailAttribute($admin->id)}}</td>
+            <td>
+              <a class="btn btn-primary" href="{{route('admin.profile', ["id" => $admin->id])}}">Open</a>
+            </td>
+          </tr>
 
-        @endforeach
+          @endforeach
 
         </tbody>
       </table>

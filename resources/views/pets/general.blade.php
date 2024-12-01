@@ -6,14 +6,198 @@
 @endsection
 
 @section('content')
-<div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert"
-    style="display: none; z-index: 100;">
-    <div class="alert-icon-aside">
-        <i class="fa-regular fa-circle-check"></i>
+<!-- Delete Pet Modal -->
+<div class="modal fade" id="deletePetModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Delete Pet</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this Pet?</p>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button><a href="" class="btn btn-danger" type="button">Delete Pet</a></div>
+        </div>
     </div>
-    <div class="alert-icon-content">
-        <h6 class="alert-heading">Success</h6>
-        Doctor Registered Successfully!
+</div>
+
+<!-- Verify Pet Modal -->
+<div class="modal fade" id="verifyPetModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Verify Pet</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to verify this Pet?</p>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button><a href="" class="btn btn-primary" type="button">Verify Pet</a></div>
+        </div>
+    </div>
+</div>
+
+<!-- Vaccination Modal -->
+<div class="modal fade" id="addVaccination" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Add Vaccination</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label for="vaccineType">Vaccine Type</label>
+                        <input type="text" name="vaccineType" id="vaccineType" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nextDueDate">Next Due Date</label>
+                        <input type="date" name="nextDueDate" id="nextDueDate" class="form-control">
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" id="noNextDueDate">
+                            <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="selectVeterinarian">Administered By</label>
+                        <select class="form-control" id="selectVeterinarian">
+                            <option>Kent Invento</option>
+                            <option>Jay Invento</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="selectStatus">Status</label>
+                        <select class="form-control" id="selectStatus">
+                            <option>Completed</option>
+                            <option>Ongoing</option>
+                            <option>Scheduled</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="button" id="addVaccinationBtn">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Vaccination Modal -->
+<div class="modal fade" id="editVaccination" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Vaccination</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label for="vaccineType">Vaccine Type</label>
+                        <input type="text" name="vaccineType" id="vaccineType" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nextDueDate">Next Due Date</label>
+                        <input type="date" name="nextDueDate" id="nextDueDate" class="form-control">
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" id="noNextDueDate">
+                            <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="selectVeterinarian">Administered By</label>
+                        <select class="form-control" id="selectVeterinarian">
+                            <option>Kent Invento</option>
+                            <option>Jay Invento</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="selectStatus">Status</label>
+                        <select class="form-control" id="selectStatus">
+                            <option>Completed</option>
+                            <option>Ongoing</option>
+                            <option>Scheduled</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="button" id="editVaccinationBtn">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Vaccination -->
+<!-- Delete Pet Modal -->
+<div class="modal fade" id="deleteVaccination" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Delete Vacciantion</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this vaccination?</p>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button><a href="" class="btn btn-danger" type="button">Delete Vaccination</a></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- View Modal -->
+<div class="modal fade" id="viewVaccination" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">View Vaccination</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-1">
+                    <div class="col-md-6">
+                        <label for="">Vaccine Type</label>
+                        <p class="text-primary">Anti-Rabies</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Date</label>
+                        <div class="">
+                            <p class="badge bg-primary-soft text-primary rounded-pill">December 1, 2024</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="selectVeterinarian">Administered By</label>
+                        <p class="text-primary">Kent Invento</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="selectStatus">Status</label>
+                        <div class="">
+                            <p class="badge bg-success-soft text-success rounded-pill">Completed</p>
+                        </div>
+                        <!-- <div class="">
+                            <p class="badge bg-secondary-soft text-secondary rounded-pill">Ongoing</p>
+                        </div> -->
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Next Due Date</label>
+                        <p class="text-primary">February 2, 2024</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editVaccination">Edit</button>
+                <button href="" class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteVaccination">Delete</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -36,6 +220,7 @@
         <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
         <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">History</a>
         <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Records</a>
+        <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#vaccination">Vaccination</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row" id="petProfileCard" style="display:none;">
@@ -51,11 +236,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Update Pet Info</a></li>
-                            <li><a class="dropdown-item" href="">Print</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#verifyPetModal">Verify Pet</button></li>
+                            <div class="dropdown-divider"></div>
+                            <li><button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deletePetModal">Delete Pet</button></li>
                         </ul>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class=" card-body">
                     <div class="row gx-5 px-3">
                         <div class="col d-flex justify-content-center align-items-center card shadow-none">
                             <img class="img-account-profile rounded-circle mb-2 p-1"
@@ -69,38 +257,44 @@
                                     <hr class="mt-1 mb-3">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputPetName">Pet Name</label>
+                                    <label class="small mb-1">Pet Name</label>
                                     <p>{{$pet->pet_name}}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputPetName">PetID</label>
+                                <div class="col-md-3">
+                                    <label class="small mb-1">PetID</label>
                                     <div>
                                         <p class="badge bg-primary-soft text-primary rounded-pill">PETID-{{ str_pad($pet->id, 5, '0', STR_PAD_LEFT) }}</p>
                                     </div>
-
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="small mb-1">Verification Status</label>
+                                    <div>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill"><i class="fa-solid fa-check"></i> Verified</p>
+                                        <p class="badge bg-light text-body rounded-pill"><i class="fa-solid fa-minus"></i> Not Verified</p>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="selectPetType">Pet Type</label>
+                                    <label class="small mb-1">Pet Type</label>
                                     <p>{{$pet->pet_type}}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBreed">Breed</label>
+                                    <label class="small mb-1">Breed</label>
                                     <p>{{$pet->pet_breed}}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputColor">Color</label>
+                                    <label class="small mb-1">Color</label>
                                     <p>{{$pet->pet_color}}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputWeight">Weight</label>
+                                    <label class="small mb-1">Weight</label>
                                     <p>{{$pet->pet_weight}}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBirthdate">Birthdate</label>
+                                    <label class="small mb-1">Birthdate</label>
                                     <p>{{$pet->pet_birthdate}}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="selectGender">Gender</label>
+                                    <label class="small mb-1">Gender</label>
                                     <p>{{$pet->pet_gender}}</p>
                                 </div>
                             </div>
@@ -368,49 +562,104 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="card mb-4 shadow-none" id="vaccinationCard" style="display: none;">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Vaccination</span>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addVaccination">Add</button>
+                        </div>
+                        <div class="card-body">
+                            <!-- only shows if there is no record -->
+                            <!-- <div class="no-records text-center p-2">
+                                <i class="fa-solid fa-hippo"></i>
+                                No Records Yet
+                            </div> -->
+                            <table id="vaccinationTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Vaccine Type</th>
+                                        <th>Next Due Date</th>
+                                        <th>Administered By</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>December 1, 2024</td>
+                                        <td>Anti-Rabies</td>
+                                        <td>February 2, 2024</td>
+                                        <td>Kent Invento</td>
+                                        <td>
+                                            <span class="badge bg-success-soft text-success rounded-pill">Completed</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#viewVaccination">Open</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        @endsection
+    </div>
+</div>
+@endsection
 
-        @section('scripts')
-        <script>
-            var pet = @json($pet);
-            console.log(pet);
+@section('scripts')
+<script>
+    var pet = @json($pet);
+    console.log(pet);
 
-            document.addEventListener('DOMContentLoaded', function() {
-                const tabs = document.querySelectorAll('.nav-tab');
-                const cards = {
-                    'pet-profile': document.getElementById('petProfileCard'),
-                    'schedules': document.getElementById('schedulesCard'),
-                    'history': document.getElementById('historyCard'),
-                    'records': document.getElementById('recordsCard')
-                };
+    // Handle the "No Next Due Date" checkbox logic
+    document.getElementById('noNextDueDate').addEventListener('change', function() {
+        const nextDueDateInput = document.getElementById('nextDueDate');
+        if (this.checked) {
+            nextDueDateInput.value = '';
+            nextDueDateInput.disabled = true;
+        } else {
+            nextDueDateInput.disabled = false;
+        }
+    });
 
-                // Ensure Pet Profile is active initially
-                document.querySelector('.nav-link[href="#pet-profile"]').classList.add('active');
-                cards['pet-profile'].style.display = 'block'; // Show Pet Profile Card by default
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.nav-tab');
+        const cards = {
+            'pet-profile': document.getElementById('petProfileCard'),
+            'schedules': document.getElementById('schedulesCard'),
+            'history': document.getElementById('historyCard'),
+            'records': document.getElementById('recordsCard'),
+            'vaccination': document.getElementById('vaccinationCard')
+        };
 
-                tabs.forEach(tab => {
-                    tab.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        // Remove active class from all tabs
-                        tabs.forEach(t => t.classList.remove('active'));
-                        tab.classList.add('active');
+        // Ensure Pet Profile is active initially
+        document.querySelector('.nav-link[href="#pet-profile"]').classList.add('active');
+        cards['pet-profile'].style.display = 'block'; // Show Pet Profile Card by default
 
-                        // Hide all cards
-                        Object.values(cards).forEach(card => card.style.display = 'none');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
 
-                        // Show the clicked tab's corresponding card
-                        const targetCard = tab.getAttribute('href').substring(1);
-                        if (cards[targetCard]) {
-                            cards[targetCard].style.display = 'block';
-                        }
-                    });
-                });
+                // Hide all cards
+                Object.values(cards).forEach(card => card.style.display = 'none');
 
-                // Trigger the click on the Pet Profile tab to show it initially
-                document.querySelector('.nav-tab.active').click();
+                // Show the clicked tab's corresponding card
+                const targetCard = tab.getAttribute('href').substring(1);
+                if (cards[targetCard]) {
+                    cards[targetCard].style.display = 'block';
+                }
             });
-        </script>
+        });
 
-        @endsection
+        // Trigger the click on the Pet Profile tab to show it initially
+        document.querySelector('.nav-tab.active').click();
+    });
+</script>
+
+@endsection
