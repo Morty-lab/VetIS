@@ -25,4 +25,14 @@ class TransactionModel extends Model
 
         return $newRecord->id;
     }
+
+    public static function getItemCount($id){
+        $details = TransactionDetailsModel::where('transaction_id', $id)->get();
+        $items = 0;
+        foreach ($details as $detail){
+            $items += $detail->quantity;
+        }
+
+        return $items;
+    }
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SoapController;
 use App\Http\Controllers\StaffController;
@@ -19,6 +20,10 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VaccinationController;
 use App\Models\Clients;
+use App\Models\Products;
+use App\Models\Suppliers;
+use App\Models\TransactionDetailsModel;
+use App\Models\TransactionModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -351,16 +356,16 @@ Route::middleware('auth')->group(function () {
     })->name("portal.prescription.print");
 });
 
-Route::get('/reports', function () {
-    return view('reports.index');
-})->name("reports.index");
+Route::get('/reports', [ReportController::class ,'index'])->name("reports.index");
 
-Route::get('/reports/pos/', function () {
-    return view('reports.posSalesReport.posSales');
-})->name("reports.pos");
+Route::get('/reports/pos/',[ReportController::class , 'pos'])->name("reports.pos");
 
 Route::get('/reports/pos/daily-sales/print', function () {
-    return view('reports.documents.posdaily');
+    $sales = TransactionDetailsModel::all();
+    $products = Products::all();
+    $supplier = Suppliers::all();
+
+    return view('reports.documents.posdaily',['sales' => $sales, 'products' => $products,'supplier' => $supplier]);
 })->name("reports.pos.daily.reports");
 Route::get('/reports/pos/monthly-sales/print', function () {
     return view('reports.documents.posMonthly');
