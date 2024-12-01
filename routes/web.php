@@ -17,6 +17,7 @@ use App\Http\Controllers\SoapController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\VaccinationController;
 use App\Models\Clients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
     Route::put('/editpet/{pets}', [PetsController::class, 'update'])->name('pets.update');
     Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store');
+    Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+
+
+    //Vaccination Routes
+    Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
 
 
     //sub routes Pet Medical Records

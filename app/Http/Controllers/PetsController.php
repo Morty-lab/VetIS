@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
+use App\Models\Doctor;
 use App\Models\PetRecords;
 use App\Models\Pets;
 use App\Models\Clients;
+use App\Models\Vaccination;
 use Illuminate\Http\Request;
 
 class PetsController extends Controller
@@ -103,10 +105,12 @@ class PetsController extends Controller
      */
     public function show(Pets $pets)
     {
+        $vets = Doctor::all();
         $appointments = Appointments::all();
         $pet_records = Petrecords::findByPetId($pets->id);
         $pets->load('client');
-        return view('pets.general', ['pet' => $pets, 'appointments' => $appointments, 'pet_records' => $pet_records]);
+        $vaccinations = Vaccination::getVaccinationByPet($pets->id);
+        return view('pets.general', ['pet' => $pets, 'appointments' => $appointments, 'pet_records' => $pet_records, 'vets' => $vets, 'vaccinations' => $vaccinations]);
     }
 
     /**
@@ -196,6 +200,13 @@ class PetsController extends Controller
             'success' => true,
             'photo_url' => asset('storage/' . $photoPath),
         ]);
+    }
+
+
+    public function verifyPet(){
+        Pets::getPetById(request('pet_id'))->update(['status' => true]);
+
+        return redirect()->route('pets.show', request('pet_id'))->with('success', 'Pet verified successfully.');
     }
 
 

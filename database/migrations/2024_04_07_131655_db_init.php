@@ -32,6 +32,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('position');
             $table->string('profile_picture')->nullable();
+            $table->string('license_number')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -195,6 +196,16 @@ return new class extends Migration
             $table->boolean('status')->default(false);
             $table->timestamps();
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
+        });
+
+        Schema::create('vaccinations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_id");
+            $table->string("vaccine_type");
+            $table->string("doctor_id");
+            $table->date("next_vaccine_date")->nullable();
+            $table->boolean("status")->default(false);
+            $table->timestamps();
         });
 
 
