@@ -44,13 +44,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>December 1, 2024</td>
-                        <th>10</th>
-                        <td>₱28,930.00</td>
-                        <td>₱13,840.00</td>
-                        <td><a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('reports.pos.daily.reports')}}" target=" _blank"><i class="fa-solid fa-print"></i></a></td>
-                    </tr>
+                @foreach($sales as $sale)
+{{--                    @if($sale->created_at === \Carbon\Carbon::today())--}}
+                        <tr>
+                            <td>{{\Carbon\Carbon::parse($sale->created_at)->format('F j, Y')}}</td>
+                            <td>{{$sale->getItemCount($sale->id)}}</td>
+                            <td>₱{{ $sale->sub_total  }}</td>
+                            <td>₱{{$sale->sub_total - ($sale->sub_total * ($sale->total_discount / 100))}}</td>
+                            <td><a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('reports.pos.daily.reports')}}" target=" _blank"><i class="fa-solid fa-print"></i></a></td>
+                        </tr>
+{{--                    @endif--}}
+                @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -71,13 +76,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                ody>
+                @foreach($monthlyReports as $monthYear => $report)
                     <tr>
-                        <td>December 2024</td>
-                        <th>400</th>
-                        <td>₱28,930.00</td>
-                        <td>₱13,840.00</td>
-                        <td><a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('reports.pos.monthly.reports')}}" target=" _blank"><i class="fa-solid fa-print"></i></a></td>
+                        <td>{{ $monthYear }}</td>
+                        <td>{{ $report['itemsSold'] }}</td>
+                        <td>₱{{ number_format($report['totalSales'], 2) }}</td>
+                        <td>₱{{ number_format($report['totalRevenue'], 2) }}</td>
+                        <td>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('reports.pos.monthly.reports') }}" target="_blank">
+                                <i class="fa-solid fa-print"></i>
+                            </a>
+                        </td>
                     </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

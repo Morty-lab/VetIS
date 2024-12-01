@@ -219,9 +219,11 @@ function handlePayment() {
         var change = document.getElementById("change");
         var cash = document.getElementById("cash");
         var change_cash = document.getElementById("change-cash");
+        var cashgivvendiv = document.getElementById('cashGivenDiv');
         cash.textContent = cashGivenInput.value;
         change.style.display = "block";
-        change_cash.textContent = cashGivenInput.value - grand_total;
+        cashgivvendiv.style.display = 'none';
+        change_cash.textContent =  (cashGivenInput.value - grand_total).toFixed(2);
 
 
 

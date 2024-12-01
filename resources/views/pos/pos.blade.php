@@ -418,7 +418,7 @@
                             <form action="{{route('pos.pay')}}" id="paymentForm" method="POST">
                                 @csrf
                                 <div class="row mt-3">
-                                    <div class="col-12">
+                                    <div class="col-12" id="cashGivenDiv">
                                         <label for="">Cash Given</label>
                                         <input type="text" class="form-control" id="cashGivenInput">
                                         <input type="hidden" name="customer_id" id="customer_id">

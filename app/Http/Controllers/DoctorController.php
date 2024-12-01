@@ -68,6 +68,7 @@ class DoctorController extends Controller
             'phone_number' => $request->phone_number,
             'birthday' => $request->birthday,
             'position' => $request->position,
+            'license_number' => $request->license_number
         ]);
 
 
@@ -119,6 +120,7 @@ class DoctorController extends Controller
             'phone_number' => 'required|max:20',
             'birthday' => 'required|date',
             'position' => 'required|max:255',
+
         ]);
 
 

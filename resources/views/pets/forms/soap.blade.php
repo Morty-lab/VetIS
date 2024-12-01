@@ -638,7 +638,11 @@
                                 <div class="card-body">
                                     @php
                                     // Decode the JSON string
+                                    $diagnosisData = [];
+                                    if(isset($diagnosis->diagnosis)){
                                     $diagnosisData = json_decode($diagnosis->diagnosis, true);
+
+                                    }
                                     @endphp
                                     <textarea name="diagnosis" id="diagnosisTextArea" cols="30"
                                         rows="10"
@@ -660,7 +664,7 @@
                                 <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
                                         rows="10"
                                         class="form-control w-full">
-                                    {{$diagnosis->treatment}}
+                                    {{$diagnosis->treatment ?? ''}}
                                     </textarea></div>
                             </div>
                         </div>
@@ -670,7 +674,7 @@
                                 <div class="card-body"><textarea name="prescription" id="prescriptionTextArea"
                                         cols="30" rows="10"
                                         class="form-control w-full">
-                                    {{$diagnosis->prescription}}
+                                    {{$diagnosis->prescription ?? ''}}
                                     </textarea></div>
                             </div>
                         </div>
@@ -681,7 +685,7 @@
                                         id="clientCommunicationTextArea" cols="30"
                                         rows="10"
                                         class="form-control w-full">
-                                    {{$diagnosis->client_communication}}
+                                    {{$diagnosis->client_communication ?? ''}}
                                     </textarea></div>
                             </div>
                         </div>

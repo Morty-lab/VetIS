@@ -208,15 +208,15 @@ Clients::setEmailAttribute($client, $client->user_id);
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="disableAccountModalLabel">Disable Account</h5>
+                    <h5 class="modal-title" id="disableAccountModalLabel">@if($client->status == true)Disable Account @else Enable Account @endif</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to disable this account?</p>
+                    <p>Are you sure you want to @if($client->status == true)disable  @else enable @endif this account?</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-danger" type="submit">Disable Account</button>
+                    <button class="btn @if($client->status == true)btn-danger @else btn-success @endif" type="submit">@if($client->status == true)Disable Account @else Enable Account @endif</button>
                 </div>
             </div>
         </form>
@@ -280,8 +280,11 @@ Clients::setEmailAttribute($client, $client->user_id);
                                 <div class="col-md-3">
                                     <label class="small mb-1">Status</label>
                                     <div>
+                                        @if($client->status ==  true)
                                         <p class="badge bg-primary-soft text-primary rounded-pill">Active</p>
+                                        @else
                                         <p class="badge bg-orange-soft text-orange rounded-pill">Disabled</p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -466,7 +469,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                                     <div class="row gy-2 gx-2">
                                         <div class="col-md-12"><button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#umEditAccount">Edit Account</button></div>
                                         <div class="col-md-6"><button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#umResetPasswordModal">Reset Password</button></div>
-                                        <div class="col-md-6"><button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#disableAccountModal">Disable Account</button></div>
+                                        <div class="col-md-6"><button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#disableAccountModal">@if($client->status == true)Disable Account @else Enable Account @endif</button></div>
                                     </div>
                                 </div>
                             </div>

@@ -32,6 +32,8 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('position');
             $table->string('profile_picture')->nullable();
+            $table->string('license_number')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -46,6 +48,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('position');
             $table->string('profile_picture')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -60,6 +63,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('position');
             $table->string('profile_picture')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -73,6 +77,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->date('birthday');
             $table->string('profile_picture')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -86,6 +91,7 @@ return new class extends Migration
             $table->string("client_address");
             $table->date("client_birthday");
             $table->string("client_profile_picture")->nullable();
+            $table->boolean('status')->default(true);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -97,6 +103,7 @@ return new class extends Migration
             $table->string("supplier_email_address");
             $table->string("supplier_phone_number");
             $table->string("supplier_contact_person");
+            $table->boolean('status')->default(true);
             $table->timestamps();
 
         });
@@ -186,9 +193,19 @@ return new class extends Migration
             $table->date("last_groom_date")->nullable();  // Last groom date
             $table->boolean("okay_to_use_photos_online")->nullable();  // Can use photos online?
             $table->text("pet_condition")->nullable();  // Seizures/Illnesses/Conditions
-
+            $table->boolean('status')->default(false);
             $table->timestamps();
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
+        });
+
+        Schema::create('vaccinations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_id");
+            $table->string("vaccine_type");
+            $table->string("doctor_id");
+            $table->date("next_vaccine_date")->nullable();
+            $table->boolean("status")->default(false);
+            $table->timestamps();
         });
 
 

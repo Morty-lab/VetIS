@@ -384,7 +384,7 @@
                                                 $latestRecord = App\Models\PetRecords::latest('id')->first();
                                                 @endphp
                                                 <input type="text" class="form-control bg-gray-100"
-                                                    value="@if($latestRecord != null) {{sprintf("VETISSOAP-%05d",$petID +1)}} @else 1 @endif"
+                                                    value="@if($latestRecord != null) {{sprintf("VETISSOAP-%05d",$pet->id +1)}} @else 1 @endif"
                                                     disabled>
                                             </div>
                                             <div class=" col-12">

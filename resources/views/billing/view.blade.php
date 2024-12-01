@@ -276,18 +276,37 @@
                     <!-- Remaining Balance Section -->
                     <div class="mb-3">
                         @php
+                            // Check payment type
+                            if ($billing->payment_type === 'full_payment') {
+                                // Full Payment directly shows Fully Paid
+                                $fullyPaid = true;
+                            } else {
+                                // Calculate remaining balance
+                                $totalPayable = $billing->total_payable;
+                                $totalPaid = $billing->total_paid;
 
-                            if($payments != null){
-                                $total_paid = 0;
-                                foreach ($payments as $p){
-                                    $total_paid = $p->cash_given;
+                                $remainingBalance = $totalPayable - $totalPaid;
+
+                                // Check if payments array is not empty
+                                if (!$payments->isEmpty()) {
+                                    $paymentsSum = $payments->sum('cash_given');
+                                    $remainingBalance -= $paymentsSum;
                                 }
 
-                                $remainingBalance = $total_paid - ($billing->total_payable- $billing->$total_paid);
+                                // Determine if fully paid
+                                $fullyPaid = $remainingBalance <= 0;
                             }
                         @endphp
                         <label for="remaining_balance" class="form-label mb-1">Remaining Balance</label>
-                        <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger"  placeholder="Remaining Balance">{{'₱' . number_format($remainingBalance, 2) ?? 'No Balance' }}</p>
+
+                        @if($fullyPaid)
+                            <!-- Fully Paid Badge -->
+                            <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
+                        @else
+                            <!-- Remaining Balance -->
+                            <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger"  placeholder="Remaining Balance">{{'₱' . number_format($remainingBalance, 2) ?? 'No Balance' }}</p>
+                        @endif
+
                     </div>
                     <hr class="my-3">
                     <!-- Payment Amount Section -->

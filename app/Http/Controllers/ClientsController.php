@@ -114,7 +114,11 @@ class ClientsController extends Controller
      */
 
     public function disable($id){
-        Clients::find($id)->update(['status' => false]);
+        $client = Clients::find($id)->get()->first();
+
+        $client->update(['status' => !$client->status]);
+
+        return redirect()->route('owners.show',$id);
     }
     public function destroy(Clients $clients)
     {

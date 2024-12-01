@@ -22,7 +22,8 @@ class Pets extends Model
         'vaccinated',
         'neutered',
         'pet_description',
-        'pet_picture'
+        'pet_picture',
+        'status',
     ];
 
     public function client()
