@@ -27,7 +27,7 @@ class SoapController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create( $id)
+    public function create($id)
     {
         $pet = Pets::find($id);
         $owner = Clients::find($pet->owner_ID);
