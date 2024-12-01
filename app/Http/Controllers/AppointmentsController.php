@@ -45,6 +45,9 @@ class AppointmentsController extends Controller
         $date = Carbon::parse($appointment->appointment_date)->format('l, F j, Y');
         $time = Carbon::parse($appointment->appointment_time)->format('g:i A');
 
+        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
+
         $data = [
             'subject' => 'Appointment Approved',
             'content' => "Dear $client->client_name,\n\n" .
@@ -54,8 +57,21 @@ class AppointmentsController extends Controller
             'status' => 'Approved'
         ];
 
+        $ownerData = [
+            'subject' => 'Appointment Scheduled',
+            'content' => "Dear Dr. $veterinarian->firstname $veterinarian->lastname,\n\n" .
+                "An appointment has been scheduled for you.\n\n" .
+                "Details of the appointment:\n" .
+                "- **Client Name**: $client->client_name\n" .
+                "- **Date**: $date\n" .
+                "- **Time**: $time\n\n" .
+                "Please review the details and prepare accordingly. If you have any questions, contact the clinic staff.\n\n" .
+                "Thank you!",
+            'status' => 'Scheduled'
+        ];
 
-        Mail::to($client->client_email)->send(new AppointmentSet($data));
+        Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
+        Mail::to($client->client_email)->cc($client->client_email)->send(new AppointmentSet($data));
         return redirect()->route('appointments.view', ['id' => $id]);
     }
 
@@ -95,6 +111,25 @@ class AppointmentsController extends Controller
         $date = Carbon::parse($appointment->appointment_date)->format('l, F j, Y');
         $time = Carbon::parse($appointment->appointment_time)->format('g:i A');
 
+
+        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
+
+
+        $ownerData = [
+            'subject' => 'Appointment Cancelled',
+            'content' => "Dear Dr. $veterinarian->firstname $veterinarian->lastname,\n\n" .
+                "We regret to inform you that the following appointment has been cancelled:\n\n" .
+                "Details of the cancelled appointment:\n" .
+                "- **Client Name**: $client->client_name\n" .
+                "- **Date**: $date\n" .
+                "- **Time**: $time\n\n" .
+                "If you have any questions or require further assistance, please contact the clinic staff.\n\n" .
+                "Thank you for your understanding.",
+            'status' => 'Cancelled'
+        ];
+
+
         $data = [
             'subject' => 'Appointment Cancelled',
             'content' => "Dear $client->client_name,\n\n" .
@@ -104,7 +139,7 @@ class AppointmentsController extends Controller
             'status' => 'Cancelled'
         ];
 
-
+        Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
         Mail::to($client->client_email)->send(new AppointmentSet($data));
 
         return redirect()->route('appointments.view', ['id' => $id]);
@@ -159,8 +194,21 @@ class AppointmentsController extends Controller
             'status' => 'Pending'
         ];
 
+        $ownerData = [
+            'subject' => 'New Appointment Request Received',
+            'content' => "Dear Vet Clinic Team,\n\n" .
+                "A new appointment request has been submitted by $client->client_name.\n\n" .
+                "Details of the appointment request:\n" .
+                "- **Date**: $date\n" .
+                "- **Time**: $time\n\n" .
+                "Please review the request and confirm or follow up as needed.\n\n" .
+                "Thank you!",
+            'status' => 'New Request'
+        ];
 
 
+
+        Mail::to(config('mail.from.address'))->send(new AppointmentSet($ownerData));
         Mail::to($client->client_email)->send(new AppointmentSet($data));
         return redirect()->route('appointments.index');
 
