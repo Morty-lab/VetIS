@@ -17,7 +17,8 @@ class Clients extends Model
         'client_no',
         'client_address',
         'client_birthday',
-        'client_profile_picture'
+        'client_profile_picture',
+        'status',
     ];
 
     public function pets()
