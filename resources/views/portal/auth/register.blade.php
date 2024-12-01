@@ -29,13 +29,13 @@
                                 <div class="card-body">
                                     <!-- Display Errors at the Top -->
                                     @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul class="mb-0">
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                     @endif
 
                                     <!-- Register form-->
@@ -77,7 +77,8 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="inputBirthday" class="small mb-1">Birthday</label>
-                                                    <input type="date" name="birthday" class="form-control" id="inputBirthday">
+                                                    <input type="date" name="birthday" class="form-control @error('birthday') is-invalid @enderror"
+                                                        id="inputBirthday" max="{{ \Carbon\Carbon::now()->toDateString() }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -122,46 +123,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
-
-    <script>
-        (function() {
-            var js = "window['__CF$cv$params']={r:'750b4b9be844073a',m:'XcCNQtsiZ9zaIrbjrXKlSZctCyFxb8XKDv1jRtqcUv0-1664187923-0-AcykVJiJu2/9wQizgMjlFBQpyyx7oLmrTCq0mawLM6zi0e5BPvPGQuOzNulAUUcTPxnjIhkm9El+jrCiKScFa5YwwCH0rcUQ8XTtvP+QLttfiOWebdvTYUHEuiYi5r1QK6SYCnkmnT+9xPJDv1mzaLc=',s:[0xbed09f9b75,0x4395878988],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";
-            var _0xh = document.createElement('iframe');
-            _0xh.height = 1;
-            _0xh.width = 1;
-            _0xh.style.position = 'absolute';
-            _0xh.style.top = 0;
-            _0xh.style.left = 0;
-            _0xh.style.border = 'none';
-            _0xh.style.visibility = 'hidden';
-            document.body.appendChild(_0xh);
-
-            function handler() {
-                var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;
-                if (_0xi) {
-                    var _0xj = _0xi.createElement('script');
-                    _0xj.nonce = '';
-                    _0xj.innerHTML = js;
-                    _0xi.getElementsByTagName('head')[0].appendChild(_0xj);
-                }
-            }
-            if (document.readyState !== 'loading') {
-                handler();
-            } else if (window.addEventListener) {
-                document.addEventListener('DOMContentLoaded', handler);
-            } else {
-                var prev = document.onreadystatechange || function() {};
-                document.onreadystatechange = function(e) {
-                    prev(e);
-                    if (document.readyState !== 'loading') {
-                        document.onreadystatechange = prev;
-                        handler();
-                    }
-                };
-            }
-        })();
-    </script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"750b4b9be844073a","token":"6e2c2575ac8f44ed824cef7899ba8463","version":"2022.8.1","si":100}' crossorigin="anonymous"></script>
 </body>
 
 </html>

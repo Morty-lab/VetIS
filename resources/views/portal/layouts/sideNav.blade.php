@@ -15,6 +15,10 @@
                 <div class="nav-link-icon"><i class="fa-solid fa-calendar-check"></i></div>
                 Appointment
             </a>
+            <a class="nav-link {{ request()->routeIs('portal.prescription*') ? 'active' : '' }}" href="{{ route('portal.prescription.list') }}">
+                <div class="nav-link-icon"><i class="fa-solid fa-prescription"></i></div>
+                Prescriptions
+            </a>
             <div class="sidenav-menu-heading">Others</div>
             <a class="nav-link {{ request()->routeIs('portal.profile*') ? 'active' : '' }}" href="{{route('portal.profile')}}">
                 <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>

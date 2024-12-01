@@ -75,4 +75,50 @@ window.addEventListener("DOMContentLoaded", (event) => {
             },
         });
     }
+
+    const dailySalesReportsTable = document.getElementById(
+        "dailySalesReportsTable"
+    );
+    if (dailySalesReportsTable) {
+        new simpleDatatables.DataTable(dailySalesReportsTable);
+    }
+
+    const monthlySalesReportsTable = document.getElementById(
+        "monthlySalesReportsTable"
+    );
+    if (monthlySalesReportsTable) {
+        new simpleDatatables.DataTable(monthlySalesReportsTable);
+    }
+
+    const inventoryProductsTable = document.getElementById(
+        "inventoryProductsTable"
+    );
+    if (inventoryProductsTable) {
+        new simpleDatatables.DataTable(inventoryProductsTable);
+    }
+    const inventoryStocksTable = document.getElementById(
+        "inventoryStocksTable"
+    );
+    if (inventoryStocksTable) {
+        new simpleDatatables.DataTable(inventoryStocksTable);
+    }
+
+    const inventorySuppliersTable = document.getElementById(
+        "inventorySuppliersTable"
+    );
+    if (inventorySuppliersTable) {
+        new simpleDatatables.DataTable(inventorySuppliersTable);
+    }
+
+    const inventoryCategoryTable = document.getElementById(
+        "inventoryCategoryTable"
+    );
+    if (inventoryCategoryTable) {
+        new simpleDatatables.DataTable(inventoryCategoryTable);
+    }
+
+    const inventoryUnitsTable = document.getElementById("inventoryUnitsTable");
+    if (inventoryUnitsTable) {
+        new simpleDatatables.DataTable(inventoryUnitsTable);
+    }
 });

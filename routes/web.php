@@ -191,7 +191,7 @@ Route::middleware('auth')->group(function () {
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
 
-        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments , "vets" => $vets]);
+        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     })->name('appointments.pending');
     Route::get('/cancelledappointments', function () {
 
@@ -199,9 +199,7 @@ Route::middleware('auth')->group(function () {
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
-        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments , "vets" => $vets]);
-
-
+        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     })->name('appointments.cancelled');
 
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
@@ -303,7 +301,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
-    Route::get('/billing/print', [BillingController::class , 'print'])->name('billing.print');
+    Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');
 });
 
 
@@ -338,9 +336,53 @@ Route::middleware('auth')->group(function () {
     Route::get('/portal/profile', [PortalController::class, 'profile'])->name(name: "portal.profile");
     Route::post('/portal/profile/update', [PortalController::class, 'updateProfile'])->name('portal.profile.update');
     Route::post('/portal/profile/upload', [PortalController::class, 'uploadProfile'])->name('portal.profile.upload');
+
+    Route::get('/portal/prescription/', function () {
+        return view('portal.main.prescriptions.prescriptionList');
+    })->name("portal.prescription.list");
+    Route::get('/portal/prescription/print', function () {
+        return view('portal.main.prescriptions.print');
+    })->name("portal.prescription.print");
 });
 
+Route::get('/reports', function () {
+    return view('reports.index');
+})->name("reports.index");
 
+Route::get('/reports/pos/', function () {
+    return view('reports.posSalesReport.posSales');
+})->name("reports.pos");
+
+Route::get('/reports/pos/daily-sales/print', function () {
+    return view('reports.documents.posdaily');
+})->name("reports.pos.daily.reports");
+Route::get('/reports/pos/monthly-sales/print', function () {
+    return view('reports.documents.posMonthly');
+})->name("reports.pos.monthly.reports");
+
+// Inventory Reports
+Route::get('/reports/inventory/', function () {
+    return view('reports.inventoryReport.inventoryReport');
+})->name("reports.inventory");
+Route::get('/reports/inventory/products-list/print', function () {
+    return view('reports.documents.productsList');
+})->name("reports.inventory.productsList");
+
+Route::get('/reports/inventory/item-stock/print', function () {
+    return view('reports.documents.itemStock');
+})->name("reports.inventory.itemStock");
+
+Route::get('/reports/inventory/all-stock/print', function () {
+    return view('reports.documents.allStock');
+})->name("reports.inventory.allStockList");
+
+Route::get('/reports/inventory/low-stock/print', function () {
+    return view('reports.documents.lowStockList');
+})->name("reports.inventory.lowStockList");
+
+Route::get('/printable/prescription/print', function () {
+    return view('printable.prescription');
+})->name("printable.prescription");
 
 
 require __DIR__ . '/auth.php';

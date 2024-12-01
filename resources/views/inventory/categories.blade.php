@@ -127,53 +127,32 @@
                 Category Type</button>
         </div>
         <div class="card-body">
-            <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-                <div class="datatable-top">
-                    <div class="datatable-dropdown">
-                        <label>
-                            <select class="datatable-selector" name="per-page">
-                                <option value="5">5</option>
-                                <option value="10" selected="">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="25">25</option>
-                            </select> entries per page
-                        </label>
-                    </div>
-                    <div class="datatable-search">
-                        <input class="datatable-input" placeholder="Search..." type="search" name="search"
-                            title="Search within table" aria-controls="datatablesSimple">
-                    </div>
-                </div>
-                <div class="datatable-container">
-                    <table class="datatable-table">
-                        <thead>
-                            <tr>
-                                <th>Category Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($categories as $i)
-                            <tr>
-                                <td>{{ $i->category_name }}</td>
-                                <td>
-                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#viewCategoryModal{{ $i->id }}"><i
-                                            data-feather="more-vertical"></i></button>
-                                    <button class="btn btn-datatable btn-icon btn-transparent-dark"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmDeleteModal{{ $i->id }}"><i
-                                            data-feather="trash-2"></i></button>
-                                </td>
-                            </tr>
-                            @endforeach
+            <table id="inventoryCategoryTable">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($categories as $i)
+                    <tr>
+                        <td>{{ $i->category_name }}</td>
+                        <td>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewCategoryModal{{ $i->id }}"><i
+                                    data-feather="more-vertical"></i></button>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal{{ $i->id }}"><i
+                                    data-feather="trash-2"></i></button>
+                        </td>
+                    </tr>
+                    @endforeach
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

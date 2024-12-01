@@ -301,64 +301,64 @@
 {{--@foreach($petPlan as $plan)--}}
 {{--<!-- Service Plan  Edit Modal -->--}}
 {{--<div class="modal fade" id="servicePlanEditModal-{{$plan->id}}" tabindex="-1" role="dialog"--}}
-{{--    aria-labelledby="myExtraLargeModalLabel"--}}
-{{--    style="display: none;" aria-hidden="true">--}}
-{{--    <div class="modal-dialog modal-dialog-centered modal-md" role="document">--}}
-{{--        <div class="modal-content">--}}
-{{--            <form action="{{route('plan.update', [ 'recordID' => $record->id,'id' => $plan->id])}}" method="post">--}}
-{{--                @csrf--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title"><i class="fa-solid fa-kit-medical me-1"></i> {{$plan->service_name}}</h5>--}}
-{{--                    <input type="hidden" name="service_name" value="{{$plan->service_name}}">--}}
-{{--                    <input type="hidden" name="status" value=1>--}}
-{{--                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <label for="" class="text-sm fw-400">Date Return</label>--}}
-{{--                    <input type="date" name="date" value="{{$plan->date_return}}" id="" class="form-control">--}}
-{{--                    <label for="" class="mt-3 text-sm fw-400">Reason for Return</label>--}}
-{{--                    <textarea name="reason_for_return" id="" cols="30" rows="5" class="form-control">{{$plan->reason_for_return}}</textarea>--}}
-{{--                    <div class="dropdown mt-3 mb-2">--}}
-{{--                        <label for="" class="text-sm fw-400">Status</label>--}}
-{{--                        <button class="form-select d-flex justify-between" id="serviceStatusMenuButton" type="button"--}}
-{{--                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status--}}
-{{--                        </button>--}}
-{{--                        <div class="select-dropdown-menu dropdown-menu" aria-labelledby="serviceStatusMenuButton">--}}
-{{--                            <a class="select-dropdown-item dropdown-item" href="#" data-selected="true" data-value="1">Upcoming</a>--}}
-{{--                            <a class="select-dropdown-item dropdown-item" href="#" data-value="2">Completed</a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="modal-footer py-1">--}}
-{{--                    <button class="btn btn-primary">Save</button>--}}
-{{--                </div>--}}
-{{--            </form>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+{{-- aria-labelledby="myExtraLargeModalLabel"--}}
+{{-- style="display: none;" aria-hidden="true">--}}
+{{-- <div class="modal-dialog modal-dialog-centered modal-md" role="document">--}}
+{{-- <div class="modal-content">--}}
+{{-- <form action="{{route('plan.update', [ 'recordID' => $record->id,'id' => $plan->id])}}" method="post">--}}
+{{-- @csrf--}}
+{{-- <div class="modal-header">--}}
+{{-- <h5 class="modal-title"><i class="fa-solid fa-kit-medical me-1"></i> {{$plan->service_name}}</h5>--}}
+{{-- <input type="hidden" name="service_name" value="{{$plan->service_name}}">--}}
+{{-- <input type="hidden" name="status" value=1>--}}
+{{-- <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{-- </div>--}}
+{{-- <div class="modal-body">--}}
+{{-- <label for="" class="text-sm fw-400">Date Return</label>--}}
+{{-- <input type="date" name="date" value="{{$plan->date_return}}" id="" class="form-control">--}}
+{{-- <label for="" class="mt-3 text-sm fw-400">Reason for Return</label>--}}
+{{-- <textarea name="reason_for_return" id="" cols="30" rows="5" class="form-control">{{$plan->reason_for_return}}</textarea>--}}
+{{-- <div class="dropdown mt-3 mb-2">--}}
+{{-- <label for="" class="text-sm fw-400">Status</label>--}}
+{{-- <button class="form-select d-flex justify-between" id="serviceStatusMenuButton" type="button"--}}
+{{-- data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status--}}
+{{-- </button>--}}
+{{-- <div class="select-dropdown-menu dropdown-menu" aria-labelledby="serviceStatusMenuButton">--}}
+{{-- <a class="select-dropdown-item dropdown-item" href="#" data-selected="true" data-value="1">Upcoming</a>--}}
+{{-- <a class="select-dropdown-item dropdown-item" href="#" data-value="2">Completed</a>--}}
+{{-- </div>--}}
+{{-- </div>--}}
+{{-- </div>--}}
+{{-- <div class="modal-footer py-1">--}}
+{{-- <button class="btn btn-primary">Save</button>--}}
+{{-- </div>--}}
+{{-- </form>--}}
+{{-- </div>--}}
+{{-- </div>--}}
 {{--</div>--}}
 {{--<!-- Delete Confirmation Modal -->--}}
 {{--<div class="modal fade" id="serviceDeleteConfirmationModal-{{$plan->id}}" tabindex="-1" role="dialog"--}}
-{{--    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
-{{--    <div class="modal-dialog modal-dialog-centered" role="document">--}}
-{{--        <div class="modal-content">--}}
-{{--            <div class="modal-header">--}}
-{{--                <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa-solid fa-trash me-2"></i>Delete--}}
-{{--                    Service</h5>--}}
-{{--                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
-{{--            </div>--}}
-{{--            <div class="modal-body">--}}
-{{--                <p>Are you sure you want to delete the selected service <span--}}
-{{--                        class="text-primary">'{{$plan->service_name}}'</span>?</p>--}}
-{{--            </div>--}}
-{{--            <div class="modal-footer">--}}
-{{--                <button class="btn btn-primary" type="button"--}}
-{{--                    data-bs-dismiss="modal">Cancel--}}
-{{--                </button>--}}
-{{--                <a href="{{route('plan.delete',["id" => $plan->id, "recordID" =>$record->id])}}"--}}
-{{--                    class="btn btn-danger" type="button">Delete</a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+{{-- aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{-- <div class="modal-dialog modal-dialog-centered" role="document">--}}
+{{-- <div class="modal-content">--}}
+{{-- <div class="modal-header">--}}
+{{-- <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa-solid fa-trash me-2"></i>Delete--}}
+{{-- Service</h5>--}}
+{{-- <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{-- </div>--}}
+{{-- <div class="modal-body">--}}
+{{-- <p>Are you sure you want to delete the selected service <span--}}
+{{-- class="text-primary">'{{$plan->service_name}}'</span>?</p>--}}
+{{-- </div>--}}
+{{-- <div class="modal-footer">--}}
+{{-- <button class="btn btn-primary" type="button"--}}
+{{-- data-bs-dismiss="modal">Cancel--}}
+{{-- </button>--}}
+{{-- <a href="{{route('plan.delete',["id" => $plan->id, "recordID" =>$record->id])}}"--}}
+{{-- class="btn btn-danger" type="button">Delete</a>--}}
+{{-- </div>--}}
+{{-- </div>--}}
+{{-- </div>--}}
 {{--</div>--}}
 {{--@endforeach--}}
 
@@ -385,7 +385,9 @@
 <div class="container-xl px-4 mt-4">
 
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href=""><span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back</a>
+        <a class="nav-link ms-0" href="javascript:void(0);" onclick="window.history.back();">
+            <span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back
+        </a>
     </nav>
     <hr class="mt-0 mb-4">
 
@@ -558,7 +560,8 @@
                                             Palpebral Reflex: {{$examination->palpebral_reflex}}
                                             Temperature: {{$examination->temperature}}
                                         @endif
-                                    </textarea></div>
+                                    </textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -612,13 +615,13 @@
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <span>Plan</span>
-{{--                                    <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
-{{--                                        Fill Template--}}
-{{--                                    </button>--}}
+                                    {{-- <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
+                                    {{-- Fill Template--}}
+                                    {{-- </button>--}}
                                 </div>
                                 <div class="card-body"><textarea name="plan" id="planTextArea" cols="30"
-                                                                 rows="10"
-                                                                 class="form-control w-full">
+                                        rows="10"
+                                        class="form-control w-full">
 
                                     </textarea>
                                 </div>
@@ -634,8 +637,8 @@
                                 </div>
                                 <div class="card-body">
                                     @php
-                                        // Decode the JSON string
-                                        $diagnosisData = json_decode($diagnosis->diagnosis, true);
+                                    // Decode the JSON string
+                                    $diagnosisData = json_decode($diagnosis->diagnosis, true);
                                     @endphp
                                     <textarea name="diagnosis" id="diagnosisTextArea" cols="30"
                                         rows="10"
@@ -647,7 +650,8 @@
                                         @endforeach
 
                                     @endif
-                                    </textarea></div>
+                                    </textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -656,7 +660,7 @@
                                 <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
                                         rows="10"
                                         class="form-control w-full">
-                                        {{$diagnosis->treatment}}
+                                    {{$diagnosis->treatment}}
                                     </textarea></div>
                             </div>
                         </div>
@@ -666,7 +670,7 @@
                                 <div class="card-body"><textarea name="prescription" id="prescriptionTextArea"
                                         cols="30" rows="10"
                                         class="form-control w-full">
-                                        {{$diagnosis->prescription}}
+                                    {{$diagnosis->prescription}}
                                     </textarea></div>
                             </div>
                         </div>
@@ -677,7 +681,7 @@
                                         id="clientCommunicationTextArea" cols="30"
                                         rows="10"
                                         class="form-control w-full">
-                                        {{$diagnosis->client_communication}}
+                                    {{$diagnosis->client_communication}}
                                     </textarea></div>
                             </div>
                         </div>

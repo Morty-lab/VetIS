@@ -22,15 +22,15 @@
                         <input class="form-control" id="inputProductSKU" type="number" placeholder="Product SKU"
                             value="" name="product_sku">
                     </div>
-{{--                   <div class="mb-3">--}}
-{{--                        <label class="small mb-1" for="selectSupplier">Supplier</label>--}}
-{{--                        <select class="form-control" id="selectSupplier" name="supplier">--}}
-{{--                            <option disabled="" selected="">-- Select Supplier --</option>--}}
-{{--                            @foreach ($suppliers as $i)--}}
-{{--                            <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
+                    {{-- <div class="mb-3">--}}
+                    {{-- <label class="small mb-1" for="selectSupplier">Supplier</label>--}}
+                    {{-- <select class="form-control" id="selectSupplier" name="supplier">--}}
+                    {{-- <option disabled="" selected="">-- Select Supplier --</option>--}}
+                    {{-- @foreach ($suppliers as $i)--}}
+                    {{-- <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>--}}
+                    {{-- @endforeach--}}
+                    {{-- </select>--}}
+                    {{-- </div>--}}
                     <div class="col-md-6">
                         <label class="small mb-1" for="selectProductCategory">Product Category</label>
                         <select class="form-control" id="selectProductCategory" name="category">
@@ -92,32 +92,33 @@
                             <div class="row ps-2">
                                 <div class="col">
                                     <div class="label">Price</div>
-                                    <h4 class="mb-0">Php {{ $product->price }}</h4>
+                                    <h4 class="mb-0 text-primary">Php {{ $product->price }}</h4>
                                 </div>
                                 <div class="col flex flex-row">
                                     <div class="label">Total Stocks</div>
-                                    <p class="text-primary">
+                                    <p class="badge bg-primary-soft text-primary rounded-pill">
                                         @php
-                                            $productStock = 0 ;
-                                            foreach ($product->stocks as $i){
-                                                $productStock += $i->stock;
-                                            }
+                                        $productStock = 0 ;
+                                        foreach ($product->stocks as $i){
+                                        $productStock += $i->stock;
+                                        }
                                         @endphp
-
                                         {{$productStock}}
+                                        Stocks Available
                                     </p>
                                 </div>
                                 <div class="col">
                                     <div class="label">Unit</div>
-                                    <p>@foreach($units as $u)
-                                            @if($u->id == $product->unit )
-                                                {{$u->unit_name}}
-                                            @endif
-                                        @endforeach</p>
+                                    <p class="badge bg-primary-soft text-primary rounded-pill">@foreach($units as $u)
+                                        @if($u->id == $product->unit )
+                                        {{$u->unit_name}}
+                                        @endif
+                                        @endforeach
+                                    </p>
                                 </div>
                                 <div class="col flex flex-row">
                                     <div class="label">Category</div>
-                                    <p class="badge bg-primary text-white rounded-pill">
+                                    <p class="badge bg-primary-soft text-primary rounded-pill">
                                         @foreach ($categories as $i)
                                         @if ($i->id == $product->product_category)
                                         {{ $i->category_name }}
@@ -130,10 +131,10 @@
                                         <div class="dropdown">
                                             <button class="btn btn-outline-gray me-2" id="productInfoMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></button>
                                             <div class="dropdown-menu animated--fade-in" aria-labelledby="productInfoMenuButton">
-                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editProductModal">Edit Product</a>
-                                                <a class="dropdown-item" href="dropdowns.html#!">Delete Product</a>
+                                                <button class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#editProductModal">Edit Product</button>
+                                                <button class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $product->id }}">Delete Product</button>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="dropdowns.html#!">Print</a>
+                                                <a class="dropdown-item cursor-pointer" href="dropdowns.html#!">Print</a>
                                             </div>
                                         </div>
                                     </div>
@@ -154,125 +155,80 @@
                     <!-- <div class="card-header bg-white d-flex d-flex justify-content-between align-items-center py-2">
                     </div> -->
                     <div class="card-body">
-                        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-                            <div class="datatable-top">
-                                <div class="datatable-dropdown">
-                                    <label>
-                                        <select class="datatable-selector" name="per-page">
-                                            <option value="5">5</option>
-                                            <option value="10" selected="">10</option>
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
-                                        </select> entries per page
-                                    </label>
-                                </div>
-                                <div class="datatable-search">
-                                    <input class="datatable-input" placeholder="Search..." type="search" name="search"
-                                        title="Search within table" aria-controls="datatablesSimple">
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            const searchInput = document.querySelector('.datatable-input');
-                                            const tableRows = document.querySelectorAll('.datatable-table tbody tr');
+                        <table id="inventoryStocksTable">
+                            <thead>
+                                <tr>
+                                    <th>Stock ID</th>
+                                    <th>SKU</th>
+                                    <th>Product Name</th>
+                                    <th>Expiry Date</th>
+                                    <th>Supplier</th>
+                                    <th>Supplier Price</th>
+                                    <th>SRP</th>
+                                    <th>Stock</th>
+                                    <th>Encoder</th>
+                                    <th>Date Added</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($product->stocks != null)
+                                @foreach($product->stocks as $s)
 
-                                            searchInput.addEventListener('keyup', function() {
-                                                const searchTerm = this.value.toLowerCase();
-
-                                                tableRows.forEach(function(row) {
-                                                    const productNameCell = row.cells[0];
-                                                    const productName = productNameCell.textContent.toLowerCase();
-
-                                                    if (productName.includes(searchTerm)) {
-                                                        row.style.display = '';
-                                                    } else {
-                                                        row.style.display = 'none';
-                                                    }
-                                                });
-                                            });
-
-                                            // Show all rows initially
-                                            tableRows.forEach(function(row) {
-                                                row.style.display = '';
-                                            });
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                            <div class="datatable-container">
-                                <table class="datatable-table">
-                                    <thead>
-                                        <tr>
-                                            <th>SKU</th>
-                                            <th>Product Name</th>
-                                            <th>Expiry Date</th>
-                                            <th>Supplier</th>
-                                            <th>Supplier Price</th>
-                                            <th>SRP</th>
-                                            <th>Stock</th>
-                                            <th>Encoder</th>
-                                            <th>Date Added</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if($product->stocks != null)
-                                        @foreach($product->stocks as $s)
-
-                                            <tr>
-                                                <td>{{ sprintf("Stock-%05d", $s->id)}}</td>
-                                                <td>{{ $product->product_name }}</td>
-                                                <td>
-                                                    {{$s->expiry_date}}
-                                                </td>
-                                                <td>
-                                                    @foreach($suppliers as $supplier)
-                                                        @if($s->supplier_id == $supplier->id)
-                                                            {{$supplier->supplier_name}}
-                                                        @endif
-
-                                                    @endforeach
-
-                                                </td>
-
-                                                <td>
-                                                    Php {{$product->price}}
-                                                </td>
-                                                <td>
-                                                    Php {{$s->price}}
-                                                </td>
-                                                <td>
-                                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                                    {{$s->stock}}
-                                                    @foreach($units as $u)
-                                                        @if($u->id == $s->unit )
-                                                            {{$u->unit_name}}
-                                                        @endif
-                                                    @endforeach
-                                                </span>
-                                                </td>
-                                                <td>
-                                                    @foreach($users as $u)
-                                                        @if($s->user_id == $u->id)
-                                                            {{$u->name}}
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                                <td>
-                                                    {{ $s->created_at->format('F d Y')}}
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-datatable btn-outline-primary me-2"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                                                </td>
-                                            </tr>
+                                <tr>
+                                    <td>STK-00000</td>
+                                    <td>{{ sprintf("Stock-%05d", $s->id)}}</td>
+                                    <td>{{ $product->product_name }}</td>
+                                    <td>
+                                        {{$s->expiry_date}}
+                                    </td>
+                                    <td>
+                                        @foreach($suppliers as $supplier)
+                                        @if($s->supplier_id == $supplier->id)
+                                        {{$supplier->supplier_name}}
+                                        @endif
 
                                         @endforeach
-                                    @endif
 
+                                    </td>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                    <td>
+                                        Php {{$product->price}}
+                                    </td>
+                                    <td>
+                                        Php {{$s->price}}
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                            {{$s->stock}}
+                                            @foreach($units as $u)
+                                            @if($u->id == $s->unit )
+                                            {{$u->unit_name}}
+                                            @endif
+                                            @endforeach
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @foreach($users as $u)
+                                        @if($s->user_id == $u->id)
+                                        {{$u->name}}
+                                        @endif
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        {{ $s->created_at->format('F d Y')}}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <button class="btn btn-datatable btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editStockModal"><i class="fa-regular fa-pen-to-square"></i></button>
+                                            <button class="btn btn-datatable btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -347,6 +303,209 @@
                     </div>
                 </div> -->
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- View Stock Modal -->
+<div class="modal fade" id="viewStockInfoModal" tabindex="-1" role="dialog" aria-labelledby="viewStockInfo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">View Stock Info</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="">Stock</label>
+                        <p>Stock-00001</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Product Name</label>
+                        <p>Turtle Tank Filter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Stocks Modal -->
+<div class="modal fade" id="addStocksModal{{ $product->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <form action="{{ route('products.addStocks', $product->id) }}" method="POST">
+            @csrf
+            <input type="hidden" name="encoder" value="{{auth()->user()->id}}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Add Stocks</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-6">
+                            <div class="label">Product Name</div>
+                            <p>{{$product->product_name}}</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Product Category</div>
+                            <p>
+                                @foreach($categories as $u)
+                                @if($u->id == $product->product_category )
+                                {{$u->category_name}}
+                                @endif
+                                @endforeach
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">SKU</div>
+                            <p>{{ sprintf("VetIS-%05d", $product->id)}}</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Product Unit</div>
+                            <p>
+                                @foreach($units as $u)
+                                @if($u->id == $product->unit )
+                                {{$u->unit_name}}
+                                @endif
+                                @endforeach
+                            </p>
+                            <input type="hidden" value="{{$product->unit}}" name="unit">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Expiry Date</div>
+                            <input type="date" name="expiry" id="" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">SRP</div>
+                            <input type="number" name="" value="{{$product->price}}" id="" class="form-control" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="selectSupplier">Supplier</label>
+                            <select class="form-control" id="selectSupplier" name="supplier">
+                                <option disabled="" selected="">-- Select Supplier --</option>
+                                @foreach ($suppliers as $i)
+                                <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Supplier Price</div>
+                            <input type="number" name="stockPrice" id="" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Stock Amount</div>
+                            <input type="number" name="stock" id="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Add Stock</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Edit Stock Stock -->
+<div class="modal fade" id="editStockModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <form action="{{ route('products.addStocks', $product->id) }}" method="POST">
+            @csrf
+            <input type="hidden" name="encoder" value="{{auth()->user()->id}}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Stocks</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-6">
+                            <div class="label">Product Name</div>
+                            <p>{{$product->product_name}}</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Product Category</div>
+                            <p>
+                                @foreach($categories as $u)
+                                @if($u->id == $product->product_category )
+                                {{$u->category_name}}
+                                @endif
+                                @endforeach
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">SKU</div>
+                            <p>{{ sprintf("VetIS-%05d", $product->id)}}</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Product Unit</div>
+                            <p>
+                                @foreach($units as $u)
+                                @if($u->id == $product->unit )
+                                {{$u->unit_name}}
+                                @endif
+                                @endforeach
+                            </p>
+                            <input type="hidden" value="{{$product->unit}}" name="unit">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Expiry Date</div>
+                            <input type="date" name="expiry" id="" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">SRP</div>
+                            <input type="number" name="" value="{{$product->price}}" id="" class="form-control" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="selectSupplier">Supplier</label>
+                            <select class="form-control" id="selectSupplier" name="supplier">
+                                <option disabled="" selected="">-- Select Supplier --</option>
+                                @foreach ($suppliers as $i)
+                                <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Supplier Price</div>
+                            <input type="number" name="stockPrice" id="" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Stock Amount</div>
+                            <input type="number" name="stock" id="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Edit Stock</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Stock Modal -->
+<div class="modal fade" id="deleteStockModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Delete Stock</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the stock of <span class="text-primary">{{ $product->product_name }}</span>?</p>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button><a href="" class="btn btn-danger" type="button">Delete Stock</a></div>
         </div>
     </div>
 </div>
@@ -428,88 +587,7 @@
                         data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Save
                         changes</button></div>
             </form>
-
         </div>
-    </div>
-</div>
-
-<!-- Add Stocks Modal -->
-<div class="modal fade" id="addStocksModal{{ $product->id }}" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <form action="{{ route('products.addStocks', $product->id) }}" method="POST">
-            @csrf
-            <input type="hidden" name="encoder" value="{{auth()->user()->id}}">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Add Stocks</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row gx-3 gy-2">
-                    <div class="col-6">
-                        <div class="label">Product Name</div>
-                        <p>{{$product->product_name}}</p>
-                    </div>
-                    <div class="col-6">
-                        <div class="label">Product Category</div>
-                        <p>
-                            @foreach($categories as $u)
-                                @if($u->id == $product->product_category )
-                                    {{$u->category_name}}
-                                @endif
-                            @endforeach
-                        </p>
-                    </div>
-                    <div class="col-6">
-                        <div class="label">SKU</div>
-                        <p>{{ sprintf("VetIS-%05d", $product->id)}}</p>
-                    </div>
-                    <div class="col-6">
-                        <div class="label">Product Unit</div>
-                        <p>
-                            @foreach($units as $u)
-                                @if($u->id == $product->unit )
-                                    {{$u->unit_name}}
-                                @endif
-                            @endforeach
-                        </p>
-                        <input type="hidden" value="{{$product->unit}}" name="unit">
-                    </div>
-                    <div class="col-6">
-                        <div class="label">Expiry Date</div>
-                        <input type="date" name="expiry" id="" class="form-control">
-                    </div>
-                    <div class="col-6">
-                        <div class="label">SRP</div>
-                        <input type="number" name="" value="{{$product->price}}" id="" class="form-control" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="small mb-1" for="selectSupplier">Supplier</label>
-                        <select class="form-control" id="selectSupplier" name="supplier">
-                            <option disabled="" selected="">-- Select Supplier --</option>
-                            @foreach ($suppliers as $i)
-                            <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-6">
-                        <div class="label">Supplier Price</div>
-                        <input type="number" name="stockPrice" id="" class="form-control">
-                    </div>
-                    <div class="col-6">
-                        <div class="label">Stock Amount</div>
-                        <input type="number" name="stock" id="" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="submit">Add Stock</button>
-            </div>
-
-        </div>
-        </form>
     </div>
 </div>
 

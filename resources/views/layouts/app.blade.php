@@ -30,7 +30,7 @@
     </div>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav" class="">
-            @include('navs.sidenav')
+            @include('layouts.sidenav')
         </div>
         <div id="layoutSidenav_content" class="">
             <main>

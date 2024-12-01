@@ -131,6 +131,10 @@
                             <input type="text" class="form-control" name="phone_number" id="editPhone" placeholder="Enter phone number" value="{{ $doctor->phone_number }}">
                         </div>
                         <div class="col-md-12">
+                            <label class="small mb-1" for="editLicenseNumber">License No.</label>
+                            <input type="text" class="form-control" name="email" id="editLicenseNumber" placeholder="Enter license number" value="">
+                        </div>
+                        <div class="col-md-12">
                             <label class="small mb-1" for="editPhone">Username</label>
                             <input type="text" class="form-control" name="username" id="editPhone" placeholder="Enter username" value="">
                         </div>
@@ -252,7 +256,7 @@
     </div>
 </header>
 @php
-    Doctor::setEmailAttribute($doctor,$doctor->user_id);
+Doctor::setEmailAttribute($doctor,$doctor->user_id);
 @endphp
 
 <!-- Main page content-->
@@ -287,10 +291,16 @@
                                     <label class="small mb-1">Veterinarian Name</label>
                                     <p>{{ $doctor->firstname }} {{ $doctor->lastname }}</p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label class="small mb-1">Veterinarian ID</label>
                                     <div>
                                         <p class="badge bg-primary-soft text-primary rounded-pill">VETID-{{ str_pad($doctor->user_id, 5, '0', STR_PAD_LEFT) }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="small mb-1">License Number</label>
+                                    <div>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">123456</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -375,33 +385,33 @@
                             $schedules = Doctor::getSchedules($doctor->id)
                             @endphp
                             @foreach($schedules as $schedule)
-                                <tr>
-                                    <td>
-                                        {{ \Carbon\Carbon::parse($schedule->appointment_date)->format('j F, Y') }} |
-                                        {{ \Carbon\Carbon::parse($schedule->appointment_time)->format('H:i') }}
-                                    </td>
-                                    <td>{{ sprintf("VetIS-%05d", $schedule->id)}}</td>
+                            <tr>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($schedule->appointment_date)->format('j F, Y') }} |
+                                    {{ \Carbon\Carbon::parse($schedule->appointment_time)->format('H:i') }}
+                                </td>
+                                <td>{{ sprintf("VetIS-%05d", $schedule->id)}}</td>
 
-                                    <td>
-                                        {{ $clients->firstWhere('id', $schedule->owner_ID)->client_name ?? 'N/A' }}
-                                    </td>
+                                <td>
+                                    {{ $clients->firstWhere('id', $schedule->owner_ID)->client_name ?? 'N/A' }}
+                                </td>
 
-                                    <td>
-                                        {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_name ?? 'N/A' }}
-                                    </td>
-                                    <td>
-                                        {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_type ?? 'N/A' }}
-                                    </td>
-                                    <td>
-                                        {{$schedule->purpose}}
-                                    </td>
-                                    <td>
-                                        <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$schedule->id])}}">Open</a>
-                                    </td>
-                                </tr>
+                                <td>
+                                    {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_name ?? 'N/A' }}
+                                </td>
+                                <td>
+                                    {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_type ?? 'N/A' }}
+                                </td>
+                                <td>
+                                    {{$schedule->purpose}}
+                                </td>
+                                <td>
+                                    <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$schedule->id])}}">Open</a>
+                                </td>
+                            </tr>
                             @endforeach
 
                         </tbody>

@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editBirthday">Birthday</label>
-                            <input type="date" class="form-control" name="client_birthday" id="editBirthday" value="{{$owner->client_birthday}}">
+                            <input type="date" class="form-control" name="client_birthday" id="editBirthday" value="{{$owner->client_birthday}}" max="{{ \Carbon\Carbon::now()->toDateString() }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
