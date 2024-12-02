@@ -9,7 +9,7 @@
 <div class="modal fade" id="editAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
     style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="" method="">
+        <form action="{{route('appointments.update',['appid'=>$appointment->id])}}" method="POST">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,17 +21,19 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" />
+                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" value="{{$appointment->appointment_date}}"/>
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" />
+                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" value="{{$appointment->appointment_time}}"/>
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
                             <select class="form-control" id="vetSelect" name="doctor_ID">
-                                <option class="form-control"
-                                    value='1'>Jane Doe</option>
+                                @foreach ($vets as $vet)
+                                    <option class="form-control"
+                                            value={{ $vet->id }} {{$appointment->doctor_ID === $vet->id ?? 'selected' }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -39,9 +41,9 @@
                             <hr class="mt-1 mb-2"> -->
                             <label class="small mb-1" for="inputPetName">Pet Owner</label>
                             <select class="form-control" id="inputOwnerName" type="select" placeholder="Name"
-                                onchange="handleClientSelect()" value="" name="owner_ID">
+                                onchange="handleClientSelect()" value="" name="owner_ID" disabled>
                                 <option value="">Select Owner</option>
-                                <option value="1">John Doe</option>
+                                <option value="1" selected>{{Clients::where('id',$appointment->owner_ID)->first()->client_name}}</option>
 
                             </select>
                             <!-- <div class="mb-3">
@@ -67,8 +69,8 @@
                             <hr class="mt-1 mb-2"> -->
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
                             <select class="form-control" id="inputPetName" type="select" placeholder="Name"
-                                value="" name="pet_ID" onchange="handlePetSelect()">
-                                <option value="">Select Pet</option>
+                                value="" name="pet_ID" onchange="handlePetSelect()" disabled>
+                                <option value="" selected>{{\App\Models\Pets::where('id',$appointment->pet_ID)->first()->pet_name}}</option>
 
                                 <option value="" class="pets"
                                     style="display:none">Pet info</option>
@@ -99,7 +101,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputPurpose">Purpose</label>
-                            <textarea class="form-control" name="inputPurpose" id="inputPurpose" cols="20" rows="10"></textarea>
+                            <textarea class="form-control" name="inputPurpose" id="inputPurpose" cols="20" rows="10">{{$appointment->purpose}}</textarea>
                         </div>
                     </div>
                 </div>
@@ -188,13 +190,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                                    <p>{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')}}</p>
+                                    <p>{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A')}}</p>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="small mb-1" for="appointmentPurpose">Purpose</label>
-                                    <p>This is the Appointment Purpose</p>
+                                    <p>{{$appointment->purpose}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
+                                    @php
+                                        $vet = \App\Models\Doctor::where('id',$appointment->doctor_ID)->first()
+                                    @endphp
+                                    <p>{{$vet->firstname. " " . $vet->lastname}}</p>
                                 </div>
                             </div>
+
                         </div>
                         <div class="col-md-12 mt-2">
                             <h6 class="mb-2 text-primary">Owner Information</h6>

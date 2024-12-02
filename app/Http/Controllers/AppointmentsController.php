@@ -30,8 +30,9 @@ class AppointmentsController extends Controller
     public function view($id){
 
         $appointment = Appointments::with(['client', 'pet'])->find($id);
+        $vets = Doctor::getAllDoctors();
 
-        return view('appointments.view', ["appointment" => $appointment]);
+        return view('appointments.view', ["appointment" => $appointment, "vets" => $vets]);
     }
 
     public function appointmentSchedule($id){
@@ -233,9 +234,70 @@ class AppointmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Appointments $appointments)
+    public function update(Request $request)
     {
-        //
+        $appid = request('appid');
+        // Validate the form fields
+        $validatedData = $request->validate([
+            'appointment_date' => 'required|date|after_or_equal:today', // Appointment date must be valid and not in the past
+            'appointment_time' => 'required|date_format:H:i',           // Valid time format
+            'doctor_ID'        => 'required|exists:users,id',           // Ensure the doctor exists
+            'inputPurpose'     => 'required|string|max:500',           // Purpose cannot be empty
+        ]);
+
+        // Find the appointment by ID
+        $appointment = Appointments::findOrFail($appid);
+
+        // Update the appointment details
+        $appointment->appointment_date = $validatedData['appointment_date'];
+        $appointment->appointment_time = $validatedData['appointment_time'];
+        $appointment->doctor_ID = $validatedData['doctor_ID'];
+        $appointment->purpose = $validatedData['inputPurpose'];
+
+        // Save the changes
+        $appointment->save();
+
+        // Retrieve the veterinarian
+        $client = Clients::find($appointment->owner_ID);
+        Clients::setEmailAttribute($client, $client->user_id);
+        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
+
+        $newDate = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
+        $newTime = Carbon::parse($request->input('appointment_time'))->format('g:i A'); // E.g., 3:00 PM
+
+
+        $veterinarianData = [
+            'subject' => 'Appointment Rescheduled',
+            'content' => "Dear Dr. $veterinarian->firstname $veterinarian->lastname,\n\n" .
+                "We would like to inform you that the following appointment has been rescheduled:\n\n" .
+                "Updated details of the appointment:\n" .
+                "- **Client Name**: $client->client_name\n" .
+                "- **New Date**: $newDate\n" .
+                "- **New Time**: $newTime\n\n" .
+                "If you have any questions or require further assistance, please contact the clinic staff.\n\n" .
+                "Thank you for your understanding.",
+            'status' => 'Rescheduled'
+        ];
+
+        $clientData = [
+            'subject' => 'Appointment Rescheduled',
+            'content' => "Dear $client->client_name,\n\n" .
+                "We would like to inform you that your appointment request has been **rescheduled**. " .
+                "Below are the updated details:\n\n" .
+                "- **New Date**: $newDate\n" .
+                "- **New Time**: $newTime\n\n" .
+                "If you have any questions or need to make further changes, please contact us.\n\n" .
+                "Thank you for your understanding.",
+            'status' => 'Rescheduled'
+        ];
+
+        Mail::to($veterinarian->doctor_email)->send(new AppointmentSet($veterinarianData));
+
+        Mail::to($client->client_email)->send(new AppointmentSet($clientData));
+
+        // Redirect back with a success message
+        return redirect()->route('appointments.view', ['id' => $appid])->with('success', 'Appointment updated successfully!');
     }
 
     /**

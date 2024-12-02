@@ -30,7 +30,7 @@
         <tbody>
           @foreach ($doctors as $doctor)
           @php
-          \App\Models\Doctor::setEmailAttribute($doctor,$doctor->id);
+          \App\Models\Doctor::setEmailAttribute($doctor,$doctor->user_id);
           @endphp
           <tr>
             <td>{{ $doctor->firstname ." " . $doctor->lastname }}</td>

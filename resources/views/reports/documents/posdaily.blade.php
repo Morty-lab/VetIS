@@ -97,7 +97,7 @@
             </tbody>
         </table>
         <div class="row">
-            <div class="col-md-9 text-end">
+            <div class="col-md-9 text-end">git pu
                 <h3 class="mb-0">Total Sales</h3>
                 <h3 class="text-primary">₱{{number_format($totalsales, 2) }}</h3>
             </div>

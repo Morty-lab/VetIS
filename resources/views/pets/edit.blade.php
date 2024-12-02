@@ -65,7 +65,7 @@
             <div class="card shadow-none mb-4">
                 <div class="card-header">Pet Profile</div>
                 <div class="card-body">
-                    <form action="{{ route('pets.update', $pet->id) }}" method="POST">
+                    <form action="{{ route('pets.update', ['petID' => $pet->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -132,71 +132,71 @@
                         <div class="row gx-3 gy-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
-                                <select class="form-control" id="inputSelectVaccinationRecord">
+                                <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
                                     <option disabled selected>-- Select Record --</option>
-                                    <option>No Vaccination Record</option>
-                                    <option>Complete</option>
-                                    <option>Incomplete</option>
+                                    <option value=null>No Vaccination Record</option>
+                                    <option value=1>Complete</option>
+                                    <option value=0>Incomplete</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
-                                <select class="form-control" id="inputSelectSpayedNeutered">
+                                <select class="form-control" id="inputSelectSpayedNeutered" name="pet_neutered">
                                     <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value=1>Yes</option>
+                                    <option value=2>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
-                                <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord">
+                                <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
                                     <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value=1>Yes</option>
+                                    <option value=2>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
-                                <input type="month" id="inputAntiRabiesDate" class="form-control">
+                                <input type="month" id="inputAntiRabiesDate" name="anti_rabies_vaccination_date" class="form-control">
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
-                                <textarea name="historyOfAggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here.."></textarea>
+                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here.."></textarea>
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputFoodAllergies">Any Food Allergies?</label>
-                                <textarea name="foodAllergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here.."></textarea>
+                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here.."></textarea>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetFood">Food?</label>
-                                <input type="text" name="petFood" id="inputPetFood" class="form-control" placeholder="Enter pet's food here..">
+                                <input type="text" name="pet_food" id="inputPetFood" class="form-control" placeholder="Enter pet's food here..">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
-                                <select class="form-control" id="inputTreats">
+                                <select class="form-control" id="inputTreats" name="okay_to_give_treats">
                                     <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value=1>Yes</option>
+                                    <option value=2>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastGroom">When was his/her last groom?</label>
-                                <input type="month" id="inputLastGroom" class="form-control">
+                                <input type="month" name="last_groom_date" id="inputLastGroom" class="form-control">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPhotosOnline">Okay to use photos online?</label>
-                                <select class="form-control" id="inputPhotosOnline">
+                                <select class="form-control" id="inputPhotosOnline" name="okay_to_use_photos_online">
                                     <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value=1>Yes</option>
+                                    <option value=2>No</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputCondition">Prone to any seizure, illness, ect.? If so please list:</label>
-                                <textarea name="petCondition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here..."></textarea>
+                                <textarea name="pet_condition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here..."></textarea>
                             </div>
                         </div>
-                        <!--                         
+                        <!--
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
                                 <div class="form-check form-check-inline">

@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
     Route::get('/profilepet/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
-    Route::put('/editpet/{pets}', [PetsController::class, 'update'])->name('pets.update');
+    Route::put('/editpet/{petID}', [PetsController::class, 'update'])->name('pets.update');
     Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store');
     Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
@@ -216,6 +216,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
     Route::get('/viewappointments/{id}/cancell', [AppointmentsController::class, 'appointmentCancel'])->name('appointments.cancel');
     Route::get('/viewappointments/{id}/schedule', [AppointmentsController::class, 'appointmentSchedule'])->name('appointments.schedule');
+
+    Route::post('/viewappointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
 
 
     Route::get('/manageschedules', function () {

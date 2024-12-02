@@ -76,7 +76,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                ody>
+
                 @foreach($monthlyReports as $monthYear => $report)
                     <tr>
                         <td>{{ $monthYear }}</td>

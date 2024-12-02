@@ -125,33 +125,18 @@ class PetsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pets $pets)
+    public function update(Request $request, $petID)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'pet_name' => 'required|string|max:255',
-            'pet_type' => 'required|string|max:255',
-            'pet_breed' => 'required|string|max:255',
-            'pet_gender' => 'required|string|max:255',
-            'pet_birthdate' => 'required|date',
-            'pet_color' => 'required|string|max:255',
-            'pet_weight' => 'required|numeric',
-            'pet_vaccinated' => 'nullable|boolean',
-            'pet_neutered' => 'nullable|boolean',
-            'pet_description' => 'nullable|string',
-            'vaccinated_anti_rabies' => 'nullable|boolean',
-            'anti_rabies_vaccination_date' => 'nullable|date',
-            'history_of_aggression' => 'nullable|string',
-            'food_allergies' => 'nullable|string',
-            'pet_food' => 'nullable|string',
-            'okay_to_give_treats' => 'nullable|boolean',
-            'last_groom_date' => 'nullable|date',
-            'okay_to_use_photos_online' => 'nullable|boolean',
-            'pet_condition' => 'nullable|string',
-        ]);
+        // Retrieve the pet by ID
+        $pet = Pets::find($petID);
+
+        // Check if the pet exists
+        if (!$pet) {
+            return redirect()->route('pets.show', $pet->id)->with('error', 'Pet not found.');
+        }
 
         // Update the pet's information
-        $pets->update([
+        $pet->update([
             'pet_name' => $request->input('pet_name'),
             'pet_type' => $request->input('pet_type'),
             'pet_breed' => $request->input('pet_breed'),
@@ -174,9 +159,10 @@ class PetsController extends Controller
         ]);
 
         // Redirect the user with a success message
-        return redirect()->route('pets.show', $pets->id)
-            ->with('success', 'Pet information updated successfully');
+        return redirect()->route('pets.show', $pet->id)
+            ->with('success', 'Pet information updated successfully.');
     }
+
 
     public function uploadPhoto(Request $request, $id)
     {
