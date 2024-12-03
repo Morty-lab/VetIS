@@ -23,13 +23,14 @@ class ProductsController extends Controller
         $units = Unit::getAllUnits();
         $categories = Category::getAllCategories();
         $users = User::all();
-
+        $stocks = Stocks::all();
         return view('inventory.products', [
             "products" => $products,
             "suppliers" => $suppliers,
             "units" => $units,
             'categories' => $categories,
             'users' => $users,
+            'stocks' => $stocks
         ]);
     }
 

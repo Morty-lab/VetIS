@@ -172,136 +172,56 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($product->stocks != null)
-                                @foreach($product->stocks as $s)
 
-                                <tr>
-                                    <td>STK-00000</td>
-                                    <td>{{ sprintf("Stock-%05d", $s->id)}}</td>
-                                    <td>{{ $product->product_name }}</td>
-                                    <td>
-                                        {{$s->expiry_date}}
-                                    </td>
-                                    <td>
-                                        @foreach($suppliers as $supplier)
-                                        @if($s->supplier_id == $supplier->id)
-                                        {{$supplier->supplier_name}}
-                                        @endif
 
-                                        @endforeach
+                                    @php
+                                        $stockforproduct = \App\Models\Stocks::getAllStocksByProductId($product->id);
+//                                        dd($stock)
+                                    @endphp
+                                    @foreach($stockforproduct as $stockP)
+                                            <tr>
+                                                <td>{{ sprintf("Stock-%05d", $stockP->id)}}</td>
+                                                <td>{{ sprintf("Stock-%05d", $stockP->id)}}</td>
+                                                <td>{{ $product->product_name }}</td>
+                                                <td>
+                                                    {{$stockP->expiry_date ?? 'No Expiry'}}
+                                                </td>
+                                                <td>
+                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
+                                                </td>
 
-                                    </td>
-
-                                    <td>
-                                        Php {{$product->price}}
-                                    </td>
-                                    <td>
-                                        Php {{$s->price}}
-                                    </td>
-                                    <td>
+                                                <td>
+                                                    Php {{$product->price}}
+                                                </td>
+                                                <td>
+                                                    Php {{$stockP->price}}
+                                                </td>
+                                                <td>
                                         <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                            {{$s->stock}}
-                                            @foreach($units as $u)
-                                            @if($u->id == $s->unit )
-                                            {{$u->unit_name}}
-                                            @endif
-                                            @endforeach
+                                            {{$stockP->stock}} {{\App\Models\Unit::where('id', $stockP->unit)->first()->unit_name}}
                                         </span>
-                                    </td>
-                                    <td>
-                                        @foreach($users as $u)
-                                        @if($s->user_id == $u->id)
-                                        {{$u->name}}
-                                        @endif
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        {{ $s->created_at->format('F d Y')}}
-                                    </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <button class="btn btn-datatable btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editStockModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="btn btn-datatable btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i class="fa-solid fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @endif
+                                                </td>
+                                                <td>
+                                                    {{\App\Models\User::where('id',$stockP->user_id)->first()->name}}
+                                                </td>
+                                                <td>
+                                                    {{ $stockP->created_at->format('F d Y')}}
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <button class="btn btn-datatable btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editStockModal"><i class="fa-regular fa-pen-to-square"></i></button>
+                                                        <button class="btn btn-datatable btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i class="fa-solid fa-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                    @endforeach
+
+
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <!-- <form>
-                    <div class="mb-3 px-1">
-                        <label class="small mb-1" for="inputProductName">Product Name</label>
-                        <p>{{ $product->product_name }}</p>
-                    </div>
-                    <div class="px-1">
-                        <label class="small mb-1" for="selectProductCategory">Product Category</label>
-                        @foreach ($categories as $i)
-                        @if ($i->id == $product->product_category)
-                        <p>{{ $i->category_name }}</p>
-                        @endif
-                        @endforeach
-                    </div>
-                    <div class="px-1">
-                        <label class="small mb-1" for="productSupplier">Supplier</label>
-                        @foreach ($suppliers as $i)
-                        @if ($i->id == $product->supplier_id)
-                        <p>{{ $i->supplier_name }}</p>
-                        @endif
-                        @endforeach
-                    </div>
-                    <hr>
-                    <div class="row gx-3 mb-3 px-1">
-                        <div class="col-md-3">
-                            <label class="small mb-1" for="selectUnitType">Unit Type</label>
-                            @foreach ($units as $i)
-                            @if ($i->id == $product->unit)
-                            <p>{{ $i->unit_name }}</p>
-                            @endif
-                            @endforeach
-                        </div>
-                        <div class="col-md-3">
-                            <label class="small mb-1" for="productPrice">Product Price</label>
-                            <p>PHP {{ $product->price }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="small mb-1" for="productStock">Product Stock</label>
-                            @if ($product->stocks->isNotEmpty())
-                            <p>{{ $product->stocks->first()->stock }}</p>
-                            @else
-                            <p class="text-danger">Out of Stock</p>
-                            @endif
-                        </div>
-                        <div class="col-md-3">
-                            <label class="small mb-1" for="productStock">Status</label>
-                            @if ($product->status == 1)
-                            <div class="badge bg-primary text-white rounded-pill">Available</div>
-                            @else
-                            <div class="badge bg-danger text-white rounded-pill">Not Available</div>
-                            @endif
-
-                        </div>
-                    </div>
-                    <hr>
-                </form>
-                <div class="row gx-3 mb-3 py-1">
-                    <p for="" class="small mb-2">Actions</p>
-                    <div class="col-md-4">
-                        <button class="btn btn-primary w-100 mb-1" data-bs-toggle="modal"
-                            data-bs-target="#addStocksModal{{ $product->id }}">Add Stocks</button>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-secondary w-100 mb-1" data-bs-toggle="modal"
-                            data-bs-target="#editProductModal">Edit Product</button>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-danger w-100" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal{{ $product->id }}">Delete Product</button>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -378,7 +298,7 @@
                         </div>
                         <div class="col-6">
                             <div class="label">Expiry Date</div>
-                            <input type="date" name="expiry" id="" class="form-control">
+                            <input type="date" name="expiry_date" id="" class="form-control">
                         </div>
                         <div class="col-6">
                             <div class="label">SRP</div>
@@ -459,7 +379,7 @@
                         </div>
                         <div class="col-6">
                             <div class="label">Expiry Date</div>
-                            <input type="date" name="expiry" id="" class="form-control">
+                            <input type="date" name="expiry_date" id="" class="form-control">
                         </div>
                         <div class="col-6">
                             <div class="label">SRP</div>
@@ -470,7 +390,7 @@
                             <select class="form-control" id="selectSupplier" name="supplier">
                                 <option disabled="" selected="">-- Select Supplier --</option>
                                 @foreach ($suppliers as $i)
-                                <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
+                                <option value="{{ $i->id }}" >{{ $i->supplier_name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -64,30 +64,37 @@
                         </td>
                         <td>
                             @php
-                            if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){
-                            $allStocks = $product->stocks;
-                            $stock = 0;
-                            $expiredStocks = 0;
-                            foreach ($allStocks as $i){
-                            if( $i->expiry_date == null ){
-                            $stock += $i->stock;
+//                            if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){
+//                            $allStocks = $product->stocks;
+//                            $stock = 0;
+//                            $expiredStocks = 0;
+//                            foreach ($allStocks as $i){
+//                            if( $i->expiry_date == null ){
+//                            $stock += $i->stock;
+//                            }
+//                            if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){
+//                            $stock += $i->stock;
+//                            }
+//                            if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){
+//                                $expiredStocks +=$i->stock;
+//                                }
+//                                }
+//                                echo $stock." stocks Available ";
+//                                if( $expiredStocks != 0){
+//                                echo $expiredStocks." stock Expired";
+//                                }
+//                                }
+//                                else{
+//                                echo "No stocks available";
+//                                }
+                            $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id);
+                            $stockNumber = 0;
+                            foreach($stocks as $s){
+                                $stockNumber += $s->stock;
                             }
-                            if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){
-                            $stock += $i->stock;
-                            }
-                            if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){
-                                $expiredStocks +=$i->stock;
-                                }
-                                }
-                                echo $stock." stocks Available ";
-                                if( $expiredStocks != 0){
-                                echo $expiredStocks." stock Expired";
-                                }
-                                }
-                                else{
-                                echo "No stocks available";
-                                }
-                                @endphp
+
+                            @endphp
+                            {{$stockNumber ?? 'No'}} Stocks Available
                         </td>
                         <td>
                             <button class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#viewProductModal{{ $product->id }}">Open</button>
