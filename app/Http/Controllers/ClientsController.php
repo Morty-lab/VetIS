@@ -55,7 +55,7 @@ class ClientsController extends Controller
         $user = User::create([
             'name' => $request->username,
             'email' => $request->email,
-            'role' => "user",
+            'role' => "client",
             'password' => Hash::make($request->password),
         ]);
 
