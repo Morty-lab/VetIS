@@ -56,7 +56,7 @@ class PetsController extends Controller
                 'pet_gender' => 'required',
                 'pet_birthdate' => 'required|date',
                 'pet_color' => 'required',
-                'pet_weight' => 'required',
+                'pet_weight' => 'required|numeric',
                 'pet_vaccinated' => 'nullable|boolean',
                 'pet_neutered' => 'nullable|boolean',
                 'pet_description' => 'nullable|string',

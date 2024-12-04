@@ -133,31 +133,28 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
                                 <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
-                                    <option disabled selected>-- Select Record --</option>
-                                    <option value=null>No Vaccination Record</option>
-                                    <option value=1>Complete</option>
-                                    <option value=0>Incomplete</option>
+                                    <option value=null {{$pet->vaccinated == null ? 'selected' : ''}}>No Vaccination Record</option>
+                                    <option value=1 {{$pet->vaccinated == 1 ? 'selected' : ''}}>Complete</option>
+                                    <option value=0 {{$pet->vaccinated == 0 ? 'selected' : ''}}>Incomplete</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
                                 <select class="form-control" id="inputSelectSpayedNeutered" name="pet_neutered">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=2>No</option>
+                                    <option value=1 {{$pet->neutered == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value=0 {{$pet->neutered == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
                                 <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=2>No</option>
+                                    <option value=1 {{$pet->vaccinated_anti_rabies == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value=0 {{$pet->vaccinated_anti_rabies == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
-                                <input type="month" id="inputAntiRabiesDate" name="anti_rabies_vaccination_date" class="form-control">
+                                <input type="month" id="inputAntiRabiesDate" name="anti_rabies_vaccination_date" class="form-control" value="{{$pet->anti_rabies_vaccination_date}}">
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
