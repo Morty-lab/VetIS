@@ -274,6 +274,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
     Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
     Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
+    Route::get('/um/admin/update', function () {
+        return view('user_management.admins.update');
+    })->name("admins.update");
 
     // Pet Owner
     Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");
@@ -295,6 +298,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/um/staff/add', [StaffController::class, "store"])->name("staffs.add");
     Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
     Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
+    Route::get('/um/staff/update', function () {
+        return view('user_management.staffs.update');
+    })->name("staffs.update");
 
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');
@@ -358,16 +364,16 @@ Route::middleware('auth')->group(function () {
     })->name("portal.prescription.print");
 });
 
-Route::get('/reports', [ReportController::class ,'index'])->name("reports.index");
+Route::get('/reports', [ReportController::class, 'index'])->name("reports.index");
 
-Route::get('/reports/pos/',[ReportController::class , 'pos'])->name("reports.pos");
+Route::get('/reports/pos/', [ReportController::class, 'pos'])->name("reports.pos");
 
 Route::get('/reports/pos/daily-sales/print', function () {
     $sales = TransactionDetailsModel::all();
     $products = Products::all();
     $supplier = Suppliers::all();
 
-    return view('reports.documents.posdaily',['sales' => $sales, 'products' => $products,'supplier' => $supplier]);
+    return view('reports.documents.posdaily', ['sales' => $sales, 'products' => $products, 'supplier' => $supplier]);
 })->name("reports.pos.daily.reports");
 Route::get('/reports/pos/monthly-sales/print', function () {
     return view('reports.documents.posMonthly');

@@ -48,7 +48,7 @@
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#">Edit Account</a></li>
+                            <li><a class="dropdown-item" href="{{route('staffs.update')}}">Edit Account</a></li>
                             <!-- You can add more items here -->
                         </ul>
                     </div>
