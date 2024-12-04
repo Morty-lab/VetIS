@@ -24,6 +24,15 @@ class Pets extends Model
         'pet_description',
         'pet_picture',
         'status',
+        'vaccinated_anti_rabies',
+        'anti_rabies_vaccination_date',
+        'history_of_aggression',
+        'food_allergies',
+        'pet_food',
+        'okay_to_give_treats',
+        'last_groom_date',
+        'okay_to_use_photos_online',
+        'pet_condition',
     ];
 
     public function client()
