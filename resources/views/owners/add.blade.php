@@ -98,13 +98,13 @@
                         {{-- <input class="form-control @error('petsowned') is-invalid @enderror" id="inputPetsOwned" name="petsowned" type="text" placeholder="Pets Owned" value="" />--}}
                         {{-- </div>--}}
                         <!-- Form Group (username)-->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username</label>
-                            <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />
-                            @error('username')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+{{--                        <div class="mb-3">--}}
+{{--                            <label class="small mb-1" for="inputUsername">Username</label>--}}
+{{--                            <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />--}}
+{{--                            @error('username')--}}
+{{--                            <div class="invalid-feedback">{{ $message }}</div>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
                             <!-- Form Group (password)-->

@@ -120,10 +120,10 @@ Clients::setEmailAttribute($client, $client->user_id);
                             <label class="small mb-1" for="editPhone">Phone number</label>
                             <input type="text" class="form-control" name="owner_no" id="" value="{{$client->client_no}}">
                         </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="editUsername">Username</label>
-                            <input type="text" class="form-control" name="owner_username" id="" value="" placeholder="Enter username">
-                        </div>
+{{--                        <div class="col-md-12">--}}
+{{--                            <label class="small mb-1" for="editUsername">Username</label>--}}
+{{--                            <input type="text" class="form-control" name="owner_username" id="" value="" placeholder="Enter username">--}}
+{{--                        </div>--}}
                         <div class="col-md-12 mt-4">
                             <h6 class="text-primary">Change Password</h6>
                             <hr class="mt-1 mb-0">

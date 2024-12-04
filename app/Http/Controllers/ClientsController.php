@@ -42,7 +42,6 @@ class ClientsController extends Controller
             'address' => 'required',
             'phone_number' => 'required',
             'birthday' => 'required|date',
-            'username' => 'required',
             'password' => 'required|min:8',
             'profile_picture' => 'nullable|image',
         ]);
@@ -53,7 +52,7 @@ class ClientsController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->username,
+            'name' =>$request->firstname." ".$request->lastname,
             'email' => $request->email,
             'role' => "client",
             'password' => Hash::make($request->password),
@@ -103,8 +102,11 @@ class ClientsController extends Controller
             'client_no' => $request->input('owner_no'),
             'client_birthday' => $request->input('owner_bday'),
         ]);
-
         Clients::updateClient($id, $data);
+
+        $client = Clients::getClientById($id);
+
+        User::where('id', $client->user_id)->update(['email'=>$request->input('owner_email')]);
 
         return redirect()->route('owners.show',$id);
     }
