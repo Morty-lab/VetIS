@@ -17,11 +17,11 @@
                         <input class="form-control" id="inputProductName" type="text" placeholder="Product Name"
                             value="" name="product_name">
                     </div>
-                    <div class="col-md-12">
-                        <label class="small mb-1" for="inputProductSKU">SKU</label>
-                        <input class="form-control" id="inputProductSKU" type="number" placeholder="Product SKU"
-                            value="" name="product_sku">
-                    </div>
+{{--                    <div class="col-md-12">--}}
+{{--                        <label class="small mb-1" for="inputProductSKU">SKU</label>--}}
+{{--                        <input class="form-control" id="inputProductSKU" type="number" placeholder="Product SKU"--}}
+{{--                            value="" name="product_sku">--}}
+{{--                    </div>--}}
                     {{-- <div class="mb-3">--}}
                     {{-- <label class="small mb-1" for="selectSupplier">Supplier</label>--}}
                     {{-- <select class="form-control" id="selectSupplier" name="supplier">--}}
@@ -159,7 +159,7 @@
                             <thead>
                                 <tr>
                                     <th>Stock ID</th>
-                                    <th>SKU</th>
+{{--                                    <th>SKU</th>--}}
                                     <th>Product Name</th>
                                     <th>Expiry Date</th>
                                     <th>Supplier</th>
@@ -172,34 +172,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-
                                     @php
                                         $stockforproduct = \App\Models\Stocks::getAllStocksByProductId($product->id);
-//                                        dd($stock)
                                     @endphp
                                     @foreach($stockforproduct as $stockP)
                                             <tr>
-                                                <td>{{ sprintf("Stock-%05d", $stockP->id)}}</td>
                                                 <td>{{ sprintf("Stock-%05d", $stockP->id)}}</td>
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>
                                                     {{$stockP->expiry_date ?? 'No Expiry'}}
                                                 </td>
                                                 <td>
-                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
+                                                    Php {{$product->price}}
                                                 </td>
 
                                                 <td>
-                                                    Php {{$product->price}}
+
+                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
+
                                                 </td>
                                                 <td>
                                                     Php {{$stockP->price}}
                                                 </td>
                                                 <td>
-                                        <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                            {{$stockP->stock}} {{\App\Models\Unit::where('id', $stockP->unit)->first()->unit_name}}
-                                        </span>
+                                                    <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                                        {{$stockP->stock}} {{\App\Models\Unit::where('id', $stockP->unit)->first()->unit_name}}
+                                                    </span>
                                                 </td>
                                                 <td>
                                                     {{\App\Models\User::where('id',$stockP->user_id)->first()->name}}
@@ -214,7 +212,6 @@
                                                     </div>
                                                 </td>
                                             </tr>
-
                                     @endforeach
 
 
@@ -281,10 +278,10 @@
                                 @endforeach
                             </p>
                         </div>
-                        <div class="col-6">
-                            <div class="label">SKU</div>
-                            <p>{{ sprintf("VetIS-%05d", $product->id)}}</p>
-                        </div>
+{{--                        <div class="col-6">--}}
+{{--                            <div class="label">SKU</div>--}}
+{{--                            <p>{{ sprintf("VetIS-%05d", $product->id)}}</p>--}}
+{{--                        </div>--}}
                         <div class="col-6">
                             <div class="label">Product Unit</div>
                             <p>

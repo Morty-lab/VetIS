@@ -213,7 +213,14 @@
         </div>
         <div class="col-md-12">
             <div class="card shadow-none mt-4">
-                <div class="card-header">Payment History</div>
+                <div class="card-header">
+                    Payment History
+
+                    <a href="{{ route('billing.print',['billingID' => $billing->id]) }}" target="_blank" class="btn btn-datatable" style="float: right;">
+                        <i class="fa-solid fa-print"></i>
+                    </a>
+
+                </div>
                 <div class="card-body">
                     <table class="" id="datatablesSimple">
                         <thead>
@@ -224,7 +231,7 @@
                                 <th>Amount Paid</th>
                                 <th>Remaining Balance</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+{{--                                <th>Actions</th>--}}
                             </tr>
                         </thead>
                         <tbody>
@@ -251,7 +258,8 @@
                                     @endif
                                 </td>
 
-                                <td><a href="{{ route('billing.print',['billingID' => $billing->id]) }}" target="_blank" class="btn btn-datatable"><i class="fa-solid fa-print"></i></a></td>
+{{--                                <td>--}}
+{{--                                    <a href="{{ route('billing.print',['billingID' => $billing->id]) }}" target="_blank" class="btn btn-datatable"><i class="fa-solid fa-print"></i></a></td>--}}
                             </tr>
                         @endforeach
 

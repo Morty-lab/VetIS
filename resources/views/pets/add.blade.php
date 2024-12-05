@@ -118,7 +118,7 @@
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
                                 <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
                                     <option disabled selected>-- Select Record --</option>
-                                    <option>No Vaccination Record</option>
+                                    <option value=>No Vaccination Record</option>
                                     <option value=1>Complete</option>
                                     <option value=0> Incomplete</option>
                                 </select>

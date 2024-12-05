@@ -96,12 +96,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (inventoryProductsTable) {
         new simpleDatatables.DataTable(inventoryProductsTable);
     }
-    const inventoryStocksTable = document.getElementById(
-        "inventoryStocksTable"
-    );
-    if (inventoryStocksTable) {
-        new simpleDatatables.DataTable(inventoryStocksTable);
-    }
+    const tablesWithDuplicateId = document.querySelectorAll("#inventoryStocksTable");
+    tablesWithDuplicateId.forEach((table) => {
+        new simpleDatatables.DataTable(table);
+    });
 
     const inventorySuppliersTable = document.getElementById(
         "inventorySuppliersTable"

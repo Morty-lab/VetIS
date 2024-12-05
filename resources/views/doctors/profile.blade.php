@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editLicenseNumber">License No.</label>
-                            <input type="text" class="form-control" name="email" id="editLicenseNumber" placeholder="Enter license number" value="">
+                            <input type="text" class="form-control" name="license_number" id="editLicenseNumber" placeholder="Enter license number" value="{{$doctor->license_number}}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editPhone">Username</label>
@@ -300,7 +300,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                 <div class="col-md-3">
                                     <label class="small mb-1">License Number</label>
                                     <div>
-                                        <p class="badge bg-primary-soft text-primary rounded-pill">123456</p>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">{{$doctor->license_number}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

@@ -133,91 +133,65 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
                                 <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
-                                    <option disabled selected>-- Select Record --</option>
-                                    <option value=null>No Vaccination Record</option>
-                                    <option value=1>Complete</option>
-                                    <option value=0>Incomplete</option>
+                                    <option value=null {{$pet->vaccinated == null ? 'selected' : ''}}>No Vaccination Record</option>
+                                    <option value=1 {{$pet->vaccinated == 1 ? 'selected' : ''}}>Complete</option>
+                                    <option value=0 {{$pet->vaccinated == 0 ? 'selected' : ''}}>Incomplete</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
-                                <select class="form-control" id="inputSelectSpayedNeutered" name="pet_neutered">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=2>No</option>
+                                <select class="form-control" id="inputSelectSpayedNeutered" name="neutered">
+                                    <option value=1 {{$pet->neutered == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value=0 {{$pet->neutered == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
+                                <label class="small mb-1"   for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
                                 <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=2>No</option>
+                                    <option value=1 {{$pet->vaccinated_anti_rabies == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value=0 {{$pet->vaccinated_anti_rabies == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
-                                <input type="month" id="inputAntiRabiesDate" name="anti_rabies_vaccination_date" class="form-control">
+                                <input type="month" id="inputAntiRabiesDate" name="anti_rabies_vaccination_date" class="form-control" value="{{\Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('Y-m')}}">
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
-                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here.."></textarea>
+                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here..">{{$pet->history_of_aggression}}</textarea>
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputFoodAllergies">Any Food Allergies?</label>
-                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here.."></textarea>
+                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here..">{{$pet->food_allergies}}</textarea>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetFood">Food?</label>
-                                <input type="text" name="pet_food" id="inputPetFood" class="form-control" placeholder="Enter pet's food here..">
+                                <input type="text" name="pet_food" id="inputPetFood" class="form-control" placeholder="Enter pet's food here.." value="{{$pet->pet_food}}">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
                                 <select class="form-control" id="inputTreats" name="okay_to_give_treats">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=2>No</option>
+                                    <option value=1 {{$pet->okay_to_give_treats == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value=0 {{$pet->okay_to_give_treats == 0? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastGroom">When was his/her last groom?</label>
-                                <input type="month" name="last_groom_date" id="inputLastGroom" class="form-control">
+                                <input type="month" name="last_groom_date" id="inputLastGroom" class="form-control" value="{{\Carbon\Carbon::parse($pet->last_groom_date)->format('Y-m')}}">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPhotosOnline">Okay to use photos online?</label>
                                 <select class="form-control" id="inputPhotosOnline" name="okay_to_use_photos_online">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=2>No</option>
+                                    <option value='1' {{$pet->okay_to_use_photos_online == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value='0' {{$pet->okay_to_use_photos_online == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputCondition">Prone to any seizure, illness, ect.? If so please list:</label>
-                                <textarea name="pet_condition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here..."></textarea>
+                                <textarea name="pet_condition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here...">{{$pet->pet_condition}}</textarea>
                             </div>
                         </div>
-                        <!--
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-3">
-                                <div class="form-check form-check-inline">
-                                    <input type="hidden" name="vaccinated" value="0">
-                                    <input class="form-check-input" type="checkbox" id="vaccinatedCheckbox" value="1" @checked($pet->vaccinated) name="vaccinated">
-                                    <label class="small" for="vaccinatedCheckbox">Vaccinated</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-check form-check-inline">
-                                    <input type="hidden" name="neutered" value="0">
-                                    <input class="form-check-input" type="checkbox" id="neuteredCheckbox" value="1" @checked($pet->neutered) name="neutered">
-                                    <label class="small" for="neuteredCheckbox">Spayed/Neutered</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputPetDescription">Pet Description</label>
-                            <textarea name="pet_description" id="inputPetDescription" class="form-control form-control-solid" cols="30"
-                                rows="5">{{ $pet->pet_description }}</textarea>
-                        </div> -->
+
                         <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
                         <hr class="mt-1 mb-3">
 

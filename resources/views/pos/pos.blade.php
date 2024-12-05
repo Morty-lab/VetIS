@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal - VetIS</title>
+    <title>Terminal - PetHub</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
@@ -476,7 +476,7 @@
 
     <nav class="topnav navbar navbar-expand border-bottom justify-content-between justify-content-sm-start navbar-light bg-white"
         id="sidenavAccordion">
-        <p class="navbar-brand px-4 fw-700">VetIS <span class="fw-400 text-gray-600">| POS Terminal</span></p>
+        <p class="navbar-brand px-4 fw-700">PetHub <span class="fw-400 text-gray-600">| POS Terminal</span></p>
         <ul class="navbar-nav align-items-center ms-auto">
             <!-- User Dropdown-->
             <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">

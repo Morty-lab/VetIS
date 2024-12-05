@@ -34,6 +34,11 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
+                        @php
+                            $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                            $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock');
+
+                        @endphp
                     <tr>
                         <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
                         <td>{{ $product->product_name }}</td>
@@ -55,53 +60,21 @@
                             Php {{ $product->price }}
                         </td>
                         <td>
-                            @if ($product->status == 1)
-                            <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
+                            @if ($stocks - $subtracted <= 0)
+                                <div class="badge bg-danger-soft text-danger rounded-pill">No Stocks</div>
+                            @elseif (($stocks - $subtracted) <= ($stocks * 0.1))
+                                <div class="badge bg-warning-soft text-warning rounded-pill">Low Stock</div>
                             @else
-                            {{-- @if($products->stocks->) @endif--}}
-                            <div class="badge bg-danger-soft text-danger rounded-pill">Unavailable</div>
+                                <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
                             @endif
                         </td>
                         <td>
-                            @php
-//                            if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){
-//                            $allStocks = $product->stocks;
-//                            $stock = 0;
-//                            $expiredStocks = 0;
-//                            foreach ($allStocks as $i){
-//                            if( $i->expiry_date == null ){
-//                            $stock += $i->stock;
-//                            }
-//                            if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){
-//                            $stock += $i->stock;
-//                            }
-//                            if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){
-//                                $expiredStocks +=$i->stock;
-//                                }
-//                                }
-//                                echo $stock." stocks Available ";
-//                                if( $expiredStocks != 0){
-//                                echo $expiredStocks." stock Expired";
-//                                }
-//                                }
-//                                else{
-//                                echo "No stocks available";
-//                                }
-                            $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id);
-                            $stockNumber = 0;
-                            foreach($stocks as $s){
-                                $stockNumber += $s->stock;
-                            }
 
-                            @endphp
-                            {{$stockNumber ?? 'No'}} Stocks Available
+                            {{$stocks - $subtracted ?? 'No'}} Stock/s Available
                         </td>
                         <td>
                             <button class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#viewProductModal{{ $product->id }}">Open</button>
-                            <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmDeleteModal{{ $product->id }}"><i
-                                            data-feather="trash-2"></i></button> -->
+
                         </td>
                     </tr>
                     @endforeach

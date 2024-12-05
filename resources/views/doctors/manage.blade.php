@@ -42,8 +42,7 @@
               <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">{{\App\Models\Doctor::getSchedules($doctor->id)->count()}}</span> Scheduled</span>
             </td>
             <td>
-              <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>
-              <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>
+              <span class="badge {{$doctor->status ? 'bg-primary-soft text-primary' : 'bg-orange-soft text-orange'}}  rounded-pill">{{$doctor->status ? 'Active' : 'Disabled'}}</span>
             </td>
             <td>
               <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->id)}}">Open</a>

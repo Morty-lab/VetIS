@@ -50,6 +50,7 @@
             </div>
             <div class=" text-end">
                 <h2 class="mb-0">Low Stock Report</h2>
+                <p>As of {{\Carbon\Carbon::now()->format('F d , Y')}}</p>
             </div>
         </div>
         <hr class="mb-3">
@@ -65,14 +66,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>VetIS-00001</td>
-                    <td>Turtle Tank Filter </td>
-                    <td>Supplements</td>
-                    <td>Bottles</td>
-                    <td>₱85.37</td>
-                    <td>No stocks available</td>
-                </tr>
+                @foreach($products as $product)
+                    @php
+                        $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock');
+                    @endphp
+                    @if(($stocks - $subtracted) <= ($stocks * 0.1))
+                        <tr>
+                            <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                            <td>{{ $product->product_name }} </td>
+                            <td>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
+                            <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name }}</td>
+                            <td>₱ {{$product->price}}</td>
+                            <td> {{$stocks - $subtracted ?? 'No'}} Stock/s Available</td>
+                        </tr>
+                    @endif
+
+                @endforeach
+
             </tbody>
         </table>
     </div>

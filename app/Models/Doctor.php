@@ -41,7 +41,7 @@ class Doctor extends Model
     // Retrieve a single doctor by ID
     public static function getDoctorById($id)
     {
-        return self::find($id);
+        return self::where('id',$id);
     }
 
     // Update a doctor
@@ -70,7 +70,7 @@ class Doctor extends Model
         $doctor->doctor_email = $email;
 
         // Optionally, you could save the client if needed
-        // $client->save();
+//         $doctor->save();
 
         return $doctor;
     }

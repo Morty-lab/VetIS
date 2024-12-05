@@ -120,26 +120,26 @@ Clients::setEmailAttribute($client, $client->user_id);
                             <label class="small mb-1" for="editPhone">Phone number</label>
                             <input type="text" class="form-control" name="owner_no" id="" value="{{$client->client_no}}">
                         </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="editUsername">Username</label>
-                            <input type="text" class="form-control" name="owner_username" id="" value="" placeholder="Enter username">
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <h6 class="text-primary">Change Password</h6>
-                            <hr class="mt-1 mb-0">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="editOldPassword">Old Password</label>
-                            <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="updateNewPassword">New Password</label>
-                            <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>
-                            <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">
-                        </div>
+{{--                        <div class="col-md-12">--}}
+{{--                            <label class="small mb-1" for="editUsername">Username</label>--}}
+{{--                            <input type="text" class="form-control" name="owner_username" id="" value="" placeholder="Enter username">--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-12 mt-4">--}}
+{{--                            <h6 class="text-primary">Change Password</h6>--}}
+{{--                            <hr class="mt-1 mb-0">--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <label class="small mb-1" for="editOldPassword">Old Password</label>--}}
+{{--                            <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1" for="updateNewPassword">New Password</label>--}}
+{{--                            <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>--}}
+{{--                            <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">--}}
+{{--                        </div>--}}
                     </div>
                     {{-- <div class="row">--}}
                     {{-- <div class="col-md-6 mb-2">--}}
@@ -442,7 +442,6 @@ Clients::setEmailAttribute($client, $client->user_id);
                                         <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
                                     @endif
                                 </td>
-                                >
                                 <td>
                                     {{$bill->due_date ?? 'No Due Date'}}
                                 </td>

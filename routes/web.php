@@ -220,9 +220,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/viewappointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
 
 
-    Route::get('/manageschedules', function () {
-        return view('schedule.calendar');
-    })->name('schedules.index');
+    Route::get('/manageschedules', [\App\Http\Controllers\CalendarController::class, 'index'])->name('schedules.index');
 
     // Pet Owners
     Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
@@ -368,36 +366,18 @@ Route::get('/reports', [ReportController::class, 'index'])->name("reports.index"
 
 Route::get('/reports/pos/', [ReportController::class, 'pos'])->name("reports.pos");
 
-Route::get('/reports/pos/daily-sales/print', function () {
-    $sales = TransactionDetailsModel::all();
-    $products = Products::all();
-    $supplier = Suppliers::all();
-
-    return view('reports.documents.posdaily', ['sales' => $sales, 'products' => $products, 'supplier' => $supplier]);
-})->name("reports.pos.daily.reports");
-Route::get('/reports/pos/monthly-sales/print', function () {
-    return view('reports.documents.posMonthly');
-})->name("reports.pos.monthly.reports");
+Route::get('/reports/pos/daily-sales/print',[ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
+Route::get('/reports/pos/monthly-sales/print', [ReportController::class , 'printMonthly'])->name("reports.pos.monthly.reports");
 
 // Inventory Reports
-Route::get('/reports/inventory/', function () {
-    return view('reports.inventoryReport.inventoryReport');
-})->name("reports.inventory");
-Route::get('/reports/inventory/products-list/print', function () {
-    return view('reports.documents.productsList');
-})->name("reports.inventory.productsList");
+Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
+Route::get('/reports/inventory/products-list/print', [ReportController::class, 'printProductList'])->name("reports.inventory.productsList");
 
-Route::get('/reports/inventory/item-stock/print', function () {
-    return view('reports.documents.itemStock');
-})->name("reports.inventory.itemStock");
+Route::get('/reports/inventory/item-stock/print', [ReportController::class , 'printStockList'])->name("reports.inventory.itemStock");
 
-Route::get('/reports/inventory/all-stock/print', function () {
-    return view('reports.documents.allStock');
-})->name("reports.inventory.allStockList");
+Route::get('/reports/inventory/all-stock/print', [ReportController::class , 'printStockListAll'])->name("reports.inventory.allStockList");
 
-Route::get('/reports/inventory/low-stock/print', function () {
-    return view('reports.documents.lowStockList');
-})->name("reports.inventory.lowStockList");
+Route::get('/reports/inventory/low-stock/print', [ReportController::class, 'printLowStock'])->name("reports.inventory.lowStockList");
 
 Route::get('/printable/prescription/print', function () {
     return view('printable.prescription');

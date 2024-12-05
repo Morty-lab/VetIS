@@ -8,6 +8,8 @@ use App\Models\PetRecords;
 use App\Models\Pets;
 use App\Models\Clients;
 use App\Models\Vaccination;
+use Carbon\Carbon;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 
 class PetsController extends Controller
@@ -56,24 +58,52 @@ class PetsController extends Controller
                 'pet_gender' => 'required',
                 'pet_birthdate' => 'required|date',
                 'pet_color' => 'required',
-                'pet_weight' => 'required',
-                'pet_vaccinated' => 'nullable|boolean',
-                'pet_neutered' => 'nullable|boolean',
+                'pet_weight' => 'required|numeric',
+                'pet_vaccinated' => 'nullable',
+                'pet_neutered' => 'nullable',
                 'pet_description' => 'nullable|string',
                 'owner_name' => 'required|exists:clients,id',
-                'vaccinated_anti_rabies' => 'nullable|boolean',
+                'vaccinated_anti_rabies' => 'nullable',
                 'anti_rabies_vaccination_date' => 'nullable|date',
                 'history_of_aggression' => 'nullable|string',
                 'food_allergies' => 'nullable|string',
                 'pet_food' => 'nullable|string',
-                'okay_to_give_treats' => 'nullable|boolean',
+                'okay_to_give_treats' => 'nullable',
                 'last_groom_date' => 'nullable|date',
-                'okay_to_use_photos_online' => 'nullable|boolean',
+                'okay_to_use_photos_online' => 'nullable',
                 'pet_condition' => 'nullable|string',
             ]);
 
+            $lastGroomDate = $validatedData['last_groom_date']
+                ? Carbon::parse($validatedData['last_groom_date'])->startOfMonth()->toDateString()
+                : null;
+
+            $antiRabiesVaccinationDate = $validatedData['anti_rabies_vaccination_date']
+                ? Carbon::parse($validatedData['anti_rabies_vaccination_date'])->startOfMonth()->toDateString()
+                : null;
+
             // Create a new Pet record with the validated data
-            $pet = new Pets($validatedData);
+            $pet = new Pets([
+                    'pet_name' => $validatedData['pet_name'],
+                    'pet_type' => $validatedData['pet_type'],
+                    'pet_breed' => $validatedData['pet_breed'] ?? null,
+                    'pet_gender' => $validatedData['pet_gender'],
+                    'pet_birthdate' => $validatedData['pet_birthdate'] ?? null,
+                    'pet_color' => $validatedData['pet_color'] ?? null,
+                    'pet_weight' => $validatedData['pet_weight'] ?? null,
+                    'vaccinated' => $request->input('vaccinated'),
+                    'neutered' => $request->input('neutered'),
+                    'pet_description' => $validatedData['pet_description'] ?? null,
+                    'vaccinated_anti_rabies' => $request->input('vaccinated_anti_rabies'),
+                    'anti_rabies_vaccination_date' => $antiRabiesVaccinationDate,
+                    'history_of_aggression' => $validatedData['history_of_aggression'] ?? null,
+                    'food_allergies' => $validatedData['food_allergies'] ?? null,
+                    'pet_food' => $validatedData['pet_food'] ?? null,
+                    'okay_to_give_treats' => $request->input('okay_to_give_treats'),
+                    'last_groom_date' => $lastGroomDate,
+                    'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? 0,
+                    'pet_condition' => $validatedData['pet_condition'] ?? null,
+                ]);
 
             // Set the owner ID from the request data
             $pet->owner_ID = $request->owner_name;
@@ -127,41 +157,78 @@ class PetsController extends Controller
      */
     public function update(Request $request, $petID)
     {
+        // Define validation rules
+        $validatedData = $request->validate([
+            'pet_name' => 'required|string|max:255',
+            'pet_type' => 'required|string|max:255',
+            'pet_breed' => 'nullable|string|max:255',
+            'pet_gender' => 'required', // Assuming only male and female genders are valid
+            'pet_birthdate' => 'nullable|date|before:today',
+            'pet_color' => 'nullable|string|max:255',
+            'pet_weight' => 'nullable|numeric|min:0',
+            'pet_description' => 'nullable|string',
+            'vaccinated' => 'sometimes|boolean',
+            'neutered' => 'sometimes|boolean',
+            'vaccinated_anti_rabies' => 'sometimes|boolean',
+            'anti_rabies_vaccination_date' => 'nullable|date|before_or_equal:today',
+            'history_of_aggression' => 'nullable|string',
+            'food_allergies' => 'nullable|string',
+            'pet_food' => 'nullable|string',
+            'okay_to_give_treats' => 'sometimes|boolean',
+            'last_groom_date' => 'nullable|date|before_or_equal:today',
+            'okay_to_use_photos_online' => 'nullable',
+            'pet_condition' => 'nullable|string',
+        ]);
+
         // Retrieve the pet by ID
         $pet = Pets::find($petID);
 
+//        dd($validatedData);
+
         // Check if the pet exists
         if (!$pet) {
-            return redirect()->route('pets.show', $pet->id)->with('error', 'Pet not found.');
+            return redirect()->route('pets.index')->with('error', 'Pet not found.');
         }
+        $lastGroomDate = $validatedData['last_groom_date']
+            ? Carbon::parse($validatedData['last_groom_date'])->startOfMonth()->toDateString()
+            : null;
+
+        $antiRabiesVaccinationDate = $validatedData['anti_rabies_vaccination_date']
+            ? Carbon::parse($validatedData['anti_rabies_vaccination_date'])->startOfMonth()->toDateString()
+            : null;
+
 
         // Update the pet's information
-        $pet->update([
-            'pet_name' => $request->input('pet_name'),
-            'pet_type' => $request->input('pet_type'),
-            'pet_breed' => $request->input('pet_breed'),
-            'pet_gender' => $request->input('pet_gender'),
-            'pet_birthdate' => $request->input('pet_birthdate'),
-            'pet_color' => $request->input('pet_color'),
-            'pet_weight' => $request->input('pet_weight'),
-            'vaccinated' => $request->has('pet_vaccinated'), // Handle the boolean as a checkbox
-            'neutered' => $request->has('pet_neutered'), // Handle the boolean as a checkbox
-            'pet_description' => $request->input('pet_description'),
-            'vaccinated_anti_rabies' => $request->has('vaccinated_anti_rabies'), // Handle anti-rabies vaccination status
-            'anti_rabies_vaccination_date' => $request->input('anti_rabies_vaccination_date'),
-            'history_of_aggression' => $request->input('history_of_aggression'),
-            'food_allergies' => $request->input('food_allergies'),
-            'pet_food' => $request->input('pet_food'),
-            'okay_to_give_treats' => $request->has('okay_to_give_treats'), // Handle as a boolean checkbox
-            'last_groom_date' => $request->input('last_groom_date'),
-            'okay_to_use_photos_online' => $request->has('okay_to_use_photos_online'), // Handle as a boolean checkbox
-            'pet_condition' => $request->input('pet_condition'),
+        $updatedPet = Pets::updatePet($petID, [
+            'pet_name' => $validatedData['pet_name'],
+            'pet_type' => $validatedData['pet_type'],
+            'pet_breed' => $validatedData['pet_breed'] ?? null,
+            'pet_gender' => $validatedData['pet_gender'],
+            'pet_birthdate' => $validatedData['pet_birthdate'] ?? null,
+            'pet_color' => $validatedData['pet_color'] ?? null,
+            'pet_weight' => $validatedData['pet_weight'] ?? null,
+            'vaccinated' => $request->input('vaccinated'),
+            'neutered' => $request->input('neutered'),
+            'pet_description' => $validatedData['pet_description'] ?? null,
+            'vaccinated_anti_rabies' => $request->input('vaccinated_anti_rabies'),
+            'anti_rabies_vaccination_date' => $antiRabiesVaccinationDate,
+            'history_of_aggression' => $validatedData['history_of_aggression'] ?? null,
+            'food_allergies' => $validatedData['food_allergies'] ?? null,
+            'pet_food' => $validatedData['pet_food'] ?? null,
+            'okay_to_give_treats' => $request->input('okay_to_give_treats'),
+            'last_groom_date' => $lastGroomDate,
+            'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? 0,
+            'pet_condition' => $validatedData['pet_condition'] ?? null,
         ]);
 
         // Redirect the user with a success message
-        return redirect()->route('pets.show', $pet->id)
-            ->with('success', 'Pet information updated successfully.');
+        if ($updatedPet) {
+            return redirect()->route('pets.show', $petID)->with('success', 'Pet has been updated successfully.');
+        }
+
+        return redirect()->route('pets.show', $petID)->with('error', 'Failed to update pet.');
     }
+
 
 
     public function uploadPhoto(Request $request, $id)
