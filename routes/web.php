@@ -220,9 +220,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/viewappointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
 
 
-    Route::get('/manageschedules', function () {
-        return view('schedule.calendar');
-    })->name('schedules.index');
+    Route::get('/manageschedules', [\App\Http\Controllers\CalendarController::class, 'index'])->name('schedules.index');
 
     // Pet Owners
     Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
