@@ -37,7 +37,7 @@
             <td>{{ $doctor->doctor_email }} </td>
             <td>{{ $doctor->phone_number }}</td>
             <td>{{ $doctor->position }}</td>
-            <td>1234567</td>
+            <td>{{ $doctor->license_number }}</td>
             <td>
               <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">{{\App\Models\Doctor::getSchedules($doctor->id)->count()}}</span> Scheduled</span>
             </td>
