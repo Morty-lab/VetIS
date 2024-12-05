@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                                    <p>{{\Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A')}}</p>
+                                    <p>{{\Carbon\Carbon::parse($appointment->appointment_time)->format('g:i A')}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="appointmentPurpose">Purpose</label>

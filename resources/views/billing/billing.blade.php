@@ -53,7 +53,7 @@
                             <div class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending Payment</div>
                             @endif
                         </td>
-                        <td>10/23/2025</td>
+                        <td>{{\Carbon\Carbon::parse($billing->due_date)->format('M d, Y')}}</td>
                         <td>
                             <a href="{{route('billing.view',['billingID' => $billing->id])}}" class="btn btn-datatable btn-primary px-5 py-3">Open</a>
                         </td>

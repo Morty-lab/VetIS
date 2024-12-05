@@ -134,7 +134,7 @@
                                                 <button class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#editProductModal">Edit Product</button>
                                                 <button class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $product->id }}">Delete Product</button>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item cursor-pointer" href="dropdowns.html#!">Print</a>
+                                                <a class="dropdown-item cursor-pointer" href="{{route('reports.inventory.itemStock',['product_id'=>$product->id])}}">Print</a>
                                             </div>
                                         </div>
                                     </div>

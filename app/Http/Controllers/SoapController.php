@@ -135,9 +135,10 @@ class SoapController extends Controller
         $examinationInput = $request->input('examination');
         $diagnosisInput = $request->input('diagnosis');
 
+
         // Process and update examination only if it is not null
         if (!is_null($examinationInput)) {
-            $examinationData = array_merge(['pet_record_id' => $id], $this->splitText($examinationInput));
+            $examinationData = array_merge(['pet_record_id' => $recordID], $this->splitText($examinationInput));
 
             $existingExamination = Examination::where('pet_record_id', $recordID)->first();
 //            dd($examinationData);
@@ -154,14 +155,14 @@ class SoapController extends Controller
         if (!is_null($diagnosisInput)) {
             $diagnosis = $this->splitText($diagnosisInput);
             $diagnosisData = [
-                'pet_record_id' => $id,
+                'pet_record_id' => $recordID,
                 'diagnosis' => json_encode($diagnosis),
                 'treatment' => $request->input('treatment'),
                 'prescription' => $request->input('prescription'),
                 'client_communication' => $request->input('client_communication'),
             ];
 
-            $existingDiagnosis = PetDiagnosis::where('pet_record_id', $id)->first();
+            $existingDiagnosis = PetDiagnosis::where('pet_record_id', $recordID)->first();
 
             if ($existingDiagnosis) {
                 // Update existing pet diagnosis record

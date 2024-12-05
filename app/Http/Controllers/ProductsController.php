@@ -10,6 +10,7 @@ use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -51,16 +52,38 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
 
+        // Validation rules
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'category' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect()
+                ->route('products.index')
+                ->withErrors($validator)
+                ->with('error', 'Validation failed! Please check the inputs and try again.')
+                ->withInput();
+        }
+
+        // Data to save
         $data = [
             'product_name' => $request->product_name,
             'price' => $request->price,
             'product_category' => $request->category,
-            'unit' => $request->unit
+            'unit' => $request->unit,
         ];
+
+        // Create product
         $product = Products::createProduct($data);
 
-
-        return redirect()->route('products.index');
+        // Return success message
+        return redirect()
+            ->route('products.index')
+            ->with('success', 'Product created successfully!');
     }
 
     public function addStocks(Request $request, $id)

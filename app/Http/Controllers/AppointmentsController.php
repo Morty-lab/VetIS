@@ -177,6 +177,7 @@ class AppointmentsController extends Controller
 
         // Create a new appointment using the validated data
         $appointment = new Appointments($validatedData);
+        $appointment->status = 0;
         $result = $appointment->save();
 
 
@@ -187,31 +188,34 @@ class AppointmentsController extends Controller
         $date = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
         $time = Carbon::parse($request->input('appointment_time'))->format('g:i A'); // E.g., 3:00 PM
 
+        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
+
+
         $data = [
-            'subject' => 'Appointment Request Submitted',
+            'subject' => 'Appointment Approved',
             'content' => "Dear $client->client_name,\n\n" .
-                "Your appointment request for $date at $time has been submitted successfully. " .
-                "Our vet secretary will evaluate your request and get back to you shortly.\n\n" .
-                "Thank you for your patience!",
-            'status' => 'Pending'
+                "Your appointment request for $date at $time has been **approved**. " .
+                "We look forward to seeing you then!\n\n" .
+                "Thank you for choosing us!",
+            'status' => 'Approved'
         ];
 
         $ownerData = [
-            'subject' => 'New Appointment Request Received',
-            'content' => "Dear Vet Clinic Team,\n\n" .
-                "A new appointment request has been submitted by $client->client_name.\n\n" .
-                "Details of the appointment request:\n" .
+            'subject' => 'Appointment Scheduled',
+            'content' => "Dear Dr. $veterinarian->firstname $veterinarian->lastname,\n\n" .
+                "An appointment has been scheduled for you.\n\n" .
+                "Details of the appointment:\n" .
+                "- **Client Name**: $client->client_name\n" .
                 "- **Date**: $date\n" .
                 "- **Time**: $time\n\n" .
-                "Please review the request and confirm or follow up as needed.\n\n" .
+                "Please review the details and prepare accordingly. If you have any questions, contact the clinic staff.\n\n" .
                 "Thank you!",
-            'status' => 'New Request'
+            'status' => 'Scheduled'
         ];
 
-
-
-        Mail::to(config('mail.from.address'))->send(new AppointmentSet($ownerData));
-        Mail::to($client->client_email)->send(new AppointmentSet($data));
+        Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
+        Mail::to($client->client_email)->cc($client->client_email)->send(new AppointmentSet($data));
         return redirect()->route('appointments.index');
 
     }

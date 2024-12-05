@@ -41,7 +41,7 @@ class Doctor extends Model
     // Retrieve a single doctor by ID
     public static function getDoctorById($id)
     {
-        return self::where('id',$id);
+        return self::where('id',$id)->first();
     }
 
     // Update a doctor
