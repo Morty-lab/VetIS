@@ -132,24 +132,24 @@
                         <div class="row gx-3 gy-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
-                                <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
+                                <select class="form-control" id="inputSelectVaccinationRecord" name="vaccinated">
                                     <option value=null {{$pet->vaccinated == null ? 'selected' : ''}}>No Vaccination Record</option>
-                                    <option value=1 {{$pet->vaccinated == 1 ? 'selected' : ''}}>Complete</option>
-                                    <option value=0 {{$pet->vaccinated == 0 ? 'selected' : ''}}>Incomplete</option>
+                                    <option value='1' {{$pet->vaccinated == 1 ? 'selected' : ''}}>Complete</option>
+                                    <option value='0' {{$pet->vaccinated == 0 ? 'selected' : ''}}>Incomplete</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
                                 <select class="form-control" id="inputSelectSpayedNeutered" name="neutered">
-                                    <option value=1 {{$pet->neutered == 1 ? 'selected' : ''}}>Yes</option>
-                                    <option value=0 {{$pet->neutered == 0 ? 'selected' : ''}}>No</option>
+                                    <option value='1' {{$pet->neutered == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value='0' {{$pet->neutered == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1"   for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
                                 <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
-                                    <option value=1 {{$pet->vaccinated_anti_rabies == 1 ? 'selected' : ''}}>Yes</option>
-                                    <option value=0 {{$pet->vaccinated_anti_rabies == 0 ? 'selected' : ''}}>No</option>
+                                    <option value='1' {{$pet->vaccinated_anti_rabies == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value='0' {{$pet->vaccinated_anti_rabies == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -171,8 +171,8 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
                                 <select class="form-control" id="inputTreats" name="okay_to_give_treats">
-                                    <option value=1 {{$pet->okay_to_give_treats == 1 ? 'selected' : ''}}>Yes</option>
-                                    <option value=0 {{$pet->okay_to_give_treats == 0? 'selected' : ''}}>No</option>
+                                    <option value='1' {{$pet->okay_to_give_treats == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value='0' {{$pet->okay_to_give_treats == 0? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
