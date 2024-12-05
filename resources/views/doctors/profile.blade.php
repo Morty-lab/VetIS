@@ -441,18 +441,29 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2024-11-23</td>
-                                <td>VETIS-00001</td>
-                                <td>Lexie</td>
-                                <td>Kent Invento</td>
-                                <td>Consultation</td>
-                                <td>Checkup</td>
-                                <td>Ongoing</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="">Open</a>
-                                </td>
-                            </tr>
+                                @php
+                                    $consultation_type = [
+                                    1=> "Walk-In" ,
+                                    2=> "Consultation" ,
+                                    3=> "Vaccination",
+                                    4=> "Surgery"
+                                    ];
+                                @endphp
+                                @foreach($records as $record)
+
+                                <tr>
+                                    <td>{{$record->created_at}}</td>
+                                    <td>{{ sprintf("VetIS-%05d", $record->id)}}</td>
+                                    <td>{{\App\Models\Pets::where('id',$record->petID)->first()->pet_name}}</td>
+                                    <td>{{ \App\Models\Clients::where('id',$record->ownerID)->first()->client_name }}</td>
+                                    <td>{{$consultation_type[$record->consultation_type] }}</td>
+                                    <td>{{ $record->complaint }}</td>
+                                    <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('soap.view', ['id' => $record->petID, 'recordID' => $record->id])}}">Open</a>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>

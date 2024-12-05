@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clients;
+use App\Models\PetRecords;
 use App\Models\Pets;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
@@ -83,11 +84,12 @@ class DoctorController extends Controller
         $doctor = Doctor::getDoctorById($id);
         $clients = Clients::getAllClients();
         $pets = Pets::getAllPets();
+        $records = PetRecords::where('doctorID', $id)->get();
 
 
 
         // Pass the combined user and doctor information to the view
-        return view('doctors.profile', ['doctor' => $doctor, 'clients' => $clients, 'pets' => $pets]);
+        return view('doctors.profile', ['doctor' => $doctor, 'clients' => $clients, 'pets' => $pets, 'records' => $records]);
     }
 
     public function show(string $id)

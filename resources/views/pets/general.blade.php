@@ -462,7 +462,7 @@
                                     |
                                     {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                                 </td>
-                                <td>AppointentID</td>
+                                <td>{{ sprintf("VetISAPT-%05d", $appointment->id)}}</td>
 
                                 <td>{{$appointment->purpose}}</td>
 
