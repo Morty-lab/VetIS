@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        Stocks::factory()->count(10)->create();
+//        Stocks::factory()->count(10)->create();
 //
 
 
