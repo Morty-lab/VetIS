@@ -52,13 +52,14 @@ class ProductsController extends Controller
     {
 
         $data = [
-
             'product_name' => $request->product_name,
             'price' => $request->price,
             'product_category' => $request->category,
             'unit' => $request->unit
         ];
-        Products::createProduct($data);
+        $product = Products::createProduct($data);
+
+
         return redirect()->route('products.index');
     }
 

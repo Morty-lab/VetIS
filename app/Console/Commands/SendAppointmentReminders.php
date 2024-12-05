@@ -37,7 +37,7 @@ class SendAppointmentReminders extends Command
 
 
         try {
-            $tomorrow = Carbon::now('UTC')->addDays(2)->format('Y-m-d');
+            $tomorrow = Carbon::now()->addDay()->format('Y-m-d');
             $startTime = '08:00:00';  // 8 AM
             $endTime = '17:00:00';    // 5 PM
             // Get all appointments scheduled for tomorrow

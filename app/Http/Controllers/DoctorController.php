@@ -44,7 +44,6 @@ class DoctorController extends Controller
             'phone_number' => 'required',
             'birthday' => 'required|date',
             'position' => 'required',
-            'username' => 'required',
             'password' => 'required|min:8',
             'profile_picture' => 'nullable|image',
         ]);
@@ -54,7 +53,7 @@ class DoctorController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->username,
+            'name' => $request->firstname. " " .$request->lastname,
             'email' => $request->email,
             'role' => "veterinarian",
             'password' => Hash::make($request->password),
@@ -120,6 +119,7 @@ class DoctorController extends Controller
             'phone_number' => 'required|max:20',
             'birthday' => 'required|date',
             'position' => 'required|max:255',
+            'license_number' => 'required|max:255',
 
         ]);
 
@@ -135,6 +135,7 @@ class DoctorController extends Controller
             'phone_number' => $validatedData['phone_number'],
             'birthday' => $validatedData['birthday'],
             'position' => $validatedData['position'],
+            'license_number' => $validatedData['license_number']
         ]);
 
         // Find the associated user by user_id

@@ -49,6 +49,7 @@ class AppointmentsController extends Controller
         $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
 
+
         $data = [
             'subject' => 'Appointment Approved',
             'content' => "Dear $client->client_name,\n\n" .

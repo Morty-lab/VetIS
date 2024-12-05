@@ -17,11 +17,11 @@
                         <input class="form-control" id="inputProductName" type="text" placeholder="Product Name"
                             value="" name="product_name">
                     </div>
-                    <div class="col-md-12">
-                        <label class="small mb-1" for="inputProductSKU">SKU</label>
-                        <input class="form-control" id="inputProductSKU" type="number" placeholder="Product SKU"
-                            value="" name="product_sku">
-                    </div>
+{{--                    <div class="col-md-12">--}}
+{{--                        <label class="small mb-1" for="inputProductSKU">SKU</label>--}}
+{{--                        <input class="form-control" id="inputProductSKU" type="number" placeholder="Product SKU"--}}
+{{--                            value="" name="product_sku">--}}
+{{--                    </div>--}}
                     {{-- <div class="mb-3">--}}
                     {{-- <label class="small mb-1" for="selectSupplier">Supplier</label>--}}
                     {{-- <select class="form-control" id="selectSupplier" name="supplier">--}}
@@ -187,11 +187,13 @@
                                                     {{$stockP->expiry_date ?? 'No Expiry'}}
                                                 </td>
                                                 <td>
-                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
+                                                    Php {{$product->price}}
                                                 </td>
 
                                                 <td>
-                                                    Php {{$product->price}}
+
+                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
+
                                                 </td>
                                                 <td>
                                                     Php {{$stockP->price}}

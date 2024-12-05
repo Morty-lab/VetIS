@@ -433,7 +433,7 @@
                                                     id="dropdownMenuButton" type="button"
                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false"
-                                                    disabled>{{($record->status == 1) ? "Filled" : "Ongoing"}}
+                                                    >{{($record->status == 1) ? "Filled" : "Ongoing"}}
                                                 </button>
                                                 <div class="select-dropdown-menu dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton">
@@ -549,8 +549,7 @@
                                 <div class="card-body">
                                     <textarea name="examination" id="examinationTextArea"
                                         cols="30" rows="10"
-                                        class="form-control w-full">
-                                        @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}
+                                        class="form-control w-full">@if(isset($examination))  Heart Rate: {{$examination->heart_rate}}
                                             Respiration Rate: {{$examination->respiration_rate}}
                                             Weight: {{$examination->weight}}
                                             Length: {{$examination->length}}
@@ -559,8 +558,7 @@
                                             Lymph Nodes: {{$examination->lymph_nodes}}
                                             Palpebral Reflex: {{$examination->palpebral_reflex}}
                                             Temperature: {{$examination->temperature}}
-                                        @endif
-                                    </textarea>
+                                        @endif</textarea>
                                 </div>
                             </div>
                         </div>
@@ -646,15 +644,13 @@
                                     @endphp
                                     <textarea name="diagnosis" id="diagnosisTextArea" cols="30"
                                         rows="10"
-                                        class="form-control w-full">
-                                    @if ($diagnosisData)
+                                        class="form-control w-full">@if ($diagnosisData)
 
                                         @foreach ($diagnosisData as $key => $value)
                                            {{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}
                                         @endforeach
 
-                                    @endif
-                                    </textarea>
+                                    @endif</textarea>
                                 </div>
                             </div>
                         </div>
@@ -673,9 +669,7 @@
                                 <div class="card-header">Prescription</div>
                                 <div class="card-body"><textarea name="prescription" id="prescriptionTextArea"
                                         cols="30" rows="10"
-                                        class="form-control w-full">
-                                    {{$diagnosis->prescription ?? ''}}
-                                    </textarea></div>
+                                        class="form-control w-full">{{$diagnosis->prescription ?? ''}}</textarea></div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -684,9 +678,7 @@
                                 <div class="card-body"><textarea name="client_communication"
                                         id="clientCommunicationTextArea" cols="30"
                                         rows="10"
-                                        class="form-control w-full">
-                                    {{$diagnosis->client_communication ?? ''}}
-                                    </textarea></div>
+                                        class="form-control w-full">{{$diagnosis->client_communication ?? ''}}</textarea></div>
                             </div>
                         </div>
                     </div>
