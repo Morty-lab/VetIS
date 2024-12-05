@@ -50,14 +50,14 @@
             </div>
             <div class=" text-end">
                 <h2 class="mb-0">Products List Report</h2>
-                <p>December 12, 2024</p>
+                <p>{{\Carbon\Carbon::now()->format('F d, Y')}}</p>
             </div>
         </div>
         <hr class="mb-3">
         <table class="table">
             <thead>
                 <tr>
-                    <th>SKU</th>
+                    <th>Product ID</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Unit</th>
@@ -66,14 +66,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>VetIS-00001</td>
-                    <td>Turtle Tank Filter </td>
-                    <td>Supplements</td>
-                    <td>Bottles</td>
-                    <td>₱85.37</td>
-                    <td>No stocks available</td>
+            @foreach($products as $product)
+                @php
+                    $stock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                @endphp
+                <tr data-index="0">
+                    <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                    <td>{{$product->product_name}}</td>
+                    <td>
+                        {{\App\Models\Category::where('id', $product->product_category)->first()->category_name}}
+                    </td>
+                    <td>
+                        {{\App\Models\Unit::where('id', $product->unit)->first()->unit_name}}
+                    </td>
+                    <td>
+                        Php {{$product->price}}
+                    </td>
+
+                    <td>
+                        {{$stock ?? "No stocks available"}}
+                    </td>
+
                 </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

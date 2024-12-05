@@ -50,7 +50,7 @@
             </div>
             <div class=" text-end">
                 <h2 class="mb-0">Item Stock Report</h2>
-                <p class="text-primary">Turtle Tank Filter</p>
+                <p class="text-primary">{{\App\Models\Products::where('id',$productId)->first()->product_name}}</p>
             </div>
         </div>
         <hr class="mb-3">
@@ -58,26 +58,27 @@
             <thead>
                 <tr>
                     <th>Stock ID</th>
-                    <th>SKU</th>
-                    <th>Product Name</th>
                     <th>Expiry Date</th>
                     <th>Supplier</th>
                     <th>Supplier Price</th>
                     <th>SRP</th>
-                    <th>Stocks</th>
+                    <th>Stocks Purchased</th>
+                    <th>Stocks Left</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>STK-0001</td>
-                    <td>4342984</td>
-                    <td>Turtle Tank Filter</td>
-                    <td>2025-09-12</td>
-                    <td>Schinner, Becker and Schmeler</td>
-                    <td>Php 85.37</td>
-                    <td>Php 61.93</td>
-                    <td>22 Capsules</td>
-                </tr>
+                @foreach($stocks as $stock)
+                    <tr>
+                        <td>{{ sprintf("STK-%05d", $stock->id)}}</td>
+                        <td>{{ $stock->expiry_date ?? 'No Expiry Date' }}</td>
+                        <td>{{ \App\Models\Suppliers::where('id', $stock->supplier_id)->first()->supplier_name }}</td>
+                        <td>Php {{$stock->price}}</td>
+                        <td>Php {{\App\Models\Products::where('id', $productId)->first()->price}}</td>
+                        <td>{{$stock->stock. ' ' . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
+                        <td>{{$stock->stock - $stock->subtracted_stock. ' ' . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
+                    </tr>
+                @endforeach
+
             </tbody>
         </table>
     </div>

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Products;
+use App\Models\Stocks;
+use App\Models\Suppliers;
+use App\Models\TransactionDetailsModel;
 use App\Models\TransactionModel;
 use Illuminate\Http\Request;
 
@@ -20,33 +24,69 @@ class ReportController extends Controller
      */
     public function pos()
     {
-        $sales = TransactionModel::all();
-        $monthlyReports = [];
+        $dailySales = TransactionModel::getDailySalesReport();
+        $monthlyReports = TransactionModel::getMonthlySalesReport();
 
-        // Loop through all sales and group them by month and year
-        foreach ($sales as $sale) {
-            // Format the month and year (e.g., December 2024)
-            $monthYear = $sale->created_at->format('F Y');
+//        dd($dailySales);
 
-            // If the month doesn't exist in the array, initialize it
-            if (!isset($monthlyReports[$monthYear])) {
-                $monthlyReports[$monthYear] = [
-                    'itemsSold' => 0,
-                    'totalSales' => 0,
-                    'totalRevenue' => 0
-                ];
-            }
+        return view('reports.posSalesReport.posSales',[ 'sales' => $dailySales,
+            'monthlyReports' => $monthlyReports,]);
+    }
 
-            // Get the number of items sold for this sale
-            $itemsSold = TransactionModel::getItemCount($sale->id);
+    public function printDaily(Request $request){
+        // Get today's date
+        $date = request('date');
 
-            // Add the items sold, total sales, and total revenue to the corresponding month
-            $monthlyReports[$monthYear]['itemsSold'] += $itemsSold;
-            $monthlyReports[$monthYear]['totalSales'] += $sale->sub_total;
-            $monthlyReports[$monthYear]['totalRevenue'] += ($sale->sub_total - ($sale->sub_total * ($sale->total_discount / 100)));
-        }
+        // Fetch all transaction details from today
+        $sales = TransactionDetailsModel::whereDate('created_at', $date)->get();
 
-        return view('reports.posSalesReport.posSales',['sales'=>$sales, 'monthlyReports'=>$monthlyReports]);
+        // Fetch all products and suppliers for reference
+        $products = Products::all();
+        $suppliers = Suppliers::all();
+        $stocks = Stocks::all();
+
+        // Pass data to the view
+        return view('reports.documents.posdaily', ['sales'=>$sales, 'products' =>$products, 'suppliers'=>$suppliers, 'stocks'=>$stocks,'date'=>$date]);
+    }
+
+    public function printMonthly(Request $request){
+        $date = request('date');
+
+        $sales = TransactionModel::getDailySalesReport();
+
+        return view('reports.documents.posMonthly', ['sales'=>$sales, 'date'=>$date]);
+    }
+
+
+    public function inventory(){
+        $products = Products::all();
+
+        return view('reports.inventoryReport.inventoryReport', ['products' => $products]);
+    }
+    public function printProductList(){
+        $products = Products::all();
+
+
+        return view('reports.documents.productsList', ['products' => $products]);
+    }
+
+    public function printStockList(){
+        $stocks = Stocks::getAllStocksByProductId(request('product_id'));
+
+        return view('reports.documents.itemStock', ['stocks' => $stocks,'productId'=>request('product_id')]);
+    }
+
+    public function printStockListAll(){
+        $stocks = Stocks::all();
+
+        return view('reports.documents.allStock', ['stocks' => $stocks]);
+    }
+
+    public function printLowStock(){
+        $products = Products::all();
+
+        return view('reports.documents.lowStockList', ['products' => $products]);
+
     }
 
     /**

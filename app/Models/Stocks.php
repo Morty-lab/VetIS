@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,8 @@ class Stocks extends Model
     'products_id',
     'supplier_id',
     'user_id',
-    'expiry_date'
+    'expiry_date',
+    'subtracted_stock'
 ];
 
 
@@ -56,11 +58,11 @@ class Stocks extends Model
             // If the required stock is less than or equal to the current stock
             if ($requiredStock <= $productStock->stock) {
                 // Subtract the required stock from the current stock
-                $productStock->stock -= $requiredStock;
+                $productStock->subtracted_stock += $requiredStock;
                 $productStock->save();
 
                 // Mark as inactive if the stock reaches zero
-                if ($productStock->stock == 0) {
+                if ($productStock->subtracted_stock == $productStock->stock) {
                     $productStock->status = 0;
                     $productStock->save();
                 }
@@ -71,7 +73,7 @@ class Stocks extends Model
 
             // If the required stock exceeds the current stock
             $requiredStock -= $productStock->stock; // Reduce the remaining required stock
-            $productStock->stock = 0; // Deplete the current stock
+            $productStock->subtracted_stock = $productStock->stock; // Deplete the current stock
             $productStock->status = 0; // Mark as inactive
             $productStock->save();
         }

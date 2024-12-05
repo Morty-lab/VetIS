@@ -70,7 +70,7 @@ class ProductsController extends Controller
             'products_id' => $id,
             'supplier_id' => $request->supplier,
             'stock' => $request->stock,
-            'price' => 21,
+            'price' => $request->stockPrice ,
             'status' => 1,
             'unit' => $request->unit,
             'expiry_date' => $request->expiry_date

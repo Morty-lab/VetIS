@@ -202,7 +202,7 @@ function handlePayment() {
     event.preventDefault();
 
     const cashGivenInput = document.getElementById("cashGivenInput");
-    const grandTotal = grand_total;
+    const grandTotal = Number(grand_total.replace(/,/g, ''));
     const customerId = customerID;
     const subtotal = document.querySelector(".sub-total").textContent;
     const products = Items;
@@ -223,8 +223,10 @@ function handlePayment() {
         cash.textContent = cashGivenInput.value;
         change.style.display = "block";
         cashgivvendiv.style.display = 'none';
-        change_cash.textContent =  (cashGivenInput.value - grand_total).toFixed(2);
+        change_cash.textContent =  (cashGivenInput.value - grandTotal).toFixed(2);
 
+        console.log(cashGivenInput.value)
+        console.log(grandTotal)
 
 
         setTimeout(() => {

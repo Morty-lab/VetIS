@@ -138,6 +138,7 @@ return new class extends Migration
             $table->unsignedBigInteger("supplier_id");
             $table->unsignedBigInteger("user_id");
             $table->integer("stock");
+            $table->integer('subtracted_stock')->default(0);
             $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();

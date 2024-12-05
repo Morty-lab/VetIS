@@ -223,7 +223,7 @@
                 </thead>
                 <tbody>
                     @foreach ($appointments as $appointment)
-                     @if($appointment->appointment_date == \Carbon\Carbon::today()->format('Y-m-d'))
+                     @if($appointment->status === 0)
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}

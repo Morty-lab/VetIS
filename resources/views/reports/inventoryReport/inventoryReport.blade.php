@@ -42,27 +42,34 @@
                     <th>Actions</th>
                 </thead>
                 <tbody>
+                @foreach($products as $product)
+                    @php
+                        $stock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                    @endphp
                     <tr data-index="0">
-                        <td>VetIS-00001</td>
-                        <td>Turtle Tank Filter</td>
+                        <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                        <td>{{$product->product_name}}</td>
                         <td>
-                            Supplements
+                            {{\App\Models\Category::where('id', $product->product_category)->first()->category_name}}
                         </td>
                         <td>
-                            Bottles
+                            {{\App\Models\Unit::where('id', $product->unit)->first()->unit_name}}
                         </td>
                         <td>
-                            Php 85.37
+                            Php {{$product->price}}
                         </td>
                         <td>
-                            <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
+                            <div class="badge {{$stock ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock ? 'Available' : 'Unavailable'}}</div>
                         </td>
                         <td>
-                            No stocks available </td>
+                            {{$stock ?? "No stocks available"}}
+                        </td>
                         <td>
-                            <a class="btn btn-datatable btn-outline-primary px-5 py-3" href="{{route('reports.inventory.itemStock')}}" target="_blank"><i class="fa-solid fa-print"></i></a>
+                            <a class="btn btn-datatable btn-outline-primary px-5 py-3" href="{{route('reports.inventory.itemStock',['product_id'=>$product->id])}}" target="_blank"><i class="fa-solid fa-print"></i></a>
                         </td>
                     </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>
