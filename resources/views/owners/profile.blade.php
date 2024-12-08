@@ -38,7 +38,12 @@ Clients::setEmailAttribute($client, $client->user_id);
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="editBirthday">Birthday</label>
-                        <input type="date" class="form-control" name="birthday" id="editBirthday" value="{{ \Carbon\Carbon::parse($client->client_birthday)->format('Y-m-d') }}">
+                        <input type="date" class="form-control"
+                            name="birthday"
+                            id="editBirthday"
+                            value="{{ \Carbon\Carbon::parse($client->client_birthday)->format('Y-m-d') }}"
+                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+
                     </div>
                     <div class="col-md-12">
                         <label class="small mb-1" for="editAddress">Address</label>
@@ -106,7 +111,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editBirthday">Birthday</label>
-                            <input type="date" class="form-control" name="owner_bday" id="editBirthday" value="{{ \Carbon\Carbon::parse($client->client_birthday)->format('Y-m-d') }}">
+                            <input type="date" class="form-control" name="owner_bday" id="editBirthday" value="{{ \Carbon\Carbon::parse($client->client_birthday)->format('Y-m-d') }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
@@ -120,26 +125,26 @@ Clients::setEmailAttribute($client, $client->user_id);
                             <label class="small mb-1" for="editPhone">Phone number</label>
                             <input type="text" class="form-control" name="owner_no" id="" value="{{$client->client_no}}">
                         </div>
-{{--                        <div class="col-md-12">--}}
-{{--                            <label class="small mb-1" for="editUsername">Username</label>--}}
-{{--                            <input type="text" class="form-control" name="owner_username" id="" value="" placeholder="Enter username">--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-12 mt-4">--}}
-{{--                            <h6 class="text-primary">Change Password</h6>--}}
-{{--                            <hr class="mt-1 mb-0">--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-12">--}}
-{{--                            <label class="small mb-1" for="editOldPassword">Old Password</label>--}}
-{{--                            <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-6">--}}
-{{--                            <label class="small mb-1" for="updateNewPassword">New Password</label>--}}
-{{--                            <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-6">--}}
-{{--                            <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>--}}
-{{--                            <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">--}}
-{{--                        </div>--}}
+                        {{-- <div class="col-md-12">--}}
+                        {{-- <label class="small mb-1" for="editUsername">Username</label>--}}
+                        {{-- <input type="text" class="form-control" name="owner_username" id="" value="" placeholder="Enter username">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-12 mt-4">--}}
+                        {{-- <h6 class="text-primary">Change Password</h6>--}}
+                        {{-- <hr class="mt-1 mb-0">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-12">--}}
+                        {{-- <label class="small mb-1" for="editOldPassword">Old Password</label>--}}
+                        {{-- <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-6">--}}
+                        {{-- <label class="small mb-1" for="updateNewPassword">New Password</label>--}}
+                        {{-- <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">--}}
+                        {{-- </div>--}}
+                        {{-- <div class="col-md-6">--}}
+                        {{-- <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>--}}
+                        {{-- <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">--}}
+                        {{-- </div>--}}
                     </div>
                     {{-- <div class="row">--}}
                     {{-- <div class="col-md-6 mb-2">--}}
@@ -212,7 +217,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to @if($client->status == true)disable  @else enable @endif this account?</p>
+                    <p>Are you sure you want to @if($client->status == true)disable @else enable @endif this account?</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button>
@@ -280,7 +285,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                                 <div class="col-md-3">
                                     <label class="small mb-1">Status</label>
                                     <div>
-                                        @if($client->status ==  true)
+                                        @if($client->status == true)
                                         <p class="badge bg-primary-soft text-primary rounded-pill">Active</p>
                                         @else
                                         <p class="badge bg-orange-soft text-orange rounded-pill">Disabled</p>
@@ -422,14 +427,14 @@ Clients::setEmailAttribute($client, $client->user_id);
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($billing as $bill)
+                            @foreach($billing as $bill)
                             <tr>
                                 <td>{{ sprintf("VetISBILL-%05d", $bill->id)}} </td>
                                 <td>{{$bill->created_at}}</td>
                                 <td>{{$pets->find($bill->pet_id)->pet_name ?? 'Unknown Pet'}}</td>
                                 <td>
                                     @php
-                                     $serviceCount = \App\Models\BillingServices::where('billing_id', $bill->id)->count();
+                                    $serviceCount = \App\Models\BillingServices::where('billing_id', $bill->id)->count();
                                     @endphp
                                     {{$serviceCount}}
                                 </td>
@@ -437,9 +442,9 @@ Clients::setEmailAttribute($client, $client->user_id);
                                 <td>₱ {{$bill->total_paid}}</td>
                                 <td>
                                     @if($bill->total_payable - $bill->total_paid == 0)
-                                        <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
+                                    <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
                                     @else
-                                        <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
+                                    <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
                                     @endif
                                 </td>
                                 <td>
@@ -449,7 +454,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                                     <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('billing.view',['billingID' => $bill->id])}}">Open</a>
                                 </td>
                             </tr>
-                        @endforeach
+                            @endforeach
 
                         </tbody>
                     </table>

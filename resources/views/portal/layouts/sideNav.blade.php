@@ -7,6 +7,10 @@
                 <div class="nav-link-icon"><i class="fa-solid fa-house"></i></div>
                 Dashboard
             </a>
+            <a class="nav-link {{ request()->routeIs('portal.vets*') ? 'active' : '' }}" href="{{ route('portal.vets') }}">
+                <div class="nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                Veterinarians
+            </a>
             <a class="nav-link {{ request()->routeIs('portal.mypets*') ? 'active' : '' }}" href="{{ route('portal.mypets') }}">
                 <div class="nav-link-icon"><i class="fa-solid fa-paw"></i></div>
                 My Pets

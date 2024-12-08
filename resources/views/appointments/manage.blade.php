@@ -22,7 +22,7 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" />
+                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
@@ -223,7 +223,7 @@
                 </thead>
                 <tbody>
                     @foreach ($appointments as $appointment)
-                     @if($appointment->status === 0)
+                    @if($appointment->status === 0)
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
@@ -232,7 +232,7 @@
                         <td>{{ $appointment->client->client_name }}</td>
                         <td>{{ $appointment->pet->pet_name }}</td>
                         <td>{{ $appointment->pet->pet_type }}</td>
-                        <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
+                        <td>Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
                         <td>{{ $appointment->purpose }}</td>
                         <td>
 
@@ -265,7 +265,7 @@
                     {{-- @else--}}
                     {{-- @continue--}}
 
-                     @endif
+                    @endif
 
                     @endforeach
 
@@ -328,7 +328,7 @@
             document.getElementById("inputPetype").value = selectedPet.pet_type;
             document.getElementById("inputPetBreed").value = selectedPet.pet_breed;
             @foreach($pets as $pet)
-            if (selectedPetId == '{{$pet->id}}'){
+            if (selectedPetId == '{{$pet->id}}') {
                 document.getElementById("inputPetAge").value = '{{ $pet->age }}'; // Using the getAgeAttribute function
 
             }

@@ -38,7 +38,7 @@
 <body class="bg-white">
     <div class="printable mt-3 mb-3">
         <div class="d-flex justify-content-between">
-            <h1>VetIS</h1>
+            <h1>PetHub</h1>
             <button class="btn btn-primary" onclick="window.print()">Print Report</button>
         </div>
     </div>
@@ -66,9 +66,9 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($products as $product)
+                @foreach($products as $product)
                 @php
-                    $stock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                $stock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
                 @endphp
                 <tr data-index="0">
                     <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
@@ -88,7 +88,7 @@
                     </td>
 
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -38,10 +38,31 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $role = $request->user()->role;
+
         // Check the user's role and redirect accordingly
-        $redirectRoute = $request->user()->role === 'client'
-            ? RouteServiceProvider::HOME_CLIENT
-            : RouteServiceProvider::HOME_ADMIN;
+        switch ($role) {
+            case 'client':
+                $redirectRoute = RouteServiceProvider::HOME_CLIENT;
+                break;
+
+            case 'veterinarian':
+                $redirectRoute = RouteServiceProvider::HOME_VETERINARIAN;
+                break;
+
+            case 'staff':
+                $redirectRoute = RouteServiceProvider::HOME_STAFF;
+                break;
+            case 'secretary':
+                $redirectRoute = RouteServiceProvider::HOME_SECRETARY;
+                break;
+            case 'cashier':
+                $redirectRoute = RouteServiceProvider::HOME_CASHIER;
+                break;
+            default:
+                $redirectRoute = RouteServiceProvider::HOME_ADMIN;
+                break;
+        }
 
         return redirect()->intended($redirectRoute);
     }
