@@ -91,7 +91,7 @@
                             <!-- Form Group (Birthday) -->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                <input class="form-control @error('birthday') is-invalid @enderror" id="inputBirthday" name="birthday" type="date" value="" />
+                                <input class="form-control @error('birthday') is-invalid @enderror" id="inputBirthday" name="birthday" type="date" value="" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                                 @error('birthday')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

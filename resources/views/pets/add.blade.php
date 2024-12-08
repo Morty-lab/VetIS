@@ -93,14 +93,14 @@
                                 <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color" />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight</label>
-                                <input class="form-control" id="inputWeight" type="text" value="" placeholder="Weight" name="pet_weight" />
+                                <label class="small mb-1" for="inputWeight">Weight (kg)</label>
+                                <input class="form-control" id="inputWeight" type="number" value="" placeholder="Weight (kg)" name="pet_weight" step="0.01" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" />
+                                <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
@@ -241,23 +241,27 @@
 
 
         @if(isset($clientID))
-            var selectedClient = clients.find(client => client.id == {{$clientID}});
+        var selectedClient = clients.find(client => client.id == {
+            {
+                $clientID
+            }
+        });
 
+        console.log(selectedClient)
+        document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
+        document.getElementById('ownerContact').value = selectedClient.client_no;
+        document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
+
+        @else
+        var selectedClientId = document.getElementById('inputOwnerName').value;
+        var selectedClient = clients.find(client => client.id == selectedClientId);
+
+        if (selectedClient) {
             console.log(selectedClient)
             document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
             document.getElementById('ownerContact').value = selectedClient.client_no;
             document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
-
-        @else
-            var selectedClientId = document.getElementById('inputOwnerName').value;
-            var selectedClient = clients.find(client => client.id == selectedClientId);
-
-            if (selectedClient) {
-                console.log(selectedClient)
-                document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
-                document.getElementById('ownerContact').value = selectedClient.client_no;
-                document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
-            }
+        }
         @endif
 
 

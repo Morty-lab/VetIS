@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputWeight">Weight</label>
-                                <p>{{$pet->pet_weight}}</p>
+                                <p>{{$pet->pet_weight}}kg</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
@@ -218,9 +218,9 @@
 <div class="col-md-12">
     <div class="card shadow-none border mb-4">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span>
-{{--            <div class="">--}}
-{{--                <a class="btn btn-primary">Book Appointment</a>--}}
-{{--            </div>--}}
+            {{-- <div class="">--}}
+            {{-- <a class="btn btn-primary">Book Appointment</a>--}}
+            {{-- </div>--}}
         </div>
         <div class="card-body">
             <table id="petScheduledAppointmentsTable">

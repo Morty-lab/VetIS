@@ -34,7 +34,7 @@
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editDOB">Birthdate</label>
-                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}">
+                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
@@ -116,7 +116,7 @@
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editDOB">Birthdate</label>
-                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}">
+                            <input type="date" class="form-control" name="birthday" id="editBirthdate" placeholder="MM/DD/YYYY" value="{{ $doctor->birthday }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
@@ -441,27 +441,27 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                             </tr>
                         </thead>
                         <tbody>
-                                @php
-                                    $consultation_type = [
-                                    1=> "Walk-In" ,
-                                    2=> "Consultation" ,
-                                    3=> "Vaccination",
-                                    4=> "Surgery"
-                                    ];
-                                @endphp
-                                @foreach($records as $record)
+                            @php
+                            $consultation_type = [
+                            1=> "Walk-In" ,
+                            2=> "Consultation" ,
+                            3=> "Vaccination",
+                            4=> "Surgery"
+                            ];
+                            @endphp
+                            @foreach($records as $record)
 
-                                <tr>
-                                    <td>{{$record->created_at}}</td>
-                                    <td>{{ sprintf("VetIS-%05d", $record->id)}}</td>
-                                    <td>{{\App\Models\Pets::where('id',$record->petID)->first()->pet_name}}</td>
-                                    <td>{{ \App\Models\Clients::where('id',$record->ownerID)->first()->client_name }}</td>
-                                    <td>{{$consultation_type[$record->consultation_type] }}</td>
-                                    <td>{{ $record->complaint }}</td>
-                                    <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('soap.view', ['id' => $record->petID, 'recordID' => $record->id])}}">Open</a>
-                                </tr>
+                            <tr>
+                                <td>{{$record->created_at}}</td>
+                                <td>{{ sprintf("VetIS-%05d", $record->id)}}</td>
+                                <td>{{\App\Models\Pets::where('id',$record->petID)->first()->pet_name}}</td>
+                                <td>{{ \App\Models\Clients::where('id',$record->ownerID)->first()->client_name }}</td>
+                                <td>{{$consultation_type[$record->consultation_type] }}</td>
+                                <td>{{ $record->complaint }}</td>
+                                <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('soap.view', ['id' => $record->petID, 'recordID' => $record->id])}}">Open</a>
+                            </tr>
                             @endforeach
 
                         </tbody>

@@ -21,18 +21,18 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" value="{{$appointment->appointment_date}}"/>
+                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" value="{{$appointment->appointment_date}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" value="{{$appointment->appointment_time}}"/>
+                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" value="{{$appointment->appointment_time}}" />
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
                             <select class="form-control" id="vetSelect" name="doctor_ID">
                                 @foreach ($vets as $vet)
-                                    <option class="form-control"
-                                            value={{ $vet->id }} {{$appointment->doctor_ID === $vet->id ?? 'selected' }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                <option class="form-control"
+                                    value={{ $vet->id }} {{$appointment->doctor_ID === $vet->id ?? 'selected' }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -199,7 +199,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
                                     @php
-                                        $vet = \App\Models\Doctor::where('id',$appointment->doctor_ID)->first()
+                                    $vet = \App\Models\Doctor::where('id',$appointment->doctor_ID)->first()
                                     @endphp
                                     <p>{{$vet->firstname. " " . $vet->lastname}}</p>
                                 </div>

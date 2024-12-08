@@ -5,10 +5,10 @@
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">PetHub | Portal</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html"> <img class="me-0" src="{{ asset('assets/img/favicon.png') }}" alt="PetHub Logo" style=" width: 40px; height: auto; margin-right: 8px;"> PetHub | Portal</a>
     <!-- Navbar Items-->
     @php
-        $client = \App\Models\Clients::getClientByUserID(\Illuminate\Support\Facades\Auth::user()->id)
+    $client = \App\Models\Clients::getClientByUserID(\Illuminate\Support\Facades\Auth::user()->id)
     @endphp
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- User Dropdown-->

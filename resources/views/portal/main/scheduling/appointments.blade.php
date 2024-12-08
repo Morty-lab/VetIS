@@ -2,7 +2,37 @@
 @extends('portal.layouts.app')
 @section('outerContent')
 <!-- Modals -->
-<div class="modal fade" id="appointmentRequestModal" tabindex="-1" role="dialog"
+
+<!-- Modal for Veterinarian Schedule -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scheduleModalLabel">Veterinarian Schedule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="datatablesSimple" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Veterinarian</th>
+                            <th>Scheduled Time <span class="text-sm fw-200">*vets are scheduled by this time</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Table data will go here -->
+                        <tr>
+                            <td>Dr. John Doe</td>
+                            <td><span class="badge bg-orange-soft text-orange ms-auto text-sm">December 2, 2024 | 5:00PM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="appointmentRequestModal" tabindex="-1" aria-labelledby="currentModalLabel" aria-hidden="true"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -63,7 +93,7 @@
                             <div class="form-group d-flex">
                                 <label>&nbsp;</label> <!-- For spacing alignment -->
                                 <br>
-                                <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>
+                                <a href="#" class="text-decoration-underline" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-bs-dismiss="">View Veterinarian Schedule</a>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -85,16 +115,19 @@
         </div>
     </div>
 </div>
-
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const form = document.querySelector('form[action="{{route('portal.appointments.add')}}"]');
+        // Use Blade to output the route URL and assign it to a JavaScript variable
+        const formAction = "{{ route('portal.appointments.add') }}"; // Blade handles this
+        const form = document.querySelector(`form[action="${formAction}"]`);
         const submitButton = document.getElementById('submitAppointment');
 
-        form.addEventListener('submit', () => {
-            submitButton.disabled = true; // Disable the button
-            submitButton.textContent = 'Submitting...'; // Optionally, update the text
-        });
+        if (form && submitButton) {
+            form.addEventListener('submit', () => {
+                submitButton.disabled = true; // Disable the button
+                submitButton.textContent = 'Submitting...'; // Optionally, update the text
+            });
+        }
     });
 </script>
 
@@ -303,7 +336,7 @@
                     </thead>
                     <tbody>
                         @foreach($appointments as $a)
-{{--                        @if(\Carbon\Carbon::parse($a->appointment_date)->lt(\Carbon\Carbon::today()) )--}}
+                        {{-- @if(\Carbon\Carbon::parse($a->appointment_date)->lt(\Carbon\Carbon::today()) )--}}
                         @php
                         $pet = \App\Models\Pets::getPetById($a->pet_ID);
                         $vet = \App\Models\Doctor::getDoctorById($a->doctor_ID);
@@ -327,7 +360,7 @@
                                 <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$a->id, 'petid'=>$a->pet_ID])}}">Open</a>
                             </td>
                         </tr>
-{{--                        @endif--}}
+                        {{-- @endif--}}
                         @endforeach
                     </tbody>
                 </table>

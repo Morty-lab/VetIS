@@ -104,16 +104,16 @@
                                     placeholder="Color" name="pet_color" />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight</label>
-                                <input class="form-control" id="inputWeight" type="text"
-                                    value="{{ $pet->pet_weight }}" placeholder="Weight" name="pet_weight" />
+                                <label class="small mb-1" for="inputWeight">Weight (kg)</label>
+                                <input class="form-control" id="inputWeight" type="number"
+                                    value="{{ $pet->pet_weight }}" placeholder="Weight (kg)" name="pet_weight" step="0.01" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
                                 <input class="form-control" id="inputBirthdate" type="date"
-                                    value="{{ $pet->pet_birthdate }}" name="pet_birthdate" />
+                                    value="{{ $pet->pet_birthdate }}" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
@@ -146,7 +146,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1"   for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
+                                <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
                                 <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
                                     <option value='1' {{$pet->vaccinated_anti_rabies == 1 ? 'selected' : ''}}>Yes</option>
                                     <option value='0' {{$pet->vaccinated_anti_rabies == 0 ? 'selected' : ''}}>No</option>

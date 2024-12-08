@@ -8,7 +8,7 @@
     <meta name="description" content="{{ config('variables.systemDescription') ? config('variables.systemDescription') : '' }}" />
     <meta name="keywords" content="{{ config('variable.systemKeyword') ? config('variables.systemKeyword') : '' }}">
 
-    <title>Login | {{ config('variables.systemSuffix') ? config('variables.systemSuffix') : 'SystemSuffix'}}</title>
+    <title>Login | PetHub</title>
 
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
@@ -24,9 +24,9 @@
                     <div class="row justify-content-center w-100">
                         <div class="col-lg-5">
                             <!-- Basic login form-->
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card shadow-none border rounded-lg mt-5">
                                 <div class="card-header justify-content-center">
-                                    <h3 class="fw-light my-4">Welcome to VetIS</h3>
+                                    <h3 class="fw-light my-4">Welcome to PetHub</h3>
                                 </div>
                                 <div class="card-body">
                                     <!-- Login form-->
@@ -78,12 +78,7 @@
             <footer class="footer-admin mt-auto footer-light">
                 <div class="container-xl px-4">
                     <div class="row">
-                        <div class="col-md-6 small">Copyright © Your Website 2021</div>
-                        <div class="col-md-6 text-md-end small">
-                            <a href="auth-login-basic.html#!">Privacy Policy</a>
-                            ·
-                            <a href="auth-login-basic.html#!">Terms &amp; Conditions</a>
-                        </div>
+                        <div class="col-md-6 small">Copyright © PetHub 2024</div>
                     </div>
                 </div>
             </footer>

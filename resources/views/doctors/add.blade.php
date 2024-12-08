@@ -114,7 +114,7 @@
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                <input class="form-control @error('birthday') is-invalid @enderror" id="inputBirthday" name="birthday" type="date" placeholder="MM/DD/YYYY" value="" />
+                                <input class="form-control @error('birthday') is-invalid @enderror" id="inputBirthday" name="birthday" type="date" placeholder="MM/DD/YYYY" value="" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                                 @error('birthday')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -136,55 +136,56 @@
                             @enderror
                         </div>
                         <!-- Form Group (username)-->
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="small mb-1" for="inputUsername">Username</label>--}}
-{{--                            <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />--}}
-{{--                            @error('username')--}}
-{{--                            <div class="invalid-feedback">{{ $message }}</div>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (password)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPassword">Password</label>
-                                <input class="form-control @error('password') is-invalid @enderror" id="inputPassword" name="password" type="password" placeholder="Password" value="" />
-                                @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <!-- Form Group (confirm password)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="confirmPassword">Confirm Password</label>
-                                <input class="form-control @error('password_confirmation') is-invalid @enderror" id="confirmPassword" name="password_confirmation" type="password" placeholder="Confirm Password" value="" />
-                                @error('password_confirmation')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <!-- Save changes button-->
-                        <button class="btn btn-primary" id="regbtn" type="submit">Register</button>
-                    </form>
+                        {{-- <div class="mb-3">--}}
+                        {{-- <label class="small mb-1" for="inputUsername">Username</label>--}}
+                        {{-- <input class="form-control @error('username') is-invalid @enderror" id="inputUsername" name="username" type="text" placeholder="Username" value="" />--}}
+                        {{-- @error('username')--}}
+                        {{-- <div class="invalid-feedback">{{ $message }}
+                </div>--}}
+                {{-- @enderror--}}
+                {{-- </div>--}}
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                    <!-- Form Group (password)-->
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputPassword">Password</label>
+                        <input class="form-control @error('password') is-invalid @enderror" id="inputPassword" name="password" type="password" placeholder="Password" value="" />
+                        @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <!-- Form Group (confirm password)-->
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="confirmPassword">Confirm Password</label>
+                        <input class="form-control @error('password_confirmation') is-invalid @enderror" id="confirmPassword" name="password_confirmation" type="password" placeholder="Confirm Password" value="" />
+                        @error('password_confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <!-- Save changes button-->
+                <button class="btn btn-primary" id="regbtn" type="submit">Register</button>
+                </form>
 
 
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card shadow-none mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#profilePictureModal">Upload Image</button>
-                </div>
             </div>
         </div>
     </div>
+    <div class="col-xl-4">
+        <!-- Profile picture card-->
+        <div class="card shadow-none mb-4 mb-xl-0">
+            <div class="card-header">Profile Picture</div>
+            <div class="card-body text-center">
+                <!-- Profile picture image-->
+                <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
+                <!-- Profile picture help block-->
+                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                <!-- Profile picture upload button-->
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#profilePictureModal">Upload Image</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>

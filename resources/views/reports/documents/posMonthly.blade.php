@@ -38,7 +38,7 @@
 <body class="bg-white">
     <div class="printable mt-3 mb-3">
         <div class="d-flex justify-content-between">
-            <h1>VetIS</h1>
+            <h1>PetHub</h1>
             <button class="btn btn-primary" onclick="window.print()">Print Report</button>
         </div>
     </div>
@@ -65,15 +65,15 @@
             </thead>
             <tbody>
                 @foreach($sales as $sale)
-                    @if( $date === \Carbon\Carbon::parse($sale->date)->format('Y-m') )
-                    <tr>
-                        <td>{{\Carbon\Carbon::parse($sale->date)->format('F j, Y')}}</td>
-                        <td>{{$sale->items_sold}}</td>
-                        <td>₱{{ $sale->total_sales  }}</td>
-                        <td>₱{{$sale->revenue}}</td>
+                @if( $date === \Carbon\Carbon::parse($sale->date)->format('Y-m') )
+                <tr>
+                    <td>{{\Carbon\Carbon::parse($sale->date)->format('F j, Y')}}</td>
+                    <td>{{$sale->items_sold}}</td>
+                    <td>₱{{ $sale->total_sales  }}</td>
+                    <td>₱{{$sale->revenue}}</td>
 
-                    </tr>
-                    @endif
+                </tr>
+                @endif
 
                 @endforeach
 
