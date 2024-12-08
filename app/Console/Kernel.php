@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\SendAppointmentReminders;
+use App\Console\Commands\SendVaccinationReminders;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,10 +15,12 @@ class Kernel extends ConsoleKernel
 
     protected $commands = [
         SendAppointmentReminders::class,
+        SendVaccinationReminders::class,
     ];
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('appointments:send-reminders')->dailyAt('06:00');
+        $schedule->command('vaccination:send-reminders')->dailyAt('06:00');
     }
 
     /**

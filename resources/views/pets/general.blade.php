@@ -95,71 +95,6 @@
     </div>
 </div>
 
-<!-- Edit Vaccination Modal -->
-<div class="modal fade" id="editVaccination" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Vaccination</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row g-3">
-                    <div class="col-md-12">
-                        <label for="vaccineType">Vaccine Type</label>
-                        <input type="text" name="vaccineType" id="vaccineType" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="nextDueDate">Next Due Date</label>
-                        <input type="date" name="nextDueDate" id="nextDueDate" class="form-control">
-                        <div class="form-check mt-2">
-                            <input type="checkbox" class="form-check-input" id="noNextDueDate">
-                            <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="selectVeterinarian">Administered By</label>
-                        <select class="form-control" id="selectVeterinarian">
-                            <option>Kent Invento</option>
-                            <option>Jay Invento</option>
-                        </select>
-                    </div>
-                    <div class="col-md-12">
-                        <label for="selectStatus">Status</label>
-                        <select class="form-control" id="selectStatus">
-                            <option>Completed</option>
-                            <option>Ongoing</option>
-                            <option>Scheduled</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" type="button" id="editVaccinationBtn">Edit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Vaccination -->
-<!-- Delete Pet Modal -->
-<div class="modal fade" id="deleteVaccination" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Delete Vacciantion</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete this vaccination?</p>
-            </div>
-            <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button><a href="" class="btn btn-danger" type="button">Delete Vaccination</a></div>
-        </div>
-    </div>
-</div>
-
 
 <!-- View Modal -->
 @foreach($vaccinations as $vac)
@@ -210,12 +145,79 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editVaccination">Edit</button>
-                    <button href="" class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteVaccination">Delete</button>
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editVaccination-{{$vac->id}}">Edit</button>
+                    <button href="" class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteVaccination-{{$vac->id}}">Delete</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- Edit Vaccination Modal -->
+    <div class="modal fade" id="editVaccination-{{$vac->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Vaccination</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label for="vaccineType">Vaccine Type</label>
+                            <input type="text" name="vaccineType" id="vaccineType" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nextDueDate">Next Due Date</label>
+                            <input type="date" name="nextDueDate" id="nextDueDate" class="form-control">
+                            <div class="form-check mt-2">
+                                <input type="checkbox" class="form-check-input" id="noNextDueDate">
+                                <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="selectVeterinarian">Administered By</label>
+                            <select class="form-control" id="selectVeterinarian">
+                                <option>Kent Invento</option>
+                                <option>Jay Invento</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="selectStatus">Status</label>
+                            <select class="form-control" id="selectStatus">
+                                <option>Completed</option>
+                                <option>Ongoing</option>
+                                <option>Scheduled</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="button" id="editVaccinationBtn">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Vaccination -->
+    <!-- Delete Pet Modal -->
+    <div class="modal fade" id="deleteVaccination-{{$vac->id}}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Delete Vacciantion</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this vaccination?</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button><a href="" class="btn btn-danger" type="button">Delete Vaccination</a></div>
+            </div>
+        </div>
+    </div>
+
 @endforeach
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
