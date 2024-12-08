@@ -38,7 +38,7 @@
 <body class="bg-white">
     <div class="printable mt-3 mb-3">
         <div class="d-flex justify-content-between">
-            <h1>VetIS</h1>
+            <h1>PetHub</h1>
             <button class="btn btn-primary" onclick="window.print()">Print Report</button>
         </div>
     </div>
@@ -68,15 +68,15 @@
             </thead>
             <tbody>
                 @foreach($stocks as $stock)
-                    <tr>
-                        <td>{{ sprintf("STK-%05d", $stock->id)}}</td>
-                        <td>{{ $stock->expiry_date ?? 'No Expiry Date' }}</td>
-                        <td>{{ \App\Models\Suppliers::where('id', $stock->supplier_id)->first()->supplier_name }}</td>
-                        <td>Php {{$stock->price}}</td>
-                        <td>Php {{\App\Models\Products::where('id', $productId)->first()->price}}</td>
-                        <td>{{$stock->stock. ' ' . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
-                        <td>{{$stock->stock - $stock->subtracted_stock. ' ' . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
-                    </tr>
+                <tr>
+                    <td>{{ sprintf("STK-%05d", $stock->id)}}</td>
+                    <td>{{ $stock->expiry_date ?? 'No Expiry Date' }}</td>
+                    <td>{{ \App\Models\Suppliers::where('id', $stock->supplier_id)->first()->supplier_name }}</td>
+                    <td>Php {{$stock->price}}</td>
+                    <td>Php {{\App\Models\Products::where('id', $productId)->first()->price}}</td>
+                    <td>{{$stock->stock. ' ' . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
+                    <td>{{$stock->stock - $stock->subtracted_stock. ' ' . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
+                </tr>
                 @endforeach
 
             </tbody>

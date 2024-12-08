@@ -62,9 +62,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', function () {
+        return view('profile.view');
+    })->name("profile.view");
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Pets
     Route::get('/addpet', [PetsController::class, 'create'])->name('pet.create');
@@ -92,6 +95,9 @@ Route::middleware('auth')->group(function () {
     Route::post('petinfo/{id}/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
+    Route::get('/petinfo/soap/print', function () {
+        return view('reports.documents.soap');
+    })->name("soap.print");
 
     // sub routes Pet Plan
     Route::post('/soap/plan/{recordID}/addservice', [PetPlanController::class, 'store'])->name('plan.store');
@@ -334,6 +340,10 @@ Route::get('/portal/register', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/portal/dashboard', [PortalController::class, 'index'])->name(name: "portal.dashboard");
 
+    Route::get('/portal/veterinarians', function () {
+        return view('portal.main.vets.vetsList');
+    })->name(name: "portal.vets");
+
     Route::get('/portal/mypets', [PortalController::class, 'myPets'])->name(name: "portal.mypets");
 
     Route::get('/portal/mypets/register', function () {
@@ -363,19 +373,17 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/reports', [ReportController::class, 'index'])->name("reports.index");
-
 Route::get('/reports/pos/', [ReportController::class, 'pos'])->name("reports.pos");
-
-Route::get('/reports/pos/daily-sales/print',[ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
-Route::get('/reports/pos/monthly-sales/print', [ReportController::class , 'printMonthly'])->name("reports.pos.monthly.reports");
+Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
+Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
 
 // Inventory Reports
 Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
 Route::get('/reports/inventory/products-list/print', [ReportController::class, 'printProductList'])->name("reports.inventory.productsList");
 
-Route::get('/reports/inventory/item-stock/print', [ReportController::class , 'printStockList'])->name("reports.inventory.itemStock");
+Route::get('/reports/inventory/item-stock/print', [ReportController::class, 'printStockList'])->name("reports.inventory.itemStock");
 
-Route::get('/reports/inventory/all-stock/print', [ReportController::class , 'printStockListAll'])->name("reports.inventory.allStockList");
+Route::get('/reports/inventory/all-stock/print', [ReportController::class, 'printStockListAll'])->name("reports.inventory.allStockList");
 
 Route::get('/reports/inventory/low-stock/print', [ReportController::class, 'printLowStock'])->name("reports.inventory.lowStockList");
 

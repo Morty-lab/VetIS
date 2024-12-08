@@ -50,12 +50,12 @@
 
 <body class="nav-fixed">
 
-@php
+    @php
     if (auth()->check() && auth()->user()->role === 'client') {
     header('Location: ' . route('portal.dashboard'));
     exit;
     }
-@endphp
+    @endphp
 
     <!-- Modals -->
     <!-- Quantity Modal -->
@@ -143,57 +143,57 @@
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
-{{--                                @php--}}
-{{--                                $stock = 0;--}}
-{{--                                $expiredStocks = 0;--}}
-{{--                                if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){--}}
-{{--                                $allStocks = $product->stocks;--}}
+                                {{-- @php--}}
+                                {{-- $stock = 0;--}}
+                                {{-- $expiredStocks = 0;--}}
+                                {{-- if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){--}}
+                                {{-- $allStocks = $product->stocks;--}}
 
-{{--                                foreach ($allStocks as $i){--}}
-{{--                                if( $i->expiry_date == null ){--}}
-{{--                                $stock += $i->stock;--}}
-{{--                                }--}}
+                                {{-- foreach ($allStocks as $i){--}}
+                                {{-- if( $i->expiry_date == null ){--}}
+                                {{-- $stock += $i->stock;--}}
+                                {{-- }--}}
 
-{{--                                if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){--}}
-{{--                                $stock += $i->stock;--}}
-{{--                                }--}}
+                                {{-- if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){--}}
+                                {{-- $stock += $i->stock;--}}
+                                {{-- }--}}
 
-{{--                                if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){--}}
-{{--                                    $expiredStocks +=$i->stock;--}}
-{{--                                    }--}}
-{{--                                    }--}}
-{{--                                    }--}}
-{{--                                    @endphp--}}
-{{--                                    @if($product->status == 0 || $stock == 0)--}}
-{{--                                    @continue--}}
-{{--                                    @endif--}}
-                                    <!-- <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"> -->
-                                    <!-- <tr data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#selectStockModal"> -->
-                                    @php
-                                    $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id);
-                                    $numberStocks = 0;
-                                    foreach ($stocks as $s){
-                                        if ($s->expiry_date == null || $s->expiry_date >= Carbon::today() ){
-                                            $numberStocks += $s->stock;
-                                        }
-                                    }
-                                    @endphp
-                                    @if($numberStocks)
-                                        <tr>
-                                            <td>{{ $product->id }}</td>
-                                            <td>{{ $product->product_name }}</td>
-                                            <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
-                                            <td>Product Unit</td>
-                                            <td>
-                                                {{$numberStocks}}
-                                            </td>
-                                            <td>₱{{ $product->price }}</td>
-                                            <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
-                                            <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}">Select</button></td>
-                                        </tr>
-                                    @endif
+                                {{-- if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){--}}
+                                {{-- $expiredStocks +=$i->stock;--}}
+                                {{-- }--}}
+                                {{-- }--}}
+                                {{-- }--}}
+                                {{-- @endphp--}}
+                                {{-- @if($product->status == 0 || $stock == 0)--}}
+                                {{-- @continue--}}
+                                {{-- @endif--}}
+                                <!-- <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"> -->
+                                <!-- <tr data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#selectStockModal"> -->
+                                @php
+                                $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id);
+                                $numberStocks = 0;
+                                foreach ($stocks as $s){
+                                if ($s->expiry_date == null || $s->expiry_date >= Carbon::today() ){
+                                $numberStocks += $s->stock;
+                                }
+                                }
+                                @endphp
+                                @if($numberStocks)
+                                <tr>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->product_name }}</td>
+                                    <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
+                                    <td>Product Unit</td>
+                                    <td>
+                                        {{$numberStocks}}
+                                    </td>
+                                    <td>₱{{ $product->price }}</td>
+                                    <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
+                                    <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}">Select</button></td>
+                                </tr>
+                                @endif
 
-                                    @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -476,7 +476,7 @@
 
     <nav class="topnav navbar navbar-expand border-bottom justify-content-between justify-content-sm-start navbar-light bg-white"
         id="sidenavAccordion">
-        <p class="navbar-brand px-4 fw-700">PetHub <span class="fw-400 text-gray-600">| POS Terminal</span></p>
+        <p class="navbar-brand px-4 fw-700"> <img class="me-0" src="{{ asset('assets/img/favicon.png') }}" alt="PetHub Logo" style=" width: 40px; height: auto; margin-right: 8px;"> PetHub <span class="fw-400 text-gray-600">| POS Terminal</span></p>
         <ul class="navbar-nav align-items-center ms-auto">
             <!-- User Dropdown-->
             <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">

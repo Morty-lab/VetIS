@@ -38,7 +38,7 @@
 <body class="bg-white">
     <div class="printable mt-3 mb-3">
         <div class="d-flex justify-content-between">
-            <h1>VetIS</h1>
+            <h1>PetHub</h1>
             <button class="btn btn-primary" onclick="window.print()">Print Report</button>
         </div>
     </div>
@@ -68,9 +68,9 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($stocks as $stock)
+                @foreach($stocks as $stock)
                 @php
-                 $product = \App\Models\Products::where('id', $stock->products_id)->first();
+                $product = \App\Models\Products::where('id', $stock->products_id)->first();
                 @endphp
                 <tr>
                     <td>{{sprintf("STK-%05d", $stock->id)}}</td>
@@ -81,18 +81,19 @@
                     <td>Php {{$product->price}}</td>
                     <td>{{$stock->stock - $stock->subtracted_stock . " " . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
                     <td>@if ($stock->stock - $stock->subtracted_stock <= 0)
-                            <div class="badge bg-danger-soft text-danger rounded-pill">No Stocks</div>
-                        @elseif (($stock->stock - $stock->subtracted_stock) <= ($stock->stock * 0.1))
-                            <div class="badge bg-warning-soft text-warning rounded-pill">Low Stock</div>
-                        @else
-                            <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
-                        @endif</td>
-                </tr>
-            @endforeach
-
-            </tbody>
-        </table>
+                            <div class="badge bg-danger-soft text-danger rounded-pill">No Stocks
     </div>
+    @elseif (($stock->stock - $stock->subtracted_stock) <= ($stock->stock * 0.1))
+        <div class="badge bg-warning-soft text-warning rounded-pill">Low Stock</div>
+        @else
+        <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
+        @endif</td>
+        </tr>
+        @endforeach
+
+        </tbody>
+        </table>
+        </div>
 </body>
 
 </html>

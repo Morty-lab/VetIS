@@ -36,7 +36,7 @@
     <div class="container">
         <div class="printable mt-3 mb-3">
             <div class="d-flex justify-content-between">
-                <h1>VetIS</h1>
+                <h1>PetHub</h1>
                 <button class="btn btn-primary" onclick="window.print()">Print Prescription</button>
             </div>
         </div>

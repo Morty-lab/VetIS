@@ -38,7 +38,7 @@
 <body class="bg-white">
     <div class="printable mt-3 mb-3">
         <div class="d-flex justify-content-between">
-            <h1>VetIS</h1>
+            <h1>PetHub</h1>
             <button class="btn btn-primary" onclick="window.print()">Print Report</button>
         </div>
     </div>
@@ -67,22 +67,22 @@
             </thead>
             <tbody>
                 @foreach($products as $product)
-                    @php
-                        $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
-                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock');
-                    @endphp
-                    @if(($stocks - $subtracted) <= ($stocks * 0.1))
-                        <tr>
-                            <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
-                            <td>{{ $product->product_name }} </td>
-                            <td>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
-                            <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name }}</td>
-                            <td>₱ {{$product->price}}</td>
-                            <td> {{$stocks - $subtracted ?? 'No'}} Stock/s Available</td>
-                        </tr>
+                @php
+                $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock');
+                @endphp
+                @if(($stocks - $subtracted) <= ($stocks * 0.1))
+                    <tr>
+                    <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                    <td>{{ $product->product_name }} </td>
+                    <td>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
+                    <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name }}</td>
+                    <td>₱ {{$product->price}}</td>
+                    <td> {{$stocks - $subtracted ?? 'No'}} Stock/s Available</td>
+                    </tr>
                     @endif
 
-                @endforeach
+                    @endforeach
 
             </tbody>
         </table>
