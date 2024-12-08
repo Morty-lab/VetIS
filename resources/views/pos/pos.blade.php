@@ -158,40 +158,37 @@
                                 {{-- $stock += $i->stock;--}}
                                 {{-- }--}}
 
-                                {{-- if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){--}}
-                                {{-- $expiredStocks +=$i->stock;--}}
-                                {{-- }--}}
-                                {{-- }--}}
-                                {{-- }--}}
-                                {{-- @endphp--}}
-                                {{-- @if($product->status == 0 || $stock == 0)--}}
-                                {{-- @continue--}}
-                                {{-- @endif--}}
-                                <!-- <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"> -->
-                                <!-- <tr data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#selectStockModal"> -->
-                                @php
-                                $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id);
-                                $numberStocks = 0;
-                                foreach ($stocks as $s){
-                                if ($s->expiry_date == null || $s->expiry_date >= Carbon::today() ){
-                                $numberStocks += $s->stock;
-                                }
-                                }
-                                @endphp
-                                @if($numberStocks)
-                                <tr>
-                                    <td>{{ $product->id }}</td>
-                                    <td>{{ $product->product_name }}</td>
-                                    <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
-                                    <td>Product Unit</td>
-                                    <td>
-                                        {{$numberStocks}}
-                                    </td>
-                                    <td>₱{{ $product->price }}</td>
-                                    <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
-                                    <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}">Select</button></td>
-                                </tr>
-                                @endif
+
+{{--                                if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){--}}
+{{--                                    $expiredStocks +=$i->stock;--}}
+{{--                                    }--}}
+{{--                                    }--}}
+{{--                                    }--}}
+{{--                                    @endphp--}}
+{{--                                    @if($product->status == 0 || $stock == 0)--}}
+{{--                                    @continue--}}
+{{--                                    @endif--}}
+                                    <!-- <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"> -->
+                                    <!-- <tr data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#selectStockModal"> -->
+                                    @php
+                                        $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock');
+                                    @endphp
+                                    @if($stocks - $subtracted != 0)
+                                        <tr>
+                                            <td>{{ $product->id }}</td>
+                                            <td>{{ $product->product_name }}</td>
+                                            <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
+                                            <td>Product Unit</td>
+                                            <td>
+                                                {{$stocks}}
+                                            </td>
+                                            <td>₱{{ $product->price }}</td>
+                                            <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
+                                            <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}">Select</button></td>
+                                        </tr>
+                                    @endif
+
 
                                 @endforeach
                             </tbody>

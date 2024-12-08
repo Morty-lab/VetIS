@@ -96,14 +96,13 @@
                                 </div>
                                 <div class="col flex flex-row">
                                     <div class="label">Total Stocks</div>
-                                    <p class="badge bg-primary-soft text-primary rounded-pill">
-                                        @php
-                                        $productStock = 0 ;
-                                        foreach ($product->stocks as $i){
-                                        $productStock += $i->stock;
-                                        }
-                                        @endphp
-                                        {{$productStock}}
+                                    @php
+                                        $productStock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock')
+                                    @endphp
+                                    <p class="badge {{$productStock - $subtracted == 0 ? 'bg-danger-soft text-danger' : 'bg-primary-soft text-primary'}} rounded-pill">
+
+                                        {{$productStock - $subtracted == 0 ? 'No' : $productStock - $subtracted}}
                                         Stocks Available
                                     </p>
                                 </div>
@@ -195,8 +194,8 @@
                                                     Php {{$stockP->price}}
                                                 </td>
                                                 <td>
-                                                    <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                                        {{$stockP->stock}} {{\App\Models\Unit::where('id', $stockP->unit)->first()->unit_name}}
+                                                    <span class="badge {{$stockP->stock - $stockP->subtracted_stock == 0 ? 'bg-danger-soft text-danger' : 'bg-primary-soft text-primary'}} text-sm rounded-pill">
+                                                        {{$stockP->stock - $stockP->subtracted_stock}} {{\App\Models\Unit::where('id', $stockP->unit)->first()->unit_name}}
                                                     </span>
                                                 </td>
                                                 <td>

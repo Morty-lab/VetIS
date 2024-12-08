@@ -45,6 +45,7 @@
                 @foreach($products as $product)
                     @php
                         $stock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock')
                     @endphp
                     <tr data-index="0">
                         <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
@@ -59,10 +60,10 @@
                             Php {{$product->price}}
                         </td>
                         <td>
-                            <div class="badge {{$stock ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock ? 'Available' : 'Unavailable'}}</div>
+                            <div class="badge {{$stock-$subtracted == 0  ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock-$subtracted == 0  ? 'Available' : 'Unavailable'}}</div>
                         </td>
                         <td>
-                            {{$stock ?? "No stocks available"}}
+                            {{$stock-$subtracted == 0 ? "No stocks available" : $stock-$subtracted}}
                         </td>
                         <td>
                             <a class="btn btn-datatable btn-outline-primary px-5 py-3" href="{{route('reports.inventory.itemStock',['product_id'=>$product->id])}}" target="_blank"><i class="fa-solid fa-print"></i></a>
