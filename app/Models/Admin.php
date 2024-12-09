@@ -17,7 +17,8 @@ class Admin extends Model
         'address',
         'phone_number',
         'birthday',
-        'position'
+        'position',
+        'profile_picture'
     ];
 
 

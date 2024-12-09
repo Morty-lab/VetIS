@@ -15,20 +15,19 @@
             <div class="modal-body p-0">
                 <div class="row justify-content-center align-items-center" style="height: 100%;">
                     <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
-                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                        <img class="img-account-profile rounded-circle mb-2" src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}" alt="Profile Picture" />
                     </div>
                     <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
-                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
-                        <input type="file" id="fileInput" class="d-none" accept="image/*" />
+
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Update</button>
-            </div>
+
         </div>
     </div>
 </div>
+
+
 
 <div id="successAlert" class="alert alert-primary alert-icon position-fixed bottom-0 end-0 m-3" role="alert"
     style="display: none; z-index: 100;">
@@ -231,12 +230,18 @@
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
                     <img class="img-account-profile rounded-circle mb-2"
-                        src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg"
+                         id="petPhotoPreview"
+                        src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}"
                         alt="" />
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#petPictureModal">Upload Pet Image</button>
+                    <form id="petPhotoForm" action="{{ route('pets.uploadPhoto', $pet->id) }}" method="POST" >
+                        @csrf
+
+                        <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
+                        <button class="btn btn-primary" type="button" onclick="document.getElementById('petPhotoInput').click();">Upload Pet Image</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -244,7 +249,28 @@
 </div>
 
 <script>
+    function uploadPetPhoto() {
+        const form = document.getElementById('petPhotoForm');
+        const formData = new FormData(form);
 
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('petPhotoPreview').src = data.photo_url;
+                    alert('Pet photo updated successfully!');
+                } else {
+                    alert('Failed to upload pet photo. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the pet photo.');
+            });
+    }
 </script>
 @endsection
 

@@ -157,6 +157,8 @@
     <div class="modal fade" id="editVaccination-{{$vac->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
+                <form action="{{route('vaccination.update', ['vacID'=>$vac->id])}}" method="post">
+                    @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Edit Vaccination</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -165,37 +167,40 @@
                     <div class="row g-3">
                         <div class="col-md-12">
                             <label for="vaccineType">Vaccine Type</label>
-                            <input type="text" name="vaccineType" id="vaccineType" class="form-control" required>
+                            <input type="text" name="vaccineType" id="vaccineType" class="form-control" value="{{$vac->vaccine_type}}"  required>
                         </div>
                         <div class="col-md-6">
                             <label for="nextDueDate">Next Due Date</label>
-                            <input type="date" name="nextDueDate" id="nextDueDate" class="form-control">
+                            <input type="date" name="nextDueDate" id="nextDueDate" class="form-control" value="{{$vac->next_vaccine_date}}">
                             <div class="form-check mt-2">
-                                <input type="checkbox" class="form-check-input" id="noNextDueDate">
+                                <input type="checkbox" class="form-check-input" id="noNextDueDate" >
                                 <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="selectVeterinarian">Administered By</label>
-                            <select class="form-control" id="selectVeterinarian">
-                                <option>Kent Invento</option>
-                                <option>Jay Invento</option>
+                            <select class="form-control" id="selectVeterinarian" disabled>
+                                @php
+                                    $doctor = \App\Models\Doctor::where('id',$vac->doctor_id)->first()
+                                @endphp
+                                <option selected>{{$doctor->firstname. ' ' . $doctor->lastname}}</option>
+
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label for="selectStatus">Status</label>
-                            <select class="form-control" id="selectStatus">
-                                <option>Completed</option>
-                                <option>Ongoing</option>
-                                <option>Scheduled</option>
+                            <select class="form-control" id="selectStatus" name="status">
+                                <option value="1" {{$vac->status == 1 ? 'selected' : ''}}>Completed</option>
+                                <option value="0" {{$vac->status == 0 ? 'selected' : ''}}>Scheduled</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="button" id="editVaccinationBtn">Edit</button>
+                    <button class="btn btn-primary" type="submit" id="editVaccinationBtn">Edit</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -269,7 +274,7 @@
                     <div class="row gx-5 px-3">
                         <div class="col d-flex justify-content-center align-items-center card shadow-none">
                             <img class="img-account-profile rounded-circle mb-2 p-1"
-                                src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg"
+                                src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}"
                                 alt="" />
                         </div>
                         <div class="col-md-9">
@@ -339,7 +344,7 @@
                                             @if($pet->vaccinated == 1)
                                             Complete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
                                             @elseif($pet->vaccinated == 0)
-                                            Incomplete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
+                                            Incomplete as of {{ \Carbon\Carbon::now()->format('F j, Y') }}
                                             @else
                                             No Vaccination record
                                             @endif
@@ -359,7 +364,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
-                                        <p>{{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}</p>
+                                        <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete'}}</p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Okay to use photos online?</label>
@@ -369,7 +374,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Date of Last Groom</label>
-                                        <p>{{ \Carbon\Carbon::parse($pet->last_groom_date)->format('F j, Y') }}</p>
+                                        <p>{{ $pet->last_groom_date ? \Carbon\Carbon::parse($pet->last_groom_date)->format('F j, Y') : 'No Record'}}</p>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="small mb-1">Okay to give treats?</label>

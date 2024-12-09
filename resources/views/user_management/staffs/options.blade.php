@@ -16,9 +16,12 @@
 
 
 <!-- UM Modals -->
+@php
+$staff->getEmailAttribute($staff->user_id);
+@endphp
 <div class="modal fade" id="umEditAccount" tabindex="-1" role="dialog" aria-labelledby="umEditAccount" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <form action="" method="POST">
+        <form action="{{route('staffs.update', ['staffID' =>$staff->id])}}" method="POST">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -29,48 +32,29 @@
                     <div class="row g-3 mb-3">
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editFirstName">First Name</label>
-                            <input type="text" class="form-control" name="editFirstName" id="" value="">
+                            <input type="text" class="form-control" name="firstname" id="" value="{{$staff->firstname}}">
                         </div>
                         <div class=" col-md-6">
                             <label class="small mb-1" for="editLastName">Last Name</label>
-                            <input type="text" class="form-control" name="editLastName" id="" value="">
+                            <input type="text" class="form-control" name="lastname" id="" value="{{$staff->lastname}}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editBirthday">Birthday</label>
-                            <input type="date" class="form-control" name="editBirthday" id="editBirthday" value="" max="{{ \Carbon\Carbon::now()->toDateString() }}">
+                            <input type="date" class="form-control" name="editBirthday" id="birthday" value="{{$staff->birthday}}" max="{{ \Carbon\Carbon::now()->toDateString() }}">
                         </div>
                         <div class="col-md-12">
                             <label class="small mb-1" for="editAddress">Address</label>
-                            <input type="text" class="form-control" name="editAddress" id="" value="">
+                            <input type="text" class="form-control" name="address" id="" value="{{$staff->address}}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editEmailAddress">Email address</label>
-                            <input type="text" class="form-control" name="editEmailAddress" id="" value="">
+                            <input type="text" class="form-control" name="staff_email" id="" value="{{$staff->staff_email}}">
                         </div>
                         <div class="col-md-6">
                             <label class="small mb-1" for="editPhone">Phone number</label>
-                            <input type="text" class="form-control" name="editPhone" id="" value="">
+                            <input type="text" class="form-control" name="phone_number" id="" value="{{$staff->phone_number}}">
                         </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="editUsername">Username</label>
-                            <input type="text" class="form-control" name="editUsername" id="" value="" placeholder="Enter username">
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <h6 class="text-primary">Change Password</h6>
-                            <hr class="mt-1 mb-0">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="editOldPassword">Old Password</label>
-                            <input type="text" class="form-control" name="username" id="editOldPassword" placeholder="Enter old password" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="updateNewPassword">New Password</label>
-                            <input type="text" class="form-control" name="username" id="updateNewPassword" placeholder="Enter new password" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="updateConfirmNewPassword">Confirm New Password</label>
-                            <input type="text" class="form-control" name="username" id="updatConfirmeNewPassword" placeholder="Confirm password" value="">
-                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-dark" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" type="submit">Update Account</button></div>
