@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Clients;
+use App\Models\Doctor;
+use App\Models\Pets;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -52,6 +56,70 @@ class AdminController extends Controller
 
         return redirect()->route('admin.manage');
     }
+
+    public function uploadPhoto(Request $request, $id)
+    {
+        // Validate the photo input
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png|max:5120', // Max size 5 MB
+        ]);
+
+        // Find the user by ID
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found.'], 404);
+        }
+
+        // Determine the role and find the corresponding profile model
+        $role = $user->role;
+
+        switch ($role) {
+            case 'admin':
+                $profile = Admin::where('user_id', $user->id)->first();
+                break;
+
+            case 'veterinarian':
+                $profile = Doctor::where('user_id', $user->id)->first();
+                break;
+
+            case 'client':
+                $profile = Clients::where('user_id', $user->id)->first();
+                break;
+
+            case 'staff':
+            case 'cashier':
+            case 'secretary':
+                $profile = Staff::where('user_id', $user->id)->first();
+                break;
+
+            default:
+                return response()->json(['success' => false, 'message' => 'Role not supported for profile photo update.'], 400);
+        }
+
+        if (!$profile) {
+            return response()->json(['success' => false, 'message' => 'Profile not found for this user.'], 404);
+        }
+
+        // Store the photo in the storage
+        $photoPath = $request->file('photo')->store('profile_photos', 'public');
+
+        // Update the profile picture based on the model
+        if($role == 'client'){
+            $profile->update(['client_profile_picture' => $photoPath]);
+
+        }else{
+            $profile->update(['profile_picture' => $photoPath]);
+
+        }
+
+        return response()->json([
+            'success' => true,
+            'photo_url' => asset('storage/' . $photoPath),
+        ]);
+    }
+
+
 
 
 }

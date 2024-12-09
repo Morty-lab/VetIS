@@ -42,56 +42,56 @@ class UsersTableSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
 
-        DB::table('users')->insert(['name' => 'Anie Joseph Cabahug', 'email' => 'aniejoseph@gmail.com','role' => 'client', 'password' => $hashedPassword]);
-
-        $userLastInsertID = DB::getPdo()->lastInsertId();
-        DB::table('clients')->insert([
-            'user_id' => $userLastInsertID, // Ensure this user_id exists in the users table
-            'client_name' => 'Anie Joseph Cabahug',
-            'client_no' => '1234567890',
-            'client_address' => '123 Main Street, Anytown, USA',
-            'client_birthday' => '1990-05-15', // Format: YYYY-MM-DD
-            'client_profile_picture' => 'profile_pictures/jane_doe.jpg', // Optional
-            'status' => true, // Defaults to true; can be omitted if you want the default
-            'created_at' => now(), // Add timestamps manually
-            'updated_at' => now(),
-        ]);
-
-        $pet = DB::getPdo()->lastInsertId();
-
-
-        DB::table('pets')->insert([
-            'owner_ID' => $pet, // Ensure this owner_ID exists in the clients table
-            'pet_name' => 'Buddy',
-            'pet_breed' => 'Golden Retriever',
-            'pet_type' => 'Dog',
-            'pet_gender' => 'Male',
-            'pet_birthdate' => '2021-03-15', // Format: YYYY-MM-DD
-            'pet_color' => 'Golden',
-            'pet_weight' => 25.0, // Weight in kilograms
-            'status' => false, // Optional since it defaults to false
-            'created_at' => now(), // Add timestamps manually
-            'updated_at' => now(),
-        ]);
-
-        DB::table('users')->insert(['name' => 'Veterinarian Cabahug', 'email' => 'aniecabahug69@gmail.com','role' => 'veterinarian', 'password' => $hashedPassword]);
-
-        $veterinarianLastInsertID = DB::getPdo()->lastInsertId();
-
-        DB::table('doctors')->insert([
-            'user_id' => $veterinarianLastInsertID, // assuming there's a user with ID 1
-            'firstname' => 'Veterinarian',
-            'lastname' => 'Cabahug',
-            'address' => '123 Main St, City, Country',
-            'phone_number' => '123-456-7890',
-            'birthday' => '1985-10-15',
-            'position' => 'General Practitioner',
-            'profile_picture' => 'profile_pic.jpg',
-            'license_number' => 'AB1234567',
-            'status' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+//        DB::table('users')->insert(['name' => 'Anie Joseph Cabahug', 'email' => 'aniejoseph@gmail.com','role' => 'client', 'password' => $hashedPassword]);
+//
+//        $userLastInsertID = DB::getPdo()->lastInsertId();
+//        DB::table('clients')->insert([
+//            'user_id' => $userLastInsertID, // Ensure this user_id exists in the users table
+//            'client_name' => 'Anie Joseph Cabahug',
+//            'client_no' => '1234567890',
+//            'client_address' => '123 Main Street, Anytown, USA',
+//            'client_birthday' => '1990-05-15', // Format: YYYY-MM-DD
+//            'client_profile_picture' => 'profile_pictures/jane_doe.jpg', // Optional
+//            'status' => true, // Defaults to true; can be omitted if you want the default
+//            'created_at' => now(), // Add timestamps manually
+//            'updated_at' => now(),
+//        ]);
+//
+//        $pet = DB::getPdo()->lastInsertId();
+//
+//
+//        DB::table('pets')->insert([
+//            'owner_ID' => $pet, // Ensure this owner_ID exists in the clients table
+//            'pet_name' => 'Buddy',
+//            'pet_breed' => 'Golden Retriever',
+//            'pet_type' => 'Dog',
+//            'pet_gender' => 'Male',
+//            'pet_birthdate' => '2021-03-15', // Format: YYYY-MM-DD
+//            'pet_color' => 'Golden',
+//            'pet_weight' => 25.0, // Weight in kilograms
+//            'status' => false, // Optional since it defaults to false
+//            'created_at' => now(), // Add timestamps manually
+//            'updated_at' => now(),
+//        ]);
+//
+//        DB::table('users')->insert(['name' => 'Veterinarian Cabahug', 'email' => 'aniecabahug69@gmail.com','role' => 'veterinarian', 'password' => $hashedPassword]);
+//
+//        $veterinarianLastInsertID = DB::getPdo()->lastInsertId();
+//
+//        DB::table('doctors')->insert([
+//            'user_id' => $veterinarianLastInsertID, // assuming there's a user with ID 1
+//            'firstname' => 'Veterinarian',
+//            'lastname' => 'Cabahug',
+//            'address' => '123 Main St, City, Country',
+//            'phone_number' => '123-456-7890',
+//            'birthday' => '1985-10-15',
+//            'position' => 'General Practitioner',
+//            'profile_picture' => 'profile_pic.jpg',
+//            'license_number' => 'AB1234567',
+//            'status' => true,
+//            'created_at' => now(),
+//            'updated_at' => now(),
+//        ]);
 
 
         //$faker = Factory::create();

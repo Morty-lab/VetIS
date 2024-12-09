@@ -63,12 +63,29 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', function () {
-        return view('profile.view');
+        $user = User::where('id', Auth::id())->first();
+        switch ($user->role) {
+            case 'admin':
+                $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
+                break;
+            case 'staff' || 'secretary' || 'cashier':
+                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
+                break;
+            case 'client':
+                $userInfo = \App\Models\Clients::where('user_id', $user->id)->first();
+                break;
+            case 'veterinarian':
+                $userInfo = \App\Models\Doctor::where('user_id', $user->id)->first();
+                break;
+        }
+
+        return view('profile.view', ['user' => $user, 'userInfo' => $userInfo]);
     })->name("profile.view");
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::post('/uploadPhoto/{id}', [AdminController::class, 'uploadPhoto'])->name('uploadPhoto');
     // Pets
     Route::get('/addpet', [PetsController::class, 'create'])->name('pet.create');
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
@@ -82,6 +99,7 @@ Route::middleware('auth')->group(function () {
 
     //Vaccination Routes
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
+    Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
 
 
     //sub routes Pet Medical Records
@@ -302,9 +320,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/um/staff/add', [StaffController::class, "store"])->name("staffs.add");
     Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
     Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
-    Route::get('/um/staff/update', function () {
-        return view('user_management.staffs.update');
-    })->name("staffs.update");
+    Route::post('/um/staff/update',[StaffController::class, 'update'])->name("staffs.update");
 
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');

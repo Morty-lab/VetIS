@@ -83,11 +83,35 @@ class VaccinationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
-    }
+        // Validate the input fields
+        $validated = $request->validate([
+            'vaccineType' => 'required|string|max:255',
+            'nextDueDate' => 'nullable|date',
+            'status' => 'required|boolean',
+        ]);
 
+        $vacID = request('vacID');
+
+        try {
+            // Find the vaccination record
+            $vaccination = Vaccination::where('id',$vacID)->first();
+
+            // Update the vaccination record
+            $vaccination->update([
+                'vaccine_type' => $validated['vaccineType'],
+                'next_vaccine_date' => $request->has('nextDueDate') ? $validated['nextDueDate'] : null,
+                'status' => $validated['status'],
+            ]);
+
+            // Return a success response (JSON or redirect depending on use case)
+            return redirect()->back()->with('success', 'Vaccination updated successfully!');
+        } catch (\Exception $e) {
+            // Handle exceptions (e.g., record not found or validation error)
+            return redirect()->back()->with('error', 'Failed to update vaccination. ' . $e->getMessage());
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */

@@ -22,7 +22,7 @@
             <table id="inventoryProductsTable">
                 <thead>
                     <tr>
-                        <th>SKU</th>
+                        <th>Product ID</th>
                         <th>Product Name</th>
                         <th>Category</th>
                         <th>Unit</th>

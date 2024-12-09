@@ -149,35 +149,35 @@
                             <div class="row g-2">
                                 <div class="col-md-6">
                                     <label class="small mb-1">Name</label>
-                                    <p>John Doe</p>
+                                    <p>{{$user->name}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">ID</label>
                                     <div>
-                                        <p class="badge bg-primary-soft text-primary rounded-pill">23213123</p>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">{{ sprintf("VetIS-%05d", $user->id)}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                    <p>August 11, 2002</p>
+                                    <p>{{\Carbon\Carbon::parse($userInfo->birthday)->format('F d, Y')}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Role</label>
                                     <div class="">
-                                        <p class="badge bg-primary-soft text-primary rounded-pill">Administrator</p>
+                                        <p class="badge bg-primary-soft text-primary rounded-pill">{{$user->role}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="small mb-1" for="inputAddress">Address</label>
-                                    <p>Purok - 3, Batangan, Valencia City, Bukidnon</p>
+                                    <p>{{$userInfo->address}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                    <p>princeinventorevltn89@gmail.com</p>
+                                    <p>{{$user->email}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <p>09923438574</p>
+                                    <p>{{$userInfo->phone_number}}</p>
                                 </div>
                             </div>
                         </div>

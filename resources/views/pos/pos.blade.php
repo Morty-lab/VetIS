@@ -82,9 +82,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1">SKU</label>
+                                <label class="small mb-1">Product ID</label>
                                 <div class="">
-                                    <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">{{ $product->id }}</p>
+                                    <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">{{ sprintf("VetIS-%05d", $product->id)}}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -132,7 +132,7 @@
                         <table class="table" id="posProdListTable">
                             <thead>
                                 <tr>
-                                    <th>SKU</th>
+                                    <th>Product ID</th>
                                     <th>Item Name</th>
                                     <th>Category</th>
                                     <th>Unit</th>
@@ -176,7 +176,7 @@
                                     @endphp
                                     @if($stocks - $subtracted != 0)
                                         <tr>
-                                            <td>{{ $product->id }}</td>
+                                            <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
                                             <td>Product Unit</td>
@@ -241,7 +241,7 @@
                             <table id="posStockListTable">
                                 <thead>
                                     <tr>
-                                        <th>SKU</th>
+                                        <th>Product ID</th>
                                         <th>Product Name</th>
                                         <th>Expiry Date</th>
                                         <th>Supplier</th>
@@ -491,7 +491,7 @@
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="account-profile.html#!">
+                    <a class="dropdown-item" href="{{ route('profile.view') }}">
                         <div class="dropdown-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -514,17 +514,14 @@
                         </div>
                         Back to Dashboard
                     </a>
-                    <a class="dropdown-item" href="account-profile.html#!">
-                        <div class="dropdown-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-log-out">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                <polyline points="16 17 21 12 16 7"></polyline>
-                                <line x1="21" y1="12" x2="9" y2="12"></line>
-                            </svg></div>
-                        Logout
-                    </a>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+
+                        <button class="dropdown-item" href="dashboard-1.html#!">
+                            <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </li>
         </ul>
@@ -610,7 +607,7 @@
                             <thead class="thead-dark text-primary">
                                 <tr>
                                     <th>Item</th>
-                                    <th>SKU</th>
+                                    <th>Product ID</th>
                                     <th>Qty</th>
                                     <th>Total</th>
                                     <th>Action</th>

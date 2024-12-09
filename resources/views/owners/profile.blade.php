@@ -76,12 +76,12 @@ Clients::setEmailAttribute($client, $client->user_id);
             <div class="modal-body p-0">
                 <div class="row justify-content-center align-items-center" style="height: 100%;">
                     <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
-                        <img class="img-account-profile rounded-circle mb-2" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                        <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
                     </div>
-                    <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
-                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
-                        <input type="file" id="fileInput" class="d-none" accept="image/*" />
-                    </div>
+{{--                    <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">--}}
+{{--                        <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>--}}
+{{--                        <input type="file" id="fileInput" class="d-none" accept="image/*" />--}}
+{{--                    </div>--}}
                 </div>
             </div>
 
@@ -338,26 +338,59 @@ Clients::setEmailAttribute($client, $client->user_id);
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Profile Picture</span>
                             <!-- Three-dot (kebab) menu button -->
-                            <div class="dropdown">
-                                <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updatePhotoModal">Update Photo</a></li>
-                                    <!-- You can add more items here -->
-                                </ul>
-                            </div>
+{{--                            <div class="dropdown">--}}
+{{--                                <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                                    <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                </button>--}}
+{{--                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">--}}
+{{--                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updatePhotoModal">Update Photo</a></li>--}}
+{{--                                    <!-- You can add more items here -->--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
+                            <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2" src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
                         </div>
                         <div class="card-footer text-center">
+                            <form id="petPhotoForm" action="{{ route('uploadPhoto', $client->user_id) }}" method="POST" >
+                                @csrf
+
+                                <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
+                                <button class="btn btn-primary" type="button" onclick="document.getElementById('petPhotoInput').click();">Select Photo</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+        <script>
+            function uploadPetPhoto() {
+                const form = document.getElementById('petPhotoForm');
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('petPhotoPreview').src = data.photo_url;
+                            alert('Photo updated successfully!');
+                        } else {
+                            alert('Failed to upload pet photo. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while uploading the pet photo.');
+                    });
+            }
+        </script>
         <div class="col-md-12" id="petsCard" style="display: none;">
             <div class="card shadow-none mb-4">
                 <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>

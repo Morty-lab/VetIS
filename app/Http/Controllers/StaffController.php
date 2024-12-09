@@ -82,9 +82,45 @@ class StaffController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // Validate input
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'editBirthday' => 'nullable|date|before_or_equal:' . now()->toDateString(),
+            'address' => 'nullable|string|max:255',
+            'staff_email' => 'required|email|max:255',
+            'phone_number' => 'nullable|string|max:15',
+        ]);
+
+        $id = request('staffID');
+
+        try {
+            // Fetch the staff record
+            $staff = Staff::findOrFail($id);
+
+            // Update the staff's details
+            $staff->update([
+                'firstname' => $validated['firstname'],
+                'lastname' => $validated['lastname'],
+                'birthday' => $validated['editBirthday'],
+                'address' => $validated['address'],
+                'phone_number' => $validated['phone_number'],
+            ]);
+
+            // Update the associated user's email
+            $user = User::findOrFail($staff->user_id);
+            $user->update([
+                'email' => $validated['staff_email'],
+            ]);
+
+            // Return a success response
+            return redirect()->back()->with('success', 'Staff account updated successfully!');
+        } catch (\Exception $e) {
+            // Handle errors
+            return redirect()->back()->with('error', 'Failed to update staff account: ' . $e->getMessage());
+        }
     }
 
     /**

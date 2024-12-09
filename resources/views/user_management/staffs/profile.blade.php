@@ -43,15 +43,15 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Account Information</span>
                     <!-- Three-dot (kebab) menu button -->
-                    <div class="dropdown">
-                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{route('staffs.update')}}">Edit Account</a></li>
-                            <!-- You can add more items here -->
-                        </ul>
-                    </div>
+{{--                    <div class="dropdown">--}}
+{{--                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                            <i class="fa fa-ellipsis-v"></i>--}}
+{{--                        </button>--}}
+{{--                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">--}}
+{{--                            <li><a class="dropdown-item" href="{{route('staffs.update')}}">Edit Account</a></li>--}}
+{{--                            <!-- You can add more items here -->--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
                 </div>
 
                 <div class="card-body">
@@ -150,15 +150,46 @@
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
+                    <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2" src="{{$staff->profile_picture != null ? asset('storage/' . $staff->profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png')}}" alt="" />
                 </div>
                 <div class="card-footer text-center">
-                    <button class="btn btn-primary" type="button">Update Profile Picture</button>
+                    <form id="petPhotoForm" action="{{ route('uploadPhoto', $staff->user_id) }}" method="POST" >
+                        @csrf
+
+                        <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
+                        <button class="btn btn-primary" type="button" onclick="document.getElementById('petPhotoInput').click();">Select Photo</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    function uploadPetPhoto() {
+        const form = document.getElementById('petPhotoForm');
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('petPhotoPreview').src = data.photo_url;
+                    alert('Photo updated successfully!');
+                } else {
+                    alert('Failed to upload pet photo. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the pet photo.');
+            });
+    }
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
