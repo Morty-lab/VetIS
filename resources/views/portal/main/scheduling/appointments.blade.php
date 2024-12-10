@@ -49,21 +49,6 @@
                 <div class="modal-body">
                     <div class="row gy-3 gx-4">
                         <div class="col-md-6">
-                            <!-- Select Schedule -->
-                            <div class="form-group">
-                                <label for="select-schedule" class="mb-1">Select Date</label>
-                                <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Select Schedule -->
-                            <div class="form-group">
-                                <label for="select-schedule" class="mb-1">Select Time</label>
-                                <input type="text" class="form-control" id="timePicker"
-                                    name="appointment_time">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
                             <!-- Select Pet -->
                             <div class="form-group">
                                 <label for="select-pet" class="mb-1">Select Pet</label>
@@ -88,12 +73,27 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <!-- View Veterinarian Schedule -->
                             <div class="form-group d-flex">
                                 <label>&nbsp;</label> <!-- For spacing alignment -->
                                 <br>
                                 <a href="#" class="text-decoration-underline" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-bs-dismiss="">View Veterinarian Schedule</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Select Schedule -->
+                            <div class="form-group">
+                                <label for="select-schedule" class="mb-1">Select Date</label>
+                                <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Select Schedule -->
+                            <div class="form-group">
+                                <label for="select-schedule" class="mb-1">Select Time</label>
+                                <input type="text" class="form-control" id="timePicker"
+                                       name="appointment_time">
                             </div>
                         </div>
                         <div class="col-md-12">
