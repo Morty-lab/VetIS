@@ -43,7 +43,7 @@ class TransactionModel extends Model
             DB::raw('SUM((SELECT SUM(quantity) FROM transaction_details WHERE transaction_details.transaction_id = transactions.id)) as items_sold')
         )
             ->groupBy(DB::raw('DATE(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at)'), 'desc')
+            ->orderBy(DB::raw('DATE(created_at)'), 'asc')
             ->get();
     }
 
@@ -56,7 +56,7 @@ class TransactionModel extends Model
             DB::raw('SUM((SELECT SUM(quantity) FROM transaction_details WHERE transaction_details.transaction_id = transactions.id)) as items_sold')
         )
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
-            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'desc')
+            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'asc')
             ->get();
     }
 }

@@ -58,7 +58,8 @@ Route::get('/dashboard', function () {
     $finishedAppointments = Appointments::where('status', 2)->where('updated_at', now())->count();
     $appointmentRequests = Appointments::where('status', null)->count();
     $petCount = Pets::count();
-    return view('dashboard', ['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests]);
+    $dailySales = TransactionModel::getDailySalesReport();
+    return view('dashboard', ['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests, 'dailySales' => $dailySales]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

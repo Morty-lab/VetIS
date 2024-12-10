@@ -181,7 +181,7 @@
                                             <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
                                             <td>Product Unit</td>
                                             <td>
-                                                {{$stocks}}
+                                                {{$stocks - $subtracted}}
                                             </td>
                                             <td>₱{{ $product->price }}</td>
                                             <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
