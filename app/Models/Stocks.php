@@ -12,6 +12,7 @@ class Stocks extends Model
 {protected $fillable = [
     'stock',
     'price',
+    'supplier_price',
     'unit',
     'status',
     'products_id',

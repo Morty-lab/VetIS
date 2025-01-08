@@ -265,8 +265,8 @@
                                 <div class="dropdown-divider"></div>
                                 <li><button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#verifyPetModal">Verify Pet</button></li>
                             @endif
-                            <div class="dropdown-divider"></div>
-                            <li><button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deletePetModal">Delete Pet</button></li>
+{{--                            <div class="dropdown-divider"></div>--}}
+{{--                            <li><button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deletePetModal">Delete Pet</button></li>--}}
                         </ul>
                     </div>
                 </div>
