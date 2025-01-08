@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Notifications;
 use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\Suppliers;
@@ -55,7 +56,6 @@ class ProductsController extends Controller
         // Validation rules
         $validator = Validator::make($request->all(), [
             'product_name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
             'category' => 'required|string|max:255',
             'unit' => 'required|string|max:255',
         ]);
@@ -72,7 +72,6 @@ class ProductsController extends Controller
         // Data to save
         $data = [
             'product_name' => $request->product_name,
-            'price' => $request->price,
             'product_category' => $request->category,
             'unit' => $request->unit,
         ];
@@ -93,7 +92,8 @@ class ProductsController extends Controller
             'products_id' => $id,
             'supplier_id' => $request->supplier,
             'stock' => $request->stock,
-            'price' => $request->stockPrice ,
+            'price' => $request->sellingPrice,
+            'supplier_price' => $request->stockPrice,
             'status' => 1,
             'unit' => $request->unit,
             'expiry_date' => $request->expiry_date
@@ -101,6 +101,13 @@ class ProductsController extends Controller
         ];
         Stocks::addStock($data);
         Products::updateProduct($id, ['status' => 1]);
+        $productName = Products::getProductById($id)->product_name;
+        Notifications::addNotif([
+            'user_id' => Auth::id(),
+            'title' => 'Stocks Added',
+            'message' => "$request->stock stocks added to $productName",
+        ]);
+
         return redirect()->route('products.index');
     }
 
@@ -127,7 +134,6 @@ class ProductsController extends Controller
     {
         $data = [
             'product_name' => $request->product_name,
-            'price' => $request->price,
         ];
         Products::updateProduct($id, $data);
         return redirect()->route('products.index');

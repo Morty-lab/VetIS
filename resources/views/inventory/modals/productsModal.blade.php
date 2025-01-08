@@ -49,11 +49,11 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-12">
-                        <label class="small mb-1" for="productPrice">Product Price</label>
-                        <input class="form-control" id="inputBreed" type="number" placeholder="Enter Price"
-                            value="" name="price">
-                    </div>
+{{--                    <div class="col-md-12">--}}
+{{--                        <label class="small mb-1" for="productPrice">Product Price</label>--}}
+{{--                        <input class="form-control" id="inputBreed" type="number" placeholder="Enter Price"--}}
+{{--                            value="" name="price">--}}
+{{--                    </div>--}}
                     <div class="row gx-3">
                         {{-- <div class="col-md-6">
                                 <label class="small mb-1" for="productStock">Product Stock</label>
@@ -182,13 +182,11 @@
                                                     {{$stockP->expiry_date ?? 'No Expiry'}}
                                                 </td>
                                                 <td>
-                                                    Php {{$product->price}}
+                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
                                                 </td>
 
                                                 <td>
-
-                                                    {{\App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name}}
-
+                                                    Php {{$stockP->supplier_price}}
                                                 </td>
                                                 <td>
                                                     Php {{$stockP->price}}
@@ -283,22 +281,8 @@
 {{--                        </div>--}}
                         <div class="col-6">
                             <div class="label">Product Unit</div>
-                            <p>
-                                @foreach($units as $u)
-                                @if($u->id == $product->unit )
-                                {{$u->unit_name}}
-                                @endif
-                                @endforeach
-                            </p>
+                            <p>{{\App\Models\Unit::where('id',$product->unit)->first()->unit_name}}</p>
                             <input type="hidden" value="{{$product->unit}}" name="unit">
-                        </div>
-                        <div class="col-6">
-                            <div class="label">Expiry Date</div>
-                            <input type="date" name="expiry_date" id="" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <div class="label">SRP</div>
-                            <input type="number" name="" value="{{$product->price}}" id="" class="form-control" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="selectSupplier">Supplier</label>
@@ -314,8 +298,16 @@
                             <input type="number" name="stockPrice" id="" class="form-control">
                         </div>
                         <div class="col-6">
+                            <div class="label">Selling Price</div>
+                            <input type="number" name="sellingPrice" id="" class="form-control">
+                        </div>
+                        <div class="col-6">
                             <div class="label">Stock Amount</div>
                             <input type="number" name="stock" id="" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Expiry Date</div>
+                            <input type="date" name="expiry_date" id="" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -486,18 +478,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row gx-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="productPrice">Product Price</label>
-                            <input class="form-control" id="inputBreed" type="number" placeholder="Enter Price"
-                                value="{{ $product->price }}" name="price">
-                        </div>
-                        {{-- <div class="col-md-6">
-                                    <label class="small mb-1" for="productStock">Product Stock</label>
-                                    <input class="form-control" id="inputBreed" type="number" placeholder="Enter Stock"
-                                        value="50">
-                                </div> --}}
-                    </div>
+{{--                    <div class="row gx-3 mb-3">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <label class="small mb-1" for="productPrice">Product Price</label>--}}
+{{--                            <input class="form-control" id="inputBreed" type="number" placeholder="Enter Price"--}}
+{{--                                value="{{ $product->price }}" name="price">--}}
+{{--                        </div>--}}
+{{--                         <div class="col-md-6">--}}
+{{--                                    <label class="small mb-1" for="productStock">Product Stock</label>--}}
+{{--                                    <input class="form-control" id="inputBreed" type="number" placeholder="Enter Stock"--}}
+{{--                                        value="50">--}}
+{{--                                </div> --}}
+{{--                    </div>--}}
                 </div>
                 <div class="modal-footer"><button class="btn btn-secondary" type="button"
                         data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Save

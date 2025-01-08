@@ -26,7 +26,7 @@
                         <th>Product Name</th>
                         <th>Category</th>
                         <th>Unit</th>
-                        <th>Price</th>
+{{--                        <th>Price</th>--}}
                         <th>Status</th>
                         <th>Stock</th>
                         <th>Actions</th>
@@ -42,23 +42,11 @@
                     <tr>
                         <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
                         <td>{{ $product->product_name }}</td>
-                        <td>
-                            @foreach ($categories as $i)
-                            @if ($i->id == $product->product_category)
-                            {{ $i->category_name }}
-                            @endif
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($units as $i)
-                            @if ($i->id == $product->unit)
-                            {{ $i->unit_name }}
-                            @endif
-                            @endforeach
-                        </td>
-                        <td>
-                            Php {{ $product->price }}
-                        </td>
+                        <td>{{\App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
+                        <td>{{\App\Models\Unit::where('id',$product->unit)->first()->unit_name}}</td>
+{{--                        <td>--}}
+{{--                            Php {{ $product->price }}--}}
+{{--                        </td>--}}
                         <td>
                             @if ($stocks - $subtracted <= 0)
                                 <div class="badge bg-danger-soft text-danger rounded-pill">No Stocks</div>

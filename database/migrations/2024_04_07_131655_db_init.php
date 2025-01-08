@@ -124,7 +124,6 @@ return new class extends Migration
             $table->id();
             $table->string("product_name");
             $table->unsignedBigInteger("product_category");
-            $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
             $table->foreign("unit")->references("id")->on("units");
@@ -139,6 +138,7 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id");
             $table->integer("stock");
             $table->integer('subtracted_stock')->default(0);
+            $table->float("supplier_price");
             $table->float("price");
             $table->unsignedBigInteger("unit");
             $table->integer("status")->nullable();
@@ -304,6 +304,7 @@ return new class extends Migration
             $table->foreign('billing_id')->references("id")->on("billing")->onDelete("cascade");
             $table->unsignedBigInteger("service_id");
             $table->foreign('service_id')->references("id")->on("services")->onDelete("cascade");
+            $table->float('service_price');
             $table->timestamps();
         });
 
@@ -353,6 +354,16 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("user_id");
+            $table->foreign('user_id')->references("id")->on("users")->onDelete("cascade");
+            $table->string('title');
+            $table->string('message');
+            $table->boolean('read')->default(false);
+            $table->timestamps();
+        });
+
 
 
     }
@@ -362,6 +373,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('notiications');
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
         Schema::dropIfExists('payments');

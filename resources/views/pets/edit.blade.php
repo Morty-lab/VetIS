@@ -194,26 +194,31 @@
                         <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
                         <hr class="mt-1 mb-3">
 
+                        @php
+                        $client = \App\Models\Clients::where('id',$pet->owner_ID)->first();
+                        $client->setEmailAttribute($client,$client->user_id)
+                        @endphp
+
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
                             <input class="form-control" id="inputOwnerName" type="text" placeholder="Owner Name"
-                                value="{{$pet->client->client_name}}" disabled />
+                                value="{{$client->client_name}}" disabled />
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                <input class="form-control" id="inputOwnerAddress" type="text" value="{{$pet->client->client_address}}"
+                                <input class="form-control" id="inputOwnerAddress" type="text" value="{{$client->client_address}}"
                                     placeholder="Owner Address" disabled />
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                <input class="form-control" id="ownerContact" type="text" value="{{$pet->client->client_no}}"
+                                <input class="form-control" id="ownerContact" type="text" value="{{$client->client_no}}"
                                     placeholder="Contact Number" disabled />
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                            <input class="form-control" id="inputOwnerEmail" type="text" value="{{$pet->client->client_email_address}}"
+                            <input class="form-control" id="inputOwnerEmail" type="text" value="{{$client->client_email}}"
                                 placeholder="Owner Address" disabled />
                         </div>
                         <!-- Save changes button-->
