@@ -371,12 +371,13 @@
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('pet.index') }}">Manage Pets</a></li>
                     <li class="breadcrumb-item active">Pet Profile</li>
-                    <li class="breadcrumb-item active">Pet Record</li>
+                    <li class="breadcrumb-item active">SOAP Record</li>
                 </ol>
             </nav>
         </div>
     </div>
 </header>
+
 
 
 
@@ -395,119 +396,142 @@
             <!-- Account details card-->
             <div class="card mb-4 shadow-none">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Pet Record</span>
+                    <span>SOAP Record</span>
                     <!-- Mo gawas rang print dropdown if ma save na -->
                     <div class="dropdown">
                         <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Print
                             Record
                         </button>
-                        <button class="btn btn-primary" type="button" onclick="submitTextFields()">
-                            <i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
-                        </button>
                         <div class="dropdown-menu" aria-labelledby="printMenuButton">
-                            <a class="dropdown-item" href="dropdowns.html#!">Record</a>
+                            <a class="dropdown-item" href="dropdowns.html#!">SOAP</a>
                             <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <nav class="nav nav-borders">
-                        <a class="nav-link nav-tab ms-0 active {{ request()->is('general') ? 'active' : '' }}" href="#general">General Information</a>
-                        <a class="nav-link nav-tab{{ request()->is('examination') ? 'active' : '' }}" href="#examination">Examination</a>
-                        <a class="nav-link nav-tab{{ request()->is('diagnosis') ? 'active' : '' }}" href="#diagnosis">Diagnosis</a>
-                        <a class="nav-link nav-tab{{ request()->is('treatment') ? 'active' : '' }}" href="#treatment">Treatment</a>
-                        <a class="nav-link nav-tab{{ request()->is('prescription') ? 'active' : '' }}" href="#prescription">Prescription</a>
-                        <a class="nav-link nav-tab{{ request()->is('remarks') ? 'active' : '' }}" href="#remarks">Remarks</a>
-                    </nav>
-                    <hr class="mt-0 mb-4" />
-                    <div id="generalSection" style="display: none">
-                        <div class="card mb-4 shadow-none">
-                            <div class="card-body ">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="row gy-3">
-                                            <div class="col-12">
-                                                <label for="">Date</label>
-                                                <input type="date" class="form-control" name="date"
-                                                    value="{{$record->record_date}}" disabled>
-                                            </div>
-                                            <div class="col-12">
-                                                @php
-                                                    $doctor = \App\Models\Doctor::getDoctorById($record->doctorID)
-                                                @endphp
-                                                <label for="">Attending Veterinarian</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#veterinarianListModal" disabled><span
-                                                        id="vet">{{$doctor->firstname." ".$doctor->lastname}}</span>
-                                                    <i class="fa-solid fa-user-doctor"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row gy-3">
-                                            <div class="col-12">
-                                                <label for="">Pet Owner</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                    type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#petOwnerListModal" disabled>
-                                                    <span>{{$owner->client_name}}</span> <i
-                                                        class="fa-solid fa-user"></i></button>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="">Pet</label>
-                                                <button class="form-control d-flex justify-content-between"
-                                                    type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#petListModal" disabled>
-                                                    <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 d-flex flex-wrap border p-3">
-                                        <div class="d-flex flex-column border m-2 p-2 flex-grow-1">
-                                            <strong>Breed:</strong>
-                                            <span>Japanese Spitz</span>
-                                        </div>
-                                        <div class="d-flex flex-column border m-2 p-2 flex-grow-1">
-                                            <strong>Birthdate:</strong>
-                                            <span>01/01/2020</span>
-                                        </div>
-                                        <div class="d-flex flex-column border m-2 p-2 flex-grow-1">
-                                            <strong>Color/Markings:</strong>
-                                            <span>White</span>
-                                        </div>
-                                        <div class="d-flex flex-column border m-2 p-2 flex-grow-1">
-                                            <strong>Age:</strong>
-                                            <span>5 years</span>
-                                        </div>
-                                        <div class="d-flex flex-column border m-2 p-2 flex-grow-1">
-                                            <strong>Gender:</strong>
-                                            <span>Female</span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                    <div class="card mb-4 shadow-none">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <span>General</span>
                         </div>
-                        <div class="col-md-12">
-                            <div class="card shadow-none">
-                                <div class="card-header">Complaint</div>
-                                <div class="card-body">
-                                    <textarea name="complaint" id="" cols="30" rows="10" class="form-control w-full">{{$record->complaint}}</textarea>
+                        <div class="card-body bg-white">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <span class="text-primary fw-500">Information</span>
+                                    <hr class="mt-0">
+                                    <div class="row gy-3">
+                                        <div class="col-12">
+                                            <label for="">SOAP ID</label>
+                                            <input type="text" class="form-control bg-gray-100"
+                                                value="{{sprintf("VETISSOAP-%05d",$record->id)}}"
+                                                disabled>
+                                        </div>
+                                        <div class=" col-12">
+                                            <div class="dropdown">
+                                                <label for="">Status</label>
+                                                <button class="form-select d-flex justify-between"
+                                                    id="dropdownMenuButton" type="button"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false"
+                                                    >{{($record->status == 1) ? "Filled" : "Ongoing"}}
+                                                </button>
+                                                <div class="select-dropdown-menu dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton">
+                                                    <a class="select-dropdown-item dropdown-item" href="#"
+                                                        data-selected="true" data-value="1">Filed</a>
+                                                    <a class="select-dropdown-item dropdown-item" href="#"
+                                                        data-value="2">Ongoing</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="">Date</label>
+                                            <input type="date" class="form-control" name="date"
+                                                value="{{$record->record_date}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="text-primary fw-500">Patient Information</span>
+                                    <hr class="mt-0">
+                                    <div class="row gy-3">
+                                        <div class="col-12">
+                                            <div class="dropdown">
+                                                <label for="">Type</label>
+                                                @php
+                                                $consultation_type = [
+                                                1=> "Walk-In" ,
+                                                2=> "Consultation" ,
+                                                3=> "Vaccination",
+                                                4=> "Surgery"
+                                                ];
+                                                @endphp
+                                                <button class="form-select d-flex justify-between" id="soapType"
+                                                    type="button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="false"
+                                                    disabled>{{$consultation_type[$record->consultation_type] }}
+                                                </button>
+                                                <div class="dropdown-menu select-dropdown-menu"
+                                                    aria-labelledby="soapType">
+                                                    <a class="dropdown-item select-dropdown-item" href="#"
+                                                        data-value="1">Walk-In</a>
+                                                    <a class="dropdown-item select-dropdown-item" href="#"
+                                                        data-value="2">Consultation</a>
+                                                    <a class="dropdown-item select-dropdown-item" href="#"
+                                                        data-value="3">Vaccination</a>
+                                                    <a class="dropdown-item select-dropdown-item" href="#"
+                                                        data-value="4">Surgery</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            @php
+                                            $doctor = \App\Models\Doctor::getDoctorById($record->doctorID)
+                                            @endphp
+                                            <label for="">Attending Veterinarian</label>
+                                            <button class="form-control d-flex justify-content-between"
+                                                type="button" data-bs-toggle="modal"
+                                                data-bs-target="#veterinarianListModal" disabled><span
+                                                    id="vet">{{$doctor->firstname." ".$doctor->lastname}}</span>
+                                                <i class="fa-solid fa-user-doctor"></i></button>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="">Pet Owner</label>
+                                            <button class="form-control d-flex justify-content-between"
+                                                type="button" data-bs-toggle="modal"
+                                                data-bs-target="#petOwnerListModal" disabled>
+                                                <span>{{$owner->client_name}}</span> <i
+                                                    class="fa-solid fa-user"></i></button>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="">Pet</label>
+                                            <button class="form-control d-flex justify-content-between"
+                                                type="button" data-bs-toggle="modal"
+                                                data-bs-target="#petListModal" disabled>
+                                                <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div id="examinationSection" style="display: none">
+                    <div class="row gy-3">
+                        <div class="col-md-12">
+                            <div class="card shadow-none">
+                                <div class="card-header">Primary Complaint/History</div>
+                                <div class="card-body"><textarea name="complaint" id="" cols="30" rows="10"
+                                        class="form-control w-full">{{$record->complaint}}</textarea>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <span>Examination</span>
                                     <button class="btn-outline-primary btn" type="button"
-                                            onclick="fillTemplate('examination')">Fill Template
+                                        onclick="fillTemplate('examination')">Fill Template
                                     </button>
                                 </div>
                                 <!--
@@ -524,23 +548,83 @@
                                     -->
                                 <div class="card-body">
                                     <textarea name="examination" id="examinationTextArea"
-                                              cols="30" rows="10"
-                                              class="form-control w-full">@if(isset($examination))  Heart Rate: {{$examination->heart_rate}}
-                                        Respiration Rate: {{$examination->respiration_rate}}
-                                        Weight: {{$examination->weight}}
-                                        Length: {{$examination->length}}
-                                        CRT: {{$examination->crt}}
-                                        BCS: {{$examination->bcs}}
-                                        Lymph Nodes: {{$examination->lymph_nodes}}
-                                        Palpebral Reflex: {{$examination->palpebral_reflex}}
-                                        Temperature: {{$examination->temperature}}
+                                        cols="30" rows="10"
+                                        class="form-control w-full">@if(isset($examination))  Heart Rate: {{$examination->heart_rate}}
+                                            Respiration Rate: {{$examination->respiration_rate}}
+                                            Weight: {{$examination->weight}}
+                                            Length: {{$examination->length}}
+                                            CRT: {{$examination->crt}}
+                                            BCS: {{$examination->bcs}}
+                                            Lymph Nodes: {{$examination->lymph_nodes}}
+                                            Palpebral Reflex: {{$examination->palpebral_reflex}}
+                                            Temperature: {{$examination->temperature}}
                                         @endif</textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-md-12">
+                            <div class="card shadow-none">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <span>Laboratory/Interpretation</span>
+                                    <button class="btn-outline-primary btn">Add</button>
+                                </div>
+                                <div class="row gy-3 mt-2 mb-4">
+                                    <div class="col-12">
+                                        <div class="card shadow-none mx-3">
+                                            <div class="row p-3">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="formFile" class="form-label">Upload</label>
+                                                        <input class="form-control" type="file" id="formFile">
+                                                    </div>
+                                                    <div
+                                                        class="card shadow-none p-2 d-flex justify-content-center align-items-center">
+                                                        <img
+                                                            src="https://t3.ftcdn.net/jpg/07/23/05/68/360_F_723056816_irMoAo8SFXjh9PNlT9kb7FUePA73JzK7.jpg"
+                                                            alt=""
+                                                            style="max-width: auto; max-height: 200px; object-fit: contain;">
+                                                    </div>
+                                                </div>
+                                                <div class=" col-md-8">
+                                                    <div class="row">
+                                                        <label class="form-label">Remark</label>
+                                                        <div class="col">
+                                                            <textarea name="" id="" cols="30" rows="18"
+                                                                class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="card-footer d-flex py-3 justify-content-end align-items-center bg-white">
+                                                <button class="btn btn-outline-danger">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mx-3 mb-4 px-1">
+                                    <span class="text-primary fw-500">Interpretation</span>
+                                    <textarea name="" id="interpretationTextField" cols="30" rows="10"
+                                        class="form-control mt-2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card shadow-none">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <span>Plan</span>
+                                    {{-- <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
+                                    {{-- Fill Template--}}
+                                    {{-- </button>--}}
+                                </div>
+                                <div class="card-body"><textarea name="plan" id="planTextArea" cols="30"
+                                        rows="10"
+                                        class="form-control w-full">
 
-                    <div id="diagnosisSection" style="display: none">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="card shadow-none">
                                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -551,203 +635,73 @@
                                 </div>
                                 <div class="card-body">
                                     @php
-                                        // Decode the JSON string
-                                        $diagnosisData = [];
-                                        if(isset($diagnosis->diagnosis)){
-                                        $diagnosisData = json_decode($diagnosis->diagnosis, true);
+                                    // Decode the JSON string
+                                    $diagnosisData = [];
+                                    if(isset($diagnosis->diagnosis)){
+                                    $diagnosisData = json_decode($diagnosis->diagnosis, true);
 
-                                        }
+                                    }
                                     @endphp
                                     <textarea name="diagnosis" id="diagnosisTextArea" cols="30"
-                                              rows="10"
-                                              class="form-control w-full">@if ($diagnosisData)
+                                        rows="10"
+                                        class="form-control w-full">@if ($diagnosisData)
 
-                                            @foreach ($diagnosisData as $key => $value)
-                                                {{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}
-                                            @endforeach
+                                        @foreach ($diagnosisData as $key => $value)
+                                           {{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}
+                                        @endforeach
 
-                                        @endif</textarea>
+                                    @endif</textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div id="treatmentSection" style="display: none">
-                        <div class="row gy-3">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Medication Given</div>
-                                    <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
-                                                                     rows="10"
-                                                                     class="form-control w-full">
-                                    {{$diagnosis->treatment ?? ''}}
-                                    </textarea></div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Prescription Given</div>
-                                    <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
-                                                                     rows="10"
-                                                                     class="form-control w-full">
-                                    {{$diagnosis->treatment ?? ''}}
-                                    </textarea></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="prescriptionSection" style="display: none">
                         <div class="col-md-12">
+                            <div class="card shadow-none">
+                                <div class="card-header">Treatment</div>
+                                <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
+                                        rows="10"
+                                        class="form-control w-full">
+                                    {{$diagnosis->treatment ?? ''}}
+                                    </textarea></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="card shadow-none">
                                 <div class="card-header">Prescription</div>
                                 <div class="card-body"><textarea name="prescription" id="prescriptionTextArea"
-                                                                 cols="30" rows="10"
-                                                                 class="form-control w-full">{{$diagnosis->prescription ?? ''}}</textarea></div>
+                                        cols="30" rows="10"
+                                        class="form-control w-full">{{$diagnosis->prescription ?? ''}}</textarea></div>
                             </div>
                         </div>
-                    </div>
-
-                    <div id="remarksSection" style="display: none">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="card shadow-none">
-                                <div class="card-header">Remarks</div>
+                                <div class="card-header">Client Communication</div>
                                 <div class="card-body"><textarea name="client_communication"
-                                                                 id="clientCommunicationTextArea" cols="30"
-                                                                 rows="10"
-                                                                 class="form-control w-full">{{$diagnosis->client_communication ?? ''}}</textarea></div>
+                                        id="clientCommunicationTextArea" cols="30"
+                                        rows="10"
+                                        class="form-control w-full">{{$diagnosis->client_communication ?? ''}}</textarea></div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-{{--                    <div class="row gy-3">--}}
-{{--                        <div class="col-md-12">--}}
-{{--                            <div class="card shadow-none">--}}
-{{--                                <div class="card-header d-flex justify-content-between align-items-center">--}}
-{{--                                    <span>Laboratory/Interpretation</span>--}}
-{{--                                    <button class="btn-outline-primary btn">Add</button>--}}
-{{--                                </div>--}}
-{{--                                <div class="row gy-3 mt-2 mb-4">--}}
-{{--                                    <div class="col-12">--}}
-{{--                                        <div class="card shadow-none mx-3">--}}
-{{--                                            <div class="row p-3">--}}
-{{--                                                <div class="col-md-4">--}}
-{{--                                                    <div class="mb-3">--}}
-{{--                                                        <label for="formFile" class="form-label">Upload</label>--}}
-{{--                                                        <input class="form-control" type="file" id="formFile">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div--}}
-{{--                                                        class="card shadow-none p-2 d-flex justify-content-center align-items-center">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://t3.ftcdn.net/jpg/07/23/05/68/360_F_723056816_irMoAo8SFXjh9PNlT9kb7FUePA73JzK7.jpg"--}}
-{{--                                                            alt=""--}}
-{{--                                                            style="max-width: auto; max-height: 200px; object-fit: contain;">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class=" col-md-8">--}}
-{{--                                                    <div class="row">--}}
-{{--                                                        <label class="form-label">Remark</label>--}}
-{{--                                                        <div class="col">--}}
-{{--                                                            <textarea name="" id="" cols="30" rows="18"--}}
-{{--                                                                class="form-control"></textarea>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div--}}
-{{--                                                class="card-footer d-flex py-3 justify-content-end align-items-center bg-white">--}}
-{{--                                                <button class="btn btn-outline-danger">Remove</button>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="mx-3 mb-4 px-1">--}}
-{{--                                    <span class="text-primary fw-500">Interpretation</span>--}}
-{{--                                    <textarea name="" id="interpretationTextField" cols="30" rows="10"--}}
-{{--                                        class="form-control mt-2"></textarea>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-12">--}}
-{{--                            <div class="card shadow-none">--}}
-{{--                                <div class="card-header d-flex justify-content-between align-items-center">--}}
-{{--                                    <span>Plan</span>--}}
-{{--                                    --}}{{----}}{{-- <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
-{{--                                    --}}{{----}}{{-- Fill Template--}}
-{{--                                    --}}{{----}}{{-- </button>--}}
-{{--                                </div>--}}
-{{--                                <div class="card-body"><textarea name="plan" id="planTextArea" cols="30"--}}
-{{--                                        rows="10"--}}
-{{--                                        class="form-control w-full">--}}
-
-{{--                                    </textarea>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-12">--}}
-{{--                            <div class="card shadow-none">--}}
-{{--                                <div class="card-header d-flex justify-content-between align-items-center">--}}
-{{--                                    <span>Diagnosis</span>--}}
-{{--                                    <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
-{{--                                        Fill Template--}}
-{{--                                    </button>--}}
-{{--                                </div>--}}
-{{--                                <div class="card-body">--}}
-{{--                                    @php--}}
-{{--                                    // Decode the JSON string--}}
-{{--                                    $diagnosisData = [];--}}
-{{--                                    if(isset($diagnosis->diagnosis)){--}}
-{{--                                    $diagnosisData = json_decode($diagnosis->diagnosis, true);--}}
-
-{{--                                    }--}}
-{{--                                    @endphp--}}
-{{--                                    <textarea name="diagnosis" id="diagnosisTextArea" cols="30"--}}
-{{--                                        rows="10"--}}
-{{--                                        class="form-control w-full">@if ($diagnosisData)--}}
-
-{{--                                        @foreach ($diagnosisData as $key => $value)--}}
-{{--                                           {{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}--}}
-{{--                                        @endforeach--}}
-
-{{--                                    @endif</textarea>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-12">--}}
-{{--                            <div class="card shadow-none">--}}
-{{--                                <div class="card-header">Treatment</div>--}}
-{{--                                <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"--}}
-{{--                                        rows="10"--}}
-{{--                                        class="form-control w-full">--}}
-{{--                                    {{$diagnosis->treatment ?? ''}}--}}
-{{--                                    </textarea></div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="col-md-6">--}}
-
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-
-{{--                <div class="card-footer">--}}
-{{--                    <form action="{{route('soap.update', ['id' => $pet->id,'recordID' => $record->id ])}}"--}}
-{{--                        method="post" id="updateForm">--}}
-{{--                        @csrf--}}
-{{--                        <input type="hidden" value="" name="examination" id="examination">--}}
-{{--                        <input type="hidden" value="" name="interpretation" id="interpretation">--}}
-{{--                        <input type="hidden" value="" name="diagnosis" id="diagnosis">--}}
-{{--                        <input type="hidden" value="" name="treatment" id="treatment">--}}
-{{--                        <input type="hidden" value="" name="prescription" id="prescription">--}}
-{{--                        <input type="hidden" value="" name="client_communication" id="client_communication">--}}
-{{--                        <button class="btn btn-primary" type="button" onclick="submitTextFields()"><i--}}
-{{--                                class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>--}}
-{{--                        </button>--}}
-{{--                    </form>--}}
-{{--                    <!-- Only shows pag na save na -->--}}
-{{--                    <!-- <button class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i> <span class="ms-2">Update Record</span></button> -->--}}
-{{--                </div>--}}
-{{--            </div>--}}
+                <div class="card-footer">
+                    <form action="{{route('soap.update', ['id' => $pet->id,'recordID' => $record->id ])}}"
+                        method="post" id="updateForm">
+                        @csrf
+                        <input type="hidden" value="" name="examination" id="examination">
+                        <input type="hidden" value="" name="interpretation" id="interpretation">
+                        <input type="hidden" value="" name="diagnosis" id="diagnosis">
+                        <input type="hidden" value="" name="treatment" id="treatment">
+                        <input type="hidden" value="" name="prescription" id="prescription">
+                        <input type="hidden" value="" name="client_communication" id="client_communication">
+                        <button class="btn btn-primary" type="button" onclick="submitTextFields()"><i
+                                class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
+                        </button>
+                    </form>
+                    <!-- Only shows pag na save na -->
+                    <!-- <button class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i> <span class="ms-2">Update Record</span></button> -->
+                </div>
+            </div>
 
         </div>
     </div>
@@ -755,61 +709,8 @@
 @endsection
 
 @section('scripts')
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const tabs = document.querySelectorAll('.nav-tab');
-                    const cards = {
-                        'general': document.getElementById('generalSection'),
-                        'examination': document.getElementById('examinationSection'),
-                        'diagnosis': document.getElementById('diagnosisSection'),
-                        'treatment': document.getElementById('treatmentSection'),
-                        'prescription': document.getElementById('prescriptionSection'),
-                        'remarks': document.getElementById('remarksSection')
-                    };
-
-                    // Ensure Pet Profile is active initially
-                    document.querySelector('.nav-link[href="#general"]').classList.add('active');
-                    cards['general'].style.display = 'block'; // Show Pet Profile Card by default
-
-                    tabs.forEach(tab => {
-                        tab.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            // Remove active class from all tabs
-                            tabs.forEach(t => t.classList.remove('active'));
-                            tab.classList.add('active');
-
-                            // Hide all cards
-                            Object.values(cards).forEach(card => card.style.display = 'none');
-
-                            // Show the clicked tab's corresponding card
-                            const targetCard = tab.getAttribute('href').substring(1);
-                            if (cards[targetCard]) {
-                                cards[targetCard].style.display = 'block';
-                            }
-                        });
-                    });
-
-                    // Trigger the click on the Pet Profile tab to show it initially
-                    document.querySelector('.nav-tab.active').click();
-                });
-            </script>
 <script src="{{ asset('js/soap.js') }}"></script>
 <script>
-    var pet = @json($pet);
-    console.log(pet);
-
-    // Handle the "No Next Due Date" checkbox logic
-    document.getElementById('noNextDueDate').addEventListener('change', function() {
-        const nextDueDateInput = document.getElementById('nextDueDate');
-        if (this.checked) {
-            nextDueDateInput.value = '';
-            nextDueDateInput.disabled = true;
-        } else {
-            nextDueDateInput.disabled = false;
-        }
-    });
-
-
     document.querySelectorAll('.select-dropdown-menu').forEach(menu => {
         // Handle dropdown item clicks
         menu.querySelectorAll('.select-dropdown-item').forEach(item => {
