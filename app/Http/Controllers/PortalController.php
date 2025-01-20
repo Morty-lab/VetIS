@@ -6,7 +6,9 @@ use App\Mail\AppointmentSet;
 use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\PetRecords;
 use App\Models\Pets;
+use App\Models\Prescriptions;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -307,6 +309,13 @@ class PortalController extends Controller
             ->addSuccess('Appointment cancelled successfully.');
 
         return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
+    }
+
+    public function prescription(){
+        $id = request('id');
+        $prescriptions = PetRecords::getPrescriptions($id);
+
+        return view('portal.main.prescriptions.prescriptionList', ['prescriptions' => $prescriptions]);
     }
 
 

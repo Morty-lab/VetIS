@@ -19,7 +19,11 @@
                 <div class="nav-link-icon"><i class="fa-solid fa-calendar-check"></i></div>
                 Appointment
             </a>
-            <a class="nav-link {{ request()->routeIs('portal.prescription*') ? 'active' : '' }}" href="{{ route('portal.prescription.list') }}">
+            @php
+            $user =  auth()->user()->id;
+            $user_id = \App\Models\Clients::getClientByUserID($user)
+            @endphp
+            <a class="nav-link {{ request()->routeIs('portal.prescription*') ? 'active' : '' }}" href="{{ route('portal.prescription.list',['id'=> $user_id->id]) }}">
                 <div class="nav-link-icon"><i class="fa-solid fa-prescription"></i></div>
                 Prescriptions
             </a>

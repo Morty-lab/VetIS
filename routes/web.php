@@ -381,9 +381,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/portal/profile/update', [PortalController::class, 'updateProfile'])->name('portal.profile.update');
     Route::post('/portal/profile/upload', [PortalController::class, 'uploadProfile'])->name('portal.profile.upload');
 
-    Route::get('/portal/prescription/', function () {
-        return view('portal.main.prescriptions.prescriptionList');
-    })->name("portal.prescription.list");
+    Route::get('/portal/prescription/', [PortalController::class , 'prescription'])->name("portal.prescription.list");
     Route::get('/portal/prescription/print', function () {
         return view('portal.main.prescriptions.print');
     })->name("portal.prescription.print");

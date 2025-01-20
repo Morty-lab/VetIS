@@ -31,13 +31,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($prescriptions as $prescription)
                         <tr>
                             <td>001</td>
-                            <td>Fluffy</td>
-                            <td>John Doe</td>
-                            <td>December 2, 2024</td>
+                            <td>{{\App\Models\Pets::where('id',$prescription->petID)->first()->pet_name}}</td>
+                            <td>{{$prescription->prescription}}e</td>
+                            <td>{{\Carbon\Carbon::parse($prescription->record_date)->format("F d, Y")}}</td>
                             <td><a class="btn btn-primary" href="{{route('portal.prescription.print')}}" target="_blank">Print</a></td>
                         </tr>
+                    @endforeach
+
                     </tbody>
                 </table>
             </div>

@@ -30,6 +30,11 @@ class PetRecords extends Model
         return self::all();
     }
 
+    public static function getPrescriptions($id)
+    {
+        return self::where('ownerID', $id)->get();
+    }
+
     public static function getPetRecordById($id)
     {
         return self::find($id);

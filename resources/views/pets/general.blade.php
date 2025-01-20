@@ -321,7 +321,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Birthdate</label>
-                                    <p>{{$pet->pet_birthdate}}</p>
+                                    <p>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format('F d, Y')}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Gender</label>

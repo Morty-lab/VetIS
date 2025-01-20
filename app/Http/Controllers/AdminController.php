@@ -79,7 +79,7 @@ class AdminController extends Controller
                 $profile = Admin::where('user_id', $user->id)->first();
                 break;
 
-            case 'veterinarian':
+            case 'veterinary':
                 $profile = Doctor::where('user_id', $user->id)->first();
                 break;
 
