@@ -408,5 +408,9 @@ Route::get('/printable/prescription/print', function () {
     return view('printable.prescription');
 })->name("printable.prescription");
 
+Route::get('/portal/appointments/request', function () {
+    return view('portal.main.scheduling.request');
+})->name("portal.scheduling.request");
+
 
 require __DIR__ . '/auth.php';

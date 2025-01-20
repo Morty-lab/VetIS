@@ -1,6 +1,20 @@
 @php use App\Models\Clients;use Illuminate\Support\Facades\Auth; @endphp
 @extends('portal.layouts.app')
 @section('outerContent')
+    <style>
+        .custom-scroll {
+            overflow-y: auto; /* Enable vertical scrolling */
+            height: 300px;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #afafaf #f1f1f1; /* Thumb and track colors */
+            padding-right: 10px;
+        }
+
+        /* For WebKit-based browsers (Chrome, Edge, Safari) */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px; /* Thin scrollbar */
+        }
+    </style>
 <!-- Modals -->
 
 <!-- Modal for Veterinarian Schedule -->
@@ -73,14 +87,14 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <!-- View Veterinarian Schedule -->
-                            <div class="form-group d-flex">
-                                <label>&nbsp;</label> <!-- For spacing alignment -->
-                                <br>
-                                <a href="#" class="text-decoration-underline" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-bs-dismiss="">View Veterinarian Schedule</a>
-                            </div>
-                        </div>
+{{--                        <div class="col-md-12">--}}
+{{--                            <!-- View Veterinarian Schedule -->--}}
+{{--                            <div class="form-group d-flex">--}}
+{{--                                <label>&nbsp;</label> <!-- For spacing alignment -->--}}
+{{--                                <br>--}}
+{{--                                <a href="#" class="text-decoration-underline" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-bs-dismiss="">View Veterinarian Schedule</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="col-md-6">
                             <!-- Select Schedule -->
                             <div class="form-group">
@@ -115,6 +129,159 @@
         </div>
     </div>
 </div>
+
+{{--<div class="modal fade" id="appointmentRequestModal" tabindex="-1" aria-labelledby="currentModalLabel" aria-hidden="true"--}}
+{{--     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--            <form action="{{route('portal.appointments.add')}}" method="post">--}}
+{{--                @csrf--}}
+{{--                @php--}}
+{{--                    $client = Clients::getClientByUserID(Auth::user()->id)--}}
+{{--                @endphp--}}
+{{--                <input type="hidden" value="{{$client->id}}" name="owner_ID">--}}
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title" id="appointmentRequestTitle">Request Appointment</h5>--}}
+{{--                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--                </div>--}}
+{{--                <div class="modal-body">--}}
+{{--                    <h4 class="text-center text-primary mb-3">Select a Veterinarian</h4>--}}
+
+{{--                    <div class="row gx-4 d-flex justify-content-center mt-3">--}}
+{{--                        <div class="col-md-5 mb-4">--}}
+{{--                            <div class="card border-top-lg border-top-primary shadow-none border">--}}
+{{--                                <div class="card-body p-0">--}}
+{{--                                    <div class="d-flex justify-content-center pt-2 px-2">--}}
+{{--                                        <img class="img-account-profile mb-2 rounded-circle border w-50 h-50" src="http://127.0.0.1:8000/assets/img/illustrations/profiles/profile-1.png" alt="Profile Picture">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="pet-info mt-2 py-1 px-3 border-top bg-white">--}}
+{{--                                        <div class="row">--}}
+{{--                                            <div class="col-md-10">--}}
+{{--                                                <p class="mb-0 fw-bold">John Doe</p>--}}
+{{--                                                <p class="mb-0">Veterinarian I</p></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="card-footer mt-0 px-3 py-1 d-flex justify-content-end">--}}
+{{--                                    <a href="" class="btn btn-primary w-100">Select</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-5 mb-4">--}}
+{{--                            <div class="card border-top-lg border-top-primary shadow-none border">--}}
+{{--                                <div class="card-body p-0">--}}
+{{--                                    <div class="d-flex justify-content-center pt-2 px-2">--}}
+{{--                                        <img class="img-account-profile mb-2 rounded-circle border w-50 h-50" src="http://127.0.0.1:8000/assets/img/illustrations/profiles/profile-1.png" alt="Profile Picture">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="pet-info mt-2 py-1 px-3 border-top bg-white">--}}
+{{--                                        <div class="row">--}}
+{{--                                            <div class="col-md-10">--}}
+{{--                                                <p class="mb-0 fw-bold">John Doe</p>--}}
+{{--                                                <p class="mb-0">Veterinarian I</p></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="card-footer mt-0 px-3 py-1 d-flex justify-content-end">--}}
+{{--                                    <a href="" class="btn btn-primary w-100">Select</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                    <h4 class="text-center text-primary mb-3">Select a Pet</h4>--}}
+
+{{--                    <div class="row gx-4 d-flex">--}}
+{{--                        <div class="d-flex flex-wrap gap-3">--}}
+{{--                            <div>--}}
+{{--                                <input type="checkbox" class="btn-check" id="option1" autocomplete="off">--}}
+{{--                                <label class="btn btn-outline-primary" for="option1">Lexie</label>--}}
+{{--                            </div>--}}
+
+{{--                            <div>--}}
+{{--                                <input type="checkbox" class="btn-check" id="option2" autocomplete="off">--}}
+{{--                                <label class="btn btn-outline-primary" for="option2">Arram</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+{{--<div class="modal fade" id="appointmentRequestModal" tabindex="-1" aria-labelledby="currentModalLabel" aria-hidden="true"--}}
+{{--     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--            <form action="{{route('portal.appointments.add')}}" method="post">--}}
+{{--                @csrf--}}
+{{--                @php--}}
+{{--                    $client = Clients::getClientByUserID(Auth::user()->id)--}}
+{{--                @endphp--}}
+{{--                <input type="hidden" value="{{$client->id}}" name="owner_ID">--}}
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title" id="appointmentRequestTitle">Request Appointment</h5>--}}
+{{--                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--                </div>--}}
+{{--                <div class="modal-body p-0">--}}
+{{--                    <div class="row m-0">--}}
+{{--                        <div class="col-md-4 px-3 py-1 border-end">--}}
+{{--                            <p class="text-primary mb-0 mt-2 fw-bold">Select a Veterinarian</p>--}}
+{{--                            <hr class="mt-2">--}}
+{{--                            <div class="vets custom-scroll">--}}
+{{--                                <div class="w-100 mb-2">--}}
+{{--                                    <input type="checkbox" class="btn-check" id="option1" autocomplete="off">--}}
+{{--                                    <label class="btn btn-outline-primary w-100" for="option1">Option 1</label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-8">--}}
+{{--                            <p class="text-primary mb-3 mt-2 fw-bold">Select a Pet</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="modal-footer"></div>--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--    <div class="modal fade" id="appointmentRequestModal" tabindex="-1" aria-labelledby="currentModalLabel" aria-hidden="true"--}}
+{{--         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">--}}
+{{--            <div class="modal-content">--}}
+{{--                <form action="{{route('portal.appointments.add')}}" method="post">--}}
+{{--                    @csrf--}}
+{{--                    @php--}}
+{{--                        $client = Clients::getClientByUserID(Auth::user()->id)--}}
+{{--                    @endphp--}}
+{{--                    <input type="hidden" value="{{$client->id}}" name="owner_ID">--}}
+{{--                    <div class="modal-header">--}}
+{{--                        <h5 class="modal-title" id="appointmentRequestTitle">Request Appointment</h5>--}}
+{{--                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-body p-0">--}}
+{{--                        <div class="row m-0">--}}
+{{--                            <div class="col-md-4 px-3 py-1 border-end">--}}
+{{--                                <p class="text-primary mb-0 mt-2 fw-bold">Select a Veterinarian</p>--}}
+{{--                                <hr class="mt-2">--}}
+{{--                                <div class="vets custom-scroll">--}}
+{{--                                    <div class="w-100 mb-2">--}}
+{{--                                        <input type="checkbox" class="btn-check" id="option1" autocomplete="off">--}}
+{{--                                        <label class="btn btn-outline-primary w-100" for="option1">Option 1</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-8">--}}
+{{--                                <p class="text-primary mb-3 mt-2 fw-bold">Select a Pet</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-footer"></div>--}}
+{{--                </form>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         // Use Blade to output the route URL and assign it to a JavaScript variable
