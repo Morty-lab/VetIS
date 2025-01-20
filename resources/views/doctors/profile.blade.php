@@ -309,7 +309,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Birthday</label>
-                                    <p>{{ $doctor->birthday }}</p>
+                                    <p>{{ \Carbon\Carbon::parse($doctor->birthday)->format('F d, Y') }}</p>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="small mb-1">Address</label>
@@ -387,7 +387,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                             document.getElementById('petPhotoPreview').src = data.photo_url;
                             alert('Photo updated successfully!');
                         } else {
-                            alert('Failed to upload pet photo. Please try again.');
+                            alert(data.message);
                         }
                     })
                     .catch(error => {

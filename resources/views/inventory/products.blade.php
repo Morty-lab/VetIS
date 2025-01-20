@@ -22,7 +22,7 @@
             <table id="inventoryProductsTable">
                 <thead>
                     <tr>
-                        <th>Product ID</th>
+                        <th>SKU (Stock Keeping Unit)</th>
                         <th>Product Name</th>
                         <th>Category</th>
                         <th>Unit</th>
@@ -40,7 +40,7 @@
 
                         @endphp
                     <tr>
-                        <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                        <td>{{ sprintf("VetIS-%05d", $product->SKU)}}</td>
                         <td>{{ $product->product_name }}</td>
                         <td>{{\App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
                         <td>{{\App\Models\Unit::where('id',$product->unit)->first()->unit_name}}</td>

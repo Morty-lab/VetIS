@@ -24,12 +24,13 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $this->call([UsersTableSeeder::class]);
-        //$this->call(ServicesTableSeeder::class);
-        //Appointments::factory()->count(10)->create();
+        $this->call([UsersTableSeeder::class,ClientsTableSeeder::class,ServicesTableSeeder::class,PetSeeder::class]);
 
 
-        // \App\Models\User::factory(10)->create();
+
+         \App\Models\User::factory(10)->create();
+        Appointments::factory()->count(10)->create();
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

@@ -94,8 +94,8 @@ class UsersTableSeeder extends Seeder
 //        ]);
 
 
-        //$faker = Factory::create();
-/**
+        $faker = Factory::create();
+
         while (DB::table('admins')->count() < 10){
           $adminPositions = [
                 "Practice Manager",
@@ -118,7 +118,7 @@ class UsersTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
-                'role' => 'veterinary',
+                'role' => 'admin',
                 'password' => $hashedPassword,
                 'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
@@ -207,7 +207,7 @@ class UsersTableSeeder extends Seeder
 
         }
 
-*/
+
 
     }
 }

@@ -430,8 +430,8 @@
                                             <div class="row gy-3">
                                                 <div class="col-12">
                                                     <label for="">Date</label>
-                                                    <input type="date" class="form-control" name="date"
-                                                        value="{{$record->record_date}}" disabled>
+                                                    <input type="text" class="form-control" name="date"
+                                                        value="{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}" disabled>
                                                 </div>
                                                 <div class="col-12">
                                                     @php
@@ -470,23 +470,23 @@
                                             <div class="text-primary w-100 fw-bold">Pet Information</div>
                                             <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
                                                 <strong>Breed:</strong>
-                                                <span>Japanese Spitz</span>
+                                                <span>{{$pet->pet_breed}}</span>
                                             </div>
                                             <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
                                                 <strong>Birthdate:</strong>
-                                                <span>01/01/2020</span>
+                                                <span>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format("F d, Y")}}</span>
                                             </div>
                                             <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
                                                 <strong>Color/Markings:</strong>
-                                                <span>White</span>
+                                                <span>{{$pet->pet_color}}</span>
                                             </div>
                                             <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
                                                 <strong>Age:</strong>
-                                                <span>5 years</span>
+                                                <span>{{$pet->age}} years</span>
                                             </div>
                                             <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
                                                 <strong>Gender:</strong>
-                                                <span>Female</span>
+                                                <span>{{$pet->pet_gender}}</span>
                                             </div>
                                         </div>
 

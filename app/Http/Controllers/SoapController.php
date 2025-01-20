@@ -67,7 +67,6 @@ class SoapController extends Controller
             'ownerID' => $ownerID,
             'doctorID' => (integer)$request->doctorID,
             'consultation_type' => $consultation_types[$request->consultation_type],
-            'status' => $status,
             'complaint' => $request->complaint,
             'record_date' => $request->date
         ];
@@ -90,12 +89,12 @@ class SoapController extends Controller
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
         $record = PetRecords::getPetRecordById($recordID);
-        $petPlan = PetPlan::getAllByRecordID($id);
-        $examination = Examination::getExaminationByRecordID($recordID);
-        $diagnosis = PetDiagnosis::getDiagnosisByPet($recordID);
+//        $petPlan = PetPlan::getAllByRecordID($id);
+//        $examination = Examination::getExaminationByRecordID($recordID);
+//        $diagnosis = PetDiagnosis::getDiagnosisByPet($recordID);
 
 //        dd($diagnosis);
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ,'petPlan' => $petPlan, 'examination' => $examination, 'diagnosis' => $diagnosis]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ]);
     }
 
     /**
