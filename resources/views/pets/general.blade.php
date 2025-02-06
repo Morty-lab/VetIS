@@ -545,8 +545,13 @@
                     <div class="card mb-4 shadow-none" id="recordsCard" style="display:none;">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Records</span>
-                            <a class="btn btn-primary" type="button"
-                                href="{{route('soap.create', ['id' =>$pet->id])}}">New</a>
+                            <form action="{{route('soap.add', ['id' =>$pet->id])}}" method="post">
+                                @csrf
+
+                                <button class="btn btn-primary" type="submit" >New
+                                </button>
+                            </form>
+
                         </div>
                         <div class="card-body">
                             <!-- only shows if there is no record -->
@@ -578,7 +583,7 @@
                                     <tr>
                                         <td>{{$record->record_date}}</td>
                                         <td>{{sprintf('VETIS-%05d', $record->id)}}</td>
-                                        <td>{{$consultation_type[$record->consultation_type] }}</td>
+                                        <td>{{$consultation_type[$record->consultation_type] ?? '' }}</td>
                                         <td>{{$record->complaint}}</td>
                                         <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
                                         <td>

@@ -16,8 +16,12 @@ class PetRecords extends Model
         'record_date',
         'consultation_type',
         'complaint',
-        'interpretation',
-        'status',
+        'examination',
+        'diagnosis',
+        'medication_given',
+        'procedure_given',
+        'remarks',
+        'prescription',
     ];
 
      public function pet()

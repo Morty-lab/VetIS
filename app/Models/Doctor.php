@@ -44,6 +44,11 @@ class Doctor extends Model
         return self::where('id',$id)->first();
     }
 
+    public static function getName($id){
+        $doctor = self::getDoctorById($id);
+        return $doctor->firstname.' '.$doctor->lastname;
+    }
+
     // Update a doctor
     public function updateDoctor($data)
     {

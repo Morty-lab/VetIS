@@ -230,12 +230,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("petID");
             $table->unsignedBigInteger("ownerID");
-            $table->unsignedBigInteger("doctorID");
+            $table->unsignedBigInteger("doctorID")->nullable();
             $table->foreign("doctorID")->references("id")->on("doctors")->onDelete("cascade");
             $table->foreign("ownerID")->references("id")->on("clients")->onDelete("cascade");
             $table->foreign("petID")->references("id")->on("pets")->onDelete("cascade");
             $table->date("record_date");
-            $table->integer("consultation_type");
+            $table->integer("consultation_type")->nullable();
             $table->longText("complaint")->nullable();
             $table->longText("examination")->nullable();
             $table->longText("diagnosis")->nullable();
