@@ -403,7 +403,7 @@
                             <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Print Record
                             </button>
-                            <button class="btn btn-primary" type="button" onclick="submitTextFields()">
+                            <button class="btn btn-primary" type="submit" >
                                 <i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="printMenuButton">
@@ -435,13 +435,14 @@
                                                 </div>
                                                 <div class="col-12">
                                                     @php
-                                                        $doctor = \App\Models\Doctor::getDoctorById($record->doctorID)
+                                                        $doctor = \App\Models\Doctor::getName($record->doctorID) ;
+
                                                     @endphp
                                                     <label for="">Attending Veterinarian</label>
                                                     <button class="form-control d-flex justify-content-between"
                                                             type="button" data-bs-toggle="modal"
                                                             data-bs-target="#veterinarianListModal" disabled><span
-                                                            id="vet">{{$doctor->firstname." ".$doctor->lastname}}</span>
+                                                            id="vet">{{$doctor ?? ''}}</span>
                                                         <i class="fa-solid fa-user-doctor"></i></button>
                                                 </div>
                                             </div>
@@ -498,9 +499,10 @@
                                     <div class="card-header">Complaint</div>
                                     <div class="card-body">
                                         <div id="quill-editor" class="mb-3" style="height: 400px;">
-                                            {{$record->complaint}}
+                                            {!! $record->complaint !!}
                                         </div>
                                         <textarea rows="3" class="mb-3 d-none" name="complaint" id="quill-editor-area">
+                                            {!! $record->complaint !!}
                                         </textarea>
     {{--                                    <textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea>--}}
                                     </div>
@@ -531,18 +533,20 @@
                                         -->
                                     <div class="card-body">
                                         <div id="examination" class="mb-3" style="height: 400px;">
-                                            @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}
-                                            Respiration Rate: {{$examination->respiration_rate}}
-                                            Weight: {{$examination->weight}}
-                                            Length: {{$examination->length}}
-                                            CRT: {{$examination->crt}}
-                                            BCS: {{$examination->bcs}}
-                                            Lymph Nodes: {{$examination->lymph_nodes}}
-                                            Palpebral Reflex: {{$examination->palpebral_reflex}}
-                                            Temperature: {{$examination->temperature}}
-                                            @endif
+{{--                                            @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}--}}
+{{--                                            Respiration Rate: {{$examination->respiration_rate}}--}}
+{{--                                            Weight: {{$examination->weight}}--}}
+{{--                                            Length: {{$examination->length}}--}}
+{{--                                            CRT: {{$examination->crt}}--}}
+{{--                                            BCS: {{$examination->bcs}}--}}
+{{--                                            Lymph Nodes: {{$examination->lymph_nodes}}--}}
+{{--                                            Palpebral Reflex: {{$examination->palpebral_reflex}}--}}
+{{--                                            Temperature: {{$examination->temperature}}--}}
+{{--                                            @endif--}}
+                                            {!! $record->examination !!}
                                         </div>
                                         <textarea rows="3" class="mb-3 d-none" name="examination" id="examinationTextArea">
+                                            {!! $record->examination !!}
                                         </textarea>
                                     </div>
                                 </div>
@@ -559,23 +563,12 @@
                                         </button>
                                     </div>
                                     <div class="card-body">
-                                        @php
-                                            // Decode the JSON string
-                                            $diagnosisData = [];
-                                            if(isset($diagnosis->diagnosis)){
-                                            $diagnosisData = json_decode($diagnosis->diagnosis, true);
-                                            }
-                                        @endphp
+
                                         <div id="diagnosis" class="mb-3" style="height: 400px;">
-                                            @if ($diagnosisData)
-
-                                                @foreach ($diagnosisData as $key => $value)
-                                                    {{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}
-                                                @endforeach
-
-                                            @endif
+                                            {!! $record->diagnosis !!}
                                         </div>
                                         <textarea rows="3" class="mb-3 d-none" name="diagnosis" id="diagnosisTextArea">
+                                            {!! $record->diagnosis !!}
                                         </textarea>
                                     </div>
                                 </div>
@@ -587,20 +580,21 @@
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header">Medication Given</div>
-                                        <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
+                                        <div class="card-body"><textarea name="medication_given" id="treatmentTextArea" cols="30"
                                                                          rows="10"
                                                                          class="form-control w-full">
-                                        {{$diagnosis->treatment ?? ''}}
+                                        {!! $record->medication_given !!}
                                         </textarea></div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header">Procedure Given</div>
-                                        <div class="card-body"><textarea name="treatment" id="treatmentTextArea" cols="30"
+                                        <div class="card-body"><textarea name="procedure_given" id="treatmentTextArea" cols="30"
                                                                          rows="10"
                                                                          class="form-control w-full">
-                                        {{$diagnosis->treatment ?? ''}}
+                                        {!! $record->procedure_given !!}
+
                                         </textarea></div>
                                     </div>
                                 </div>
@@ -613,9 +607,10 @@
                                     <div class="card-header">Prescription</div>
                                     <div class="card-body">
                                         <div id="prescription" class="mb-3" style="height: 400px;">
-                                            {{$diagnosis->prescription ?? ''}}
+                                            {!! $record->prescription !!}
                                         </div>
                                         <textarea rows="3" class="mb-3 d-none" name="prescription" id="prescriptionTextArea">
+                                            {!! $record->prescription !!}
                                         </textarea>
                                     </div>
                                 </div>
@@ -628,9 +623,10 @@
                                     <div class="card-header">Remarks</div>
                                     <div class="card-body">
                                         <div id="remarks" class="mb-3" style="height: 400px;">
-                                            {{$diagnosis->client_communication ?? ''}}
+                                            {!! $record->prescription !!}
                                         </div>
                                         <textarea rows="3" class="mb-3 d-none" name="client_communication" id="clientCommunicationTextArea">
+                                            {!! $record->prescription !!}
                                         </textarea>
                                     </div>
                                 </div>
@@ -663,11 +659,29 @@
                     theme: 'snow'
                 });
 
+                quill.on('text-change', function() {
+                    document.getElementById('quill-editor-area').value = quill.root.innerHTML;
+                });
+
+                // Ensure textarea is updated before form submission
+                document.querySelector("form").addEventListener("submit", function() {
+                    document.getElementById('quill-editor-area').value = quill.root.innerHTML;
+                });
+
                 var examination = new Quill('#examination', {
                     modules: {
                         toolbar: toolbarOptions
                     },
                     theme: 'snow'
+                });
+
+                examination.on('text-change', function() {
+                    document.getElementById('examinationTextArea').value = examination.root.innerHTML;
+                });
+
+                // Ensure textarea is updated before form submission
+                document.querySelector("form").addEventListener("submit", function() {
+                    document.getElementById('examinationTextArea').value = examination.root.innerHTML;
                 });
 
                 var diagnosis = new Quill('#diagnosis', {
@@ -677,6 +691,15 @@
                     theme: 'snow'
                 });
 
+                diagnosis.on('text-change', function() {
+                    document.getElementById('diagnosisTextArea').value = diagnosis.root.innerHTML;
+                });
+
+                // Ensure textarea is updated before form submission
+                document.querySelector("form").addEventListener("submit", function() {
+                    document.getElementById('diagnosisTextArea').value = diagnosis.root.innerHTML;
+                });
+
                 var remarks = new Quill('#remarks', {
                     modules: {
                         toolbar: toolbarOptions
@@ -684,11 +707,29 @@
                     theme: 'snow'
                 });
 
+                remarks.on('text-change', function() {
+                    document.getElementById('clientCommunicationTextArea').value = remarks.root.innerHTML;
+                });
+
+                // Ensure textarea is updated before form submission
+                document.querySelector("form").addEventListener("submit", function() {
+                    document.getElementById('clientCommunicationTextArea').value = remarks.root.innerHTML;
+                });
+
                 var prescription = new Quill('#prescription', {
                     modules: {
                         toolbar: toolbarOptions
                     },
                     theme: 'snow'
+                });
+
+                prescription.on('text-change', function() {
+                    document.getElementById('prescriptionTextArea').value = prescription.root.innerHTML;
+                });
+
+                // Ensure textarea is updated before form submission
+                document.querySelector("form").addEventListener("submit", function() {
+                    document.getElementById('prescriptionTextArea').value = prescription.root.innerHTML;
                 });
             </script>
             <script>

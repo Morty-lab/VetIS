@@ -9,6 +9,7 @@ use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,17 +42,11 @@ class SoapController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,int $id)
+    public function store(int $id)
     {
 
         $ownerID = Pets::find($id)->owner_ID;
-        $consultation_types = [
-            "Walk-In" => 1,
-            "Consultation" => 2,
-            "Vaccination" => 3,
-            "Surgery" => 4
-        ];
-        $status = ($request->status == 'Filed') ? 1 : 0;
+
         $rules = [
             'petID' => 'required|integer',
             'ownerID' => 'required|integer',
@@ -65,10 +60,10 @@ class SoapController extends Controller
         $data = [
             'petID' => $id,
             'ownerID' => $ownerID,
-            'doctorID' => (integer)$request->doctorID,
-            'consultation_type' => $consultation_types[$request->consultation_type],
-            'complaint' => $request->complaint,
-            'record_date' => $request->date
+//            'doctorID' => (integer)$request->doctorID,
+//            'consultation_type' => $consultation_types[$request->consultation_type],
+//            'complaint' => $request->complaint,
+            'record_date' => Carbon::now()->toDateTimeString(),
         ];
 
 
@@ -131,49 +126,35 @@ class SoapController extends Controller
     }
     public function update(Request $request, int $id, int $recordID)
     {
-        $examinationInput = $request->input('examination');
-        $diagnosisInput = $request->input('diagnosis');
+        // Validate the request data
+        $validatedData = $request->validate([
+            'consultation_type'  => 'nullable|integer', // Assuming it's stored as an integer
+            'complaint'          => 'nullable|string',
+            'examination'        => 'nullable|string',
+            'diagnosis'          => 'nullable|string',
+            'medication_given'   => 'nullable|string',
+            'procedure_given'    => 'nullable|string',
+            'remarks'            => 'nullable|string',
+            'prescription'       => 'nullable|string',
+        ]);
 
+        try {
+            // Fetch the record
+            $record = PetRecords::findOrFail($recordID);
 
-        // Process and update examination only if it is not null
-        if (!is_null($examinationInput)) {
-            $examinationData = array_merge(['pet_record_id' => $recordID], $this->splitText($examinationInput));
+            // Update the record with validated data
+            $record->update($validatedData);
 
-            $existingExamination = Examination::where('pet_record_id', $recordID)->first();
-//            dd($examinationData);
-            if ($existingExamination) {
-                // Update existing examination record
-                $existingExamination->update($examinationData);
-            } else {
-                // Add a new examination record
-                Examination::create($examinationData);
-            }
+            // Redirect back with success message
+            return redirect()->route('soap.view', ['id' => $id, 'recordID' => $recordID])
+                ->with('success', 'Record updated successfully.');
+        } catch (\Exception $e) {
+            // Handle errors (e.g., record not found, database issues)
+            return redirect()->route('soap.view', ['id' => $id, 'recordID' => $recordID])
+                ->with('error', 'Failed to update record: ' . $e->getMessage());
         }
-
-        // Process and update diagnosis only if it is not null
-        if (!is_null($diagnosisInput)) {
-            $diagnosis = $this->splitText($diagnosisInput);
-            $diagnosisData = [
-                'pet_record_id' => $recordID,
-                'diagnosis' => json_encode($diagnosis),
-                'treatment' => $request->input('treatment'),
-                'prescription' => $request->input('prescription'),
-                'client_communication' => $request->input('client_communication'),
-            ];
-
-            $existingDiagnosis = PetDiagnosis::where('pet_record_id', $recordID)->first();
-
-            if ($existingDiagnosis) {
-                // Update existing pet diagnosis record
-                $existingDiagnosis->update($diagnosisData);
-            } else {
-                // Add a new pet diagnosis record
-                PetDiagnosis::create($diagnosisData);
-            }
-        }
-
-        return redirect()->route('soap.view', ['id' => $id, 'recordID' => $recordID]);
     }
+
 
 
     /**
