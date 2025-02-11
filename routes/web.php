@@ -105,9 +105,6 @@ Route::middleware('auth')->group(function () {
 
     //sub routes Pet Medical Records
 
-    //    Route::get('/record', function () {
-    //        return view('pets.record');
-    //    });
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
     Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');

@@ -41,11 +41,11 @@ class Doctor extends Model
     // Retrieve a single doctor by ID
     public static function getDoctorById($id)
     {
-        return self::where('id',$id)->first();
+        return self::where('user_id',$id)->first();
     }
 
     public static function getName($id){
-        $doctor = self::getDoctorById($id);
+        $doctor = self::where('id',$id)->first();
         return $doctor->firstname.' '.$doctor->lastname;
     }
 

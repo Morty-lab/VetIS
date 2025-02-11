@@ -60,7 +60,7 @@ class SoapController extends Controller
         $data = [
             'petID' => $id,
             'ownerID' => $ownerID,
-//            'doctorID' => (integer)$request->doctorID,
+            'doctorID' => request('doctorID'),
 //            'consultation_type' => $consultation_types[$request->consultation_type],
 //            'complaint' => $request->complaint,
             'record_date' => Carbon::now()->toDateTimeString(),
