@@ -48,7 +48,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
-    return redirect()->route('login');
+    return redirect()->route('portal.login');
 });
 
 Auth::routes(['login' => false]);
@@ -62,32 +62,8 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests, 'dailySales' => $dailySales]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', function () {
-        $user = User::where('id', Auth::id())->first();
-        switch ($user->role) {
-            case 'admin':
-                $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
-                break;
-            case 'staff' || 'secretary' || 'cashier':
-                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
-                break;
-            case 'client':
-                $userInfo = \App\Models\Clients::where('user_id', $user->id)->first();
-                break;
-            case 'veterinarian':
-                $userInfo = \App\Models\Doctor::where('user_id', $user->id)->first();
-                break;
-        }
-
-        return view('profile.view', ['user' => $user, 'userInfo' => $userInfo]);
-    })->name("profile.view");
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::post('/uploadPhoto/{id}', [AdminController::class, 'uploadPhoto'])->name('uploadPhoto');
-    // Pets
+Route::middleware(['auth', 'role:admin,staff'])->group(function () {
+    //Pet Routes
     Route::get('/addpet', [PetsController::class, 'create'])->name('pet.create');
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
     Route::get('/profilepet/{pets}', [PetsController::class, 'show'])->name('pets.show');
@@ -97,17 +73,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
+});
 
-    //Vaccination Routes
+Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () {
+    //Pet Vaccination
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
     Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
 
-
-    //sub routes Pet Medical Records
-
-    //    Route::get('/record', function () {
-    //        return view('pets.record');
-    //    });
+    //Pet Records
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
     Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');
@@ -117,13 +90,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/petinfo/soap/print', function () {
         return view('reports.documents.soap');
     })->name("soap.print");
+});
 
-    // sub routes Pet Plan
-    Route::post('/soap/plan/{recordID}/addservice', [PetPlanController::class, 'store'])->name('plan.store');
-    Route::post('/soap/plan/{recordID}/{id}/update', [PetPlanController::class, 'update'])->name('plan.update');
-    Route::get('/soap/plan/{recordID}/{id}/delete', [PetPlanController::class, 'destroy'])->name('plan.delete');
-
-
+//User Managemnt
+Route::middleware(['auth', 'role:admin'])->group(function () {
     // Doctors
     Route::get('/managedoctor', [DoctorController::class, 'index'])->name('doctor.index');
     Route::post('/adddoctor', [DoctorController::class, 'store'])->name('doctor.add');
@@ -199,6 +169,59 @@ Route::middleware('auth')->group(function () {
         return back()->with('success', 'Password updated successfully.');
     })->name('doctor.updateAdmin');
 
+    // Pet Owners
+    Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
+    Route::get('/addowner', function () {
+        return view('owners.add');
+    });
+    Route::post('/profileowner/add', [ClientsController::class, 'store'])->name('owners.add');
+    Route::get('/profileowner/{id}', [ClientsController::class, 'show'])->name('owners.show');
+    Route::post('/profileowner/{id}', [ClientsController::class, 'update'])->name('owners.update');
+    Route::post('/profileowner/{id}/disable', [ClientsController::class, 'disable'])->name('owners.disable');
+
+    // Admin
+    Route::get('/um/admin', [AdminController::class, 'index'])->name("admin.manage");
+    Route::get('/um/admin/add', function () {
+        return view('user_management.admins.add');
+    });
+    Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
+    Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
+    Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
+    Route::get('/um/admin/update', function () {
+        return view('user_management.admins.update');
+    })->name("admins.update");
+
+    // Pet Owner
+    Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");
+    Route::get('/um/client/add', function () {
+        return view('user_management.pet_owners.add');
+    });
+    Route::get('/um/client/profile', function () {
+        return view('user_management.pet_owners.profile');
+    });
+    Route::get('/um/client/profile/options', function () {
+        return view('user_management.pet_owners.options');
+    });
+
+    // Staff
+    Route::get('/um/staff', [StaffController::class, "index"])->name("staffs.index");
+    Route::get('/um/staff/add', function () {
+        return view('user_management.staffs.add');
+    });
+    Route::post('/um/staff/add', [StaffController::class, "store"])->name("staffs.add");
+    Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
+    Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
+    Route::post('/um/staff/update', [StaffController::class, 'update'])->name("staffs.update");
+
+    Route::get('/profileowner/umsettings', function () {
+        return view('owners.options');
+    });
+
+
+});
+
+//Appointments
+Route::middleware(['auth', 'role:admin,staff,veterinary'])->group(function () {
     // Appointments
     Route::get('/manageappointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::post('addappontments', [AppointmentsController::class, 'store'])->name('appointments.add');
@@ -218,7 +241,7 @@ Route::middleware('auth')->group(function () {
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
 
-        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments,  "vets" => $vets]);
+        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     })->name('appointments.finished');
     Route::get('/pendingappointments', function () {
 
@@ -243,20 +266,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/viewappointments/{id}/schedule', [AppointmentsController::class, 'appointmentSchedule'])->name('appointments.schedule');
 
     Route::post('/viewappointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
+});
 
-
-    Route::get('/manageschedules', [\App\Http\Controllers\CalendarController::class, 'index'])->name('schedules.index');
-
-    // Pet Owners
-    Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
-    Route::get('/addowner', function () {
-        return view('owners.add');
-    });
-    Route::post('/profileowner/add', [ClientsController::class, 'store'])->name('owners.add');
-    Route::get('/profileowner/{id}', [ClientsController::class, 'show'])->name('owners.show');
-    Route::post('/profileowner/{id}', [ClientsController::class, 'update'])->name('owners.update');
-    Route::post('/profileowner/{id}/disable', [ClientsController::class, 'disable'])->name('owners.disable');
-
+//POS and Inventory
+Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     // POS Routes
 
     Route::get('/pos', [POSController::class, 'index'])->name('pos');
@@ -288,49 +301,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/units/update/{id}', [UnitController::class, 'update'])->name("units.update");
     Route::get('/units/{id}', [UnitController::class, 'destroy'])->name("units.delete");
 
-    // User Management
-    // Admin
-    Route::get('/um/admin',  [AdminController::class, 'index'])->name("admin.manage");
-    Route::get('/um/admin/add', function () {
-        return view('user_management.admins.add');
-    });
-    Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
-    Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
-    Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
-    Route::get('/um/admin/update', function () {
-        return view('user_management.admins.update');
-    })->name("admins.update");
-
-    // Pet Owner
-    Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");
-    Route::get('/um/client/add', function () {
-        return view('user_management.pet_owners.add');
-    });
-    Route::get('/um/client/profile', function () {
-        return view('user_management.pet_owners.profile');
-    });
-    Route::get('/um/client/profile/options', function () {
-        return view('user_management.pet_owners.options');
-    });
-
-    // Staff
-    Route::get('/um/staff', [StaffController::class, "index"])->name("staffs.index");
-    Route::get('/um/staff/add', function () {
-        return view('user_management.staffs.add');
-    });
-    Route::post('/um/staff/add', [StaffController::class, "store"])->name("staffs.add");
-    Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
-    Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
-    Route::post('/um/staff/update',[StaffController::class, 'update'])->name("staffs.update");
-
-    Route::get('/profileowner/umsettings', function () {
-        return view('owners.options');
-    });
-
-    Route::get('/print/sales', function () {
-        return view('printable.sales');
-    });
-
     // billing section
     Route::get('/billing', [BillingController::class, 'index'])->name('billing');
     Route::get('/billing/add', [BillingController::class, 'create'])->name('billing.add');
@@ -342,6 +312,61 @@ Route::middleware('auth')->group(function () {
     Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
     Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');
+
+    //Printable sales
+    Route::get('/print/sales', function () {
+        return view('printable.sales');
+    });
+
+    //Reports
+    Route::get('/reports', [ReportController::class, 'index'])->name("reports.index");
+    Route::get('/reports/pos/', [ReportController::class, 'pos'])->name("reports.pos");
+    Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
+    Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
+
+    // Inventory Reports
+    Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
+    Route::get('/reports/inventory/products-list/print', [ReportController::class, 'printProductList'])->name("reports.inventory.productsList");
+
+    Route::get('/reports/inventory/item-stock/print', [ReportController::class, 'printStockList'])->name("reports.inventory.itemStock");
+
+    Route::get('/reports/inventory/all-stock/print', [ReportController::class, 'printStockListAll'])->name("reports.inventory.allStockList");
+
+    Route::get('/reports/inventory/low-stock/print', [ReportController::class, 'printLowStock'])->name("reports.inventory.lowStockList");
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', function () {
+        $user = User::where('id', Auth::id())->first();
+        switch ($user->role) {
+            case 'admin':
+                $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
+                break;
+            case 'staff' || 'secretary' || 'cashier':
+                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
+                break;
+            case 'client':
+                $userInfo = \App\Models\Clients::where('user_id', $user->id)->first();
+                break;
+            case 'veterinarian':
+                $userInfo = \App\Models\Doctor::where('user_id', $user->id)->first();
+                break;
+        }
+
+        return view('profile.view', ['user' => $user, 'userInfo' => $userInfo]);
+    })->name("profile.view");
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/uploadPhoto/{id}', [AdminController::class, 'uploadPhoto'])->name('uploadPhoto');
+
+    // sub routes Pet Plan
+    Route::post('/soap/plan/{recordID}/addservice', [PetPlanController::class, 'store'])->name('plan.store');
+    Route::post('/soap/plan/{recordID}/{id}/update', [PetPlanController::class, 'update'])->name('plan.update');
+    Route::get('/soap/plan/{recordID}/{id}/delete', [PetPlanController::class, 'destroy'])->name('plan.delete');
+
+    //Schedules
+    Route::get('/manageschedules', [\App\Http\Controllers\CalendarController::class, 'index'])->name('schedules.index');
 });
 
 
@@ -353,8 +378,7 @@ Route::get('/portal/login', function () {
 Route::get('/portal/register', function () {
     return view('portal.auth.register');
 })->name(name: "portal.register");
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/portal/dashboard', [PortalController::class, 'index'])->name(name: "portal.dashboard");
 
     Route::get('/portal/veterinarians', function () {
@@ -381,34 +405,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/portal/profile/update', [PortalController::class, 'updateProfile'])->name('portal.profile.update');
     Route::post('/portal/profile/upload', [PortalController::class, 'uploadProfile'])->name('portal.profile.upload');
 
-    Route::get('/portal/prescription/', [PortalController::class , 'prescription'])->name("portal.prescription.list");
+    Route::get('/portal/prescription/', [PortalController::class, 'prescription'])->name("portal.prescription.list");
     Route::get('/portal/prescription/print', function () {
         return view('portal.main.prescriptions.print');
     })->name("portal.prescription.print");
+
+    Route::get('/printable/prescription/print', function () {
+        return view('printable.prescription');
+    })->name("printable.prescription");
+
+    Route::get('/portal/appointments/request', function () {
+        return view('portal.main.scheduling.request');
+    })->name("portal.scheduling.request");
+
 });
-
-Route::get('/reports', [ReportController::class, 'index'])->name("reports.index");
-Route::get('/reports/pos/', [ReportController::class, 'pos'])->name("reports.pos");
-Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
-Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
-
-// Inventory Reports
-Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
-Route::get('/reports/inventory/products-list/print', [ReportController::class, 'printProductList'])->name("reports.inventory.productsList");
-
-Route::get('/reports/inventory/item-stock/print', [ReportController::class, 'printStockList'])->name("reports.inventory.itemStock");
-
-Route::get('/reports/inventory/all-stock/print', [ReportController::class, 'printStockListAll'])->name("reports.inventory.allStockList");
-
-Route::get('/reports/inventory/low-stock/print', [ReportController::class, 'printLowStock'])->name("reports.inventory.lowStockList");
-
-Route::get('/printable/prescription/print', function () {
-    return view('printable.prescription');
-})->name("printable.prescription");
-
-Route::get('/portal/appointments/request', function () {
-    return view('portal.main.scheduling.request');
-})->name("portal.scheduling.request");
-
-
 require __DIR__ . '/auth.php';

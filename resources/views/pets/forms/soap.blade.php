@@ -435,7 +435,11 @@
                                                 </div>
                                                 <div class="col-12">
                                                     @php
+                                                        $doctor = '';
+                                                        if (!is_null($record->doctorID)){
                                                         $doctor = \App\Models\Doctor::getName($record->doctorID) ;
+
+                                                        }
 
                                                     @endphp
                                                     <label for="">Attending Veterinarian</label>

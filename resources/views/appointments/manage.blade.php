@@ -13,6 +13,7 @@
         <form action="{{ route('appointments.add') }}" method="POST">
             @csrf
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title">Add Appointment</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>

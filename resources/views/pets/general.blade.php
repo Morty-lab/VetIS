@@ -545,7 +545,10 @@
                     <div class="card mb-4 shadow-none" id="recordsCard" style="display:none;">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Records</span>
-                            <form action="{{route('soap.add', ['id' =>$pet->id])}}" method="post">
+                            @php
+                                $doctor_id = \App\Models\Doctor::getDoctorById(auth()->id())->id
+                            @endphp
+                            <form action="{{route('soap.add', ['id' =>$pet->id,'doctorID' => $doctor_id])}}" method="post">
                                 @csrf
 
                                 <button class="btn btn-primary" type="submit" >New
