@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Faker\Factory;
 
 class UsersTableSeeder extends Seeder
 {
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
 
         // Insert users
         DB::table('users')->insert(
-            ['name' => 'Admin', 'email' => 'cabahuganiejoseph@gmail.com','role' => 'admin', 'password' => $hashedPassword],
+            ['name' => 'Admin', 'email' => 'cabahuganiejoseph@gmail.com', 'role' => 'admin', 'password' => $hashedPassword],
         );
 
         $adminLastInsertID = DB::getPdo()->lastInsertId();
@@ -96,8 +96,8 @@ class UsersTableSeeder extends Seeder
 
         $faker = Factory::create();
 
-        while (DB::table('admins')->count() < 10){
-          $adminPositions = [
+        while (DB::table('admins')->count() < 10) {
+            $adminPositions = [
                 "Practice Manager",
                 "Office Manager",
                 "Receptionist",
@@ -156,15 +156,13 @@ class UsersTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
-                'role' => 'veterinary',
+                'role' => 'veterinarian',
                 'password' => $hashedPassword,
                 'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
             ]);
 
             $VetlastInsertedId = DB::getPdo()->lastInsertId();
-
-
 
 
             DB::table('doctors')->insert([
@@ -206,7 +204,6 @@ class UsersTableSeeder extends Seeder
 
 
         }
-
 
 
     }

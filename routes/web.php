@@ -11,7 +11,6 @@ use App\Http\Controllers\PetsController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SoapController;
@@ -19,19 +18,16 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VaccinationController;
+use App\Models\Appointments;
 use App\Models\Clients;
-use App\Models\Products;
-use App\Models\Suppliers;
-use App\Models\TransactionDetailsModel;
+use App\Models\Doctor;
+use App\Models\Pets;
 use App\Models\TransactionModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Models\Doctor;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Pets;
-use App\Models\Appointments;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +70,17 @@ Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 });
+Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () {
+    //Pet Routes
+    Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
+    Route::get('/profilepet/{pets}', [PetsController::class, 'show'])->name('pets.show');
+    Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
+    Route::put('/editpet/{petID}', [PetsController::class, 'update'])->name('pets.update');
+    Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
+    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+
+});
+
 
 Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () {
     //Pet Vaccination
@@ -139,8 +146,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         // Redirect back with a success message
         return back()->with('success', 'Password updated successfully.');
     })->name('doctor.updateSecurity');
-
-
 
 
     Route::get('/adminsettingsdoctor/{id}', function (string $id) {
@@ -221,7 +226,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 //Appointments
-Route::middleware(['auth', 'role:admin,staff,veterinary'])->group(function () {
+Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () {
     // Appointments
     Route::get('/manageappointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::post('addappontments', [AppointmentsController::class, 'store'])->name('appointments.add');
@@ -368,7 +373,6 @@ Route::middleware('auth')->group(function () {
     //Schedules
     Route::get('/manageschedules', [\App\Http\Controllers\CalendarController::class, 'index'])->name('schedules.index');
 });
-
 
 
 // Portal Section
