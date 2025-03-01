@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clients;
+use App\Models\Doctor;
 use App\Models\PetRecords;
 use App\Models\Pets;
-use Illuminate\Http\Request;
-use App\Models\Doctor;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 
 class DoctorController extends Controller
 {
@@ -21,14 +20,6 @@ class DoctorController extends Controller
     {
         $doctors = Doctor::getAllDoctors();
         return view('doctors.manage', ['doctors' => $doctors]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -54,7 +45,7 @@ class DoctorController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->firstname. " " .$request->lastname,
+            'name' => $request->firstname . " " . $request->lastname,
             'email' => $request->email,
             'role' => "veterinarian",
             'password' => Hash::make($request->password),
@@ -77,15 +68,22 @@ class DoctorController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Display the specified resource.
      */
     public function showProfile(string $id)
     {
-        $doctor = Doctor::getDoctorById($id);
+        $doctor = Doctor::where('id', $id)->first();
         $clients = Clients::getAllClients();
         $pets = Pets::getAllPets();
         $records = PetRecords::where('doctorID', $id)->get();
-
 
 
         // Pass the combined user and doctor information to the view
@@ -94,7 +92,7 @@ class DoctorController extends Controller
 
     public function show(string $id)
     {
-        $doctor = Doctor::getDoctorById($id);
+        $doctor = Doctor::where('id', $id)->first();
         return view('doctors.profile', ['doctor' => $doctor]);
     }
 
