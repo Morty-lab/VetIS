@@ -239,16 +239,16 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                <input class="form-control" id="inputOwnerAddress" type="text" value="" placeholder="Owner Address" />
+                                <input class="form-control" id="inputOwnerAddress" type="text" value="" placeholder="Owner Address"  disabled/>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                <input class="form-control" id="ownerContact" type="text" value="" placeholder="Contact Number" />
+                                <input class="form-control" id="ownerContact" type="text" value="" placeholder="Contact Number" disabled/>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                            <input class="form-control" id="inputOwnerEmail" type="text" value="" placeholder="Owner Address" />
+                            <input class="form-control" id="inputOwnerEmail" type="text" value="" placeholder="Owner Address" disabled/>
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" id="regbtn" type="submit">Add Pet</button>
