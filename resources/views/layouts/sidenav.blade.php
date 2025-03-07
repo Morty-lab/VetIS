@@ -58,6 +58,11 @@
                     Reports
                 </a>
             @endif
+            <!-- @if(Request::is('reports*')) active @endif -->
+            <a class="nav-link" href="{{ route('reports.index') }}">
+                    <div class="nav-link-icon"><i class="fa-solid fa-bell"></i></div>
+                    Notifications
+                </a>
 
 
             <!-- Billing & Services (Accessible to Cashier, Admin) -->
