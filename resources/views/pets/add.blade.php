@@ -80,7 +80,9 @@
                                     <option>Bird</option>
                                     <option>Frog</option>
                                     <option>Chicken</option>
+                                    <option>Other</option>
                                 </select>
+                                <input type="text" name="" id="" class="form-control d-none">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBreed">Breed</label>
@@ -154,7 +156,7 @@
                                         <label class="form-check-label" for="vaccinatedWithAR1">Yes</label>
                                     </div>
                                     <div class="form-check form-check-solid">
-                                        <input class="form-check-input" id="vaccinatedWithAR2" type="radio" name="pet_neutered" value="2">
+                                        <input class="form-check-input" id="vaccinatedWithAR2" type="radio" name="vaccinated_anti_rabies" value="2">
                                         <label class="form-check-label" for="vaccinatedWithAR2">No</label>
                                     </div>
                                 </div>
