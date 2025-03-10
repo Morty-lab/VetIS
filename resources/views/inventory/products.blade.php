@@ -40,14 +40,11 @@
 
                         @endphp
                     <tr>
-                        <td>{{ sprintf("VetIS-%05d", $product->SKU)}}</td>
-                        <td>{{ $product->product_name }}</td>
-                        <td>{{\App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
-                        <td>{{\App\Models\Unit::where('id',$product->unit)->first()->unit_name}}</td>
-{{--                        <td>--}}
-{{--                            Php {{ $product->price }}--}}
-{{--                        </td>--}}
-                        <td>
+                        <td class="text-center">{{ $product->SKU }}</td>
+                        <td class="text-center">{{ $product->product_name }}</td>
+                        <td class="text-center">{{ \App\Models\Category::where('id', $product->product_category)->first()->category_name }}</td>
+                        <td class="text-center">{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
+                        <td class="text-center">
                             @if ($stocks - $subtracted <= 0)
                                 <div class="badge bg-danger-soft text-danger rounded-pill">No Stocks</div>
                             @elseif (($stocks - $subtracted) <= ($stocks * 0.1))
@@ -56,13 +53,11 @@
                                 <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
                             @endif
                         </td>
-                        <td>
-
-                            {{$stocks - $subtracted ?? 'No'}} Stock/s Available
+                        <td class="text-center">
+                            {{ $stocks - $subtracted ?? 'No' }} Stock/s Available
                         </td>
-                        <td>
+                        <td class="text-center">
                             <button class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#viewProductModal{{ $product->id }}">Open</button>
-
                         </td>
                     </tr>
                     @endforeach

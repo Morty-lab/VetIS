@@ -56,8 +56,11 @@ class Stocks extends Model
             ->get();
 
         foreach ($productStocks as $productStock) {
+            if ($productStock->stock <= $productStock->subtracted_stock + $requiredStock) {
+                continue;
+            }
             // If the required stock is less than or equal to the current stock
-            if ($requiredStock <= $productStock->stock) {
+            if ($requiredStock <=  $productStock->subtracted_stock) {
                 // Subtract the required stock from the current stock
                 $productStock->subtracted_stock += $requiredStock;
                 $productStock->save();
@@ -91,4 +94,6 @@ class Stocks extends Model
     public static function getAllStocksByProductId($product_id){
         return self::where('products_id', $product_id)->orderBy('expiry_date', 'asc')->get();
     }
+
+
 }

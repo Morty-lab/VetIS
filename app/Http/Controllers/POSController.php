@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clients;
+use App\Models\Notifications;
 use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\TransactionDetailsModel;
@@ -46,6 +47,8 @@ class POSController extends Controller
 
 
 
+
+
         $transactionID =TransactionModel::storeTransaction($data);
 
         $productData = json_decode($request->products,true);
@@ -58,8 +61,28 @@ class POSController extends Controller
                 "quantity" => $product['quantity'],
                 "price" => $product['currentPrice']
             ];
+
+            $productName = Products::find($product['productId'])->product_name;
+
+            $productStock = Stocks::getAllStocksByProductId(
+                $product['productId'],
+            )->sum('stock');
+            $subtracted = Stocks::getAllStocksByProductId(
+                $product['productId'],
+            )->sum('subtracted_stock');
+            // dd($data);
             Stocks::subtractStock($product['productId'], $product['quantity']);
             TransactionDetailsModel::storeDetails($data);
+
+            if ($productStock - $subtracted <= 20) {
+                // Stocks::update($product['productId'], ['status' => 0]);
+                Notifications::addNotif([
+                    'visible_to' => 'staff',
+                    'title' => 'Stocks Alert',
+                    'message' => "{$productName} has less than 20 stocks left",
+                ]);
+
+            }
 
 
         }

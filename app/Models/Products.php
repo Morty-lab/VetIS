@@ -17,7 +17,9 @@ class Products extends Model
         'product_category',
         'unit',
         'status',
-        'stock'
+        'stock',
+        'SKU',
+
     ];
 
 
