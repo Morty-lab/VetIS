@@ -258,9 +258,9 @@
         <nav class="nav nav-borders">
             <a class="nav-link nav-tab ms-0{{ request()->is('pet-profile') ? 'active' : '' }}" href="#pet-profile">Pet
                 Profile</a>
-            <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
-            <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">History</a>
-            <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Records</a>
+            <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Appointment Schedules</a>
+            <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">Appointment History</a>
+            <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Medical Records</a>
             <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}"
                href="#vaccination">Vaccination</a>
         </nav>
@@ -471,7 +471,7 @@
             <div class="col">
                 <div class="card mb-4 shadow-none" id="schedulesCard" style="display:none;">
                     <div class="card-header">
-                        Schedules
+                        Appointment Schedules
                     </div>
                     <div class="card-body">
                         <!-- <div class="no-records text-center p-2">
@@ -513,7 +513,7 @@
                                         </td>
                                         <td>
                                             <a href="{{route('appointments.view',['id'=>$appointment->id])}}"
-                                               class="btn btn-datatable btn-primary px-5 py-3">Open</a>
+                                               class="btn btn-datatable btn-primary px-5 py-3">View</a>
                                         </td>
                                     </tr>
 
@@ -530,7 +530,7 @@
                 <div class="col">
                     <div class="card mb-4 shadow-none" id="historyCard" style="display:none;">
                         <div class="card-header">
-                            History
+                            Appointment History
                         </div>
                         <div class="card-body">
                             <!-- <div class="no-records text-center p-2">
@@ -562,7 +562,7 @@
                                                 </div>
                                             </td>
                                             <td><a href="{{route('appointments.view',['id'=>$appointment->id])}}"
-                                                   class="btn btn-datatable btn-primary px-5 py-3">Open</a></td>
+                                                   class="btn btn-datatable btn-primary px-5 py-3">View</a></td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -574,7 +574,7 @@
                     <div class="col-md-12">
                         <div class="card mb-4 shadow-none" id="recordsCard" style="display:none;">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Records</span>
+                                <span>Medical Records</span>
                                 @if(auth()->user()->role === "veterinarian")
                                     @php
 
@@ -626,7 +626,7 @@
                                             <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
                                             <td>
                                                 <a class="btn btn-datatable btn-primary px-5 py-3"
-                                                   href="{{route('soap.view', ['id' => $pet->id, 'recordID' => $record->id])}}">Open</a>
+                                                   href="{{route('soap.view', ['id' => $pet->id, 'recordID' => $record->id])}}">View</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -680,7 +680,7 @@
                                             <td>
                                                 <button class="btn btn-datatable btn-primary px-5 py-3"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#viewVaccination-{{$vac->id}}">Open
+                                                        data-bs-target="#viewVaccination-{{$vac->id}}">View
                                                 </button>
                                             </td>
                                         </tr>

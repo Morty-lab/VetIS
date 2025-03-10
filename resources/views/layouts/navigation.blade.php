@@ -32,13 +32,13 @@
                 </form>
             </div>
         </li> -->
-        <!-- Alerts Dropdown-->
-        <!-- <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
+        <!-- Alerts Dropdown -->
+        <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="bell"></i></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
                 <h6 class="dropdown-header dropdown-notifications-header">
                     <i class="me-2" data-feather="bell"></i>
-                    Alerts Center
+                    Notification Center
                 </h6>
                 <a class="dropdown-item dropdown-notifications-item" href="dashboard-1.html#!">
                     <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
@@ -68,9 +68,9 @@
                         <div class="dropdown-notifications-item-content-text">New user request. Woody has requested access to the organization.</div>
                     </div>
                 </a>
-                <a class="dropdown-item dropdown-notifications-footer" href="dashboard-1.html#!">View All Alerts</a>
+                <a class="dropdown-item dropdown-notifications-footer" href="dashboard-1.html#!">View All Notifications</a>
             </div>
-        </li> -->
+        </li>
 
         <!-- Messages Dropdown-->
         <!-- <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">

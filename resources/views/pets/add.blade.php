@@ -73,14 +73,16 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                <select class="form-control" id="selectPetType" name="pet_type">
-                                    <option disabled selected>-- Select Pet Type --</option>
+                                <select class="form-select" id="selectPetType" name="pet_type">
+                                    <option disabled selected>Select Pet Type:</option>
                                     <option>Dog</option>
                                     <option>Cat</option>
                                     <option>Bird</option>
                                     <option>Frog</option>
                                     <option>Chicken</option>
+                                    <option>Other</option>
                                 </select>
+                                <input type="text" name="" id="" class="form-control d-none">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBreed">Breed</label>
@@ -104,8 +106,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender</label>
-                                <select class="form-control" id="selectGender" name="pet_gender">
-                                    <option disabled selected>-- Select Gender --</option>
+                                <select class="form-select" id="selectGender" name="pet_gender">
+                                    <option disabled selected>Select Gender:</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
@@ -114,10 +116,10 @@
                         <h6 class="mb-2 mt-5 text-primary">Other Information</h6>
                         <hr class="mt-1 mb-3">
                         <div class="row gx-3 gy-3 mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
-                                <select class="form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated">
-                                    <option disabled selected>-- Select Record --</option>
+                                <select class="form-select" id="inputSelectVaccinationRecord" name="pet_vaccinated">
+                                    <option disabled selected>Select Record:</option>
                                     <option value=>No Vaccination Record</option>
                                     <option value=1>Complete</option>
                                     <option value=0> Incomplete</option>
@@ -125,31 +127,51 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectSpayedNeutered">Spayed/Neutered</label>
-                                <select class="form-control" id="inputSelectSpayedNeutered" name="pet_neutered">
+                                <!-- <select class="form-control" id="inputSelectSpayedNeutered" name="pet_neutered">
                                     <option disabled selected>-- Select [Yes/No] --</option>
                                     <option value=1>Yes</option>
                                     <option value=2>No</option>
-                                </select>
+                                </select> -->
+                                <div class="d-flex flex-col mt-2"> 
+                                    <div class="form-check form-check-solid me-4">
+                                        <input class="form-check-input" id="petNeuteredRadio1" type="radio" name="pet_neutered" value="1">
+                                        <label class="form-check-label" for="petNeuteredRadio1">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-solid">
+                                        <input class="form-check-input" id="petNeuteredRadio2" type="radio" name="pet_neutered" value="2">
+                                        <label class="form-check-label" for="petNeuteredRadio2">No</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputSelectVaccinationAntiRabiesRecord">Vacccinated With Anti-Rabies?</label>
-                                <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
+                                <!-- <select class="form-control" id="inputSelectVaccinationAntiRabiesRecord" name="vaccinated_anti_rabies">
                                     <option disabled selected>-- Select [Yes/No] --</option>
                                     <option value=1>Yes</option>
                                     <option value=2>No</option>
-                                </select>
+                                </select> -->
+                                <div class="d-flex flex-col mt-2"> 
+                                    <div class="form-check form-check-solid me-4">
+                                        <input class="form-check-input" id="vaccinatedWithAR1" type="radio" name="vaccinated_anti_rabies" value="1">
+                                        <label class="form-check-label" for="vaccinatedWithAR1">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-solid">
+                                        <input class="form-check-input" id="vaccinatedWithAR2" type="radio" name="vaccinated_anti_rabies" value="2">
+                                        <label class="form-check-label" for="vaccinatedWithAR2">No</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
                                 <input type="month" id="inputAntiRabiesDate" class="form-control" name="anti_rabies_vaccination_date">
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
-                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="3" placeholder="Enter pet's history of agression here.."></textarea>
+                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="8" placeholder="Enter pet's history of agression here.."></textarea>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputFoodAllergies">Any Food Allergies?</label>
-                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="3" placeholder="Enter pet's food allergies here.."></textarea>
+                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="8" placeholder="Enter pet's food allergies here.."></textarea>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetFood">Food?</label>
@@ -157,11 +179,21 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
-                                <select class="form-control" id="inputTreats" name="okay_to_give_treats">
+                                <!-- <select class="form-control" id="inputTreats" name="okay_to_give_treats">
                                     <option disabled selected>-- Select [Yes/No] --</option>
                                     <option value=1>Yes</option>
                                     <option value=0>No</option>
-                                </select>
+                                </select> -->
+                                <div class="d-flex flex-col mt-2"> 
+                                    <div class="form-check form-check-solid me-4">
+                                        <input class="form-check-input" id="inputTreats1" type="radio" name="okay_to_give_treats" value="1">
+                                        <label class="form-check-label" for="inputTreats1">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-solid">
+                                        <input class="form-check-input" id="inputTreats0" type="radio" name="okay_to_give_treats" value="0">
+                                        <label class="form-check-label" for="inputTreats0">No</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastGroom">When was his/her last groom?</label>
@@ -169,11 +201,21 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPhotosOnline">Okay to use photos online?</label>
-                                <select class="form-control" id="inputPhotosOnline" name="okay_to_use_photos_online">
+                                <!-- <select class="form-control" id="inputPhotosOnline" name="okay_to_use_photos_online">
                                     <option disabled selected>-- Select [Yes/No] --</option>
                                     <option value=1>Yes</option>
                                     <option value=0>No</option>
-                                </select>
+                                </select> -->
+                                <div class="d-flex flex-col mt-2"> 
+                                    <div class="form-check form-check-solid me-4">
+                                        <input class="form-check-input" id="inputPhotosOnline1" type="radio" name="okay_to_use_photos_online" value="1">
+                                        <label class="form-check-label" for="inputPhotosOnline1">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-solid">
+                                        <input class="form-check-input" id="inputPhotosOnline0" type="radio" name="okay_to_use_photos_online" value="0">
+                                        <label class="form-check-label" for="inputPhotosOnline0">No</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputCondition">Prone to any seizure, illness, ect.? If so please list:</label>
@@ -185,7 +227,7 @@
 
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerName">Owner Name</label>
-                            <select class="form-control" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
+                            <select class="form-select" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
                                 @foreach ($clients as $client)
                                 @php
                                 Clients::setEmailAttribute($client, $client->user_id);
@@ -197,16 +239,16 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                <input class="form-control" id="inputOwnerAddress" type="text" value="" placeholder="Owner Address" />
+                                <input class="form-control" id="inputOwnerAddress" type="text" value="" placeholder="Owner Address"  disabled/>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                <input class="form-control" id="ownerContact" type="text" value="" placeholder="Contact Number" />
+                                <input class="form-control" id="ownerContact" type="text" value="" placeholder="Contact Number" disabled/>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                            <input class="form-control" id="inputOwnerEmail" type="text" value="" placeholder="Owner Address" />
+                            <input class="form-control" id="inputOwnerEmail" type="text" value="" placeholder="Owner Address" disabled/>
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" id="regbtn" type="submit">Add Pet</button>
