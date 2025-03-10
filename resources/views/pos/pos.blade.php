@@ -11,8 +11,10 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}" />
     @yield('styles')
-    <script data-search-pseudo-elements="" defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script data-search-pseudo-elements="" defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous">
+    </script>
     <style>
         .sidebar-pos {
             padding-top: 4rem;
@@ -51,70 +53,76 @@
 <body class="nav-fixed">
 
     @php
-    if (auth()->check() && auth()->user()->role === 'client') {
-    header('Location: ' . route('portal.dashboard'));
-    exit;
-    }
+        if (auth()->check() && auth()->user()->role === 'client') {
+            header('Location: ' . route('portal.dashboard'));
+            exit();
+        }
     @endphp
 
     <!-- Modals -->
     <!-- Quantity Modal -->
     @foreach ($products as $product)
-    <div class="modal fade" id="enterQty{{ $product->id }}" tabindex="-1" role="dialog"
-        aria-labelledby="enterQty" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="enterQtyLabel">Enter Quantity</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="item-description px-2">
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <label class="small mb-1">Product</label>
-                                <p class="mb-0 fw-bold text-primary"> {{ $product->product_name }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1">Price</label>
-                                <div class="">
-                                    <p class="mb-0 fw-bold text-primary">₱{{ $product->price }}</p>
+        <div class="modal fade" id="enterQty{{ $product->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="enterQty" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="enterQtyLabel">Enter Quantity</h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="item-description px-2">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Product</label>
+                                    <p class="mb-0 fw-bold text-primary"> {{ $product->product_name }}</p>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1">Product ID</label>
-                                <div class="">
-                                    <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">{{ sprintf("VetIS-%05d", $product->id)}}</p>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Price</label>
+                                    <div class="">
+                                        <p class="mb-0 fw-bold text-primary">
+                                            ₱{{ optional(App\Models\Stocks::where('products_id', $product->id)->first())->price ?? 'N/A' }}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1">Category</label>
-                                <div class="">
-                                    <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">{{ $product->category?->category_name ?? 'No Category' }}</p>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Product ID</label>
+                                    <div class="">
+                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">
+                                            {{ sprintf('VetIS-%05d', $product->id) }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr class="mt-3 mb-2">
-                            <div class="col-md-12">
-                                <h6 class="mb-2 text-primary">Enter Quantity</h6>
-                                <input type="number" id="quantityInput" class="form-control" placeholder="Enter Quantity" min="1" max="10" step="1" oninput="setQuantity(this.value, {{\App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock')}}); ">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Category</label>
+                                    <div class="">
+                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">
+                                            {{ $product->category?->category_name ?? 'No Category' }}</p>
+                                    </div>
+                                </div>
+                                <hr class="mt-3 mb-2">
+                                <div class="col-md-12">
+                                    <h6 class="mb-2 text-primary">Enter Quantity</h6>
+                                    <input type="number" id="quantityInput" class="form-control"
+                                        placeholder="Enter Quantity" min="1" max="10" step="1"
+                                        oninput="setQuantity(this.value, {{ \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock') - \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock') }}); ">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
-                        onclick="addItem({
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
+                            onclick="addItem({
                         'sku' : {{ $product->id }},
                         'name' : '{{ $product->product_name }}',
-                        'price' : {{ $product->price }},
+                        'price' : {{ optional(App\Models\Stocks::where('products_id', $product->id)->first())->price ?? 'N/A' }},
                         'qty' : document.getElementById('quantityInput').value
                         })">Add
-                        Product</button>
+                            Product</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endforeach
 
     <!-- Select Product Modal -->
@@ -127,7 +135,8 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control mb-3" placeholder="Enter Product Name, SKU" id="customSearchInput">
+                    <input type="text" class="form-control mb-3" placeholder="Enter Product Name, SKU"
+                        id="customSearchInput">
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table" id="posProdListTable">
                             <thead>
@@ -143,53 +152,60 @@
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
-                                {{-- @php--}}
-                                {{-- $stock = 0;--}}
-                                {{-- $expiredStocks = 0;--}}
-                                {{-- if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){--}}
-                                {{-- $allStocks = $product->stocks;--}}
+                                    {{-- @php --}}
+                                    {{-- $stock = 0; --}}
+                                    {{-- $expiredStocks = 0; --}}
+                                    {{-- if ($product->stocks->isNotEmpty() && $product->stocks->first()->status == 1){ --}}
+                                    {{-- $allStocks = $product->stocks; --}}
 
-                                {{-- foreach ($allStocks as $i){--}}
-                                {{-- if( $i->expiry_date == null ){--}}
-                                {{-- $stock += $i->stock;--}}
-                                {{-- }--}}
+                                    {{-- foreach ($allStocks as $i){ --}}
+                                    {{-- if( $i->expiry_date == null ){ --}}
+                                    {{-- $stock += $i->stock; --}}
+                                    {{-- } --}}
 
-                                {{-- if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){--}}
-                                {{-- $stock += $i->stock;--}}
-                                {{-- }--}}
+                                    {{-- if( $i->expiry_date != null && $i->expiry_date > Carbon::today()){ --}}
+                                    {{-- $stock += $i->stock; --}}
+                                    {{-- } --}}
 
 
-{{--                                if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){--}}
-{{--                                    $expiredStocks +=$i->stock;--}}
-{{--                                    }--}}
-{{--                                    }--}}
-{{--                                    }--}}
-{{--                                    @endphp--}}
-{{--                                    @if($product->status == 0 || $stock == 0)--}}
-{{--                                    @continue--}}
-{{--                                    @endif--}}
+                                    {{--                                if( $i->expiry_date != null && $i->expiry_date <= Carbon::today()){ --}}
+                                    {{--                                    $expiredStocks +=$i->stock; --}}
+                                    {{--                                    } --}}
+                                    {{--                                    } --}}
+                                    {{--                                    } --}}
+                                    {{--                                    @endphp --}}
+                                    {{--                                    @if ($product->status == 0 || $stock == 0) --}}
+                                    {{--                                    @continue --}}
+                                    {{--                                    @endif --}}
                                     <!-- <tr data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}"> -->
                                     <!-- <tr data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#selectStockModal"> -->
                                     @php
-                                        $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
-                                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock');
+                                        $stocks = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum(
+                                            'stock',
+                                        );
+                                        $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum(
+                                            'subtracted_stock',
+                                        );
                                     @endphp
-                                    @if($stocks - $subtracted != 0)
+                                    @if ($stocks - $subtracted != 0)
                                         <tr>
-                                            <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                                            <td>{{ sprintf('VetIS-%05d', $product->id) }}</td>
                                             <td>{{ $product->product_name }}</td>
-                                            <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name}}</td>
-                                            <td>Product Unit</td>
-                                            <td>
-                                                {{$stocks - $subtracted}}
+                                            <td>{{ \App\Models\Category::where('id', $product->product_category)->first()->category_name }}
                                             </td>
-                                            <td>₱{{ $product->price }}</td>
+                                            <td>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
+                                            <td>
+                                                {{ $stocks - $subtracted }}
+                                            </td>
+                                            <td>₱
+                                                {{ optional(App\Models\Stocks::where('products_id', $product->id)->first())->price ?? 'N/A' }}.00
+                                            </td>
                                             <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
-                                            <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#enterQty{{ $product->id }}">Select</button></td>
+                                            <td><button class="btn btn-primary btn-datatable px-5 py-3"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#enterQty{{ $product->id }}">Select</button></td>
                                         </tr>
                                     @endif
-
-
                                 @endforeach
                             </tbody>
                         </table>
@@ -200,7 +216,8 @@
     </div>
 
     <!-- Select Stock Modal -->
-    <div class="modal fade" id="selectStockModal" role="dialog" aria-checked="stockModal" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal fade" id="selectStockModal" role="dialog" aria-checked="stockModal" aria-hidden="true"
+        data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -218,7 +235,8 @@
                                 <div class="col-md-2">
                                     <label class="small mb-1">Category</label>
                                     <div class="">
-                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">Pain Reliever</p>
+                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">Pain Reliever
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -230,7 +248,8 @@
                                 <div class="col-md-2">
                                     <label class="small mb-1">Total Stocks</label>
                                     <div class="">
-                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">60 Stocks Left</p>
+                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">60 Stocks Left
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -304,18 +323,17 @@
                             <tbody>
 
                                 @foreach ($customers as $customer)
-                                <tr style="cursor: pointer;">
-                                    <td>{{ $customer->client_name }}</td>
-                                    <td>{{ 'OWN-' . str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</td>
-                                    <td>
-                                        <button
-                                            class="btn btn-primary btn-datatable px-5 py-3"
-                                            onclick="setCustomer('{{ addslashes($customer->client_name) }}', {{ $customer->id }})"
-                                            data-bs-dismiss="modal">
-                                            Select
-                                        </button>
-                                    </td>
-                                </tr>
+                                    <tr style="cursor: pointer;">
+                                        <td>{{ $customer->client_name }}</td>
+                                        <td>{{ 'OWN-' . str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-datatable px-5 py-3"
+                                                onclick="setCustomer('{{ addslashes($customer->client_name) }}', {{ $customer->id }})"
+                                                data-bs-dismiss="modal">
+                                                Select
+                                            </button>
+                                        </td>
+                                    </tr>
                                 @endforeach
 
                             </tbody>
@@ -337,10 +355,12 @@
                 </div>
                 <div class="modal-body">
                     <label for="discount">Discount Amount (%)</label>
-                    <input type="number" id="discount" class="form-control" placeholder="Enter percentage (e.g., 5)">
+                    <input type="number" id="discount" class="form-control"
+                        placeholder="Enter percentage (e.g., 5)">
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" onclick="setDiscount(document.getElementById('discount').value)">Add Discount</button>
+                    <button class="btn btn-primary" type="button"
+                        onclick="setDiscount(document.getElementById('discount').value)">Add Discount</button>
                 </div>
             </div>
         </div>
@@ -391,7 +411,8 @@
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Date</p>
-                                            <p class="text-md text-grey mb-0"> {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
+                                            <p class="text-md text-grey mb-0">
+                                                {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
                                         </div>
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
@@ -421,7 +442,7 @@
                         </div>
                         <div class="col-6 p-2 mx-auto">
                             <!-- Mawala ni pag ma bayran na -->
-                            <form action="{{route('pos.pay')}}" id="paymentForm" method="POST">
+                            <form action="{{ route('pos.pay') }}" id="paymentForm" method="POST">
                                 @csrf
                                 <div class="row mt-3">
                                     <div class="col-12" id="cashGivenDiv">
@@ -431,7 +452,8 @@
                                         <input type="hidden" name="sub_total" id="sub_total">
                                         <input type="hidden" name="discount" id="discountInput">
                                         <input type="hidden" name="products" id="products">
-                                        <button type="button" class="btn btn-primary mt-3 w-100" onclick="handlePayment()">Enter</button>
+                                        <button type="button" class="btn btn-primary mt-3 w-100"
+                                            onclick="handlePayment()">Enter</button>
                                         <hr class="mt-3">
                                     </div>
                                 </div>
@@ -459,7 +481,7 @@
                                 </div>
                             </div>
 
-                            {{-- <hr class="mt-3">--}}
+                            {{-- <hr class="mt-3"> --}}
                             {{-- <a href="" class="btn btn-outline-primary mt-3 w-100">New Transaction</a> --}}
                             <!-- ---- -->
                         </div>
@@ -473,7 +495,9 @@
 
     <nav class="topnav navbar navbar-expand border-bottom justify-content-between justify-content-sm-start navbar-light bg-white"
         id="sidenavAccordion">
-        <p class="navbar-brand px-4 fw-700"> <img class="me-0" src="{{ asset('assets/img/favicon.png') }}" alt="PetHub Logo" style=" width: 40px; height: auto; margin-right: 8px;"> PetHub <span class="fw-400 text-gray-600">| POS Terminal</span></p>
+        <p class="navbar-brand px-4 fw-700"> <img class="me-0" src="{{ asset('assets/img/favicon.png') }}"
+                alt="PetHub Logo" style=" width: 40px; height: auto; margin-right: 8px;"> PetHub <span
+                class="fw-400 text-gray-600">| POS Terminal</span></p>
         <ul class="navbar-nav align-items-center ms-auto">
             <!-- User Dropdown-->
             <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
@@ -487,7 +511,8 @@
                         <img class="dropdown-user-img" src="assets/img/illustrations/profiles/profile-1.png">
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-details-name">{{ Auth::user()->name }}</div>
-                            <div class="dropdown-user-details-email"><a href="cdn-cgi/l/email-protection.html" class="__cf_email__ text-muted"> {{ Auth::user()->email }} </a></div>
+                            <div class="dropdown-user-details-email"><a href="cdn-cgi/l/email-protection.html"
+                                    class="__cf_email__ text-muted"> {{ Auth::user()->email }} </a></div>
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
@@ -503,7 +528,7 @@
                             </svg></div>
                         Account
                     </a>
-                    <a class="dropdown-item" href="{{route('dashboard')}}">
+                    <a class="dropdown-item" href="{{ route('dashboard') }}">
                         <div class="dropdown-item-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -529,7 +554,8 @@
     <div class="main">
         <div class="row min-vh-100 g-0">
             <div class="col-3 bg-white border-end">
-                <div class="sidebar-pos col-12 px-4 d-flex flex-column h-100 justify-content-between" id="sticky-sidebar">
+                <div class="sidebar-pos col-12 px-4 d-flex flex-column h-100 justify-content-between"
+                    id="sticky-sidebar">
                     <div class="receipt-section">
                         <div class="receipt-display mt-3 bg-light p-4">
                             <p class="text-center h3 text-primary">PetHub: Vet Clinic</p>
@@ -540,7 +566,8 @@
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Date</p>
-                                <p class="text-md text-grey mb-0"> {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
+                                <p class="text-md text-grey mb-0">
+                                    {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Customer</p>
@@ -594,7 +621,8 @@
                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#discountModal"
                                     class="dropdown-item">Discount</a></li>
                             <hr class="my-2">
-                            <li><a href="{{route('billing.add')}}" class="dropdown-item text-primary">Services Billing</a></li>
+                            <li><a href="{{ route('billing.add') }}" class="dropdown-item text-primary">Services
+                                    Billing</a></li>
                             <hr class="my-2">
                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#voidTransactionModal"
                                     class="dropdown-item text-danger">Void Transaction</a></li>
@@ -623,9 +651,11 @@
         </div>
     </div>
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     <script src="{{ asset('js/pos.js') }}"></script>
     <script>
         var focusInputOnModalShown = function() {

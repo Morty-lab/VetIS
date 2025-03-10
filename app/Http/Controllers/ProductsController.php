@@ -57,6 +57,7 @@ class ProductsController extends Controller
         $validator = Validator::make($request->all(), [
             'product_name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
+            'product_sku' => 'required|string|unique:products,SKU|max:255',
             'unit' => 'required|string|max:255',
         ]);
 
@@ -71,6 +72,7 @@ class ProductsController extends Controller
 
         // Data to save
         $data = [
+            'SKU' => $request->product_sku,
             'product_name' => $request->product_name,
             'product_category' => $request->category,
             'unit' => $request->unit,
@@ -103,7 +105,7 @@ class ProductsController extends Controller
         Products::updateProduct($id, ['status' => 1]);
         $productName = Products::getProductById($id)->product_name;
         Notifications::addNotif([
-            'user_id' => Auth::id(),
+            'visible_to' => "staff",
             'title' => 'Stocks Added',
             'message' => "$request->stock stocks added to $productName",
         ]);

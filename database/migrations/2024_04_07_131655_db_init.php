@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -108,13 +107,13 @@ return new class extends Migration
 
         });
 
-        Schema::create('units', Function (Blueprint $table){
+        Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string("unit_name");
             $table->timestamps();
         });
 
-        Schema::create('category', Function (Blueprint $table){
+        Schema::create('category', function (Blueprint $table) {
             $table->id();
             $table->string("category_name");
             $table->timestamps();
@@ -122,11 +121,11 @@ return new class extends Migration
 
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer("SKU");
+            $table->string("SKU")->nullable();
             $table->string("product_name");
             $table->unsignedBigInteger("product_category");
             $table->unsignedBigInteger("unit");
-        $table->integer("status")->nullable();
+            $table->integer("status")->nullable();
             $table->foreign("unit")->references("id")->on("units");
             $table->foreign("product_category")->references("id")->on("category");
             $table->timestamps();
@@ -361,14 +360,12 @@ return new class extends Migration
 
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
-            $table->foreign('user_id')->references("id")->on("users")->onDelete("cascade");
+            $table->string('visible_to');
             $table->string('title');
             $table->string('message');
             $table->boolean('read')->default(false);
             $table->timestamps();
         });
-
 
 
     }
