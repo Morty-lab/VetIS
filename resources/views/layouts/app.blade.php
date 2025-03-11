@@ -8,11 +8,14 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>PetHub</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('css/select2-bootstrap-5-theme.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}" />
     @yield('styles')
     <script data-search-pseudo-elements="" defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -55,6 +58,8 @@
     </div>
     <!-- <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
     <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/forms/select.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
