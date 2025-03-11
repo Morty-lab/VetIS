@@ -177,7 +177,7 @@
                     </div> -->
                         <div class="card-body">
                             <table id="inventoryStocksTable">
-                                <thead>
+                                <!-- <thead>
                                     <tr>
                                         <th>Stock ID</th>
                                         {{--                                    <th>SKU</th> --}}
@@ -240,6 +240,55 @@
                                     @endforeach
 
 
+                                </tbody> -->
+                                <thead>
+                                    <tr>
+                                        <th>Product Information</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $stockforproduct = \App\Models\Stocks::getAllStocksByProductId($product->id);
+                                    @endphp
+                                    @foreach ($stockforproduct as $stockP)
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">Product Name: <span class="text-primary fw-600">{{ $product->product_name }}</span></div>
+                                                <div class="col-md-12">Supplier:  {{ \App\Models\Suppliers::where('id', $stockP->supplier_id)->first()->supplier_name }}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-8">Suggested Retail Price (SRP)</div>
+                                                <div class="col-md-4 mb-2"><span class="text-primary">₱{{ $stockP->price }}</span></div>
+                                                <div class="col-md-8">Supplier Price</div>
+                                                <div class="col-md-4"><span class="text-primary">₱{{ $stockP->supplier_price }}</span></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12"><span class="text-primary"> {{ $stockP->stock - $stockP->subtracted_stock }}
+                                                {{ \App\Models\Unit::where('id', $stockP->unit)->first()->unit_name }} Available</span></div>
+                                                <div class="col-md-12">Date Added: {{ $stockP->created_at->format('F d Y') }}</div>
+                                                <div class="col-md-12">Expiry: {{ $stockP->expiry_date ?? 'No Expiry' }}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                        <div class="d-flex">
+                                                    <button class="btn btn-datatable btn-outline-primary me-2"
+                                                        data-bs-toggle="modal" data-bs-target="#editStockModal"><i
+                                                            class="fa-regular fa-pen-to-square"></i></button>
+                                                    <button class="btn btn-datatable btn-outline-primary me-2"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i
+                                                            class="fa-solid fa-trash"></i></button>
+                                                </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

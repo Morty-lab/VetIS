@@ -2,7 +2,6 @@
 @extends('layouts.app')
 
 @section('styles')
-
 @endsection
 
 @section('content')
@@ -67,19 +66,16 @@
                     <form action="{{ route('pets.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputPetName">Pet Name</label>
-                            <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="" name="pet_name" />
+                            <label class="small mb-1" for="inputPetName">Pet Name <span class="text-danger">*</span></label>
+                            <input class="form-control" id="inputPetName" type="text" placeholder="Enter Pet Name" value="" name="pet_name" />
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="selectPetType">Pet Type</label>
-                                <select class="form-select" id="selectPetType" name="pet_type">
-                                    <option disabled selected>Select Pet Type:</option>
+                                <label class="small mb-1" for="selectPetType">Pet Type <span class="text-danger">*</span></label>
+                                <select class="select-pet-type form-control" id="selectPetType" name="pet_type" data-placeholder="Select Pet Type">
+                                    <option></option>
                                     <option>Dog</option>
                                     <option>Cat</option>
-                                    <option>Bird</option>
-                                    <option>Frog</option>
-                                    <option>Chicken</option>
                                     <option>Other</option>
                                 </select>
                                 <input type="text" name="" id="" class="form-control d-none">
@@ -91,23 +87,23 @@
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputColor">Color</label>
+                                <label class="small mb-1" for="inputColor">Color <span class="text-danger">*</span></label>
                                 <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color" />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight (kg)</label>
+                                <label class="small mb-1" for="inputWeight">Weight (kg) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="inputWeight" type="number" value="" placeholder="Weight (kg)" name="pet_weight" step="0.01" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthdate">Birthdate</label>
+                                <label class="small mb-1" for="inputBirthdate">Birthdate <span class="text-danger">*</span></label>
                                 <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="selectGender">Gender</label>
-                                <select class="form-select" id="selectGender" name="pet_gender">
-                                    <option disabled selected>Select Gender:</option>
+                                <label class="small mb-1" for="selectGender">Gender <span class="text-danger">*</span></label>
+                                <select class="select-pet-gender form-control" id="selectGender" name="pet_gender" data-placeholder="Select Gender">
+                                    <option></option>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
@@ -117,10 +113,10 @@
                         <hr class="mt-1 mb-3">
                         <div class="row gx-3 gy-3 mb-3">
                             <div class="col-md-12">
-                                <label class="small mb-1" for="inputSelectVaccinationRecord">Vaccination Record</label>
-                                <select class="form-select" id="inputSelectVaccinationRecord" name="pet_vaccinated">
-                                    <option disabled selected>Select Record:</option>
-                                    <option value=>No Vaccination Record</option>
+                                <label class="small mb-1" for="inputSelectVaccinationRecord">Does pet have vaccination record?</label>
+                                <select class="select-pet-vaccination-record form-control" id="inputSelectVaccinationRecord" name="pet_vaccinated" data-placeholder="No Vaccination Record/Complete/Incomplete">
+                                    <option value=""></option>
+                                    <option value=2>No Vaccination Record</option>
                                     <option value=1>Complete</option>
                                     <option value=0> Incomplete</option>
                                 </select>
@@ -162,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label class="small mb-1" for="inputAntiRabiesDate">If so, when was it vaccinated?</label>
+                                <label class="small mb-1" for="inputAntiRabiesDate">If vaccinated, when was it vaccinated?</label>
                                 <input type="month" id="inputAntiRabiesDate" class="form-control" name="anti_rabies_vaccination_date">
                             </div>
                             <div class="col-md-6">
@@ -226,8 +222,9 @@
                         <hr class="mt-1 mb-3">
 
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputOwnerName">Owner Name</label>
-                            <select class="form-select" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()">
+                            <label class="small mb-1" for="inputOwnerName">Owner Name <span class="text-danger">*</span></label>
+                            <select class="select-pet-owner form-control" id="inputOwnerName" name="owner_name" onchange="handleClientSelect()" data-placeholder="Select a Pet Owner">
+                                <option></option>
                                 @foreach ($clients as $client)
                                 @php
                                 Clients::setEmailAttribute($client, $client->user_id);
@@ -236,19 +233,19 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="row gx-3 mb-3">
+                        <div class="row">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                <input class="form-control" id="inputOwnerAddress" type="text" value="" placeholder="Owner Address"  disabled/>
+                                <p id="inputOwnerAddress">-----</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                <input class="form-control" id="ownerContact" type="text" value="" placeholder="Contact Number" disabled/>
+                                <p id="ownerContact">---- --- ----</p>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                            <input class="form-control" id="inputOwnerEmail" type="text" value="" placeholder="Owner Address" disabled/>
+                            <p id="inputOwnerEmail">-----</p>
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" id="regbtn" type="submit">Add Pet</button>
@@ -290,9 +287,9 @@
         });
 
         console.log(selectedClient)
-        document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
-        document.getElementById('ownerContact').value = selectedClient.client_no;
-        document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
+        document.getElementById('inputOwnerAddress').textContent = selectedClient.client_address;
+        document.getElementById('ownerContact').textContent = selectedClient.client_no;
+        document.getElementById('inputOwnerEmail').textContent = selectedClient.client_email;
 
         @else
         var selectedClientId = document.getElementById('inputOwnerName').value;
@@ -300,9 +297,9 @@
 
         if (selectedClient) {
             console.log(selectedClient)
-            document.getElementById('inputOwnerAddress').value = selectedClient.client_address;
-            document.getElementById('ownerContact').value = selectedClient.client_no;
-            document.getElementById('inputOwnerEmail').value = selectedClient.client_email;
+            document.getElementById('inputOwnerAddress').textContent = selectedClient.client_address;
+            document.getElementById('ownerContact').textContent = selectedClient.client_no;
+            document.getElementById('inputOwnerEmail').textContent = selectedClient.client_email;
         }
         @endif
 
