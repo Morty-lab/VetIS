@@ -262,7 +262,7 @@
             <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">Appointment History</a>
             <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Medical Records</a>
             <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}"
-               href="#vaccination">Vaccination</a>
+               href="#vaccination">Vaccination Records</a>
         </nav>
         <hr class="mt-0 mb-4"/>
         <div class="row" id="petProfileCard" style="display:none;">
@@ -639,7 +639,7 @@
                     <div class="col-md-12">
                         <div class="card mb-4 shadow-none" id="vaccinationCard" style="display: none;">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Vaccination</span>
+                                <span>Vaccination Record</span>
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#addVaccination">Add
                                 </button>

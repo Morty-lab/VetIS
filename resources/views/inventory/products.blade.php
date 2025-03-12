@@ -57,7 +57,7 @@
                             {{ $stocks - $subtracted ?? 'No' }} Stock/s Available
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#viewProductModal{{ $product->id }}">Open</button>
+                            <button class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#viewProductModal{{ $product->id }}">View</button>
                         </td>
                     </tr>
                     @endforeach
