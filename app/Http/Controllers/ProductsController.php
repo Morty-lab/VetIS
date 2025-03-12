@@ -9,6 +9,7 @@ use App\Models\Stocks;
 use App\Models\Suppliers;
 use App\Models\Unit;
 use App\Models\User;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -90,7 +91,7 @@ class ProductsController extends Controller
     public function addStocks(Request $request, $id)
     {
         $data = [
-            'user_id' =>  Auth::user()->id,
+            'user_id' => Auth::user()->id,
             'products_id' => $id,
             'supplier_id' => $request->supplier,
             'stock' => $request->stock,
@@ -111,6 +112,52 @@ class ProductsController extends Controller
         ]);
 
         return redirect()->route('products.index');
+    }
+
+
+    public function repackStock(Request $request)
+    {
+        // // Validation rules for repacking stock
+        // $validator = Validator::make($request->all(), [
+        //     'product_id' => 'required|exists:products,id',
+        //     'quantity' => 'required|integer|min:1',
+        //     'unit' => 'required|exists:units,id',
+        //     'number_repacked_units' => 'required|integer|min:1',
+        //     'price' => 'required|numeric|min:0.01'
+        // ]);
+
+        // dd($request->all());
+
+        Stocks::subtractStock($request->product_id, $request->quantity);
+        $products = Products::where('id',$request->product_id)->first();
+        $newProduct = Products::createProduct([
+            'SKU' => $products->SKU,
+            'product_name' => $products->product_name . ' ' . Unit::find($request->unit)->name,
+            'product_category' => $products->product_category,
+            'unit' => $request->unit,
+        ]);
+        Stocks::addStock([
+            'user_id' => Auth::user()->id,
+            'products_id' => $newProduct->id,
+            'supplier_id' =>$request->supplier,
+            'stock' => $request->number_repacked_units,
+            'price' => $request->stock_price,
+            'supplier_price' => $request->supplier_price,
+            'status' => 1,
+            'unit' => $request->unit
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Stocks repacked successfully!');
+
+        // // Check validation
+        // if ($validator->fails()) {
+        //     return redirect()
+        //         ->route('products.index')
+        //         ->withErrors($validator)
+        //         ->with('error', 'Validation failed! Please check the inputs and try again.')
+        //         ->withInput();
+        // }
+
     }
 
     /**

@@ -51,18 +51,16 @@ class Stocks extends Model
     public static function subtractStock($product_id, $requiredStock)
     {
         // Fetch all stocks for the given product, ordered by expiry date
+        $requiredStockCopy = $requiredStock;
         $productStocks = Stocks::where('products_id', $product_id)
             ->orderBy('expiry_date', 'asc')
             ->get();
 
         foreach ($productStocks as $productStock) {
-            if ($productStock->stock <= $productStock->subtracted_stock + $requiredStock) {
-                continue;
-            }
-            // If the required stock is less than or equal to the current stock
-            if ($requiredStock <=  $productStock->subtracted_stock) {
-                // Subtract the required stock from the current stock
-                $productStock->subtracted_stock += $requiredStock;
+            $availableStock = $productStock->stock - $productStock->subtracted_stock;
+
+            if ($requiredStockCopy <= $availableStock) {
+                $productStock->subtracted_stock += $requiredStockCopy;
                 $productStock->save();
 
                 // Mark as inactive if the stock reaches zero
@@ -76,14 +74,13 @@ class Stocks extends Model
             }
 
             // If the required stock exceeds the current stock
-            $requiredStock -= $productStock->stock; // Reduce the remaining required stock
-            $productStock->subtracted_stock = $productStock->stock; // Deplete the current stock
-            $productStock->status = 0; // Mark as inactive
+            $requiredStockCopy -= $availableStock; // Reduce the remaining required stock
+            $productStock->subtracted_stock += $availableStock; // Deplete the current available stock
             $productStock->save();
         }
 
         // If the loop completes but there are still unmet stock requirements, throw an exception
-        if ($requiredStock > 0) {
+        if ($requiredStockCopy > 0) {
             throw new Exception("Not enough stock available to fulfill the request.");
         }
 
