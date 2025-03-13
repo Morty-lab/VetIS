@@ -50,13 +50,15 @@ class PetsController extends Controller
 
 
         try {
+
+            // dd($request->all());
             // Validate the request data
             $validatedData = $request->validate([
                 'pet_name' => 'required',
                 'pet_type' => 'required',
                 'pet_breed' => 'required',
                 'pet_gender' => 'required',
-                'pet_birthdate' => 'required|date',
+                'pet_birthdate' => 'required',
                 'pet_color' => 'required',
                 'pet_weight' => 'required|numeric',
                 'pet_vaccinated' => 'nullable',
@@ -73,6 +75,8 @@ class PetsController extends Controller
                 'okay_to_use_photos_online' => 'nullable',
                 'pet_condition' => 'nullable|string',
             ]);
+
+
 
             $lastGroomDate = $validatedData['last_groom_date']
                 ? Carbon::parse($validatedData['last_groom_date'])->startOfMonth()->toDateString()

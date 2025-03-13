@@ -284,6 +284,8 @@ Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
     Route::post('/products/addStocks/{id}', [ProductsController::class, 'addStocks'])->name("products.addStocks");
+Route::post('/products/repackStocks', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
+
     Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
     Route::post('/products/update/{id}', [ProductsController::class, 'update'])->name("products.update");
     Route::get('/products/{id}', [ProductsController::class, 'destroy'])->name("products.delete");

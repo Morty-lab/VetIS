@@ -77,6 +77,72 @@
 </div>
 
 @foreach ($products as $product)
+    @php
+        $stockforproduct = \App\Models\Stocks::getAllStocksByProductId($product->id);
+    @endphp
+    @foreach ($stockforproduct as $stockP)
+        <!-- Repack Stock Modal -->
+        <div class="modal fade" id="repackStockModal-{{ $product->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Repack
+                            Stock for {{ $product->product_name }}
+                        </h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('products.repackStocks') }}" method="POST">
+                            {{-- {{ route('repackStock') }} --}}
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="supplier_price" value="{{ $stockP->supplier_price }}">
+                            <input type="hidden" name="supplier" value="{{ $stockP->supplier_id }}">
+
+
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputRepackQuantity">Repack Quantity</label>
+                                <input class="form-control" id="inputRepackQuantity" type="number"
+                                    placeholder="Enter Quantity" name="quantity">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="selectRepackUnit">Repack Unit</label>
+                                <select class="form-control" id="selectRepackUnit" name="unit">
+                                    <option disabled="" selected="">-- Select
+                                        Unit --</option>
+                                    @foreach ($units as $i)
+                                        <option value="{{ $i->id }}">
+                                            {{ $i->unit_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputNumberRepackedUnits">Number of Repacked
+                                    Stocks</label>
+                                <input class="form-control" id="inputNumberRepackedUnits" type="number"
+                                    placeholder="Enter Number of Repacked Units" name="number_repacked_units">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputRepackStockPrice">Stock Price</label>
+                                <input class="form-control" id="inputRepackStockPrice" type="number" step="0.01"
+                                    placeholder="Enter Stock Price" name="stock_price">
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit">Repack
+                                    Stock</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     <!-- View Product Modal -->
     <div class="modal fade" id="viewProductModal{{ $product->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -193,9 +259,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $stockforproduct = \App\Models\Stocks::getAllStocksByProductId($product->id);
-                                    @endphp
+
                                     @foreach ($stockforproduct as $stockP)
                                         <tr>
                                             <td>{{ sprintf('Stock-%05d', $stockP->id) }}</td>
@@ -229,11 +293,17 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#editStockModal"><i
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editStockModal-{{ $product->id }}"><i
                                                             class="fa-regular fa-pen-to-square"></i></button>
                                                     <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteStockModal-{{ $product->id }}"><i
                                                             class="fa-solid fa-trash"></i></button>
+                                                    <button class="btn btn-datatable btn-outline-primary me-2"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#repackStockModal-{{ $product->id }}"><i
+                                                            class="fa-solid fa-box-open"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -280,11 +350,15 @@
                                         <td>
                                         <div class="d-flex">
                                                     <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#editStockModal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#editStockModal-{{ $product->id }}""><i
                                                             class="fa-regular fa-pen-to-square"></i></button>
                                                     <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#deleteStockModal-{{ $product->id }}""><i
                                                             class="fa-solid fa-trash"></i></button>
+                                                            <button class="btn btn-datatable btn-outline-primary me-2"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#repackStockModal-{{ $product->id }}"><i
+                                                            class="fa-solid fa-box-open"></i></button>
                                                 </div>
                                         </td>
                                     </tr>
@@ -402,7 +476,7 @@
 
 
     <!-- Edit Stock Stock -->
-    <div class="modal fade" id="editStockModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="editStockModal-{{ $product->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <form action="{{ route('products.addStocks', $product->id) }}" method="POST">
@@ -482,8 +556,11 @@
         </div>
     </div>
 
+
+
+
     <!-- Delete Stock Modal -->
-    <div class="modal fade" id="deleteStockModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="deleteStockModal-{{ $product->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -503,7 +580,7 @@
     </div>
 
     <!-- Edit Product Modal -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="editProductModal-{{ $product->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -524,13 +601,7 @@
                         <label class="small mb-1" for="selectSupplier">Supplier</label>
                         <select class="form-control" id="selectSupplier" name="supplier">
                             <option disabled="">-- Select Supplier --</option>
-                            @foreach ($suppliers as $i)
-@if ($i->id == $product->supplier_id)
-<option value="{{ $i->id }}" selected>{{ $i->supplier_name }}</option>
-@else
-<option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
-@endif
-@endforeach
+
                         </select>
                     </div> -->
                         <div class="row gx-3 mb-3">
