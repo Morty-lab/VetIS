@@ -263,9 +263,9 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link nav-tab ms-0{{ request()->is('vet-profile') ? 'active' : '' }}" href="#vet-profile">Vet Profile</a>
+        <a class="nav-link nav-tab ms-0{{ request()->is('vet-profile') ? 'active' : '' }}" href="#vet-profile">Profile</a>
         <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
-        <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Records</a>
+        <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Pet Records</a>
         <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">UM Settings</a>
     </nav>
     <hr class="mt-0 mb-4" />
