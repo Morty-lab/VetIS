@@ -21,7 +21,6 @@
             <th>Email</th>
             <th>Contact Number</th>
             <th>Position</th>
-            <th>Lisence No.</th>
             <th>Schedules</th>
             <th>Status</th>
             <th>Actions</th>
@@ -37,7 +36,6 @@
             <td>{{ $doctor->doctor_email }} </td>
             <td>{{ $doctor->phone_number }}</td>
             <td>{{ $doctor->position }}</td>
-            <td>{{ $doctor->license_number }}</td>
             <td>
               <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">{{\App\Models\Doctor::getSchedules($doctor->id)->count()}}</span> Scheduled</span>
             </td>
