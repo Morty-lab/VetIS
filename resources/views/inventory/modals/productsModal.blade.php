@@ -350,11 +350,15 @@
                                         <td>
                                         <div class="d-flex">
                                                     <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#editStockModal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#editStockModal-{{ $product->id }}""><i
                                                             class="fa-regular fa-pen-to-square"></i></button>
                                                     <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#deleteStockModal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#deleteStockModal-{{ $product->id }}""><i
                                                             class="fa-solid fa-trash"></i></button>
+                                                            <button class="btn btn-datatable btn-outline-primary me-2"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#repackStockModal-{{ $product->id }}"><i
+                                                            class="fa-solid fa-box-open"></i></button>
                                                 </div>
                                         </td>
                                     </tr>
