@@ -655,10 +655,12 @@
                     [ 'link', 'image' ],                          // Links and images
                     ['clean']                                     // Clear formatting
                 ];
-
                 var quill = new Quill('#quill-editor', {
                     modules: {
-                        toolbar: toolbarOptions
+                        toolbar: toolbarOptions,
+                        imageResize: {
+                            displaySize: true
+                        },
                     },
                     theme: 'snow'
                 });
@@ -674,7 +676,10 @@
 
                 var examination = new Quill('#examination', {
                     modules: {
-                        toolbar: toolbarOptions
+                        toolbar: toolbarOptions,
+                        imageResize: {
+                            displaySize: true
+                        },
                     },
                     theme: 'snow'
                 });
@@ -690,7 +695,10 @@
 
                 var diagnosis = new Quill('#diagnosis', {
                     modules: {
-                        toolbar: toolbarOptions
+                        toolbar: toolbarOptions,
+                        imageResize: {
+                            displaySize: true
+                        },
                     },
                     theme: 'snow'
                 });
@@ -706,7 +714,10 @@
 
                 var remarks = new Quill('#remarks', {
                     modules: {
-                        toolbar: toolbarOptions
+                        toolbar: toolbarOptions,
+                        imageResize: {
+                            displaySize: true
+                        },
                     },
                     theme: 'snow'
                 });
@@ -722,7 +733,10 @@
 
                 var prescription = new Quill('#prescription', {
                     modules: {
-                        toolbar: toolbarOptions
+                        toolbar: toolbarOptions,
+                        imageResize: {
+                            displaySize: true
+                        },
                     },
                     theme: 'snow'
                 });

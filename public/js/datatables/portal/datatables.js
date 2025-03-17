@@ -26,6 +26,21 @@ window.addEventListener("DOMContentLoaded", (event) => {
             perPageSelect: false,
         });
     }
+    const petInfoTable = document.getElementById(
+        "petInfoTable"
+    );
+    if (petInfoTable) {
+        new simpleDatatables.DataTable(petInfoTable, {
+            searchable: false, // Disable the search box
+            perPage: 5, // Show only 5 rows per page
+            pagination: true, // Enable pagination
+            perPageSelect: false,
+            labels: {
+                info: "" // hides the "Showing X to X of X entries" text
+            }
+        });
+    }
+
     const petScheduledAppointmentsTable = document.getElementById(
         "petScheduledAppointmentsTable"
     );

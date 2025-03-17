@@ -256,7 +256,7 @@
     <!-- Main page content-->
     <div class="container-xl px-4 mt-4">
         <nav class="nav nav-borders">
-            <a class="nav-link nav-tab ms-0{{ request()->is('pet-profile') ? 'active' : '' }}" href="#pet-profile">Pet
+            <a class="nav-link nav-tab{{ request()->is('pet-profile') ? 'active' : '' }}" href="#pet-profile">Pet
                 Profile</a>
             <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Appointment Schedules</a>
             <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">Appointment History</a>
@@ -295,10 +295,11 @@
                     </div>
                     <div class=" card-body">
                         <div class="row gx-5 px-3">
-                            <div class="col d-flex justify-content-center align-items-center card shadow-none">
-                                <img class="img-account-profile rounded-circle mb-2 p-1"
-                                     src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}"
-                                     alt=""/>
+                            <div class="col d-flex justify-content-center p-0 align-items-center card shadow-none" style="height: 300px;">
+                                <img class="img-account-profile rounded p-1"
+                                     src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png') }}"
+                                     alt=""
+                                     style="width: 100%; height: 100%; object-fit: cover;"/>
                             </div>
                             <div class="col-md-9">
                                 <div class="row gx-3">

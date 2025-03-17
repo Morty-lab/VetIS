@@ -17,7 +17,7 @@
             <div class="modal-body p-0">
                 <div class="row justify-content-center align-items-center" style="height: 100%;">
                     <div class="col-md-6 d-flex flex-column align-items-center text-center border-end p-3 pe-3">
-                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="Profile Picture" />
+                        <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/pet.png') }}" alt="Profile Picture" />
                     </div>
                     <div class="col-md-6 d-flex flex-column align-items-center text-center p-3">
                         <label for="fileInput" class="btn btn-outline-primary mb-2">Select Photo</label>
@@ -275,7 +275,7 @@
                 <div class="card-header">Pet Photo</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg" alt="" />
+                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/pet.png') }}" alt="" />
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
