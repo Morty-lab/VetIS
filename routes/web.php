@@ -384,7 +384,7 @@ Route::get('/portal/login', function () {
 Route::get('/portal/register', function () {
     return view('portal.auth.register');
 })->name(name: "portal.register");
-Route::middleware(['auth', 'role:user'])->group(function () {
+Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/portal/dashboard', [PortalController::class, 'index'])->name(name: "portal.dashboard");
 
     Route::get('/portal/veterinarians', function () {
