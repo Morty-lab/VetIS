@@ -445,7 +445,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                     <div class="badge bg-secondary-soft text-secondary rounded-pill">Scheduled</div>
                                 </td>
                                 <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$schedule->id])}}">Open</a>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$schedule->id])}}">View</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -496,7 +496,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                 <td>{{ $record->complaint }}</td>
                                 <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('soap.view', ['id' => $record->petID, 'recordID' => $record->id])}}">Open</a>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('soap.view', ['id' => $record->petID, 'recordID' => $record->id])}}">View</a>
                             </tr>
                             @endforeach
 

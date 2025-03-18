@@ -431,7 +431,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('pets.show', $pet->id) }}">Open</a>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('pets.show', $pet->id) }}">View</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -484,7 +484,7 @@ Clients::setEmailAttribute($client, $client->user_id);
                                     {{$bill->due_date ?? 'No Due Date'}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('billing.view',['billingID' => $bill->id])}}">Open</a>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('billing.view',['billingID' => $bill->id])}}">View</a>
                                 </td>
                             </tr>
                             @endforeach

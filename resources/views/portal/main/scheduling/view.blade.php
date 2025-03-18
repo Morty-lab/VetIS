@@ -21,9 +21,35 @@
                         <div class="col-md-6">
                             <!-- Select Schedule -->
                             <div class="form-group">
-                                <label for="select-schedule" class="mb-1">Select Time</label>
-                                <input type="text" class="form-control" id="timePicker"
-                                    name="appointment_time" value="{{$appointment->appointment_time}}">
+                                <label class="small mb-1">Appointment Time</label>
+                                <select class="select-appointment-time-edit-portal form-control" id="selectAppointmentTime" name="appointment_time" data-placeholder="Select Time" required>
+                                    <option value=""></option>
+                                    <optgroup label="--- Select a Time ---"></optgroup>
+                                    <optgroup label="AM">
+                                        <option value="8:00 AM">8:00 AM</option>
+                                        <option value="8:30 AM">8:30 AM</option>
+                                        <option value="9:00 AM">9:00 AM</option>
+                                        <option value="9:30 AM">9:30 AM</option>
+                                        <option value="10:00 AM">10:00 AM</option>
+                                        <option value="10:30 AM">10:30 AM</option>
+                                        <option value="11:00 AM">11:00 AM</option>
+                                        <option value="11:30 AM">11:30 AM</option>
+                                    </optgroup>
+                                    <optgroup label="PM">
+                                        <option value="1:00 PM">1:00 PM</option>
+                                        <option value="1:30 PM">1:30 PM</option>
+                                        <option value="2:00 PM">2:00 PM</option>
+                                        <option value="2:30 PM">2:30 PM</option>
+                                        <option value="3:00 PM">3:00 PM</option>
+                                        <option value="3:30 PM">3:30 PM</option>
+                                        <option value="4:00 PM">4:00 PM</option>
+                                        <option value="4:30 PM">4:30 PM</option>
+                                        <option value="5:00 PM">5:00 PM</option>
+                                    </optgroup>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select an appointment time.
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -53,14 +79,14 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <!-- View Veterinarian Schedule -->
-                            <div class="form-group d-flex">
-                                <label>&nbsp;</label> <!-- For spacing alignment -->
-                                <br>
-                                <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>
-                            </div>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <!-- View Veterinarian Schedule -->--}}
+{{--                            <div class="form-group d-flex">--}}
+{{--                                <label>&nbsp;</label> <!-- For spacing alignment -->--}}
+{{--                                <br>--}}
+{{--                                <a href="#" class="text-decoration-underline">View Veterinarian Schedule</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="col-md-12">
                             <!-- Concern/Complain -->
                             <div class="form-group">
@@ -175,18 +201,22 @@
                                             $vet = $vets->firstWhere('id', $appointment->doctor_ID);
                                             $vetName = $vet ? $vet->firstname . ' ' . $vet->lastname : 'N/A';
                                         @endphp
-                                        {{ $vetName }}
+                                        Dr. {{ $vetName }}
                                     </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Pet Owner</label><br>
+                                    <p class="text-primary fw-bold">{{$appointment->client->client_name}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Pet/s</label><br>
                                     <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                               {{$pet->pet_name}}
-                            </span>
+                                       {{$pet->pet_name}}
+                                    </span>
                                 </div>
-                                <div class="col-md-12 mt-3">
-                                    <div class="card shadow-none rounded border border-top-lg border-top-primary p-2 px-3">
-                                        <label class="small mb-1">Reason of Visit</label>
+                                <div class="col-md-12 mt-4">
+                                    <div class="border py-3 px-3 border-top-lg border-top-primary rounded">
+                                        <label class="mb-1 text-primary fw-bold b">Reason of Visit</label>
                                         <p class="mb-0">
                                             {{$appointment->purpose}}
                                         </p>
@@ -346,10 +376,11 @@
                     </div>
                     <div class="card-body">
                         <div class="col-12 border p-2 text-center rounded bg-light">
-                            <h1 class="fw-700 mb-0 text-xl">#04758</h1>
+                            <h1 class="fw-700 mb-0 text-xl">#-----</h1>
                         </div>
 {{--                        <p class="text-center mt-2 mb-0 text-gray-500 font-italic">You will be given a priority number once your appointment request has been scheduled</p>--}}
-                        <p class="text-center mt-2 mb-0 text-gray-500 font-italic">Please present your priority number upon arrival.</p>
+                        <p class="text-center mt-2 mb-0 text-gray-500 font-italic">A priority number will be generated once scheduled.</p>
+{{--                        <p class="text-center mt-2 mb-0 text-gray-500 font-italic">Please present your priority number upon arrival.</p>--}}
                     </div>
                 </div>
             </div>

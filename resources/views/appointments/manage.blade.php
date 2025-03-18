@@ -64,7 +64,7 @@
                             <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID">
                                 @foreach ($vets as $vet)
                                 <option class="form-control"
-                                    value={{ $vet->id }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                    value={{ $vet->id }}>Dr. {{ $vet->firstname.' '.$vet->lastname }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -241,12 +241,12 @@
                 <thead>
                     <tr>
                         <th>Date & Time</th>
-                        <th>Priority Number</th>
                         <th>Pet Owner</th>
                         <th>Pet/s</th>
                         <th>Veterinarian</th>
                         <th>Reason of Visit</th>
                         <th>Status</th>
+                        <th>Priority Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -257,37 +257,36 @@
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                         </td>
-                        <td>#00001</td>
                         <td>{{ $appointment->client->client_name }}</td>
                         <td>
-                            <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                            <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
                                 {{ $appointment->pet->pet_name }} | {{ $appointment->pet->pet_type }}
                             </span>
                         </td>
                         <td>Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
-                        <td>{{ $appointment->purpose }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($appointment->purpose, 30, '...') }}</td>
                         <td>
                             @if (is_null($appointment->status) == true)
-                            <div class="badge bg-warning-soft text-warning rounded-pill">
+                            <div class="badge bg-warning-soft text-warning text-xs rounded-pill">
                                 Pending
                             </div>
                             @elseif ($appointment->status == 0)
-                            <div class="badge bg-secondary-soft text-secondary rounded-pill">
+                            <div class="badge bg-secondary-soft text-secondary text-xs rounded-pill">
                                 Scheduled
                             </div>
                             @elseif ($appointment->status == 2)
-                            <div class="badge bg-danger-soft text-danger rounded-pill">
+                            <div class="badge bg-danger-soft text-danger text-xs rounded-pill">
                                 Canceled
                             </div>
                             @elseif ($appointment->status == 1)
-                            <div class="badge bg-success-soft text-success rounded-pill">
+                            <div class="badge bg-success-soft text-success text-xs rounded-pill">
                                 Finished
                             </div>
                             @endif
                         </td>
+                        <td>#00001</td>
                         <td>
-                            <a class="btn btn-outline-primary"
-                                href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$appointment->id])}}">View</a>
                         </td>
 
                     </tr>

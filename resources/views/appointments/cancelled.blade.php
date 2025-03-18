@@ -24,9 +24,8 @@
                 <thead>
                     <tr>
                         <th>Date & Time</th>
-                        <th>Appointment ID</th>
                         <th>Pet Owner</th>
-                        <th>Pet</th>
+                        <th>Pet/s</th>
                         <th>Pet Type</th>
                         <th>Veterinarian</th>
                         <th>Purpose</th>
@@ -41,17 +40,19 @@
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                         </td>
-                        <td>VETIS-00001</td>
                         <td>{{$appointment->client->client_name}}</td>
-                        <td>{{$appointment->pet->pet_name}}</td>
-                        <td>{{$appointment->pet->pet_type}}</td>
+                        <td>
+                              <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                {{ $appointment->pet->pet_name }} | {{ $appointment->pet->pet_type }}
+                              </span>
+                        </td>
                         <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
                         <td>{{ $appointment->purpose }}</td>
                         <td>
                             <div class="badge bg-danger-soft text-danger rounded-pill">Cancelled</div>
                         </td>
                         <td>
-                            <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$appointment->id])}}">View</a>
                         </td>
                     </tr>
                     @else

@@ -58,6 +58,46 @@ $(document).ready(function() {
         });
     }, 100);
 
+
+    $('.select-appointment-time-edit').select2({
+        theme: "bootstrap-5",
+        dropdownParent: $('#editAppointmentModal'),
+        minimumResultsForSearch: Infinity,
+        width: function() {
+            return $(this).data('width') ? $(this).data('width') :
+                $(this).hasClass('w-100') ? '100%' : 'style';
+        },
+        placeholder: function() {
+            return $(this).data('placeholder');
+        }
+    });
+    setTimeout(function() {
+        $('.select-appointment-time-edit').each(function() {
+            let $select = $(this);
+            let select2Container = $select.next('.select2-container--bootstrap-5');
+
+            // Find the selection element (where the background image is set)
+            let selectionSingle = select2Container.find('.select2-selection--single');
+
+            if (selectionSingle.length) {
+                selectionSingle.css({
+                    'background-image': "url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2369707a%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2710%27/%3E%3Cpolyline points=%2712 6 12 12 16 14%27/%3E%3C/svg%3E')",
+                    'background-size': '16px 16px',
+                    'background-position': 'right 0.75rem center',
+                    'background-repeat': 'no-repeat',
+                    'color':'#69707a !important'
+                });
+            }
+        });
+    }, 100);
+
+    $('.select-attending-vet-edit').select2({
+        theme: "bootstrap-5",
+        dropdownParent: '#editAppointmentModal',
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+    });
+
     $('.select-attending-vet').select2({
         theme: "bootstrap-5",
         dropdownParent: '#appointmentSchedModal',
@@ -98,6 +138,38 @@ $(document).ready(function() {
     });
     setTimeout(function() {
         $('.select-appointment-time').each(function() {
+            let $select = $(this);
+            let select2Container = $select.next('.select2-container--bootstrap-5');
+
+            // Find the selection element (where the background image is set)
+            let selectionSingle = select2Container.find('.select2-selection--single');
+
+            if (selectionSingle.length) {
+                selectionSingle.css({
+                    'background-image': "url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2369707a%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2710%27/%3E%3Cpolyline points=%2712 6 12 12 16 14%27/%3E%3C/svg%3E')",
+                    'background-size': '16px 16px',
+                    'background-position': 'right 0.75rem center',
+                    'background-repeat': 'no-repeat',
+                    'color':'#69707a !important'
+                });
+            }
+        });
+    }, 100);
+
+    $('.select-appointment-time-edit-portal').select2({
+        theme: "bootstrap-5",
+        dropdownParent: $('#editAppointmentRequestModal'),
+        minimumResultsForSearch: Infinity,
+        width: function() {
+            return $(this).data('width') ? $(this).data('width') :
+                $(this).hasClass('w-100') ? '100%' : 'style';
+        },
+        placeholder: function() {
+            return $(this).data('placeholder');
+        }
+    });
+    setTimeout(function() {
+        $('.select-appointment-time-edit-portal').each(function() {
             let $select = $(this);
             let select2Container = $select.next('.select2-container--bootstrap-5');
 

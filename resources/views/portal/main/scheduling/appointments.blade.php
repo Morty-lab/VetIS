@@ -92,7 +92,7 @@
 
                         <div class="col-md-12 mb-3">
                             <p class="fw-bold mb-1">Attending Veterinarian</p>
-                            <p class="mb-0">John Doe</p>
+                            <p class="mb-0">Dr. John Doe</p>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -168,7 +168,7 @@
                                             <option value=""></option>
                                             @foreach($vets as $vet)
                                                 <option
-                                                    value={{$vet->id}}>{{$vet->firstname. " " . $vet->lastname}}</option>
+                                                    value={{$vet->id}}>Dr. {{$vet->firstname. " " . $vet->lastname}}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -491,7 +491,7 @@
                                     {{$pet->pet_name}}
                                 </span>
                             </td>
-                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
+                            <td>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
                                 <span class="badge bg-success-soft text-success text-sm rounded-pill">
@@ -574,7 +574,7 @@
                                     {{$pet->pet_name}}
                                 </span>
                             </td>
-                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
+                            <td>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
                                 <span class="badge bg-success-soft text-success text-sm rounded-pill">
@@ -626,7 +626,7 @@
                                     {{$pet->pet_name}}
                                 </span>
                             </td>
-                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
+                            <td>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$a->purpose}}</td>
                             <td>
                                 <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>

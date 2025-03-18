@@ -24,13 +24,13 @@
                 <thead>
                     <tr>
                         <th>Date & Time</th>
-                        <th>Appointment ID</th>
                         <th>Pet Owner</th>
-                        <th>Pet</th>
+                        <th>Pet/s</th>
                         <th>Pet Type</th>
                         <th>Veterinarian</th>
-                        <th>Purpose</th>
+                        <th>Reason of Visit</th>
                         <th>Status</th>
+                        <th>Priority Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -41,9 +41,12 @@
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                         </td>
-                        <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
                         <td>{{$appointment->client->client_name}}</td>
-                        <td>{{$appointment->pet->pet_name}}</td>
+                        <td>
+                             <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                {{ $appointment->pet->pet_name }} | {{ $appointment->pet->pet_type }}
+                            </span>
+                        </td>
                         <td>{{$appointment->pet->pet_type}}</td>
                         <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
                         <td>{{ $appointment->purpose }}</td>
@@ -51,7 +54,7 @@
                             <div class="badge bg-success-soft text-success rounded-pill">Finished</div>
                         </td>
                         <td>
-                            <a class="btn btn-outline-primary" href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$appointment->id])}}">View</a>
                         </td>
 
                     </tr>
