@@ -278,8 +278,9 @@
                 </div>
             </div>
             <div class="card shadow-none mb-4">
-                <div class="card-header">
-                    Pet Owner Details
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="">Pet Owner Details</div>
+                    <a class="btn btn-datatable btn-primary px-5 py-3 m-0" href="{{route('owners.show',  $appointment->owner_ID)}}"><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="card-body">
                         @php
@@ -384,10 +385,10 @@
                                 <button class="btn btn-secondary w-100" type="button" data-bs-toggle="modal"
                                         data-bs-target="#editAppointmentModal">Edit Appointment
                                 </button>
-                                <hr>
+{{--                                <hr>--}}
                             @endif
-                            <a href="{{route('pets.show', $appointment->pet_ID)}}" class="btn btn-outline-primary mb-2 w-100">View Pet</a>
-                            <a href="{{route('owners.show',  $appointment->owner_ID)}}" class="btn btn-outline-primary mb-2 w-100">View Pet Owner</a>
+{{--                            <a href="{{route('pets.show', $appointment->pet_ID)}}" class="btn btn-outline-primary mb-2 w-100">View Pet</a>--}}
+{{--                            <a href="{{route('owners.show',  $appointment->owner_ID)}}" class="btn btn-outline-primary mb-2 w-100">View Pet Owner</a>--}}
                         </div>
                     </div>
                 </div>
