@@ -44,7 +44,6 @@
                                         <option value="3:30 PM">3:30 PM</option>
                                         <option value="4:00 PM">4:00 PM</option>
                                         <option value="4:30 PM">4:30 PM</option>
-                                        <option value="5:00 PM">5:00 PM</option>
                                     </optgroup>
                                 </select>
                                 <div class="invalid-feedback">
