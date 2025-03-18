@@ -11,7 +11,7 @@
                         @if (Route::currentRouteName() === 'appointments.index' && (auth()->user()->role == 'staff' || auth()->user()->role == 'admin' ))
 
                             <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalXl">Add Appointment
+                                    data-bs-target="#appointmentSchedModal">Add Appointment
                             </button>
 
                         @endif

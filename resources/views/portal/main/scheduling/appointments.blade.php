@@ -139,7 +139,7 @@
                                     <!-- Select Pet -->
                                     <div class="form-group">
                                         <label for="select-pet" class="mb-1">Select Pet</label>
-                                        <select class="select-pet form-control" id="select-pet" name="pet_ID" multiple="multiple" data-placeholder="Select a Pet" required>
+                                        <select class="select-pet form-control" id="select-pet" name="pet_ID" multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off" >
                                             @foreach($pets as $pet)
                                                 <option value={{$pet->id}}>{{$pet->pet_name}}</option>
                                             @endforeach
@@ -150,11 +150,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <!-- Concern/Complain -->
                                     <div class="form-group">
                                         <label for="concern-complain" class="mb-1">Reason of Visit</label>
                                         <textarea class="form-control" id="concern-complain" name="purpose" rows="3" required minlength="5"
-                                                  placeholder="Enter the reason of your appointment"></textarea>
+                                                  placeholder="Enter the reason of your appointment" autocomplete="off" ></textarea>
                                         <div class="invalid-feedback">
                                             Please provide a valid reason (at least 5 characters).
                                         </div>
@@ -193,8 +192,8 @@
                                         <div class="input-group input-group-joined">
                                             <input class="form-control" id="select-schedule" type="text" value="" name="appointment_date" min="{{ date('Y-m-d') }}" placeholder="Select a Date"/>
                                             <span class="input-group-text">
-                                        <i data-feather="calendar"></i>
-                                    </span>
+                                                <i data-feather="calendar"></i>
+                                            </span>
                                         </div>
                                         <div class="invalid-feedback">
                                             Please select a valid date.
@@ -213,6 +212,7 @@
                                         <label for="select-schedule" class="mb-1">Select Time</label>
                                         <select class="select-appointment-time form-control" id="selectAppointmentTime" name="appointment_time" data-placeholder="Select Time" required>
                                             <option value=""></option>
+                                            <optgroup label="--- Select a Time ---"></optgroup>
                                             <optgroup label="AM">
                                                 <option value="8:00 AM">8:00 AM</option>
                                                 <option value="8:30 AM">8:30 AM</option>
@@ -224,8 +224,6 @@
                                                 <option value="11:30 AM">11:30 AM</option>
                                             </optgroup>
                                             <optgroup label="PM">
-                                                <option value="12:00 PM">12:00 PM</option>
-                                                <option value="12:30 PM">12:30 PM</option>
                                                 <option value="1:00 PM">1:00 PM</option>
                                                 <option value="1:30 PM">1:30 PM</option>
                                                 <option value="2:00 PM">2:00 PM</option>
@@ -469,11 +467,11 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Purpose</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
+                            <th>Priority Number</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -488,9 +486,12 @@
                             <td>{{$s->appointment_date}} |
                                 {{$s->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $s->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
-                            <td>{{$owner->client_name}}</td>
+                            <td>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
+                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
                                 <span class="badge bg-success-soft text-success text-sm rounded-pill">
@@ -498,11 +499,43 @@
                                 </span>
                             </td>
                             <td>
+
+                            </td>
+                            <td>
                                 <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">Open</a>
                             </td>
                         </tr>
                         @endif
                         @endforeach
+                        <tr>
+                            <td>3/18/2025 |
+                                12:30 PM
+                            </td>
+                            <td>
+                                 <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    Lexie
+                                </span>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    Lexie
+                                </span>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    Lexie
+                                </span>
+                            </td>
+                            <td>Kent Invento</td>
+                            <td>Checkup</td>
+                            <td>
+                                <span class="badge bg-success-soft text-success text-sm rounded-pill">
+                                    Scheduled
+                                </span>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="">View</a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -516,11 +549,11 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Purpose</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
+                            <th>Priority Number</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -536,8 +569,11 @@
                             <td>{{$s->appointment_date}} |
                                 {{$s->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $s->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
+                            <td>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
                             <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
@@ -545,13 +581,13 @@
                                     Scheduled
                                 </span>
                             </td>
+                            <td></td>
                             <td>
-                                <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">Open</a>
+                                <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">View</a>
                             </td>
                         </tr>
                         @endif
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -566,10 +602,9 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Complaint/Concern</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -586,17 +621,15 @@
                             <td>{{$a->appointment_date}} |
                                 {{$a->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
+                            <td>
+                                 <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
                             <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
-
                             <td>{{$a->purpose}}</td>
                             <td>
-                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
-                                {{-- Scheduled--}}
-                                {{-- </span>--}}
                                 <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>
-                                {{-- <span class="badge bg-danger-soft text-danger text-sm rounded-pill">Cancelled</span>--}}
                             </td>
                             <td>
                                 <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$a->id, 'petid'=>$a->pet_ID])}}">Open</a>
@@ -618,10 +651,9 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Complaint/Concern</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -637,15 +669,17 @@
                             <td>{{$a->appointment_date}} |
                                 {{$a->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
+                            <td>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
                             <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$a->purpose}}</td>
                             <td>
-                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
-                                {{-- Scheduled--}}
-                                {{-- </span>--}}
-                                <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>
+                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">Success</span>--}}
+                                {{-- <span class="badge bg-primary-soft text-primary text-sm rounded-pill">Completed</span>--}}
+                                {{-- <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>--}}
                                 {{-- <span class="badge bg-danger-soft text-danger text-sm rounded-pill">Cancelled</span>--}}
                             </td>
                             <td>
