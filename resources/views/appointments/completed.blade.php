@@ -26,11 +26,9 @@
                         <th>Date & Time</th>
                         <th>Pet Owner</th>
                         <th>Pet/s</th>
-                        <th>Pet Type</th>
                         <th>Veterinarian</th>
                         <th>Reason of Visit</th>
                         <th>Status</th>
-                        <th>Priority Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -47,7 +45,6 @@
                                 {{ $appointment->pet->pet_name }} | {{ $appointment->pet->pet_type }}
                             </span>
                         </td>
-                        <td>{{$appointment->pet->pet_type}}</td>
                         <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
                         <td>{{ $appointment->purpose }}</td>
                         <td>

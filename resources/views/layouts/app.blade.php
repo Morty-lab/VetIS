@@ -8,7 +8,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>PetHub</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -23,17 +24,20 @@
     <link href="{{ asset('css/select2-bootstrap-5-theme.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}" />
     @yield('styles')
-    <script data-search-pseudo-elements="" defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script data-search-pseudo-elements="" defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous">
+    </script>
+
     <!-- @vite('resources/js/app.js') -->
 </head>
 
 <body class="nav-fixed">
     @php
-    if (auth()->check() && auth()->user()->role === 'client') {
-    header('Location: ' . route('portal.dashboard'));
-    exit;
-    }
+        if (auth()->check() && auth()->user()->role === 'client') {
+            header('Location: ' . route('portal.dashboard'));
+            exit();
+        }
     @endphp
     <div class="">
         @include('layouts.navigation')
@@ -51,17 +55,14 @@
                 <div class="container-xl px-4">
                     <div class="row">
                         <div class="col-md-6 small">Copyright © PetHub 2024</div>
-                        <!-- <div class="col-md-6 text-md-end small">
-                            <a href="dashboard-1.html#!">Privacy Policy</a>
-                            ·
-                            <a href="dashboard-1.html#!">Terms &amp; Conditions</a>
-                        </div> -->
+
                     </div>
                 </div>
             </footer>
         </div>
     </div>
     <!-- <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/forms/select.js') }}"></script>
     <script src="{{ asset('js/forms/flatpickr.js') }}"></script>
@@ -69,16 +70,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     @yield('scripts')
 
     <script>
         (function() {
-            var js = "window['__CF$cv$params']={r:'750b4b957f85073a',m:'9YnjVxj1lvMSfJo7FsgPB016a2d5Mob2vA_RY8AwXr8-1664187922-0-AYAGUvWlfpTuG6aVTeb+LG7WyKDALTbQYNo0X5a9KafV+tJEYlT3I0N7gEOfaqulJhciJArCS3XY5iGoLdd3b2PKGtOM/dAqEvp7tMuwIgUcehMM66DnwO0Igodqcxkigmpdy+zBqltHzaAB3jq4tDU=',s:[0x7ca35a1970,0x45461e0d12],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";
+            var js =
+                "window['__CF$cv$params']={r:'750b4b957f85073a',m:'9YnjVxj1lvMSfJo7FsgPB016a2d5Mob2vA_RY8AwXr8-1664187922-0-AYAGUvWlfpTuG6aVTeb+LG7WyKDALTbQYNo0X5a9KafV+tJEYlT3I0N7gEOfaqulJhciJArCS3XY5iGoLdd3b2PKGtOM/dAqEvp7tMuwIgUcehMM66DnwO0Igodqcxkigmpdy+zBqltHzaAB3jq4tDU=',s:[0x7ca35a1970,0x45461e0d12],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";
             var _0xh = document.createElement('iframe');
             _0xh.height = 1;
             _0xh.width = 1;
@@ -114,7 +118,10 @@
             }
         })();
     </script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"750b4b957f85073a","token":"6e2c2575ac8f44ed824cef7899ba8463","version":"2022.8.1","si":100}' crossorigin="anonymous"></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194"
+        integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw=="
+        data-cf-beacon='{"rayId":"750b4b957f85073a","token":"6e2c2575ac8f44ed824cef7899ba8463","version":"2022.8.1","si":100}'
+        crossorigin="anonymous"></script>
 
 </body>
 
