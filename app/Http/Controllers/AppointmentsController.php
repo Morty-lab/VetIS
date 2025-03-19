@@ -212,7 +212,7 @@ class AppointmentsController extends Controller
             'pet_ID' => 'required',
             'doctor_ID' => 'required',
             'appointment_date' => 'required|date',
-            'appointment_time' => 'nullable|date_format:H:i',
+            'appointment_time' => 'nullable',
             'purpose' => 'required',
         ]);
 
@@ -220,10 +220,9 @@ class AppointmentsController extends Controller
 
 
         // Create a new appointment using the validated data
-        $appointment = new Appointments($validatedData);
-        $appointment->status = 0;
-        $result = $appointment->save();
+        $request->merge(['pet_ID' => implode(',', $request->input('pet_ID')),'status' => 0]);
 
+        $result = Appointments::createAppointment($request->all());
 
 
         Log::info('Appointment creation result:', ['saved' => $result]);
@@ -232,7 +231,7 @@ class AppointmentsController extends Controller
         $date = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
         $time = Carbon::parse($request->input('appointment_time'))->format('g:i A'); // E.g., 3:00 PM
 
-        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian = Doctor::where('id', $result->doctor_ID)->first();
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
 
 

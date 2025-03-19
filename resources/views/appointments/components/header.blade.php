@@ -75,8 +75,7 @@
                                         $cancelledCount = 0;
                                         foreach ($appointments as $appointment) {
                                         if (
-                                        $appointment->status == 2 &&
-                                        \Carbon\Carbon::parse($appointment->updated_at)->isToday()
+                                        $appointment->status == 2
                                         ) {
                                         $cancelledCount++;
                                         } else {
