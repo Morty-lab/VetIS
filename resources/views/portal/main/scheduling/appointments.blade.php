@@ -451,7 +451,7 @@
                                         (\Carbon\Carbon::parse($a->appointment_date)->isToday() ||
                                             \Carbon\Carbon::parse($a->appointment_date)->isFuture()))
                                     @php
-                                        $petIDs = explode(',', $s->pet_ID);
+                                        $petIDs = explode(',', $a->pet_ID);
                                         $pets = \App\Models\Pets::whereIn('id', $petIDs)->get();
                                         $vet = \App\Models\Doctor::where('id', $a->doctor_ID)->first();
 
