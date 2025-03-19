@@ -5,7 +5,10 @@
     <div class="card-body px-5 py-4 pb-xxl-1">
         <div class="row align-items-center justify-content-between">
             <div class="col-md-7">
-                <h1 class="text-primary text-xl">Hello, {{auth()->user()->name}}</h1>
+                @php
+                    $client = \App\Models\Clients::getClientByUserID(\Illuminate\Support\Facades\Auth::user()->id)
+                @endphp
+                <h1 class="text-primary text-xl">Hello, {{$client->client_name}}</h1>
                 <p class="text-gray-700">Welcome to <b class="text-primary">PetHub Portal</b> - Your gateway to managing pet care effortlessly. Explore personalized features like managing your pets' profiles, scheduling veterinary appointments, and staying on top of their wellness—all in one convenient platform!</p>
                 <div class="d-flex">
                     <a href="{{route('portal.mypets')}}" class="btn btn-primary me-2">My Pets <i class="ms-1" data-feather="arrow-right"></i></a>

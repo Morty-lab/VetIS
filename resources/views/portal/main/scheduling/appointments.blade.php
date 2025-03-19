@@ -14,6 +14,16 @@
         .custom-scroll::-webkit-scrollbar {
             width: 5px; /* Thin scrollbar */
         }
+        /* Disable green border and icons for valid fields */
+        .was-validated .form-control:valid,
+        .form-control.is-valid {
+            border-color: #ced4da !important; /* Default border */
+            padding-right: 0.75rem !important; /* No extra padding */
+            background-image: none !important; /* No check icon */
+            background-repeat: no-repeat;
+            background-position: center right 0.375rem;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
     </style>
 <!-- Modals -->
 
@@ -46,11 +56,72 @@
     </div>
 </div>
 
-<div class="modal fade" id="appointmentRequestModal" tabindex="-1" aria-labelledby="currentModalLabel" aria-hidden="true"
+{{-- Pending Appointment Request Success --}}
+    <div class="modal fade" id="appointmentRequestSuccess" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content position-relative">
+                <!-- Close Button Floating -->
+                <button type="button" class="btn-close position-absolute end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1051;"></button>
+
+                <div class="modal-body d-flex flex-column justify-content-center align-items-center py-4 px-3">
+                    <i class="fa-solid fa-circle-check fa-5x text-success mb-3"></i>
+                    <h3 class="text-primary text-center mb-3">Appointment Request Sent Successfully</h3>
+                    <p class="text-sm text-center mb-4">
+                        Your appointment request has been submitted. You will receive confirmation once approved.
+                    </p>
+
+                    <div class="row border w-100 bg-white rounded py-3 px-2 m-0">
+                        <div class="col-md-12 mb-3">
+                            <p class="fw-bold mb-1">Pet Owner</p>
+                            <p class="mb-0">Jane Doe</p>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <p class="fw-bold mb-1">Pet/s</p>
+                            <span class="badge bg-primary-soft text-primary text-sm rounded-pill">Lexie</span>
+                            <span class="badge bg-primary-soft text-primary text-sm rounded-pill">Lexie</span>
+                            <span class="badge bg-primary-soft text-primary text-sm rounded-pill">Lexie</span>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <p class="fw-bold mb-1">Reason for Appointment</p>
+                            <p class="mb-0">Reason Here</p>
+                        </div>
+
+                        <hr>
+
+                        <div class="col-md-12 mb-3">
+                            <p class="fw-bold mb-1">Attending Veterinarian</p>
+                            <p class="mb-0">Dr. John Doe</p>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <p class="fw-bold mb-1">Appointment Date</p>
+                            <p class="mb-0">March 17, 2025</p>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <p class="fw-bold mb-1">Appointment Time</p>
+                            <p class="mb-0">2:30PM</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="fw-bold mb-1">Appointment Status</p>
+                            <p class="text-warning mb-0">Pending...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="appointmentRequestModal" tabindex="-1" aria-labelledby="currentModalLabel" aria-hidden="true"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{{route('portal.appointments.add')}}" method="post">
+            <form action="{{route('portal.appointments.add')}}" method="post" class="needs-validation" id="appointmentRequestForm" novalidate>
                 @csrf
                 @php
                 $client = Clients::getClientByUserID(Auth::user()->id)
@@ -60,66 +131,117 @@
                     <h5 class="modal-title" id="appointmentRequestTitle">Request Appointment</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row gy-3 gx-4">
-                        <div class="col-md-6">
-                            <!-- Select Pet -->
-                            <div class="form-group">
-                                <label for="select-pet" class="mb-1">Select Pet</label>
-                                <select class="form-control" id="select-pet" name="pet_ID">
-                                    <option value="" disabled selected>Select a Pet</option>
-                                    @foreach($pets as $pet)
-                                    <option value={{$pet->id}}>{{$pet->pet_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Select Veterinarian -->
-                            <div class="form-group">
-                                <label for="select-veterinarian" class="mb-1">Select Veterinarian</label>
-                                <select class="form-control" id="select-veterinarian" name="doctor_ID">
-                                    <option value="" disabled selected>Select a Veterinarian</option>
-                                    @foreach($vets as $vet)
-                                    <option
-                                        value={{$vet->id}}>{{$vet->firstname. " " . $vet->lastname}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-{{--                        <div class="col-md-12">--}}
-{{--                            <!-- View Veterinarian Schedule -->--}}
-{{--                            <div class="form-group d-flex">--}}
-{{--                                <label>&nbsp;</label> <!-- For spacing alignment -->--}}
-{{--                                <br>--}}
-{{--                                <a href="#" class="text-decoration-underline" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-bs-dismiss="">View Veterinarian Schedule</a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        <div class="col-md-6">
-                            <!-- Select Schedule -->
-                            <div class="form-group">
-                                <label for="select-schedule" class="mb-1">Select Date</label>
-                                <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Select Schedule -->
-                            <div class="form-group">
-                                <label for="select-schedule" class="mb-1">Select Time</label>
-                                <input type="text" class="form-control" id="timePicker"
-                                       name="appointment_time">
-                            </div>
-                        </div>
+                <div class="modal-body py-0">
+                    <div class="row">
                         <div class="col-md-12">
-                            <!-- Concern/Complain -->
-                            <div class="form-group">
-                                <label for="concern-complain" class="mb-1">Purpose</label>
-                                <textarea class="form-control" id="concern-complain" name="purpose" rows="5"
-                                    placeholder="Enter the purpose of your appointment"></textarea>
+                            <div class="row gy-3 gx-4 pt-2 pb-3">
+                                <div class="col-md-12">
+                                    <!-- Select Pet -->
+                                    <div class="form-group">
+                                        <label for="select-pet" class="mb-1">Select Pet</label>
+                                        <select class="select-pet form-control" id="select-pet" name="pet_ID" multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off" >
+                                            @foreach($pets as $pet)
+                                                <option value={{$pet->id}}>{{$pet->pet_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select at least one pet.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="concern-complain" class="mb-1">Reason of Visit</label>
+                                        <textarea class="form-control" id="concern-complain" name="purpose" rows="3" required minlength="5"
+                                                  placeholder="Enter the reason of your appointment" autocomplete="off" ></textarea>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid reason (at least 5 characters).
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mb-0">
+                                <div class="col-md-12">
+                                    <!-- Select Veterinarian -->
+                                    <div class="form-group">
+                                        <label for="select-veterinarian" class="mb-1">Select Veterinarian</label>
+                                        <select class="select-veterinarian form-control" id="select-veterinarian" name="doctor_ID" data-placeholder="Select a Veterinarian" required>
+                                            <option value=""></option>
+                                            @foreach($vets as $vet)
+                                                <option
+                                                    value={{$vet->id}}>Dr. {{$vet->firstname. " " . $vet->lastname}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a veterinarian.
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--                        <div class="col-md-12">--}}
+                                {{--                            <!-- View Veterinarian Schedule -->--}}
+                                {{--                            <div class="form-group d-flex">--}}
+                                {{--                                <label>&nbsp;</label> <!-- For spacing alignment -->--}}
+                                {{--                                <br>--}}
+                                {{--                                <a href="#" class="text-decoration-underline" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-bs-dismiss="">View Veterinarian Schedule</a>--}}
+                                {{--                            </div>--}}
+                                {{--                        </div>--}}
+                                <div class="col-md-6">
+                                    <!-- Select Schedule -->
+                                    <div class="form-group">
+                                        <label for="select-schedule" class="mb-1">Select Date</label>
+{{--                                        <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD" required min="{{ date('Y-m-d') }}">--}}
+                                        <div class="input-group input-group-joined">
+                                            <input class="form-control" id="select-schedule" type="text" value="" name="appointment_date" min="{{ date('Y-m-d') }}" placeholder="Select a Date"/>
+                                            <span class="input-group-text">
+                                                <i data-feather="calendar"></i>
+                                            </span>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please select a valid date.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Select Schedule -->
+                                    {{--                            <div class="form-group">--}}
+                                    {{--                                <label for="select-schedule" class="mb-1">Select Time</label>--}}
+                                    {{--                                <input type="text" class="form-control" id="timePicker"--}}
+                                    {{--                                       name="appointment_time">--}}
+                                    {{--                            </div>--}}
+
+                                    <div class="form-group">
+                                        <label for="select-schedule" class="mb-1">Select Time</label>
+                                        <select class="select-appointment-time form-control" id="selectAppointmentTime" name="appointment_time" data-placeholder="Select Time" required>
+                                            <option value=""></option>
+                                            <optgroup label="--- Select a Time ---"></optgroup>
+                                            <optgroup label="AM">
+                                                <option value="8:00 AM">8:00 AM</option>
+                                                <option value="8:30 AM">8:30 AM</option>
+                                                <option value="9:00 AM">9:00 AM</option>
+                                                <option value="9:30 AM">9:30 AM</option>
+                                                <option value="10:00 AM">10:00 AM</option>
+                                                <option value="10:30 AM">10:30 AM</option>
+                                                <option value="11:00 AM">11:00 AM</option>
+                                                <option value="11:30 AM">11:30 AM</option>
+                                            </optgroup>
+                                            <optgroup label="PM">
+                                                <option value="1:00 PM">1:00 PM</option>
+                                                <option value="1:30 PM">1:30 PM</option>
+                                                <option value="2:00 PM">2:00 PM</option>
+                                                <option value="2:30 PM">2:30 PM</option>
+                                                <option value="3:00 PM">3:00 PM</option>
+                                                <option value="3:30 PM">3:30 PM</option>
+                                                <option value="4:00 PM">4:00 PM</option>
+                                                <option value="4:30 PM">4:30 PM</option>
+                                            </optgroup>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select an appointment time.
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -323,16 +445,16 @@
         @endphp
         <nav class="nav nav-borders">
             <a class="nav-link ms-0 nav-tab{{ request()->is('today') ? 'active' : '' }}" href="#today">
-                Today's <span class="badge bg-primary-soft text-primary ms-auto">{{$today}}</span>
+                Today's Appointments <span class="badge bg-primary-soft text-primary ms-auto">{{$today}}</span>
             </a>
             <a class="nav-link nav-tab{{ request()->is('scheduled') ? 'active' : '' }}" href="#scheduled">
-                Scheduled <span class="badge bg-secondary-soft text-secondary ms-auto">{{$scheduled}}</span>
+                Scheduled Appointments <span class="badge bg-secondary-soft text-secondary ms-auto">{{$scheduled}}</span>
             </a>
             <a class="nav-link nav-tab{{ request()->is('requests') ? 'active' : '' }}" href="#requests">
-                My Requests <span class="badge bg-warning-soft text-warning ms-auto">{{$requests}}</span>
+                Appointment Requests <span class="badge bg-warning-soft text-warning ms-auto">{{$requests}}</span>
             </a>
             <a class="nav-link nav-tab{{ request()->is('history') ? 'active' : '' }}" href="#history">
-                My History
+                Appointment History
             </a>
         </nav>
         <hr class="mt-0 mb-4">
@@ -344,11 +466,11 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Purpose</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
+                            <th>Priority Number</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -363,9 +485,12 @@
                             <td>{{$s->appointment_date}} |
                                 {{$s->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $s->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
-                            <td>{{$owner->client_name}}</td>
+                            <td>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
+                            <td>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
                                 <span class="badge bg-success-soft text-success text-sm rounded-pill">
@@ -373,11 +498,43 @@
                                 </span>
                             </td>
                             <td>
+
+                            </td>
+                            <td>
                                 <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">Open</a>
                             </td>
                         </tr>
                         @endif
                         @endforeach
+                        <tr>
+                            <td>3/18/2025 |
+                                12:30 PM
+                            </td>
+                            <td>
+                                 <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    Lexie
+                                </span>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    Lexie
+                                </span>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    Lexie
+                                </span>
+                            </td>
+                            <td>Kent Invento</td>
+                            <td>Checkup</td>
+                            <td>
+                                <span class="badge bg-success-soft text-success text-sm rounded-pill">
+                                    Scheduled
+                                </span>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="">View</a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -391,11 +548,11 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Purpose</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
+                            <th>Priority Number</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -411,22 +568,25 @@
                             <td>{{$s->appointment_date}} |
                                 {{$s->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $s->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
-                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
+                            <td>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
+                            <td>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$s->purpose}}</td>
                             <td>
                                 <span class="badge bg-success-soft text-success text-sm rounded-pill">
                                     Scheduled
                                 </span>
                             </td>
+                            <td></td>
                             <td>
-                                <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">Open</a>
+                                <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$s->id, 'petid'=>$s->pet_ID])}}">View</a>
                             </td>
                         </tr>
                         @endif
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -441,10 +601,9 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Complaint/Concern</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -461,17 +620,15 @@
                             <td>{{$a->appointment_date}} |
                                 {{$a->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
-                            <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
-
+                            <td>
+                                 <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
+                            <td>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$a->purpose}}</td>
                             <td>
-                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
-                                {{-- Scheduled--}}
-                                {{-- </span>--}}
                                 <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>
-                                {{-- <span class="badge bg-danger-soft text-danger text-sm rounded-pill">Cancelled</span>--}}
                             </td>
                             <td>
                                 <a class="btn btn-outline-primary" href="{{route('portal.appointments.view',['appid'=>$a->id, 'petid'=>$a->pet_ID])}}">Open</a>
@@ -493,10 +650,9 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
-                            <th>Appointment ID</th>
-                            <th>Pet</th>
+                            <th>Pet/s</th>
                             <th>Veterinarian</th>
-                            <th>Complaint/Concern</th>
+                            <th>Reason of Visit</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -512,15 +668,17 @@
                             <td>{{$a->appointment_date}} |
                                 {{$a->appointment_time}}
                             </td>
-                            <td>{{sprintf("VetIS-%05d", $a->id)}}</td>
-                            <td>{{$pet->pet_name}}</td>
+                            <td>
+                                <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                    {{$pet->pet_name}}
+                                </span>
+                            </td>
                             <td>{{$vet->firstname. ' ' . $vet->lastname}}</td>
                             <td>{{$a->purpose}}</td>
                             <td>
-                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">--}}
-                                {{-- Scheduled--}}
-                                {{-- </span>--}}
-                                <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>
+                                {{-- <span class="badge bg-success-soft text-success text-sm rounded-pill">Success</span>--}}
+                                {{-- <span class="badge bg-primary-soft text-primary text-sm rounded-pill">Completed</span>--}}
+                                {{-- <span class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending</span>--}}
                                 {{-- <span class="badge bg-danger-soft text-danger text-sm rounded-pill">Cancelled</span>--}}
                             </td>
                             <td>
@@ -538,6 +696,24 @@
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
+    (() => {
+        'use strict';
+
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+
+
     // Check if the 'openModal' parameter is present in the URL
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);

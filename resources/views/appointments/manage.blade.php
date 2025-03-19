@@ -7,7 +7,7 @@
 @section('content')
 @include('appointments.components.header', ['title' => 'Appointments'], ['icon' => '<i class="fa-regular fa-calendar-plus"></i>'])
 
-<div class="modal fade" id="exampleModalXl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+<div class="modal fade" id="appointmentSchedModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
     style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form action="{{ route('appointments.add') }}" method="POST">
@@ -22,27 +22,56 @@
                     <!-- Form Row-->
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                            <label class="small mb-1" for="inputAppointmentDate">Appointment Date</label>
+                            <div class="input-group input-group-joined">
+                                <input class="form-control" id="select-schedule" type="text" name="appointment_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" placeholder="Select a Date"/>
+                                <span class="input-group-text">
+                                    <i data-feather="calendar"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
-                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" />
+                            <label class="small mb-1" for="inputAppointmentTime">Appointment Time</label>
+{{--                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" />--}}
+                            <select class="select-appointment-time-admin form-control" id="selectAppointmentTime" name="appointment_time" data-placeholder="Select Time" required>
+                                <option value=""></option>
+                                <optgroup label="--- Select a Time ---"></optgroup>
+                                <optgroup label="AM">
+                                    <option value="8:00 AM">8:00 AM</option>
+                                    <option value="8:30 AM">8:30 AM</option>
+                                    <option value="9:00 AM">9:00 AM</option>
+                                    <option value="9:30 AM">9:30 AM</option>
+                                    <option value="10:00 AM">10:00 AM</option>
+                                    <option value="10:30 AM">10:30 AM</option>
+                                    <option value="11:00 AM">11:00 AM</option>
+                                    <option value="11:30 AM">11:30 AM</option>
+                                </optgroup>
+                                <optgroup label="PM">
+                                    <option value="1:00 PM">1:00 PM</option>
+                                    <option value="1:30 PM">1:30 PM</option>
+                                    <option value="2:00 PM">2:00 PM</option>
+                                    <option value="2:30 PM">2:30 PM</option>
+                                    <option value="3:00 PM">3:00 PM</option>
+                                    <option value="3:30 PM">3:30 PM</option>
+                                    <option value="4:00 PM">4:00 PM</option>
+                                    <option value="4:30 PM">4:30 PM</option>
+                                </optgroup>
+                            </select>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
-                            <select class="form-control" id="vetSelect" name="doctor_ID">
+                            <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID">
                                 @foreach ($vets as $vet)
                                 <option class="form-control"
-                                    value={{ $vet->id }}>{{ $vet->firstname.' '.$vet->lastname }}</option>
+                                    value={{ $vet->id }}>Dr. {{ $vet->firstname.' '.$vet->lastname }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
                             <!-- <h6 class="mb-2 mt-3 text-primary">Owner Information</h6>
                             <hr class="mt-1 mb-2"> -->
-                            <label class="small mb-1" for="inputPetName">Pet Owner</label>
-                            <select class="form-control" id="inputOwnerName" type="select" placeholder="Name"
+                            <label class="small mb-1" for="inputOwnerName">Pet Owner</label>
+                            <select class="select-owner-name form-control" id="inputOwnerName" type="select" placeholder="Name"
                                 onchange="handleClientSelect()" value="" name="owner_ID">
                                 <option value="">Select Owner</option>
                                 @foreach ($clients as $client)
@@ -70,13 +99,12 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <!-- <h6 class="mb-2 mt-3 text-primary">Pet Information</h6>
                             <hr class="mt-1 mb-2"> -->
                             <label class="small mb-1" for="inputPetName">Pet Name</label>
-                            <select class="form-control" id="inputPetName" type="select" placeholder="Name"
-                                value="" name="pet_ID" onchange="handlePetSelect()">
-                                <option value="">Select Pet</option>
+                            <select class="select-pet-name form-control" id="inputPetName" type="select" placeholder="Name"
+                                value="" name="pet_ID" onchange="handlePetSelect()" multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off">
                                 @foreach ($pets as $pet)
                                 <option value="{{ $pet->id }}" id="{{ $pet->owner_ID }}" class="pets"
                                     style="display:none">{{ $pet->pet_name }}</option>
@@ -106,7 +134,7 @@
                             </div> -->
                         </div>
                         <div class="col-md-12">
-                            <label class="small mb-1" for="inputPurpose">Purpose</label>
+                            <label class="small mb-1" for="inputPurpose">Reason of Visit</label>
                             <textarea class="form-control" name="purpose" id="inputPurpose" cols="20" rows="10"></textarea>
                         </div>
                     </div>
@@ -212,13 +240,12 @@
                 <thead>
                     <tr>
                         <th>Date & Time</th>
-                        <th>Appointment ID</th>
                         <th>Pet Owner</th>
-                        <th>Pet</th>
-                        <th>Pet Type</th>
+                        <th>Pet/s</th>
                         <th>Veterinarian</th>
-                        <th>Purpose</th>
+                        <th>Reason of Visit</th>
                         <th>Status</th>
+                        <th>Priority Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -229,37 +256,36 @@
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
                         </td>
-                        <td>{{ sprintf("VETIS-%05d", $appointment->id) }}</td>
                         <td>{{ $appointment->client->client_name }}</td>
-                        <td>{{ $appointment->pet->pet_name }}</td>
-                        <td>{{ $appointment->pet->pet_type }}</td>
-                        <td>Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
-                        <td>{{ $appointment->purpose }}</td>
                         <td>
-
+                            <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                {{ $appointment->pet->pet_name }} | {{ $appointment->pet->pet_type }}
+                            </span>
+                        </td>
+                        <td>Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($appointment->purpose, 30, '...') }}</td>
+                        <td>
                             @if (is_null($appointment->status) == true)
-                            <div class="badge bg-warning-soft text-warning rounded-pill">
+                            <div class="badge bg-warning-soft text-warning text-xs rounded-pill">
                                 Pending
                             </div>
                             @elseif ($appointment->status == 0)
-                            <div class="badge bg-secondary-soft text-secondary rounded-pill">
+                            <div class="badge bg-secondary-soft text-secondary text-xs rounded-pill">
                                 Scheduled
                             </div>
                             @elseif ($appointment->status == 2)
-                            <div class="badge bg-danger-soft text-danger rounded-pill">
+                            <div class="badge bg-danger-soft text-danger text-xs rounded-pill">
                                 Canceled
                             </div>
                             @elseif ($appointment->status == 1)
-                            <div class="badge bg-success-soft text-success rounded-pill">
+                            <div class="badge bg-success-soft text-success text-xs rounded-pill">
                                 Finished
                             </div>
                             @endif
-
-
                         </td>
+                        <td>#00001</td>
                         <td>
-                            <a class="btn btn-outline-primary"
-                                href="{{route('appointments.view',['id'=>$appointment->id])}}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('appointments.view',['id'=>$appointment->id])}}">View</a>
                         </td>
 
                     </tr>

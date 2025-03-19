@@ -40,7 +40,7 @@
 {{--                            <span class="badge bg-orange-soft text-orange rounded-pill">Disabled</span>--}}
 {{--                        </td>--}}
                         <td>
-                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('owners.show',  $client->id)}}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('owners.show',  $client->id)}}">View</a>
                         </td>
                     </tr>
                     @endforeach

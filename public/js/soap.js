@@ -45,16 +45,15 @@ function fillSoapStatusValue() {
 }
 function fillTemplate(textarea) {
     const examinationTemplateContent = `
-    Heart Rate:
-    Respiration Rate:
-    Weight:
-    Length:
-    CRT:
-    BCS:
-    Lymph Nodes:
-    Palpebral Reflex:
-    Temperature:
-
+        <h4><strong>Heart Rate: </strong></h4>
+        <h4><strong>Respiration Rate:</strong></h4>
+        <h4><strong>Weight:</strong></h4>
+        <h4><strong>Length:</strong></h4>
+        <h4><strong>CRT:</strong></h4>
+        <h4><strong>BCS:</strong></h4>
+        <h4><strong>Lymph Nodes:</strong></h4>
+        <h4><strong>Palpebral Reflex:</strong></h4>
+        <h4><strong>Temperature:</strong></h4>
     `;
 
     const diagnosisTemplateContent = `
@@ -70,7 +69,7 @@ function fillTemplate(textarea) {
         const examinationTextarea = document.querySelector(
             'textarea[name="examination"]'
         );
-        examinationTextarea.value = examinationTemplateContent;
+        examination.clipboard.dangerouslyPasteHTML(examinationTemplateContent);
     }
 
     if (textarea == "diagnosis") {

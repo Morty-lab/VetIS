@@ -51,7 +51,7 @@
                             @endif
                         </td>
                         <td>
-                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('pets.show', $pet->id) }}">Open</a>
+                            <a class="btn btn-datatable btn-primary px-5 py-3" href="{{ route('pets.show', $pet->id) }}">View</a>
                         </td>
                     </tr>
                     @endforeach

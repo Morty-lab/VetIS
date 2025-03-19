@@ -178,43 +178,6 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card mb-4 shadow-none" id="historyCard" style="display: block;">
-            <div class="card-header">
-                History
-            </div>
-            <div class="card-body">
-                <!-- <div class="no-records text-center p-2">
-                                <i class="fa-solid fa-hippo"></i>
-                                No Records Yet
-                            </div> -->
-                <table id="petAppointmentsHistoryTable">
-                    <thead>
-                        <tr>
-                            <th><a href="#">Date</a></th>
-                            <th><a href="#">Subject</a></th>
-                            <th><a href="#">Status</a></th>
-                            <th><a href="#">Action</a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($appointments as $appointment)
-                        @if($appointment->status === 1)
-                        <tr>
-                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
-                            <td>{{$appointment->purpose}}</td>
-                            <td>Completed</td>
-                            <td><a href="" class="btn btn-primary">Open</a></td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="col-md-12">
     <div class="card shadow-none border mb-4">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span>
@@ -254,6 +217,41 @@
                     </tr>
                     @endif
                     @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card mb-4 shadow-none" id="historyCard" style="display: block;">
+        <div class="card-header">
+            Appointment History
+        </div>
+        <div class="card-body">
+            <!-- <div class="no-records text-center p-2">
+                            <i class="fa-solid fa-hippo"></i>
+                            No Records Yet
+                        </div> -->
+            <table id="petAppointmentsHistoryTable">
+                <thead>
+                <tr>
+                    <th><a href="#">Date</a></th>
+                    <th><a href="#">Subject</a></th>
+                    <th><a href="#">Status</a></th>
+                    <th><a href="#">Action</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($appointments as $appointment)
+                    @if($appointment->status === 1)
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                            <td>{{$appointment->purpose}}</td>
+                            <td>Completed</td>
+                            <td><a href="" class="btn btn-primary">Open</a></td>
+                        </tr>
+                    @endif
+                @endforeach
                 </tbody>
             </table>
         </div>
