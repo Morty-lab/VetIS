@@ -257,9 +257,13 @@
             const submitButton = document.getElementById('submitAppointment');
 
             if (form && submitButton) {
-                form.addEventListener('submit', () => {
-                    submitButton.disabled = true; // Disable the button
-                    submitButton.textContent = 'Submitting...'; // Optionally, update the text
+                form.addEventListener('submit', (event) => {
+                    if (form.checkValidity()) {
+                        submitButton.disabled = true; // Disable the button
+                        submitButton.textContent = 'Submitting...'; // Optionally, update the text
+                    } else {
+                        event.preventDefault(); // Prevent the default form submission
+                    }
                 });
             }
         });
