@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ class Appointments extends Model
         'doctor_ID',
         'appointment_date',
         'appointment_time',
+        'priority_number',
         'status',
         'purpose',
     ];
@@ -27,6 +29,14 @@ class Appointments extends Model
     public function pet()
     {
         return $this->belongsTo(Pets::class, 'pet_ID');
+    }
+
+
+    public static function generateAppointmentNumber($date,$time)
+    {
+        $prefix = $date->isSameDay(Carbon::today()) ? 'W' : 'A';
+
+        return $prefix . '-' . $time->format('Hi');
     }
 
     public static function getAllAppointments()
@@ -47,6 +57,7 @@ class Appointments extends Model
 
     public static function createAppointment($data)
     {
+        $data['priority_number'] = self::generateAppointmentNumber(Carbon::parse($data['appointment_date']), Carbon::parse($data['appointment_time']));
         return self::create($data);
     }
 
@@ -68,5 +79,7 @@ class Appointments extends Model
         }
         return false;
     }
+
+
 
 }

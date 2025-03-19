@@ -213,13 +213,14 @@ return new class extends Migration {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("owner_ID");
-            $table->unsignedBigInteger("pet_ID");
+            $table->text("pet_ID");
             $table->unsignedBigInteger("doctor_ID");
             $table->foreign("doctor_ID")->references("id")->on("doctors")->onDelete("cascade");
-            $table->foreign("pet_ID")->references("id")->on("pets")->onDelete("cascade");
+            // $table->foreign("pet_ID")->references("id")->on("pets")->onDelete("cascade");
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
             $table->date("appointment_date");
             $table->time("appointment_time")->nullable();
+            $table->string("priority_number");
             $table->integer("status")->nullable();
             $table->string("purpose")->nullable();
             $table->timestamps();

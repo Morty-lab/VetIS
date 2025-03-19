@@ -27,7 +27,48 @@ class AppointmentsController extends Controller
         return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
     }
 
-    public function view($id){
+    public function getAvailableTimes(Request $request)
+    {
+        $selectedDate = $request->input('date');
+
+        // Define available time slots
+        $allTimes = [
+            "08:00",
+            "08:30",
+            "09:00",
+            "09:30",
+            "10:00",
+            "10:30",
+            "11:00",
+            "11:30",
+            "13:00",
+            "13:30",
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30"
+        ];
+
+        // Get booked times for the selected date
+        $bookedTimes = Appointments::where('appointment_date', $selectedDate)
+            ->pluck('appointment_time')
+            ->map(function ($time) {
+                return Carbon::parse($time)->format('H:i');
+            })
+            ->toArray();
+
+        // Filter out booked times
+        $availableTimes = array_diff($allTimes, $bookedTimes);
+
+        return response()->json(
+            array_values($availableTimes)
+        );
+    }
+
+    public function view($id)
+    {
 
         $appointment = Appointments::with(['client', 'pet'])->find($id);
         $vets = Doctor::getAllDoctors();
@@ -35,7 +76,8 @@ class AppointmentsController extends Controller
         return view('appointments.view', ["appointment" => $appointment, "vets" => $vets]);
     }
 
-    public function appointmentSchedule($id){
+    public function appointmentSchedule($id)
+    {
         $appointment = Appointments::with(['client', 'pet'])->find($id);
 
         $appointment->status = 0;
@@ -77,7 +119,8 @@ class AppointmentsController extends Controller
         return redirect()->route('appointments.view', ['id' => $id]);
     }
 
-    public function appointmentDone($id){
+    public function appointmentDone($id)
+    {
         $appointment = Appointments::with(['client', 'pet'])->find($id);
 
         $appointment->status = 1;
@@ -102,7 +145,8 @@ class AppointmentsController extends Controller
         return redirect()->route('appointments.view', ['id' => $id]);
     }
 
-    public function appointmentCancel($id){
+    public function appointmentCancel($id)
+    {
         $appointment = Appointments::with(['client', 'pet'])->find($id);
 
         $appointment->status = 2;
@@ -246,8 +290,8 @@ class AppointmentsController extends Controller
         $validatedData = $request->validate([
             'appointment_date' => 'required|date|after_or_equal:today', // Appointment date must be valid and not in the past
             'appointment_time' => 'required|date_format:H:i',           // Valid time format
-            'doctor_ID'        => 'required|exists:users,id',           // Ensure the doctor exists
-            'inputPurpose'     => 'required|string|max:500',           // Purpose cannot be empty
+            'doctor_ID' => 'required|exists:users,id',           // Ensure the doctor exists
+            'inputPurpose' => 'required|string|max:500',           // Purpose cannot be empty
         ]);
 
         // Find the appointment by ID

@@ -126,6 +126,7 @@ class PortalController extends Controller
 
     public function addMyAppointment(Request $request)
     {
+        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'owner_ID' => 'required',
@@ -169,9 +170,10 @@ class PortalController extends Controller
                 ->withInput();
         }
 
+        $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
 
-        $appointment = new Appointments($request->all());
-        $appointment->save();
+
+        Appointments::createAppointment($request->all());
 
 
         $date = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
@@ -194,7 +196,19 @@ class PortalController extends Controller
             ->positionClass('toast-bottom-right')
             ->addSuccess('Appointment request submitted successfully.');
 
-        return redirect()->route('portal.appointments');
+
+        return redirect()->route('portal.appointments')->with([
+            'appointment_success' => true,
+            'pending_modal_data' => [
+                'owner_name' => Auth::user()->name,
+                'pet_ids' => explode(',', $request->input('pet_ID')),
+                'reason' => $request->input('purpose'),
+                'veterinarian' => Doctor::find($request->input('doctor_ID'))->name,
+                'appointment_date' => $request->input('appointment_date'),
+                'appointment_time' => $request->input('appointment_time'),
+            ],
+        ]);
+
     }
 
     public function viewMyAppointments()
@@ -216,7 +230,6 @@ class PortalController extends Controller
         $id = request('appointmentID');
 
         $appointment = Appointments::getAppointmentById($id);
-        //        dd($request->all());
 
         $validatedData = $request->validate([
             'doctor_ID' => 'required',
@@ -311,7 +324,8 @@ class PortalController extends Controller
         return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
     }
 
-    public function prescription(){
+    public function prescription()
+    {
         $id = request('id');
         $prescriptions = PetRecords::getPrescriptions($id);
 
