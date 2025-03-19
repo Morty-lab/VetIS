@@ -28,6 +28,7 @@ class AppointmentsFactory extends Factory
             'doctor_ID' => $this->faker->numberBetween(1, 10),
             'appointment_date' => $date,
             'appointment_time' => $this->faker->time(),
+            'priority_number' => 'W-' . $this->faker->numberBetween(1, 10),
             'status' => ($date < Carbon::now()) ? 1 : 0,
             'purpose' => $this->faker->sentence(),
 

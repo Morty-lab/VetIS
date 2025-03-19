@@ -40,12 +40,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
     return redirect()->route('portal.login');
 });
+
+Route::get('/appointments/available-times', [AppointmentsController::class, 'getAvailableTimes'])->name('appointments.available-times');
 
 Auth::routes(['login' => false]);
 
