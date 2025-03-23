@@ -49,11 +49,11 @@
                                     {{-- <option value="Doctor" {{ $staff->position == 'Doctor' ? 'selected' : '' }}>Veterinarian</option> --}}
                                     {{-- <option value="Owner" {{ $staff->position == 'Owner' ? 'selected' : '' }}>Owner</option> --}}
                                     {{-- <option value="Administrator" {{ $staff->position == 'Administrator' ? 'selected' : '' }}>Administrator</option> --}}
-                                    <option value="secretary" {{ $staff->position == 'Secretary' ? 'selected' : '' }}>
+                                    <option value="secretary" {{ $staff->position == 'secretary' ? 'selected' : '' }}>
                                         Secretary</option>
                                     <option value="cashier" {{ $staff->position == 'cashier' ? 'selected' : '' }}>Cashier
                                     </option>
-                                    <option value="staff" {{ $staff->position == 'Staff' ? 'selected' : '' }}>Staff
+                                    <option value="staff" {{ $staff->position == 'staff' ? 'selected' : '' }}>Staff
                                     </option>
                                 </select>
                             </div>
@@ -201,10 +201,10 @@
                         <option value="Doctor" {{ $staff->position == 'Doctor' ? 'selected' : '' }}>Veterinarian</option> --}}
                             {{-- <option value="Owner" {{ $staff->position == 'Owner' ? 'selected' : '' }}>Owner</option> --}}
                             {{-- <option value="Administrator" {{ $staff->position == 'Administrator' ? 'selected' : '' }}>Administrator</option> --}}
-                            <option value="secretary" {{ $staff->position == 'Secretary' ? 'selected' : '' }}>Secretary
+                            <option value="secretary" {{ $staff->position == 'secretary' ? 'selected' : '' }}>Secretary
                             </option>
                             <option value="cashier" {{ $staff->position == 'cashier' ? 'selected' : '' }}>Cashier</option>
-                            <option value="staff" {{ $staff->position == 'Staff' ? 'selected' : '' }}>Staff</option>
+                            <option value="staff" {{ $staff->position == 'staff' ? 'selected' : '' }}>Staff</option>
                         </select>
                     </div>
                 </div>
