@@ -25,7 +25,7 @@ class PetSeeder extends Seeder
                 'pet_gender' => $faker->randomElement(['Male', 'Female']),  // English gender (Male or Female)
                 'pet_birthdate' => $faker->date($format = 'Y-m-d', $max = 'now'),  // Random date of birth
                 'pet_color' => $faker->safeColorName,  // English safe color name
-                'pet_picture' => $faker->imageUrl($width = 640, $height = 480, 'cats'), // Example for cats, adjust as needed
+                // 'pet_picture' => $faker->imageUrl($width = 640, $height = 480, 'cats'), // Example for cats, adjust as needed
                 'pet_description' => $faker->sentence,  // Random English sentence for description
                 'pet_weight' => $faker->randomFloat(2, 1, 100), // Random weight between 1 and 100
                 'vaccinated' => $faker->boolean,  // Random boolean for vaccination status
