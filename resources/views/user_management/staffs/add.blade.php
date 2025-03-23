@@ -159,7 +159,7 @@
 {{--</div>--}}
 </div>
 </div>
-
+{{--
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Get the register button
@@ -181,7 +181,7 @@
             }, 3000);
         });
     });
-</script>
+</script> --}}
 @endsection
 
 @section('scripts')

@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-6">
                                 <p class="small mb-1">Position</p>
-                                <p>Staff</p>
+                                <p>{{ ucfirst($staff->position) }}</p>
                             </div>
                         </div>
 
