@@ -188,17 +188,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/profileowner/{id}', [ClientsController::class, 'update'])->name('owners.update');
     Route::post('/profileowner/{id}/disable', [ClientsController::class, 'disable'])->name('owners.disable');
 
-    // Admin
-    Route::get('/um/admin', [AdminController::class, 'index'])->name("admin.manage");
-    Route::get('/um/admin/add', function () {
-        return view('user_management.admins.add');
-    });
-    Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
-    Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
-    Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
-    Route::get('/um/admin/update', function () {
-        return view('user_management.admins.update');
-    })->name("admins.update");
+    // // Admin
+    // Route::get('/um/admin', [AdminController::class, 'index'])->name("admin.manage");
+    // Route::get('/um/admin/add', function () {
+    //     return view('user_management.admins.add');
+    // });
+    // Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
+    // Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
+    // Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
+    // Route::get('/um/admin/update', function () {
+    //     return view('user_management.admins.update');
+    // })->name("admins.update");
 
     // Pet Owner
     Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");
