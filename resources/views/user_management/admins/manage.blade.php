@@ -44,6 +44,7 @@
         </thead>
         <tbody>
           @foreach($admins as $admin)
+          @continue($admin->id == auth()->user()->id)
           <tr>
             <td>{{$admin->firstname." ".$admin->lastname}}</td>
             <td>{{$admin->age}}</td>
@@ -54,6 +55,7 @@
               <a class="btn btn-primary" href="{{route('admin.profile', ["id" => $admin->id])}}">Open</a>
             </td>
           </tr>
+
 
           @endforeach
 

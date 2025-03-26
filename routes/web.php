@@ -62,7 +62,7 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests, 'dailySales' => $dailySales]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'role:admin,staff'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     //Pet Routes
     Route::get('/addpet', [PetsController::class, 'create'])->name('pet.create');
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
@@ -188,17 +188,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/profileowner/{id}', [ClientsController::class, 'update'])->name('owners.update');
     Route::post('/profileowner/{id}/disable', [ClientsController::class, 'disable'])->name('owners.disable');
 
-    // Admin
-    Route::get('/um/admin', [AdminController::class, 'index'])->name("admin.manage");
-    Route::get('/um/admin/add', function () {
-        return view('user_management.admins.add');
-    });
-    Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
-    Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
-    Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
-    Route::get('/um/admin/update', function () {
-        return view('user_management.admins.update');
-    })->name("admins.update");
+    // // Admin
+    // Route::get('/um/admin', [AdminController::class, 'index'])->name("admin.manage");
+    // Route::get('/um/admin/add', function () {
+    //     return view('user_management.admins.add');
+    // });
+    // Route::post('/um/admin/add', [AdminController::class, 'store'])->name("admin.add");
+    // Route::get('/um/admin/profile/{id}', [AdminController::class, 'show'])->name("admin.profile");
+    // Route::get('/um/admin/profile/{id}/options', [AdminController::class, 'edit'])->name('admin.profile.options');
+    // Route::get('/um/admin/update', function () {
+    //     return view('user_management.admins.update');
+    // })->name("admins.update");
 
     // Pet Owner
     Route::get('/um/client', [ClientsController::class, 'index'])->name("clients.index");
@@ -221,6 +221,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/um/staff/profile/{id}', [StaffController::class, "show"])->name("staffs.profile");
     Route::get('/um/staff/profile/{id}/options', [StaffController::class, "edit"])->name("staffs.options");
     Route::post('/um/staff/update', [StaffController::class, 'update'])->name("staffs.update");
+    Route::post('/um/staff/resetpassword', [StaffController::class, "resetPassword"])->name("staffs.resetpassword");
+    Route::post('/um/staff/switchstatus', [StaffController::class, 'switchstatus'])->name("staffs.switchstatus");
+
 
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');
@@ -230,7 +233,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 //Appointments
-Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function () {
     // Appointments
     Route::get('/manageappointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::post('addappontments', [AppointmentsController::class, 'store'])->name('appointments.add');
@@ -278,7 +281,7 @@ Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () 
 });
 
 //POS and Inventory
-Route::middleware(['auth', 'role:admin,staff'])->group(function () {
+Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     // POS Routes
 
     Route::get('/pos', [POSController::class, 'index'])->name('pos');

@@ -122,15 +122,6 @@
             <!-- Admin: User Management (Accessible to Admin) -->
             @if(auth()->user()->role === "admin")
                 <div class="sidenav-menu-heading">User Management</div>
-
-                <a class="nav-link @if(Request::is('um/admin*')) active @endif" href="{{ route('admin.manage') }}">
-                    <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
-                    Administrator
-                </a>
-            @endif
-
-            <!-- Staff: User Management (Accessible to Admin) -->
-            @if(auth()->user()->role === "admin")
                 <a class="nav-link @if(Request::is('um/staff*')) active @endif" href="{{ route('staffs.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Staff
