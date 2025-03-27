@@ -15,10 +15,12 @@
                         <div class="row gy-3 gx-4">
                             <div class="col-md-6">
                                 <!-- Select Schedule -->
-                                <div class="form-group">
-                                    <label for="select-schedule" class="mb-1">Select Date</label>
-                                    <input type="text" class="form-control" id="select-schedule" name="appointment_date"
-                                        placeholder="YYYY-MM-DD" value="{{ $appointment->appointment_date }}">
+                                <label for="select-schedule" class="mb-1">Select Date</label>
+                                <div class="input-group input-group-joined">
+                                    <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD" value="{{ $appointment->appointment_date }}">
+                                    <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -29,7 +31,6 @@
                                         id="selectAppointmentTime" name="appointment_time" data-placeholder="Select Time"
                                         required>
                                         <option value=""></option>
-                                        <optgroup label="--- Select a Time ---"></optgroup>
                                         <optgroup label="AM">
                                             <option value="8:00 AM">8:00 AM</option>
                                             <option value="8:30 AM">8:30 AM</option>
@@ -59,9 +60,8 @@
                             <div class="col-md-6">
                                 <!-- Select Pet -->
                                 <div class="form-group">
-                                    <label for="select-pet" class="mb-1">Select Pet</label>
-                                    <select class="form-control" id="select-pet" name="pet_ID">
-                                        <option value="" disabled selected>Select a Pet</option>
+                                    <label for="select-pet" class="mb-1">Pet/s</label>
+                                    <select class="select-pet form-control" multiple="multiple" id="select-pet" name="pet_ID" data-placeholder="Select a Pet">
                                         @foreach ($pets as $p)
                                             <option value="{{ $p->id }}"
                                                 @if ($p->id == $pet->id) selected @endif>{{ $p->pet_name }}
@@ -75,8 +75,8 @@
                             <div class="col-md-6">
                                 <!-- Select Veterinarian -->
                                 <div class="form-group">
-                                    <label for="select-veterinarian" class="mb-1">Select Veterinarian</label>
-                                    <select class="form-control" id="select-veterinarian" name="doctor_ID">
+                                    <label for="select-veterinarian" class="mb-1">Veterinarian</label>
+                                    <select class="select-vet form-control" id="select-veterinarian" name="doctor_ID">
                                         <option value="" disabled selected>Select a Veterinarian</option>
                                         @foreach ($vets as $vet)
                                             <option value="{{ $vet->id }}"
@@ -85,6 +85,26 @@
                                         @endforeach
                                         <!-- Add more options as needed -->
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit-rov" class="mb-1">Reason of Visit</label>
+                                    <select class="edit-rov form-control" id="select-appointment-reason" name="" data-placeholder="Select Reason of Visit" multiple="multiple" required autocomplete="off">
+                                        <option value=""></option>
+                                        <option value="vaccination">Vaccination (starts at ₱500)</option>
+                                        <option value="deworming">Deworming (starts at ₱200)</option>
+                                        <option value="checkup">Check-Up (₱300)</option>
+                                        <option value="surgery">Consultation (starts at ₱200)</option>
+                                        <option value="lab-test">CBC Test (starts at ₱600)</option>
+                                        <option value="xray-ultrasound">Pregnancy Diagnosis (starts at ₱800)</option>
+                                        <option value="spay-neuter">Spay / Neuter (starts at ₱2,000)</option>
+                                        <option value="emergency">Emergency (additional fees apply)</option>
+                                        <option value="others">Others (please specify)</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select at least one reason.
+                                    </div>
                                 </div>
                             </div>
 
@@ -105,6 +125,28 @@
                     </div>
                 </form>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Appointment Request Modal -->
+    <div class="modal fade" id="cancelRequestModal" tabindex="-1" aria-labelledby="cancelRequestLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content py-3">
+                <div class="modal-header border-0 text-center d-block">
+                    <i class="fa-solid fa-triangle-exclamation text-warning display-4"></i>
+                    <h5 class="modal-title mt-2" id="cancelRequestLabel">Cancel Appointment Request</h5>
+                </div>
+                <div class="modal-body text-center">
+                    Are you sure you want to <strong>Cancel</strong> this appointment request? This action cannot be undone.
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <form action="{{ route('portal.appointments.cancel', ['appid' => $appointment->id]) }}" method="POST">
+                        @csrf
+                        <button type="button" class="btn btn-light text-dark" data-bs-dismiss="modal">No, Keep It</button>
+                        <button type="submit" class="btn btn-warning">Yes, Cancel Request</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -146,15 +188,8 @@
                                         <li><a class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#editAppointmentRequestModal">Edit Request</a></li>
                                         <li>
-                                            <form
-                                                action="{{ route('portal.appointments.cancel', ['appid' => $appointment->id]) }}"
-                                                method="POST" class="dropdown-item" style="display: inline;">
-                                                @csrf
-                                                <button type="submit" class="btn btn-link text-decoration-none p-0 m-0"
-                                                    style="color: inherit; background: none; border: none; cursor: pointer;">
-                                                    Cancel Request
-                                                </button>
-                                            </form>
+                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                               data-bs-target="#cancelRequestModal">Cancel Request</a></li>
                                         </li>
                                     @endif
 
@@ -296,6 +331,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Check if the 'openModal' parameter is present in the URL
         window.onload = function() {

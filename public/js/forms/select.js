@@ -119,6 +119,13 @@ $(document).ready(function() {
         placeholder: $( this ).data( 'placeholder' ),
     });
 
+    $('.select-reason-of-visit').select2({
+        theme: "bootstrap-5",
+        dropdownParent: '#appointmentSchedModal',
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+    });
+
 
 
 
@@ -187,15 +194,30 @@ $(document).ready(function() {
             }
         });
     }, 100);
-
-    $('.select-pet').select2({
-        theme: "bootstrap-5",
-        dropdownParent: '#appointmentRequestModal',
-        placeholder: $( this ).data( 'placeholder' ),
-    });
     $('.select-veterinarian').select2({
         theme: "bootstrap-5",
         dropdownParent: '#appointmentRequestModal',
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+    });
+
+    $('.select-pet').select2({
+        theme: "bootstrap-5",
+        dropdownParent: '#editAppointmentRequestModal',
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+    });
+
+    $('.edit-rov').select2({
+        theme: "bootstrap-5",
+        dropdownParent: '#editAppointmentRequestModal',
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+    });
+
+    $('.select-vet').select2({
+        theme: "bootstrap-5",
+        dropdownParent: '#editAppointmentRequestModal',
         width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
         placeholder: $( this ).data( 'placeholder' ),
     });

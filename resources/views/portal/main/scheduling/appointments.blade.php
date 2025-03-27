@@ -38,36 +38,6 @@
     </style>
     <!-- Modals -->
 
-    <!-- Modal for Veterinarian Schedule -->
-    <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="scheduleModalLabel">Veterinarian Schedule</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table id="datatablesSimple" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Veterinarian</th>
-                                <th>Scheduled Time <span class="text-sm fw-200">*vets are scheduled by this time</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Table data will go here -->
-                            <tr>
-                                <td>Dr. John Doe</td>
-                                <td><span class="badge bg-orange-soft text-orange ms-auto text-sm">December 2, 2024 |
-                                        5:00PM</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
     {{-- Pending Appointment Request Success --}}
     <div class="modal fade" id="appointmentRequestSuccess" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -100,8 +70,15 @@
 
                             <div class="col-md-12 mb-3">
                                 <p class="fw-bold mb-1">Reason for Appointment</p>
+                                <span
+                                    class="badge border text-body text-sm rounded-pill">Appointment Service</span>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <p class="fw-bold mb-1">Other Notes</p>
                                 <p class="mb-0">{{ session('pending_modal_data.reason') }}</p>
                             </div>
+
 
                             <hr>
 
@@ -172,12 +149,29 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="concern-complain" class="mb-1">Reason of Visit</label>
-                                            <textarea class="form-control" id="concern-complain" name="purpose" rows="3" required minlength="5"
-                                                placeholder="Enter the reason of your appointment" autocomplete="off"></textarea>
+                                            <label for="select-reason-of-visit" class="mb-1">Reason of Visit</label>
+                                            <select class="select-appointment-reason form-control" id="select-appointment-reason" name="" data-placeholder="Select Reason of Visit" multiple="multiple" required autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="vaccination">Vaccination (starts at ₱500)</option>
+                                                <option value="deworming">Deworming (starts at ₱200)</option>
+                                                <option value="checkup">Check-Up (₱300)</option>
+                                                <option value="surgery">Consultation (starts at ₱200)</option>
+                                                <option value="lab-test">CBC Test (starts at ₱600)</option>
+                                                <option value="xray-ultrasound">Pregnancy Diagnosis (starts at ₱800)</option>
+                                                <option value="spay-neuter">Spay / Neuter (starts at ₱2,000)</option>
+                                                <option value="emergency">Emergency (additional fees apply)</option>
+                                                <option value="others">Others (please specify)</option>
+                                            </select>
                                             <div class="invalid-feedback">
-                                                Please provide a valid reason (at least 5 characters).
+                                                Please select at least one reason.
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="concern-complain" class="mb-1">Other Notes</label>
+                                            <textarea class="form-control" id="concern-complain" name="purpose" rows="3"
+                                                placeholder="Enter other notes of your appointment" autocomplete="off"></textarea>
                                         </div>
                                     </div>
                                     <hr class="mb-0">
@@ -662,9 +656,18 @@
                                 let pmGroup = $('<optgroup label="PM"></optgroup>');
 
                                 response.forEach(function(time) {
+                                    let [hour, minute] = time.split(':');
+                                    hour = parseInt(hour);
+
+                                    // Convert to 12-hour format for display
+                                    let period = hour < 12 ? 'AM' : 'PM';
+                                    let displayHour = hour % 12 || 12; // 0 => 12
+                                    let displayTime = `${displayHour}:${minute} ${period}`;
+
+                                    // Keep the value in 24-hour format, display in 12-hour format
                                     let option =
-                                        `<option value="${time}">${time}</option>`;
-                                    let hour = parseInt(time.split(':')[0]);
+                                        `<option value="${time}">${displayTime}</option>`;
+
                                     if (hour < 12) {
                                         amGroup.append(option);
                                     } else {
