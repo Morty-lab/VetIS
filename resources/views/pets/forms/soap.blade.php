@@ -393,250 +393,321 @@
     <div class="row">
         <form action="{{route('soap.update', ['id' => $pet->id,'recordID' => $record->id ])}}" method="post" id="updateForm">
             @csrf
-            <div class="col-md-12">
-                <!-- Account details card-->
-                <div class="card mb-4 shadow-none">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Pet Record</span>
-                        <!-- Mo gawas rang print dropdown if ma save na -->
-                        <div class="dropdown">
-                            <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Print Record
-                            </button>
-                            <button class="btn btn-primary" type="submit" >
-                                <i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="printMenuButton">
-                                <a class="dropdown-item" href="dropdowns.html#!">Record</a>
-                                <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
-                            </div>
+            <div class="row gy-2">
+                <div class="col-md-8">
+                    <div class="card mb-5 shadow-none">
+                        <div class="card-header">
+                            <span>Pet Information</span>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <nav class="nav nav-borders">
-                            <a class="nav-link nav-tab ms-0 active {{ request()->is('general') ? 'active' : '' }}" href="#general">General Information</a>
-                            <a class="nav-link nav-tab{{ request()->is('examination') ? 'active' : '' }}" href="#examination">Examination</a>
-                            <a class="nav-link nav-tab{{ request()->is('diagnosis') ? 'active' : '' }}" href="#diagnosis">Diagnosis</a>
-                            <a class="nav-link nav-tab{{ request()->is('treatment') ? 'active' : '' }}" href="#treatment">Treatment</a>
-                            <a class="nav-link nav-tab{{ request()->is('remarks') ? 'active' : '' }}" href="#remarks">Remarks</a>
-                            <a class="nav-link nav-tab{{ request()->is('prescription') ? 'active' : '' }}" href="#prescription">Prescription</a>
-                        </nav>
-                        <hr class="mt-0 mb-4" />
-                        <div id="generalSection" style="display: none">
-                            <div class="card mb-4 shadow-none">
-                                <div class="card-body ">
-                                    <div class="row g-4">
-                                        <div class="col-md-6">
-                                            <div class="row gy-3">
-                                                <div class="col-12">
-                                                    <label for="">Date</label>
-                                                    <input type="text" class="form-control" name="date"
-                                                        value="{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}" disabled>
-                                                </div>
-                                                <div class="col-12">
-                                                    @php
-                                                        $doctor = '';
-                                                        if (!is_null($record->doctorID)){
-                                                        $doctor = \App\Models\Doctor::getName($record->doctorID) ;
-
-                                                        }
-
-                                                    @endphp
-                                                    <label for="">Attending Veterinarian</label>
-                                                    <button class="form-control d-flex justify-content-between"
-                                                            type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#veterinarianListModal" disabled><span
-                                                            id="vet">{{$doctor ?? ''}}</span>
-                                                        <i class="fa-solid fa-user-doctor"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row gy-3">
-                                                <div class="col-12">
-                                                    <label for="">Pet Owner</label>
-                                                    <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#petOwnerListModal" disabled>
-                                                        <span>{{$owner->client_name}}</span> <i
-                                                            class="fa-solid fa-user"></i></button>
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="">Pet</label>
-                                                    <button class="form-control d-flex justify-content-between"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#petListModal" disabled>
-                                                        <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 d-flex flex-wrap border rounded p-3">
-                                            <div class="text-primary w-100 fw-bold">Pet Information</div>
-                                            <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                <strong>Breed:</strong>
-                                                <span>{{$pet->pet_breed}}</span>
-                                            </div>
-                                            <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                <strong>Birthdate:</strong>
-                                                <span>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format("F d, Y")}}</span>
-                                            </div>
-                                            <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                <strong>Color/Markings:</strong>
-                                                <span>{{$pet->pet_color}}</span>
-                                            </div>
-                                            <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                <strong>Age:</strong>
-                                                <span>{{$pet->age}} years</span>
-                                            </div>
-                                            <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                <strong>Gender:</strong>
-                                                <span>{{$pet->pet_gender}}</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Complaint</div>
-                                    <div class="card-body">
-                                        <div id="quill-editor" class="mb-3" style="height: 400px;">
-                                            {!! $record->complaint !!}
-                                        </div>
-                                        <textarea rows="3" class="mb-3 d-none" name="complaint" id="quill-editor-area">
-                                            {!! $record->complaint !!}
-                                        </textarea>
-    {{--                                    <textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea>--}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="examinationSection" style="display: none">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <span>Examination</span>
-                                        <button class="btn-outline-primary btn" type="button"
-                                                onclick="fillTemplate('examination')">Fill Template
-                                        </button>
-                                    </div>
-                                    <!--
-                                            --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                            Heart Rate (BPM):
-                                            Respiration Rate (BRPM):
-                                            Weight (KG):
-                                            Length (CM):
-                                            CRT:
-                                            BCS:
-                                            Lymph Nodes:
-                                            Palpebral Reflex:
-                                            Temperature:
-                                        -->
-                                    <div class="card-body">
-                                        <div id="examination" class="mb-3" style="height: 400px;">
-{{--                                            @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}--}}
-{{--                                            Respiration Rate: {{$examination->respiration_rate}}--}}
-{{--                                            Weight: {{$examination->weight}}--}}
-{{--                                            Length: {{$examination->length}}--}}
-{{--                                            CRT: {{$examination->crt}}--}}
-{{--                                            BCS: {{$examination->bcs}}--}}
-{{--                                            Lymph Nodes: {{$examination->lymph_nodes}}--}}
-{{--                                            Palpebral Reflex: {{$examination->palpebral_reflex}}--}}
-{{--                                            Temperature: {{$examination->temperature}}--}}
-{{--                                            @endif--}}
-                                            {!! $record->examination !!}
-                                        </div>
-                                        <textarea rows="3" class="mb-3 d-none" name="examination" id="examinationTextArea">
-                                            {!! $record->examination !!}
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="diagnosisSection" style="display: none">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <span>Diagnosis</span>
-                                        <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">
-                                            Fill Template
-                                        </button>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <div id="diagnosis" class="mb-3" style="height: 400px;">
-                                            {!! $record->diagnosis !!}
-                                        </div>
-                                        <textarea rows="3" class="mb-3 d-none" name="diagnosis" id="diagnosisTextArea">
-                                            {!! $record->diagnosis !!}
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="treatmentSection" style="display: none">
-                            <div class="row gy-3">
+                        <div class="card-body">
+                            <div class="row gy-2">
                                 <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header">Medication Given</div>
-                                        <div class="card-body"><textarea name="medication_given" id="treatmentTextArea" cols="30"
-                                                                         rows="10"
-                                                                         class="form-control w-full">
-                                        {!! $record->medication_given !!}
-                                        </textarea></div>
-                                    </div>
+                                    Pet Name
+                                    <p class="text-primary">{{$pet->pet_name}}</p>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="card shadow-none">
-                                        <div class="card-header">Procedure Given</div>
-                                        <div class="card-body"><textarea name="procedure_given" id="treatmentTextArea" cols="30"
-                                                                         rows="10"
-                                                                         class="form-control w-full">
-                                        {!! $record->procedure_given !!}
-
-                                        </textarea></div>
-                                    </div>
+                                <div class="col-md-4">
+                                    Pet Type
+                                    <p class="text-primary">{{$pet->pet_type}}</p>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div id="prescriptionSection" style="display: none">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Prescription</div>
-                                    <div class="card-body">
-                                        <div id="prescription" class="mb-3" style="height: 400px;">
-                                            {!! $record->prescription !!}
-                                        </div>
-                                        <textarea rows="3" class="mb-3 d-none" name="prescription" id="prescriptionTextArea">
-                                            {!! $record->prescription !!}
-                                        </textarea>
-                                    </div>
+                                <div class="col-md-4">
+                                    Breed
+                                    <p class="text-primary">{{$pet->pet_breed}}</p>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div id="remarksSection" style="display: none">
-                            <div class="col-md-12">
-                                <div class="card shadow-none">
-                                    <div class="card-header">Remarks</div>
-                                    <div class="card-body">
-                                        <div id="remarks" class="mb-3" style="height: 400px;">
-                                            {!! $record->prescription !!}
-                                        </div>
-                                        <textarea rows="3" class="mb-3 d-none" name="client_communication" id="clientCommunicationTextArea">
-                                            {!! $record->prescription !!}
-                                        </textarea>
-                                    </div>
+                                <div class="col-md-4">
+                                    Color
+                                    <p class="text-primary">{{$pet->pet_color}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Account details card-->
+                    <div class="card mb-4 shadow-none">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Pet Record</span>
+                            <!-- Mo gawas rang print dropdown if ma save na -->
+                        </div>
+                        <div class="card-body">
+                            <nav class="nav nav-borders">
+                                <a class="nav-link nav-tab active {{ request()->is('general') ? 'active' : '' }}" href="#general">Complaint</a>
+                                <a class="nav-link nav-tab{{ request()->is('examination') ? 'active' : '' }}" href="#examination">Examination</a>
+                                <a class="nav-link nav-tab{{ request()->is('diagnosis') ? 'active' : '' }}" href="#diagnosis">Diagnosis</a>
+                                <a class="nav-link nav-tab{{ request()->is('treatment') ? 'active' : '' }}" href="#treatment">Treatment</a>
+                                <a class="nav-link nav-tab{{ request()->is('remarks') ? 'active' : '' }}" href="#remarks">Remarks</a>
+                                <a class="nav-link nav-tab{{ request()->is('prescription') ? 'active' : '' }}" href="#prescription">Prescription</a>
+                            </nav>
+                            <hr class="mt-0 mb-4" />
+                            <div id="generalSection" style="display: none">
+                                <div class="card mb-4 shadow-none">
+                                    <div class="card-body ">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <label for="">Date</label>
+                                                        <input type="text" class="form-control" name="date"
+                                                               value="{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}" disabled>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        @php
+                                                            $doctor = '';
+                                                            if (!is_null($record->doctorID)){
+                                                            $doctor = \App\Models\Doctor::getName($record->doctorID) ;
+
+                                                            }
+
+                                                        @endphp
+                                                        <label for="">Attending Veterinarian</label>
+                                                        <button class="form-control d-flex justify-content-between"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#veterinarianListModal" disabled><span
+                                                                id="vet">{{$doctor ?? ''}}</span>
+                                                            <i class="fa-solid fa-user-doctor"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <label for="">Pet Owner</label>
+                                                        <button class="form-control d-flex justify-content-between"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#petOwnerListModal" disabled>
+                                                            <span>{{$owner->client_name}}</span> <i
+                                                                class="fa-solid fa-user"></i></button>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="">Pet</label>
+                                                        <button class="form-control d-flex justify-content-between"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#petListModal" disabled>
+                                                            <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 d-flex flex-wrap border rounded p-3">
+                                                <div class="text-primary w-100 fw-bold">Pet Information</div>
+                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
+                                                    <strong>Breed:</strong>
+                                                    <span>{{$pet->pet_breed}}</span>
+                                                </div>
+                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
+                                                    <strong>Birthdate:</strong>
+                                                    <span>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format("F d, Y")}}</span>
+                                                </div>
+                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
+                                                    <strong>Color/Markings:</strong>
+                                                    <span>{{$pet->pet_color}}</span>
+                                                </div>
+                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
+                                                    <strong>Age:</strong>
+                                                    <span>{{$pet->age}} years</span>
+                                                </div>
+                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
+                                                    <strong>Gender:</strong>
+                                                    <span>{{$pet->pet_gender}}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Complaint</div>
+                                        <div class="card-body">
+                                            <div id="quill-editor" class="mb-3" style="height: 400px;">
+                                                {!! $record->complaint !!}
+                                            </div>
+                                            <textarea rows="3" class="mb-3 d-none" name="complaint" id="quill-editor-area">
+                                                {!! $record->complaint !!}
+                                            </textarea>
+                                            {{--                                    <textarea name="" id="" cols="30" rows="10" class="form-control w-full"></textarea>--}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="examinationSection" style="display: none">
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <span>Examination</span>
+                                            <button class="btn-outline-primary btn" type="button"
+                                                    onclick="fillTemplate('examination')">Fill Template
+                                            </button>
+                                        </div>
+                                        <!--
+                                                --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                Heart Rate (BPM):
+                                                Respiration Rate (BRPM):
+                                                Weight (KG):
+                                                Length (CM):
+                                                CRT:
+                                                BCS:
+                                                Lymph Nodes:
+                                                Palpebral Reflex:
+                                                Temperature:
+                                            -->
+                                        <div class="card-body">
+                                            <div id="examination" class="mb-3" style="height: 400px;">
+                                                {{--                                            @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}--}}
+                                                {{--                                            Respiration Rate: {{$examination->respiration_rate}}--}}
+                                                {{--                                            Weight: {{$examination->weight}}--}}
+                                                {{--                                            Length: {{$examination->length}}--}}
+                                                {{--                                            CRT: {{$examination->crt}}--}}
+                                                {{--                                            BCS: {{$examination->bcs}}--}}
+                                                {{--                                            Lymph Nodes: {{$examination->lymph_nodes}}--}}
+                                                {{--                                            Palpebral Reflex: {{$examination->palpebral_reflex}}--}}
+                                                {{--                                            Temperature: {{$examination->temperature}}--}}
+                                                {{--                                            @endif--}}
+                                                {!! $record->examination !!}
+                                            </div>
+                                            <textarea rows="3" class="mb-3 d-none" name="examination" id="examinationTextArea">
+                                                {!! $record->examination !!}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="diagnosisSection" style="display: none">
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <span>Diagnosis</span>
+                                            <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">
+                                                Fill Template
+                                            </button>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div id="diagnosis" class="mb-3" style="height: 400px;">
+                                                {!! $record->diagnosis !!}
+                                            </div>
+                                            <textarea rows="3" class="mb-3 d-none" name="diagnosis" id="diagnosisTextArea">
+                                                {!! $record->diagnosis !!}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="treatmentSection" style="display: none">
+                                <div class="row gy-3">
+                                    <div class="col-md-12">
+                                        <div class="card shadow-none">
+                                            <div class="card-header">Medication Given</div>
+                                            <div class="card-body"><textarea name="medication_given" id="treatmentTextArea" cols="30"
+                                                                             rows="10"
+                                                                             class="form-control w-full">
+                                            {!! $record->medication_given !!}
+                                            </textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card shadow-none">
+                                            <div class="card-header">Procedure Given</div>
+                                            <div class="card-body"><textarea name="procedure_given" id="treatmentTextArea" cols="30"
+                                                                             rows="10"
+                                                                             class="form-control w-full">
+                                            {!! $record->procedure_given !!}
+
+                                            </textarea></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="prescriptionSection" style="display: none">
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Prescription</div>
+                                        <div class="card-body">
+                                            <div id="prescription" class="mb-3" style="height: 400px;">
+                                                {!! $record->prescription !!}
+                                            </div>
+                                            <textarea rows="3" class="mb-3 d-none" name="prescription" id="prescriptionTextArea">
+                                                {!! $record->prescription !!}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="remarksSection" style="display: none">
+                                <div class="col-md-12">
+                                    <div class="card shadow-none">
+                                        <div class="card-header">Remarks</div>
+                                        <div class="card-body">
+                                            <div id="remarks" class="mb-3" style="height: 400px;">
+                                                {!! $record->prescription !!}
+                                            </div>
+                                            <textarea rows="3" class="mb-3 d-none" name="client_communication" id="clientCommunicationTextArea">
+                                                {!! $record->prescription !!}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-none">
+                        <div class="card-header">
+                            Record Information
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Date Created
+                                    <p class="text-primary">{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    Status
+                                    <p class="text-primary">Completed</p>
+                                </div>
+                                <div class="col-md-12">
+                                    @php
+                                        $doctor = '';
+                                        if (!is_null($record->doctorID)){
+                                        $doctor = \App\Models\Doctor::getName($record->doctorID) ;
+
+                                        }
+                                    @endphp
+                                    Attending Veterinarian
+                                    <p class="text-primary">
+                                        Dr. {{$doctor ?? ''}}
+                                    </p>
+                                </div>
+                                <div class="col-md-12">
+                                    Pet Owner
+                                    <p class="text-primary">{{$owner->client_name}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    Pet
+                                    <p class="text-primary">{{$pet->pet_name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Print Record
+                                </button>
+                                <button class="btn btn-primary" type="submit" >
+                                    <i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="printMenuButton">
+                                    <a class="dropdown-item" href="dropdowns.html#!">Record</a>
+                                    <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
                 </div>
             </div>
         </form>

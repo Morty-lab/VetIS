@@ -29,10 +29,53 @@
                         <!-- Form Row-->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
+                                <label class="small mb-1" for="inputOwnerName">Pet Owner</label>
+                                <select class="select-owner-name form-control" id="inputOwnerName" name="owner_ID" data-placeholder="Select Pet Owner"
+                                    onchange="fetchOwnedPets(this.value)">
+                                    <option value=""></option>
+                                    @foreach ($clients as $client)
+                                        @php
+                                            Clients::setEmailAttribute($client, $client->user_id);
+                                        @endphp
+                                        <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Pet/s</label>
+                                <select class="select-pet-name form-control" id="inputPetName" name="pet_ID[]" multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off">
+                                    @foreach ($pets as $pet)
+                                        <option value="{{ $pet->id }}" id="{{ $pet->owner_ID }}" class="pets">{{ $pet->pet_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputReasonOfVisit">Reason of Visit</label>
+                                <select class="select-reason-of-visit form-control" id="reasonOfVisit" name="reasonOfVisit[]" multiple="multiple" data-placeholder="Select a Reason of Visit" required autocomplete="off">
+                                    <option value="#">Check-Up</option>
+                                    <option value="#">Vaccination</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputPurpose">Other Notes</label>
+                                <textarea class="form-control" name="purpose" id="inputPurpose" rows="4"></textarea>
+                            </div>
+                            <hr class="mb-0">
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
+                                <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID" data-placeholder="Select a Veterinarian">
+                                    <option value=""></option>
+                                    @foreach ($vets as $vet)
+                                        <option class="form-control" value={{ $vet->id }}>Dr.
+                                            {{ $vet->firstname . ' ' . $vet->lastname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputAppointmentDate">Appointment Date</label>
                                 <div class="input-group input-group-joined">
                                     <input class="form-control" id="select-schedule" type="text" name="appointment_date"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" placeholder="Select a Date" />
+                                           min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" placeholder="Select a Date" />
                                     <span class="input-group-text">
                                         <i data-feather="calendar"></i>
                                     </span>
@@ -42,7 +85,7 @@
                                 <label class="small mb-1" for="inputAppointmentTime">Appointment Time</label>
                                 {{--                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" /> --}}
                                 <select class="select-appointment-time-admin form-control" id="selectAppointmentTime"
-                                    name="appointment_time" data-placeholder="Select Time" required>
+                                        name="appointment_time" data-placeholder="Select Time" required>
                                     <option value=""></option>
                                     <optgroup label="--- Select a Time ---"></optgroup>
                                     <optgroup label="AM">
@@ -67,50 +110,11 @@
                                     </optgroup>
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
-                                <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID">
-                                    @foreach ($vets as $vet)
-                                        <option class="form-control" value={{ $vet->id }}>Dr.
-                                            {{ $vet->firstname . ' ' . $vet->lastname }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputOwnerName">Pet Owner</label>
-                                <select class="select-owner-name form-control" id="inputOwnerName" name="owner_ID"
-                                    onchange="fetchOwnedPets(this.value)">
-                                    <option value="">Select Owner</option>
-                                    @foreach ($clients as $client)
-                                        @php
-                                            Clients::setEmailAttribute($client, $client->user_id);
-                                        @endphp
-                                        <option value="{{ $client->id }}">{{ $client->client_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="small mb-1" for="inputPetName">Pet Name</label>
-                                <select class="select-pet-name form-control" id="inputPetName" name="pet_ID[]"
-                                    multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off">
-                                    @foreach ($pets as $pet)
-                                        <option value="{{ $pet->id }}" id="{{ $pet->owner_ID }}" class="pets"
-                                            >{{ $pet->pet_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-
-                            <div class="col-md-12">
-                                <label class="small mb-1" for="inputPurpose">Reason of Visit</label>
-                                <textarea class="form-control" name="purpose" id="inputPurpose" cols="20" rows="10"></textarea>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Save</button>
                         <button class="btn btn-light text-primary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Schedule Appointment</button>
                     </div>
                 </div>
             </form>
