@@ -265,8 +265,9 @@
                href="#vaccination">Vaccination Records</a>
         </nav>
         <hr class="mt-0 mb-4"/>
-        <div class="row" id="petProfileCard" style="display:none;">
-            <div class="col-md-12">
+        <div id="petProfileCard" style="display:none;">
+            <div class="row">
+            <div class="col-md-8">
                 <!-- Account details card-->
                 <div class="card mb-4 shadow-none">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -277,8 +278,7 @@
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Update Pet
-                                        Info</a></li>
+                                <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Update Pet</a></li>
 
                                 @if(!$pet->status)
                                     <div class="dropdown-divider"></div>
@@ -295,23 +295,19 @@
                     </div>
                     <div class=" card-body">
                         <div class="row gx-5 px-3">
-                            <div class="col d-flex justify-content-center p-0 align-items-center card shadow-none" style="height: 300px;">
-                                <img class="img-account-profile rounded p-1"
+                            <div class="col-md-3 d-flex justify-content-center p-0 h-50 align-items-center">
+                                <img class="img-account-profile rounded-circle p-1"
                                      src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png') }}"
                                      alt=""
                                      style="width: 100%; height: 100%; object-fit: cover;"/>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-9 ps-md-5 p-0">
                                 <div class="row gx-3">
-                                    <div class="col-md-12">
-                                        <h6 class="mb-2 text-primary">Pet Information</h6>
-                                        <hr class="mt-1 mb-3">
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Pet Name</label>
-                                        <p>{{$pet->pet_name}}</p>
+                                        <p class="text-primary">{{$pet->pet_name}}</p>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="small mb-1">PetID</label>
                                         <div>
                                             <p class="badge bg-primary-soft text-primary rounded-pill">
@@ -330,27 +326,27 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Pet Type</label>
                                         <p>{{$pet->pet_type}}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Breed</label>
                                         <p>{{$pet->pet_breed}}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Color</label>
                                         <p>{{$pet->pet_color}}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Weight</label>
-                                        <p>{{$pet->pet_weight}}</p>
+                                        <p>{{$pet->pet_weight}} kg</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Birthdate</label>
                                         <p>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format('F d, Y')}}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="small mb-1">Gender</label>
                                         <p>{{$pet->pet_gender}}</p>
                                     </div>
@@ -364,68 +360,66 @@
                                         <h6 class="mb-2 text-primary">Other Information</h6>
                                         <hr class="mt-1 mb-3">
                                     </div>
-                                    <div class="row gx-3">
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Vacciantion Record</label>
-                                            <p>
-                                                @if($pet->vaccinated == 1)
-                                                    Complete as
-                                                    of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
-                                                @elseif($pet->vaccinated == 0)
-                                                    Incomplete as of {{ \Carbon\Carbon::now()->format('F j, Y') }}
-                                                @else
-                                                    No Vaccination record
-                                                @endif
-                                            </p>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Vacciantion Record</label>
+                                        <p>
+                                            @if($pet->vaccinated == 1)
+                                                Complete as
+                                                of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
+                                            @elseif($pet->vaccinated == 0)
+                                                Incomplete as of {{ \Carbon\Carbon::now()->format('F j, Y') }}
+                                            @else
+                                                No Vaccination record
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Spayed/Neutered</label>
+                                        <p>
+                                            {{$pet->neutered == 1 ? 'Yes' : 'No'}}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Vaccinated with Anti-Rabies?</label>
+                                        <p>
+                                            {{$pet->vaccinated_anti_rabies == 1 ? 'Yes' : 'No'}}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
+                                        <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete'}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Okay to use photos online?</label>
+                                        <p>
+                                            {{$pet->okay_to_use_photos_online == 1 ? 'Yes' : 'No'}}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Date of Last Groom</label>
+                                        <p>{{ $pet->last_groom_date ? \Carbon\Carbon::parse($pet->last_groom_date)->format('F j, Y') : 'No Record'}}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="small mb-1">Okay to give treats?</label>
+                                        <p> {{$pet->okay_to_give_treats == 1 ? 'Yes' : 'No'}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1">Food Preferences</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 150px">{{$pet->pet_food != null ? $pet->pet_food : "No Specific Food Identified"}}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1">Allergies</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 150px">{{$pet->food_allergies !=  null ? $pet->food_allergies : "No Allergies Recorded"}}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1">History of Aggression</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 150px">
+                                            {{$pet->history_of_aggression != null ? $pet->history_of_aggression : 'No History of Aggression Identified'}}
                                         </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Spayed/Neutered</label>
-                                            <p>
-                                                {{$pet->neutered == 1 ? 'Yes' : 'No'}}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Vaccinated with Anti-Rabies?</label>
-                                            <p>
-                                                {{$pet->vaccinated_anti_rabies == 1 ? 'Yes' : 'No'}}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
-                                            <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete'}}</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Okay to use photos online?</label>
-                                            <p>
-                                                {{$pet->okay_to_use_photos_online == 1 ? 'Yes' : 'No'}}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Date of Last Groom</label>
-                                            <p>{{ $pet->last_groom_date ? \Carbon\Carbon::parse($pet->last_groom_date)->format('F j, Y') : 'No Record'}}</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Okay to give treats?</label>
-                                            <p> {{$pet->okay_to_give_treats == 1 ? 'Yes' : 'No'}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1">Food</label>
-                                            <p class="form-control">{{$pet->pet_food != null ? $pet->pet_food : "No Specific Food Identified"}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1">History of Aggression</label>
-                                            <p class="form-control">
-                                                {{$pet->history_of_aggression != null ? $pet->history_of_aggression : 'No History of Aggression Identified'}}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1">Food Allergies</label>
-                                            <p class="form-control">{{$pet->food_allergies !=  null ? $pet->food_allergies : "No Allergies Recorded"}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1">Pet Condition</label>
-                                            <p class="form-control">{{$pet->pet_condition != null ? $pet->pet_condition : "No Conditions Recorded"}}</p>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1">Pet's Medical Condition</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 150px">{{$pet->pet_condition != null ? $pet->pet_condition : "No Conditions Recorded"}}</div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mt-3">--}}
@@ -433,39 +427,43 @@
                                 {{-- <p>{{$pet->pet_description}}</p>--}}
                                 {{-- </div>--}}
                             </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12 mt-4">
-                                        <h6 class="mb-2 text-primary">Owner Information</h6>
-                                        <hr class="mt-1 mb-3">
-                                        <div class="row gx-3">
-                                            @php
-                                                Clients::setEmailAttribute($pet->client, $pet->client->user_id);
-                                            @endphp
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="inputOwnerName">Owner Name</label>
-                                                <p>{{$pet->client->client_name}}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
-                                                <p>{{$pet->client->client_address}}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="ownerContact">Contact Number</label>
-                                                <p>{{$pet->client->client_no}}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                                                <p>{{$pet->client->client_email}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-none">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="">Pet Owner Details</div>
+                        <a class="btn btn-datatable btn-primary px-5 py-3 m-0" href="{{ route('owners.show', $pet->client->user_id) }}"><svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z"></path></svg><!-- <i class="fas fa-arrow-right"></i> Font Awesome fontawesome.com --></a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                                <div class="row gx-3">
+                                    @php
+                                        Clients::setEmailAttribute($pet->client, $pet->client->id);
+                                    @endphp
+                                    <div class="col-md-12">
+                                        <p class="small mb-1" for="inputOwnerName">Owner Name</p>
+                                        <p class="text-primary">{{$pet->client->client_name}}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="small mb-1" for="inputOwnerAddress">Owner Address</p>
+                                        <p>{{$pet->client->client_address}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="small mb-1" for="ownerContact">Contact Number</p>
+                                        <a href="tel:{{$pet->client->client_no}}">{{$pet->client->client_no}}</a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="small mb-1" for="inputOwnerEmail">Email Address</p>
+                                        <a href="mailto:{{$pet->client->client_email}}">{{$pet->client->client_email}}</a>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
         <div class="row">
@@ -483,8 +481,8 @@
                             <thead>
                             <tr>
                                 <th>Date & Time</th>
-                                <th>Appointment ID</th>
-                                <th>Purpose</th>
+                                <th>Reason of Visit</th>
+                                <th>Veterinarian</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -542,8 +540,8 @@
                                 <thead>
                                 <tr>
                                     <th>Date & Time</th>
-                                    <th>Appointment ID</th>
-                                    <th>Purpose</th>
+                                    <th>Reason of Visit</th>
+                                    <th>Veterinarian</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
