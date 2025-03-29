@@ -139,7 +139,7 @@
                                         <label class="form-check-label" for="petNeuteredRadio1">Yes</label>
                                     </div>
                                     <div class="form-check form-check-solid">
-                                        <input class="form-check-input" id="petNeuteredRadio2" type="radio" name="pet_neutered" value="2">
+                                        <input class="form-check-input" id="petNeuteredRadio2" type="radio" name="pet_neutered" value="0">
                                         <label class="form-check-label" for="petNeuteredRadio2">No</label>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                         <label class="form-check-label" for="vaccinatedWithAR1">Yes</label>
                                     </div>
                                     <div class="form-check form-check-solid">
-                                        <input class="form-check-input" id="vaccinatedWithAR2" type="radio" name="vaccinated_anti_rabies" value="2">
+                                        <input class="form-check-input" id="vaccinatedWithAR2" type="radio" name="vaccinated_anti_rabies" value="0">
                                         <label class="form-check-label" for="vaccinatedWithAR2">No</label>
                                     </div>
                                 </div>
@@ -171,34 +171,13 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
-                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="8" placeholder="Enter pet's history of agression here.."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputFoodAllergies">Any Food Allergies?</label>
-                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="8" placeholder="Enter pet's food allergies here.."></textarea>
-                            </div>
                             <div class="col-md-12">
-                                <label class="small mb-1" for="inputPetFood">What type of food does your pet prefer?</label>
-                                <textarea name="pet_food" id="inputPetFood" class="form-control" cols="30" rows="4" placeholder="e.g., Chicken-flavored kibble, Grain-free wet food"></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
-                                <!-- <select class="form-control" id="inputTreats" name="okay_to_give_treats">
-                                    <option disabled selected>-- Select [Yes/No] --</option>
-                                    <option value=1>Yes</option>
-                                    <option value=0>No</option>
-                                </select> -->
-                                <div class="d-flex flex-col mt-2">
-                                    <div class="form-check form-check-solid me-4">
-                                        <input class="form-check-input" id="inputTreats1" type="radio" name="okay_to_give_treats" value="1">
-                                        <label class="form-check-label" for="inputTreats1">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-solid">
-                                        <input class="form-check-input" id="inputTreats0" type="radio" name="okay_to_give_treats" value="0">
-                                        <label class="form-check-label" for="inputTreats0">No</label>
-                                    </div>
+                                <label class="small mb-1" for="inputLastGroom">When was pet's last groom?</label>
+                                <div class="input-group input-group-joined">
+                                    <input class="form-control" id="inputLastGroom" type="text" value="" name="last_groom_date" placeholder="Select a Date"/>
+                                    <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -219,19 +198,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <label class="small mb-1" for="inputLastGroom">When was his/her last groom?</label>
-                                <div class="input-group input-group-joined">
-                                    <input class="form-control" id="inputLastGroom" type="text" value="" name="last_groom_date" placeholder="Select a Date"/>
-                                    <span class="input-group-text">
-                                        <i data-feather="calendar"></i>
-                                    </span>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputTreats">Okay to give treats?</label>
+                                <!-- <select class="form-control" id="inputTreats" name="okay_to_give_treats">
+                                    <option disabled selected>-- Select [Yes/No] --</option>
+                                    <option value=1>Yes</option>
+                                    <option value=0>No</option>
+                                </select> -->
+                                <div class="d-flex flex-col mt-2">
+                                    <div class="form-check form-check-solid me-4">
+                                        <input class="form-check-input" id="inputTreats1" type="radio" name="okay_to_give_treats" value="1">
+                                        <label class="form-check-label" for="inputTreats1">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-solid">
+                                        <input class="form-check-input" id="inputTreats0" type="radio" name="okay_to_give_treats" value="0">
+                                        <label class="form-check-label" for="inputTreats0">No</label>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetFood">What type of food does your pet prefer?</label>
+                                <textarea name="pet_food" id="inputPetFood" class="form-control" cols="30" rows="8" placeholder="e.g., Chicken-flavored kibble, Grain-free wet food"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFoodAllergies">Any Allergies?</label>
+                                <textarea name="food_allergies" id="inputFoodAllergies" class="form-control" cols="30" rows="8" placeholder="Enter pet's food allergies here.."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputHistoryofAggression">Any history of agression against any other dogs?</label>
+                                <textarea name="history_of_aggression" id="inputHistoryofAggression" class="form-control" cols="30" rows="8" placeholder="Enter pet's history of agression here.."></textarea>
+                            </div>
+                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputCondition">Prone to any seizure, illness, ect.? If so please list:</label>
-                                <textarea name="pet_condition" id="inputCondition" class="form-control" cols="30" rows="4" placeholder="Enter any illnesses or conditions here..."></textarea>
+                                <textarea name="pet_condition" id="inputCondition" class="form-control" cols="30" rows="8" placeholder="Enter any illnesses or conditions here..."></textarea>
                             </div>
                         </div>
                         <h6 class="mb-2 mt-5 text-primary">Owner Information</h6>
@@ -249,7 +248,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOwnerAddress">Owner Address</label>
                                 <p id="inputOwnerAddress">-----</p>
@@ -258,10 +257,10 @@
                                 <label class="small mb-1" for="ownerContact">Contact Number</label>
                                 <p id="ownerContact">---- --- ----</p>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
-                            <p id="inputOwnerEmail">-----</p>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOwnerEmail">Email Address</label>
+                                <p id="inputOwnerEmail">-----</p>
+                            </div>
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" id="regbtn" type="submit">Add Pet</button>

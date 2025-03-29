@@ -401,21 +401,49 @@
                         </div>
                         <div class="card-body">
                             <div class="row gy-2">
-                                <div class="col-md-12">
+                                <div class="col-md-3">
                                     Pet Name
                                     <p class="text-primary">{{$pet->pet_name}}</p>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Pet Type
-                                    <p class="text-primary">{{$pet->pet_type}}</p>
+                                    <p class="">{{$pet->pet_type}}</p>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Breed
-                                    <p class="text-primary">{{$pet->pet_breed}}</p>
+                                    <p class="">{{$pet->pet_breed}}</p>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Color
-                                    <p class="text-primary">{{$pet->pet_color}}</p>
+                                    <p class="">{{$pet->pet_color}}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    Birthdate
+                                    <p class="">{{ \Carbon\Carbon::parse($pet->pet_birthdate)->format('F d, Y') }}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    Weight
+                                    <p class="">{{$pet->pet_weight}} kg</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="small mb-1">Spayed/Neutered</label>
+                                    <p>
+                                        {{$pet->neutered == 1 ? 'Yes' : 'No'}}
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="small mb-1">Vaccinated with Anti-Rabies?</label>
+                                    <p>
+                                        {{$pet->vaccinated_anti_rabies == 1 ? 'Yes' : 'No'}}
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
+                                    <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete'}}</p>
+                                </div>
+                                <div class="col-md-9">
+                                    <label class="small mb-1">Okay to give treats?</label>
+                                    <p> {{$pet->okay_to_give_treats == 1 ? 'Yes' : 'No'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -437,81 +465,6 @@
                             </nav>
                             <hr class="mt-0 mb-4" />
                             <div id="generalSection" style="display: none">
-                                <div class="card mb-4 shadow-none">
-                                    <div class="card-body ">
-                                        <div class="row g-4">
-                                            <div class="col-md-6">
-                                                <div class="row gy-3">
-                                                    <div class="col-12">
-                                                        <label for="">Date</label>
-                                                        <input type="text" class="form-control" name="date"
-                                                               value="{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}" disabled>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        @php
-                                                            $doctor = '';
-                                                            if (!is_null($record->doctorID)){
-                                                            $doctor = \App\Models\Doctor::getName($record->doctorID) ;
-
-                                                            }
-
-                                                        @endphp
-                                                        <label for="">Attending Veterinarian</label>
-                                                        <button class="form-control d-flex justify-content-between"
-                                                                type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#veterinarianListModal" disabled><span
-                                                                id="vet">{{$doctor ?? ''}}</span>
-                                                            <i class="fa-solid fa-user-doctor"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="row gy-3">
-                                                    <div class="col-12">
-                                                        <label for="">Pet Owner</label>
-                                                        <button class="form-control d-flex justify-content-between"
-                                                                type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#petOwnerListModal" disabled>
-                                                            <span>{{$owner->client_name}}</span> <i
-                                                                class="fa-solid fa-user"></i></button>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label for="">Pet</label>
-                                                        <button class="form-control d-flex justify-content-between"
-                                                                type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#petListModal" disabled>
-                                                            <span>{{$pet->pet_name}}</span> <i class="fa-solid fa-cat"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 d-flex flex-wrap border rounded p-3">
-                                                <div class="text-primary w-100 fw-bold">Pet Information</div>
-                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                    <strong>Breed:</strong>
-                                                    <span>{{$pet->pet_breed}}</span>
-                                                </div>
-                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                    <strong>Birthdate:</strong>
-                                                    <span>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format("F d, Y")}}</span>
-                                                </div>
-                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                    <strong>Color/Markings:</strong>
-                                                    <span>{{$pet->pet_color}}</span>
-                                                </div>
-                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                    <strong>Age:</strong>
-                                                    <span>{{$pet->age}} years</span>
-                                                </div>
-                                                <div class="d-flex flex-column border rounded m-2 p-2 flex-grow-1">
-                                                    <strong>Gender:</strong>
-                                                    <span>{{$pet->pet_gender}}</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
                                         <div class="card-header">Complaint</div>
@@ -654,60 +607,92 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card shadow-none">
-                        <div class="card-header">
-                            Record Information
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    Date Created
-                                    <p class="text-primary">{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}</p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card shadow-none">
+                                <div class="card-header">
+                                    Record Information
                                 </div>
-                                <div class="col-md-6">
-                                    Status
-                                    <p class="text-primary">Completed</p>
-                                </div>
-                                <div class="col-md-12">
-                                    @php
-                                        $doctor = '';
-                                        if (!is_null($record->doctorID)){
-                                        $doctor = \App\Models\Doctor::getName($record->doctorID) ;
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            Date Created
+                                            <p class="text-primary">{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            Status
+                                            <p class="text-primary">Completed</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            Subject
+                                            <p class="text-primary">The Subject of this pet record</p>
+                                        </div>
+                                        <hr>
+                                        <div class="col-md-12">
+                                            @php
+                                                $doctor = '';
+                                                if (!is_null($record->doctorID)){
+                                                $doctor = \App\Models\Doctor::getName($record->doctorID) ;
 
-                                        }
-                                    @endphp
-                                    Attending Veterinarian
-                                    <p class="text-primary">
-                                        Dr. {{$doctor ?? ''}}
-                                    </p>
+                                                }
+                                            @endphp
+                                            Veterinarian
+                                            <p class="text-primary">
+                                                Dr. {{$doctor ?? ''}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            Pet Owner
+                                            <p class="text-primary">{{$owner->client_name}}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            Pet
+                                            <p class="text-primary">{{$pet->pet_name}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-12">
-                                    Pet Owner
-                                    <p class="text-primary">{{$owner->client_name}}</p>
-                                </div>
-                                <div class="col-md-12">
-                                    Pet
-                                    <p class="text-primary">{{$pet->pet_name}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Print Record
-                                </button>
-                                <button class="btn btn-primary" type="submit" >
-                                    <i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="printMenuButton">
-                                    <a class="dropdown-item" href="dropdowns.html#!">Record</a>
-                                    <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
+                                <div class="card-footer">
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa-solid fa-print"></i> <span class="ms-2">Print</span>
+                                        </button>
+                                        <button class="btn btn-primary" type="submit" >
+                                            <i class="fa-solid fa-floppy-disk"></i> <span class="ms-2">Save Record</span>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="printMenuButton">
+                                            <a class="dropdown-item" href="dropdowns.html#!">Record</a>
+                                            <a class="dropdown-item" href="dropdowns.html#!">Prescription</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-8">
+                    <div class="mt-4">
+                        <div class="card shadow-none">
+                            <div class="card-header">
+                                Medical Information
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="small mb-1">Pet's Medical Condition</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 100px">{{$pet->pet_condition != null ? $pet->pet_condition : "No Conditions Recorded"}}</div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="small mb-1">Allergies</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 100px">{{$pet->food_allergies !=  null ? $pet->food_allergies : "No Allergies Recorded"}}</div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="small mb-1">History of Aggression</label>
+                                        <div class="border rounded p-3 mb-3" style="min-height: 100px">
+                                            {{$pet->history_of_aggression != null ? $pet->history_of_aggression : 'No History of Aggression Identified'}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

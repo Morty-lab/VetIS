@@ -83,7 +83,6 @@
                                 <select class="select-appointment-time-edit form-control" id="selectAppointmentTime"
                                         name="appointment_time" data-placeholder="Select Time" required>
                                     <option value=""></option>
-                                    <optgroup label="--- Select a Time ---"></optgroup>
                                     <optgroup label="AM">
                                         <option value="8:00 AM">8:00 AM</option>
                                         <option value="8:30 AM">8:30 AM</option>
@@ -311,41 +310,6 @@
                     </div>
                 </div>
                 <div class="card shadow-none mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div class="">Pet Owner Details</div>
-                        <a class="btn btn-datatable btn-primary px-5 py-3 m-0"
-                            href="{{ route('owners.show', $appointment->owner_ID) }}"><i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="card-body">
-                        @php
-                            Clients::setEmailAttribute($appointment->client, $appointment->client->user_id);
-                        @endphp
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPetName">Name</label>
-                                <p class="text-primary">{{ $appointment->client->client_name }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPetName">Address</label>
-                                <p>{{ $appointment->client->client_address }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPetName">Contact Number</label>
-                                <br>
-                                <a
-                                    href="tel:{{ $appointment->client->client_no }}">{{ $appointment->client->client_no }}</a>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPetName">Email</label>
-                                <br>
-                                <a
-                                    href="mailto:{{ $appointment->client->client_email }}">{{ $appointment->client->client_email }}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card shadow-none mb-4">
                     <div class="card-header">
                         Pet/s Details
                     </div>
@@ -387,6 +351,39 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-none mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="">Pet Owner Details</div>
+                        <a class="btn btn-datatable btn-primary px-5 py-3 m-0" href="{{ route('owners.show', $appointment->owner_ID) }}"><i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="card-body">
+                        @php
+                            Clients::setEmailAttribute($appointment->client, $appointment->client->user_id);
+                        @endphp
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Name</label>
+                                <p class="text-primary">{{ $appointment->client->client_name }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Address</label>
+                                <p>{{ $appointment->client->client_address }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Contact Number</label>
+                                <br>
+                                <a
+                                    href="tel:{{ $appointment->client->client_no }}">{{ $appointment->client->client_no }}</a>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPetName">Email</label>
+                                <br>
+                                <a
+                                    href="mailto:{{ $appointment->client->client_email }}">{{ $appointment->client->client_email }}</a>
                             </div>
                         </div>
                     </div>
