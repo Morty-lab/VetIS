@@ -263,18 +263,12 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="small mb-1">Pet/s</label><br>
                                         @php
-                                            $petIDs = explode(',', $appointment->pet_ID);
-                                            $pets = [];
-                                            foreach ($petIDs as $petID) {
-                                                $pet = \App\Models\Pets::find($petID);
-                                                if ($pet) {
-                                                    $pets[] = $pet->pet_name . ' | ' . $pet->pet_type;
-                                                }
-                                            }
+                                            $pet_ids = explode(',', $appointment->pet_ID);
+                                            $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
                                         @endphp
                                         @foreach ($pets as $pet)
                                             <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                                {{ $pet }}
+                                            {{ $pet->pet_name }} <span class="badge bg-white text-primary text-sm rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
                                             </span>
                                         @endforeach
                                     </div>

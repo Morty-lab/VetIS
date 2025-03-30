@@ -111,7 +111,7 @@
                             <div class="col-md-12">
                                 <!-- Concern/Complain -->
                                 <div class="form-group">
-                                    <label for="concern-complain" class="mb-1">Purpose</label>
+                                    <label for="concern-complain" class="mb-1">Other Notes</label>
                                     <textarea class="form-control" id="concern-complain" name="purpose" rows="5"
                                         placeholder="Enter the purpose of your appointment"> {{ $appointment->purpose }}</textarea>
                                 </div>
@@ -249,28 +249,41 @@
                                     <label class="small mb-1">Pet Owner</label><br>
                                     <p class="text-primary fw-bold">{{ $appointment->client->client_name }}</p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label class="small mb-1">Pet/s</label><br>
                                     @php
                                         $pet_ids = explode(',', $appointment->pet_ID);
                                         $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
                                     @endphp
-                                    @foreach ($pets as $pet)
-                                        <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                            {{ $pet->pet_name }}
-                                        </span>
-                                    @endforeach
+                                        @foreach ($pets as $pet)
+                                            <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                            {{ $pet->pet_name }} <span class="badge bg-white text-primary text-sm rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
+                                            </span>
+                                        @endforeach
                                 </div>
-                                <div class="col-md-12 mt-4">
+                                <div class="col-md-6 mt-3">
                                     <div class="border py-3 px-3 border-top-lg border-top-primary rounded">
                                         <label class="mb-1 text-primary fw-bold b">Reason of Visit</label>
-                                        <p class="mb-0">
+                                        <table class="table table-bordered mt-2 mb-0">
+                                            <tr>
+                                                <td>Grooming</td>
+                                                <td>500.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Grooming</td>
+                                                <td>500.00</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="border py-3 px-3 border-top-lg border-top-dark rounded">
+                                        <label class="mb-1 text-gray-700 fw-bold b">Other Notes</label>
+                                        <p class="mb-0 mt-2">
                                             {{ $appointment->purpose }}
                                         </p>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -299,8 +312,8 @@
                                         <tr data-index="0">
                                             <td>{{ $pet->pet_name }}</td>
                                             <td>{{ $pet->pet_type }}</td>
-                                            <td>{{ $pet->breed }}</td>
-                                            <td>{{ $pet->age }}</td>
+                                            <td>{{ $pet->pet_breed }}</td>
+                                            <td>{{ $pet->age }} year/s old</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
