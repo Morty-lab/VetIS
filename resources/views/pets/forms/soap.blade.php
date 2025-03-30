@@ -422,10 +422,6 @@
                                     <p class="">{{ \Carbon\Carbon::parse($pet->pet_birthdate)->format('F d, Y') }}</p>
                                 </div>
                                 <div class="col-md-3">
-                                    Weight
-                                    <p class="">{{$pet->pet_weight}} kg</p>
-                                </div>
-                                <div class="col-md-3">
                                     <label class="small mb-1">Spayed/Neutered</label>
                                     <p>
                                         {{$pet->neutered == 1 ? 'Yes' : 'No'}}
@@ -438,12 +434,8 @@
                                     </p>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
+                                    <label class="small mb-1">Date of Vaccination</label>
                                     <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete'}}</p>
-                                </div>
-                                <div class="col-md-9">
-                                    <label class="small mb-1">Okay to give treats?</label>
-                                    <p> {{$pet->okay_to_give_treats == 1 ? 'Yes' : 'No'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -456,7 +448,7 @@
                         </div>
                         <div class="card-body">
                             <nav class="nav nav-borders">
-                                <a class="nav-link nav-tab active {{ request()->is('general') ? 'active' : '' }}" href="#general">Complaint</a>
+                                <a class="nav-link nav-tab active {{ request()->is('general') ? 'active' : '' }}" href="#general">Chief Complaint</a>
                                 <a class="nav-link nav-tab{{ request()->is('examination') ? 'active' : '' }}" href="#examination">Examination</a>
                                 <a class="nav-link nav-tab{{ request()->is('diagnosis') ? 'active' : '' }}" href="#diagnosis">Diagnosis</a>
                                 <a class="nav-link nav-tab{{ request()->is('treatment') ? 'active' : '' }}" href="#treatment">Treatment</a>
@@ -467,7 +459,7 @@
                             <div id="generalSection" style="display: none">
                                 <div class="col-md-12">
                                     <div class="card shadow-none">
-                                        <div class="card-header">Complaint</div>
+                                        <div class="card-header">Chief Complaint (CC)</div>
                                         <div class="card-body">
                                             <div id="quill-editor" class="mb-3" style="height: 400px;">
                                                 {!! $record->complaint !!}
@@ -486,9 +478,6 @@
                                     <div class="card shadow-none">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <span>Examination</span>
-                                            <button class="btn-outline-primary btn" type="button"
-                                                    onclick="fillTemplate('examination')">Fill Template
-                                            </button>
                                         </div>
                                         <!--
                                                 --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
@@ -503,22 +492,289 @@
                                                 Temperature:
                                             -->
                                         <div class="card-body">
-                                            <div id="examination" class="mb-3" style="height: 400px;">
-                                                {{--                                            @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}--}}
-                                                {{--                                            Respiration Rate: {{$examination->respiration_rate}}--}}
-                                                {{--                                            Weight: {{$examination->weight}}--}}
-                                                {{--                                            Length: {{$examination->length}}--}}
-                                                {{--                                            CRT: {{$examination->crt}}--}}
-                                                {{--                                            BCS: {{$examination->bcs}}--}}
-                                                {{--                                            Lymph Nodes: {{$examination->lymph_nodes}}--}}
-                                                {{--                                            Palpebral Reflex: {{$examination->palpebral_reflex}}--}}
-                                                {{--                                            Temperature: {{$examination->temperature}}--}}
-                                                {{--                                            @endif--}}
-                                                {!! $record->examination !!}
+                                            <div class="row gy-5 mb-5">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Temperature:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <span class="input-group-text">°C</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Heart Rate:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                        <span class="input-group-text">bpm</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Respiratory Rate:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                        <span class="input-group-text">bpm</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Weight:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <span class="input-group-text">kg</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Length:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <span class="input-group-text">cm</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Height:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <span class="input-group-text">cm</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Body Condition:</label> <br>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="underweight">
+                                                        <label class="form-check-label" for="underweight">Underweight</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="normal">
+                                                        <label class="form-check-label" for="normal">Normal</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="overweight">
+                                                        <label class="form-check-label" for="overweight">Overweight</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">General Appearance:</label>
+                                                    <br>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="active">
+                                                        <label class="form-check-label" for="active">Active</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="lethargic">
+                                                        <label class="form-check-label" for="lethargic">Lethargic</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="unresponsive">
+                                                        <label class="form-check-label" for="unresponsive">Unresponsive</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="appearance" id="aggressive">
+                                                        <label class="form-check-label" for="unresponsive">Aggressive</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Skin & Coat Condition:</label>
+                                                        <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="healthySkin">
+                                                            <label class="form-check-label" for="healthySkin">Healthy</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="dry">
+                                                            <label class="form-check-label" for="dry">Dry</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="flaky">
+                                                            <label class="form-check-label" for="flaky">Flaky</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="hairLoss">
+                                                            <label class="form-check-label" for="hairLoss">Hair Loss</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="parasites">
+                                                            <label class="form-check-label" for="parasites">Parasites Present</label>
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Eyes, Ears, Nose, & Throat:</label>
+                                                        <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="clear">
+                                                            <label class="form-check-label" for="clear">Clear</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="discharge">
+                                                            <label class="form-check-label" for="discharge">Discharge</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="redness">
+                                                            <label class="form-check-label" for="redness">Redness</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="swelling">
+                                                            <label class="form-check-label" for="swelling">Swelling</label>
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Mouth & Teeth:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="healthyMouth">
+                                                            <label class="form-check-label" for="healthyMouth">Healthy</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="tartar">
+                                                            <label class="form-check-label" for="tartar">Tartar</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="gingivitis">
+                                                            <label class="form-check-label" for="gingivitis">Gingivitis</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="missingTeeth">
+                                                            <label class="form-check-label" for="missingTeeth">Missing Teeth</label>
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Lymph Nodes:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checked" name="lymphNodes" id="normalNodes">
+                                                            <label class="form-check-label" for="normalNodes">Normal</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checked" name="lymphNodes" id="swollenNodes">
+                                                            <label class="form-check-label" for="swollenNodes">Swollen</label>
+                                                        </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" name="lymphNodes" id="enlargedNodes">
+                                                        <label class="form-check-label" for="swollenNodes">Enlarged</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Cardiovascular System:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="cardioSystem" id="normalHeart">
+                                                            <label class="form-check-label" for="normalHeart">Normal</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="cardioSystem" id="murmurs">
+                                                            <label class="form-check-label" for="murmurs">Murmurs</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="cardioSystem" id="irregularBeat">
+                                                            <label class="form-check-label" for="irregularBeat">Irregular Heartbeat</label>
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Respiratory System:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="normalResp">
+                                                            <label class="form-check-label" for="normalResp">Normal</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="wheezing">
+                                                            <label class="form-check-label" for="wheezing">Wheezing</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="coughing">
+                                                            <label class="form-check-label" for="coughing">Coughing</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="laboredBreathing">
+                                                            <label class="form-check-label" for="laboredBreathing">Labored Breathing</label>
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Digestive System:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="normalDigest">
+                                                            <label class="form-check-label" for="normalDigest">Normal</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="bloating">
+                                                            <label class="form-check-label" for="bloating">Bloating</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="vomiting">
+                                                            <label class="form-check-label" for="vomiting">Vomiting</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="diarrhea">
+                                                            <label class="form-check-label" for="diarrhea">Diarrhea</label>
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <label class="form-label">Musculoskeletal System:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="normalMusculo">
+                                                            <label class="form-check-label" for="normalMusculo">Normal</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="limping">
+                                                            <label class="form-check-label" for="limping">Limping</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="jointPain">
+                                                            <label class="form-check-label" for="jointPain">Joint Pain</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="muscleAtrophy">
+                                                            <label class="form-check-label" for="muscleAtrophy">Muscle Atrophy</label>
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Neurological System:</label>
+                                                    <br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="normalNeuro">
+                                                            <label class="form-check-label" for="normalNeuro">Normal</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="seizures">
+                                                            <label class="form-check-label" for="seizures">Seizures</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="weakness">
+                                                            <label class="form-check-label" for="weakness">Weakness</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="uncoordinated">
+                                                            <label class="form-check-label" for="uncoordinated">Uncoordinated Movements</label>
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Other Notes:</label>
+                                                    <div id="examination" class="mb-3" style="height: 400px;">
+                                                        {{--                                            @if(isset($examination))  Heart Rate: {{$examination->heart_rate}}--}}
+                                                        {{--                                            Respiration Rate: {{$examination->respiration_rate}}--}}
+                                                        {{--                                            Weight: {{$examination->weight}}--}}
+                                                        {{--                                            Length: {{$examination->length}}--}}
+                                                        {{--                                            CRT: {{$examination->crt}}--}}
+                                                        {{--                                            BCS: {{$examination->bcs}}--}}
+                                                        {{--                                            Lymph Nodes: {{$examination->lymph_nodes}}--}}
+                                                        {{--                                            Palpebral Reflex: {{$examination->palpebral_reflex}}--}}
+                                                        {{--                                            Temperature: {{$examination->temperature}}--}}
+                                                        {{--                                            @endif--}}
+                                                        {!! $record->examination !!}
+                                                    </div>
+                                                    <textarea rows="3" class="mb-3 d-none" name="examination" id="examinationTextArea">
+                                                        {!! $record->examination !!}
+                                                    </textarea>
+                                                </div>
                                             </div>
-                                            <textarea rows="3" class="mb-3 d-none" name="examination" id="examinationTextArea">
-                                                {!! $record->examination !!}
-                                            </textarea>
                                         </div>
                                     </div>
                                 </div>
