@@ -43,18 +43,12 @@
                                     <td>{{ $appointment->client->client_name }}</td>
                                     <td>
                                         @php
-                                            $petIDs = explode(',', $appointment->pet_ID);
-                                            $pets = [];
-                                            foreach ($petIDs as $petID) {
-                                                $pet = \App\Models\Pets::find($petID);
-                                                if ($pet) {
-                                                    $pets[] = $pet->pet_name . ' | ' . $pet->pet_type;
-                                                }
-                                            }
+                                            $pet_ids = explode(',', $appointment->pet_ID);
+                                            $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
                                         @endphp
                                         @foreach ($pets as $pet)
                                             <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
-                                                {{ $pet }}
+                                            {{ $pet->pet_name }} <span class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
                                             </span>
                                         @endforeach
                                     </td>

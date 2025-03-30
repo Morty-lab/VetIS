@@ -41,9 +41,11 @@
                         </td>
                         <td>{{$appointment->client->client_name}}</td>
                         <td>
-                             <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
-                                {{ $appointment->pet->pet_name }} | {{ $appointment->pet->pet_type }}
-                            </span>
+                            @foreach ($pets as $pet)
+                                <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                            {{ $appointment->pet->pet_name }} <span class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $appointment->pet->pet_type }}</span></span>
+                                </span>
+                            @endforeach
                         </td>
                         <td>Dr.  {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
                         <td>{{ $appointment->purpose }}</td>
