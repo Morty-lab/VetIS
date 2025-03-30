@@ -135,7 +135,7 @@
                                         <!-- Select Pet -->
                                         <div class="form-group">
                                             <label for="select-pet" class="mb-1">Select Pet</label>
-                                            <select class="select-pet form-control" id="select-pet" name="pet_ID[]"
+                                            <select class="select-pet-portal form-control" id="select-pet" name="pet_ID[]"
                                                 multiple="multiple" data-placeholder="Select a Pet" required
                                                 autocomplete="off">
                                                 @foreach ($pets as $pet)
@@ -149,8 +149,8 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="select-reason-of-visit" class="mb-1">Reason of Visit</label>
-                                            <select class="select-appointment-reason form-control" id="select-appointment-reason" name="" data-placeholder="Select Reason of Visit" multiple="multiple" required autocomplete="off">
+                                            <label for="select-reason-of-visit-portal" class="mb-1">Reason of Visit</label>
+                                            <select class="select-reason-of-visit-portal form-control" id="select-appointment-reason" name="" data-placeholder="Select Reason of Visit" multiple="multiple" required autocomplete="off">
                                                 <option value=""></option>
                                                 <option value="vaccination">Vaccination (starts at ₱500)</option>
                                                 <option value="deworming">Deworming (starts at ₱200)</option>
