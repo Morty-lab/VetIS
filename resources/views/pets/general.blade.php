@@ -101,8 +101,52 @@
         </div>
     </div>
 
+    {{--  Create Medical Record Modal  --}}
+    <div class="modal fade " id="addMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="addMedicalRecord"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="" method="post">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Medical Record for <span class="text-primary">{{$pet->pet_name}}</span></h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row gy-2">
+                            <div class="col-md-12">
+                                <label for="" class="mb-1">Subject</label>
+                                <input type="text" name="" id="" placeholder="Specify the purpose of this record" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="mb-1">Attending Veterinarian</label>
+                                <select name="" id="" class="form-select">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="mb-1">Date of Visit</label>
+                                <div class="input-group input-group-joined">
+                                    <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="" placeholder="Select a Date"/>
+                                    <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit" id="addVaccinationBtn">Add</button>
+                    </div>
+                </form>
 
-    <!-- View Modal -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- View Vaccination Modal -->
     @foreach($vaccinations as $vac)
 
         <div class="modal fade" id="viewVaccination-{{$vac->id}}" tabindex="-1" role="dialog"
@@ -339,10 +383,6 @@
                                         <p>{{$pet->pet_color}}</p>
                                     </div>
                                     <div class="col-md-5">
-                                        <label class="small mb-1">Weight</label>
-                                        <p>{{$pet->pet_weight}} kg</p>
-                                    </div>
-                                    <div class="col-md-5">
                                         <label class="small mb-1">Birthdate</label>
                                         <p>{{\Carbon\Carbon::parse($pet->pet_birthdate)->format('F d, Y')}}</p>
                                     </div>
@@ -574,21 +614,20 @@
                         <div class="card mb-4 shadow-none" id="recordsCard" style="display:none;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Medical Records</span>
-                                @if(auth()->user()->role === "veterinarian")
-                                    @php
+{{--                                @if(auth()->user()->role === "veterinarian")--}}
+{{--                                    @php--}}
 
-                                        $doctor_id = \App\Models\Doctor::getDoctorById(auth()->id())->id
-                                    @endphp
-                                    <form action="{{route('soap.add', ['id' =>$pet->id,'doctorID' => $doctor_id])}}"
-                                          method="post">
-                                        @csrf
+{{--                                        $doctor_id = \App\Models\Doctor::getDoctorById(auth()->id())->id--}}
+{{--                                    @endphp--}}
+{{--                                    <form action="{{route('soap.add', ['id' =>$pet->id,'doctorID' => $doctor_id])}}"--}}
+{{--                                          method="post">--}}
+{{--                                        @csrf--}}
 
-                                        <button class="btn btn-primary" type="submit">New
-                                        </button>
-                                    </form>
-                                @endif
-
-
+{{--                                        <button class="btn btn-primary" type="submit">New--}}
+{{--                                        </button>--}}
+{{--                                    </form>--}}
+{{--                                @endif--}}
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addMedicalRecord"><i class="fa-solid fa-plus me-2"></i> Create Medical Record</button>
                             </div>
                             <div class="card-body">
                                 <!-- only shows if there is no record -->
@@ -599,28 +638,18 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                     <tr>
-                                        <th>Date Created</th>
-                                        <th>Code</th>
-                                        <th>Type</th>
-                                        <th>Subjective</th>
+                                        <th>Date of Visit</th>
+                                        <th>Subject</th>
+                                        <th>Attending Veterinarian</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @php
-                                        $consultation_type = [
-                                        1=> "Walk-In" ,
-                                        2=> "Consultation" ,
-                                        3=> "Vaccination",
-                                        4=> "Surgery"
-                                        ];
-                                    @endphp
                                     @foreach($pet_records as $record)
                                         <tr>
                                             <td>{{$record->record_date}}</td>
                                             <td>{{sprintf('VETIS-%05d', $record->id)}}</td>
-                                            <td>{{$consultation_type[$record->consultation_type] ?? '' }}</td>
                                             <td>{{$record->complaint}}</td>
                                             <td>{{($record->status == 1) ? "Filled" : "Ongoing"}}</td>
                                             <td>

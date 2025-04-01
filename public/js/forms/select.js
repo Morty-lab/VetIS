@@ -252,4 +252,17 @@ $(document).ready(function() {
         width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
         placeholder: $( this ).data( 'placeholder' ),
     });
+
+//     Medical Record
+    $(".select-proc").select2({
+        theme: "bootstrap-5",
+        tags: true,  // Allow users to add new values
+        placeholder: "Select or type procedure",
+        allowClear: true
+    });
+    $(".med-type").select2({
+        theme: "bootstrap-5",
+        minimumResultsForSearch: -1,
+        placeholder: "Medication Type",
+    });
 });

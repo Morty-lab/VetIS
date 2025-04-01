@@ -33,7 +33,7 @@
                         <td>{{ $pet->pet_name }}</td>
                         <td>{{ $pet->pet_type }}</td>
                         <td>{{ $pet->pet_breed }}</td>
-                        <td>{{ $pet->age }} years</td>
+                        <td>{{ $pet->age }} year/s old</td>
                         <td>{{ $pet->pet_gender }}</td>
                         <td>{{ $pet->client->client_name }}</td>
                         <td>

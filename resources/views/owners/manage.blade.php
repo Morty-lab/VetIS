@@ -16,11 +16,11 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>OwnerID</th>
                         <th>Name</th>
                         {{-- <th>Age</th>--}}
                         <th>Address</th>
                         <th>Contact Number</th>
+                        <th>Email Address</th>
                         <th>Pets Owned</th>
 {{--                        <th>Status</th>--}}
                         <th>Actions</th>
@@ -29,11 +29,11 @@
                 <tbody>
                     @foreach($clients as $client)
                     <tr>
-                        <td>{{ sprintf("OWN-%05d", $client->id) }}</td>
                         <td>{{$client->client_name}}</td>
                         {{-- <td>{{$client->age}}</td>--}}
                         <td>{{$client->client_address}}</td>
-                        <td>{{$client->client_no}}</td>
+                        <td><a class="text-body" href="tel:{{$client->client_no}}">{{$client->client_no}}</a></td>
+                        <td><a class="text-body" href="mailto:{{$client->client_email}}">{{$client->client_email}}</a></td>
                         <td>{{$client->petsOwned($client->id)->count()}}</td>
 {{--                        <td>--}}
 {{--                            <span class="badge bg-primary-soft text-primary rounded-pill">Active</span>--}}

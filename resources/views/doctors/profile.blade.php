@@ -266,7 +266,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
         <a class="nav-link nav-tab ms-0{{ request()->is('vet-profile') ? 'active' : '' }}" href="#vet-profile">Profile</a>
         <a class="nav-link nav-tab{{ request()->is('schedules') ? 'active' : '' }}" href="#schedules">Schedules</a>
         <a class="nav-link nav-tab{{ request()->is('records') ? 'active' : '' }}" href="#records">Pet Records</a>
-        <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">UM Settings</a>
+        <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">Account Settings</a>
     </nav>
     <hr class="mt-0 mb-4" />
     <div class="row">
@@ -289,7 +289,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                             <div class="row g-2">
                                 <div class="col-md-6">
                                     <label class="small mb-1">Veterinarian Name</label>
-                                    <p>{{ $doctor->firstname }} {{ $doctor->lastname }}</p>
+                                    <p class="text-primary fw-bold">{{ $doctor->firstname }} {{ $doctor->lastname }}</p>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="small mb-1">Veterinarian ID</label>
@@ -512,26 +512,9 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card shadow-none">
-                        <div class="card-header">UM Settings</div>
+                        <div class="card-header">Account Settings</div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card shadow-none">
-                                        <div class="card-header">Role</div>
-                                        <div class="card-body"><select class="form-control" id="exampleFormControlSelect2" name="role">
-                                                <option value="Owner">Pet Owner</option>
-                                                <option value="Doctor" selected>Veterinarian</option>
-                                                <option value="Owner">Owner</option>
-                                                <option value="Administrator">Administrator</option>
-                                                <option value="Secretary">Secretary</option>
-                                                <option value="Staff">Staff</option>
-                                            </select>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="card shadow-none">
                                         <div class="card-header">Account</div>

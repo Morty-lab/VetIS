@@ -17,6 +17,81 @@
 
 
 <!-- Modals -->
+<!-- Archive Medical Record Modal -->
+<div class="modal fade" id="archiveMedicalRecordModal" tabindex="-1" aria-labelledby="archiveMedicalRecordModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content py-3">
+            <div class="modal-header border-0 text-center d-block">
+                <i class="fa-solid fa-box-archive text-warning display-4"></i>
+                <h5 class="modal-title mt-2" id="archiveMedicalRecordModal">Archive Medical Record</h5>
+            </div>
+            <div class="modal-body text-center">
+                Are you sure you want to <strong>Archive</strong> this medical record?
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <form action="" method="POST">
+                    @csrf
+                    <button type="button" class="btn btn-light text-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Archive</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{--  Edit Medical Record Modal  --}}
+<div class="modal fade " id="editMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="editMedicalRecord"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Medical Record for <span class="text-primary">{{$pet->pet_name}}</span></h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <label for="" class="mb-1">Subject</label>
+                            <input type="text" name="" id="" placeholder="Specify the purpose of this record" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="mb-1">Attending Veterinarian</label>
+                            <select name="" id="" class="form-select">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="mb-1">Date of Visit</label>
+                            <div class="input-group input-group-joined">
+                                <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="" placeholder="Select a Date"/>
+                                <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                            </div>
+                        </div>
+                        <hr class="mt-3 mb-2">
+                        <div class="col-md-12">
+                            <label for="" class="mb-1">Medical Record Status</label>
+                            <select name="" id="" class="form-select">
+                                <option value="">Ongoing</option>
+                                <option value="">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit" id="addVaccinationBtn">Edit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 <!-- Attending Veterinarian -->
 <div class="modal fade" id="veterinarianListModal" tabindex="-1" role="dialog"
     aria-labelledby="myExtraLargeModalLabel"
@@ -371,7 +446,7 @@
                 <ol class="breadcrumb bg-transparent px-0 py-2 rounded mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('pet.index') }}">Manage Pets</a></li>
                     <li class="breadcrumb-item active">Pet Profile</li>
-                    <li class="breadcrumb-item active">Pet Record</li>
+                    <li class="breadcrumb-item active">Medical Record</li>
                 </ol>
             </nav>
         </div>
@@ -785,9 +860,9 @@
                                     <div class="card shadow-none">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <span>Diagnosis</span>
-                                            <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">
-                                                Fill Template
-                                            </button>
+{{--                                            <button class="btn-outline-primary btn" onclick="fillTemplate('diagnosis')">--}}
+{{--                                                Fill Template--}}
+{{--                                            </button>--}}
                                         </div>
                                         <div class="card-body">
 
@@ -805,26 +880,88 @@
                             <div id="treatmentSection" style="display: none">
                                 <div class="row gy-3">
                                     <div class="col-md-12">
-                                        <div class="card shadow-none">
+                                        <div class="card shadow-none mb-4">
                                             <div class="card-header">Medication Given</div>
-                                            <div class="card-body"><textarea name="medication_given" id="treatmentTextArea" cols="30"
-                                                                             rows="10"
-                                                                             class="form-control w-full">
-                                            {!! $record->medication_given !!}
-                                            </textarea></div>
+                                            <div class="card-body" id="medications">
+                                                <div class="row mb-2 medication-entry">
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control med-name" placeholder="Medication Name">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control med-dosage" placeholder="Dosage">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control form-select med-type">
+                                                            <option value=""></option>
+                                                            <option>Oral</option>
+                                                            <option>IV (Intravenous)</option>
+                                                            <option>IM (Intramuscular)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <a href="" class="btn btn-primary add-med">+</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="card shadow-none">
                                             <div class="card-header">Procedure Given</div>
-                                            <div class="card-body"><textarea name="procedure_given" id="treatmentTextArea" cols="30"
-                                                                             rows="10"
-                                                                             class="form-control w-full">
-                                            {!! $record->procedure_given !!}
-
-                                            </textarea></div>
+                                            <div class="card-body" id="procedures">
+                                                <div class="row mb-2 procedure-entry">
+                                                    <div class="col-md-6">
+                                                        <select class="form-control proc-name select-proc" style="width: 100%;">
+                                                            <option value="">Select Procedure</option>
+                                                            <option value="Blood Test">Blood Test</option>
+                                                            <option value="X-Ray">X-Ray</option>
+                                                            <option value="MRI Scan">MRI Scan</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control proc-outcome" placeholder="Outcome">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <a href="" class="btn btn-primary add-proc">+</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="card shadow-none">
+                                            <div class="card-header">Treatment Notes</div>
+                                            <div class="card-body">
+                                                <div id="treatmentnotes" class="mb-3" style="height: 200px;">
+
+                                                </div>
+                                                <textarea rows="3" class="mb-3 d-none" name="treatmentnotes" id="treatmentnotes">
+
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+{{--                                    <div class="col-md-12">--}}
+{{--                                        <div class="card shadow-none">--}}
+{{--                                            <div class="card-header">Medication Given</div>--}}
+{{--                                            <div class="card-body"><textarea name="medication_given" id="treatmentTextArea" cols="30"--}}
+{{--                                                                             rows="10"--}}
+{{--                                                                             class="form-control w-full">--}}
+{{--                                            {!! $record->medication_given !!}--}}
+{{--                                            </textarea></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-12">--}}
+{{--                                        <div class="card shadow-none">--}}
+{{--                                            <div class="card-header">Procedure Given</div>--}}
+{{--                                            <div class="card-body"><textarea name="procedure_given" id="treatmentTextArea" cols="30"--}}
+{{--                                                                             rows="10"--}}
+{{--                                                                             class="form-control w-full">--}}
+{{--                                            {!! $record->procedure_given !!}--}}
+
+{{--                                            </textarea></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
 
@@ -865,9 +1002,17 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-12">
-                            <div class="card shadow-none">
+                            <div class="card card-header-actions shadow-none">
                                 <div class="card-header">
                                     Record Information
+                                    <div class="dropdown no-caret">
+                                        <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical text-gray-500"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                                        <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="areaChartDropdownExample" style="">
+                                            <a class="dropdown-item" href="#" type="button" data-bs-toggle="modal" data-bs-target="#editMedicalRecord"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Record</a>
+                                            <hr class="mt-0">
+                                            <a class="dropdown-item text-danger" href="#" type="button" data-bs-toggle="modal" data-bs-target="#archiveMedicalRecordModal"><i class="fa-solid fa-box-archive me-2"></i>Archive Record</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -1003,6 +1148,25 @@
                 // Ensure textarea is updated before form submission
                 document.querySelector("form").addEventListener("submit", function() {
                     document.getElementById('examinationTextArea').value = examination.root.innerHTML;
+                });
+
+                var treatmentnotes = new Quill('#treatmentnotes', {
+                    modules: {
+                        toolbar: toolbarOptions,
+                        imageResize: {
+                            displaySize: true
+                        },
+                    },
+                    theme: 'snow'
+                });
+
+                treatmentnotes.on('text-change', function() {
+                    document.getElementById('treatmentnotes').value = treatmentnotes.root.innerHTML;
+                });
+
+                // Ensure textarea is updated before form submission
+                document.querySelector("form").addEventListener("submit", function() {
+                    document.getElementById('treatmentnotes').value = treatmentnotes.root.innerHTML;
                 });
 
                 var diagnosis = new Quill('#diagnosis', {
@@ -1172,5 +1336,128 @@
         }
     });
 </script>
+            <script>
+                $(document).ready(function () {
+                    // Medication field validation
+                    $('.add-med').click(function () {
+                        event.preventDefault();
+                        let lastEntry = $('#medications .medication-entry').last();
+                        let name = lastEntry.find('.med-name').val().trim();
+                        let dosage = lastEntry.find('.med-dosage').val().trim();
+                        let type = lastEntry.find('.med-type').val().trim();
+
+                        if (name !== "" && dosage !== "" && type !== "") {
+                            $('#medications').append(`
+                        <div class="row mb-2 medication-entry">
+                            <div class="col-md-5">
+                                <input type="text" class="form-control med-name" placeholder="Medication Name">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control med-dosage" placeholder="Dosage">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control form-select med-type">
+                                    <option value="">Medication Type</option>
+                                    <option>Oral</option>
+                                    <option>IV</option>
+                                    <option>IM</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="" class="btn btn-danger remove-med">-</a>
+                            </div>
+                        </div> `);
+                            $(".med-type").select2({
+                                theme: "bootstrap-5",
+                                minimumResultsForSearch: -1,
+                                placeholder: "Medication Type",
+                            });
+
+                            $('#medications').find('.text-danger').remove(); // Remove error message when new row is added
+                        } else {
+                            if ($('#medications').find('.text-danger').length === 0) {
+                                let errorMsg = $('<div class="text-danger mt-3">Please fill in all fields before adding a new entry.</div>');
+                                $('#medications').append(errorMsg);
+
+                                setTimeout(function () {
+                                    errorMsg.fadeOut(500, function () {
+                                        $(this).remove();
+                                    });
+                                }, 5000);
+                            }
+                        }
+                    });
+
+                    $(document).on('click', '.remove-med', function () {
+                        event.preventDefault();
+                        $(this).closest('.medication-entry').remove();
+                        $('#medications').find('.text-danger').remove(); // Remove error if fields are cleared
+                    });
+
+                    $('.add-proc').click(function (event) {
+                        event.preventDefault(); // Prevents page reload
+
+                        let lastEntry = $('#procedures .procedure-entry').last();
+                        let procName = lastEntry.find('.proc-name').val().trim();
+                        let procOutcome = lastEntry.find('.proc-outcome').val().trim();
+
+                        if (procName !== "") {
+                            $('#procedures .text-danger').remove(); // Remove existing error message
+
+                            $('#procedures').append(`
+                                <div class="row mb-2 procedure-entry">
+                                    <div class="col-md-6">
+                                        <select class="form-control proc-name select-proc" style="width: 100%;">
+                                            <option value="">Select Procedure</option>
+                                            <option value="Blood Test">Blood Test</option>
+                                            <option value="X-Ray">X-Ray</option>
+                                            <option value="MRI Scan">MRI Scan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control proc-outcome" placeholder="Outcome">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="#" class="btn btn-danger remove-procedure">-</a>
+                                    </div>
+                                </div>
+                            `);
+
+                            $(".select-proc").select2({
+                                theme: "bootstrap-5",
+                                tags: true,  // Allow users to add new values
+                                placeholder: "Select or type procedure",
+                                allowClear: true
+                            });
+                        } else {
+                            if (procName === "") {
+                                if ($('#procedures .text-danger').length === 0) {
+                                    let errorMsg = $('<div class="text-danger mt-3">Please fill in the procedure name before adding a new entry.</div>');
+                                    $('#procedures').append(errorMsg);
+
+                                    setTimeout(function () {
+                                        errorMsg.fadeOut(500, function () {
+                                            $(this).remove();
+                                        });
+                                    }, 5000);
+                                }
+                            } else {
+                                $('#procedures .text-danger').remove(); // Remove error if the procedure name is filled
+                            }
+                        }
+                    });
+
+                    // Remove procedure entry
+                    $(document).on('click', '.remove-procedure', function (event) {
+                        event.preventDefault(); // Prevents page reload
+                        $(this).closest('.procedure-entry').remove();
+
+                        // Remove error message if there are no more entries
+                        if ($('#procedures .procedure-entry').length === 0) {
+                            $('#procedures .text-danger').remove();
+                        }
+                    });
+                });
+            </script>
 
 @endsection

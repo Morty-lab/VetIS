@@ -32,9 +32,9 @@
           \App\Models\Doctor::setEmailAttribute($doctor,$doctor->user_id);
           @endphp
           <tr>
-            <td>{{ $doctor->firstname ." " . $doctor->lastname }}</td>
-            <td>{{ $doctor->doctor_email }} </td>
-            <td>{{ $doctor->phone_number }}</td>
+            <td>Dr. {{ $doctor->firstname ." " . $doctor->lastname }}</td>
+            <td><a class="text-body" href="mailto:{{ $doctor->doctor_email }}">{{ $doctor->doctor_email }}</a></td>
+            <td><a class="text-body" href="tel:{{ $doctor->phone_number }}">{{ $doctor->phone_number }}</a></td>
             <td>{{ $doctor->position }}</td>
             <td>
               <span class="badge bg-secondary-soft text-secondary rounded-pill"><span class="fw-bold">{{\App\Models\Doctor::getSchedules($doctor->id)->count()}}</span> Scheduled</span>

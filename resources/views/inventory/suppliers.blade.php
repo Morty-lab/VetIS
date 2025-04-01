@@ -202,8 +202,8 @@
                     <tr>
                         <td>{{ $supplier->supplier_name }}</td>
                         <td>{{ $supplier->supplier_contact_person }}</td>
-                        <td>{{ $supplier->supplier_phone_number }}</td>
-                        <td>{{ $supplier->supplier_email_address }}</td>
+                        <td><a class="text-body" href="tel:{{ $supplier->supplier_phone_number }}">{{ $supplier->supplier_phone_number }}</a></td>
+                        <td><a class="text-body" href="mailto:{{ $supplier->supplier_email_address }}">{{ $supplier->supplier_email_address }}</a></td>
                         <td>{{ $supplier->supplier_address }}</td>
                         <td>
                             <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"
