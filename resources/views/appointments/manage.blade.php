@@ -30,8 +30,8 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOwnerName">Pet Owner</label>
-                                <select class="select-owner-name form-control" id="inputOwnerName" name="owner_ID" data-placeholder="Select Pet Owner"
-                                    onchange="fetchOwnedPets(this.value)">
+                                <select class="select-owner-name form-control" id="inputOwnerName" name="owner_ID"
+                                    data-placeholder="Select Pet Owner" onchange="fetchOwnedPets(this.value)">
                                     <option value=""></option>
                                     @foreach ($clients as $client)
                                         @php
@@ -43,15 +43,20 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPetName">Pet/s</label>
-                                <select class="select-pet-name form-control" id="inputPetName" name="pet_ID[]" multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off">
+                                <select class="select-pet-name form-control" id="inputPetName" name="pet_ID[]"
+                                    multiple="multiple" data-placeholder="Select a Pet" required autocomplete="off">
                                     @foreach ($pets as $pet)
-                                        <option value="{{ $pet->id }}" id="{{ $pet->owner_ID }}" class="pets">{{ $pet->pet_name }}</option>
+                                        <option value="{{ $pet->id }}" data-owner-id="{{ $pet->owner_ID }}"
+                                            class="pets">{{ $pet->pet_name }}</option>
                                     @endforeach
                                 </select>
+
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputReasonOfVisit">Reason of Visit</label>
-                                <select class="select-reason-of-visit form-control" id="reasonOfVisit" name="reasonOfVisit[]" multiple="multiple" data-placeholder="Select a Reason of Visit" required autocomplete="off">
+                                <select class="select-reason-of-visit form-control" id="reasonOfVisit"
+                                    name="reasonOfVisit[]" multiple="multiple" data-placeholder="Select a Reason of Visit"
+                                    required autocomplete="off">
                                     <option value="#">Check-Up</option>
                                     <option value="#">Vaccination</option>
                                 </select>
@@ -63,7 +68,8 @@
                             <hr class="mb-0">
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
-                                <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID" data-placeholder="Select a Veterinarian">
+                                <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID"
+                                    data-placeholder="Select a Veterinarian">
                                     <option value=""></option>
                                     @foreach ($vets as $vet)
                                         <option class="form-control" value={{ $vet->id }}>Dr.
@@ -75,7 +81,7 @@
                                 <label class="small mb-1" for="inputAppointmentDate">Appointment Date</label>
                                 <div class="input-group input-group-joined">
                                     <input class="form-control" id="select-schedule" type="text" name="appointment_date"
-                                           min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" placeholder="Select a Date" />
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" placeholder="Select a Date" />
                                     <span class="input-group-text">
                                         <i data-feather="calendar"></i>
                                     </span>
@@ -85,7 +91,7 @@
                                 <label class="small mb-1" for="inputAppointmentTime">Appointment Time</label>
                                 {{--                            <input class="form-control" id="inputEmailAddress" type="time" name="appointment_time" /> --}}
                                 <select class="select-appointment-time-admin form-control" id="selectAppointmentTime"
-                                        name="appointment_time" data-placeholder="Select Time" required>
+                                    name="appointment_time" data-placeholder="Select Time" required>
                                     <option value=""></option>
                                     <optgroup label="--- Select a Time ---"></optgroup>
                                     <optgroup label="AM">
@@ -114,7 +120,8 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-light text-primary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Schedule Appointment</button>
+                        <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Schedule
+                            Appointment</button>
                     </div>
                 </div>
             </form>
@@ -152,7 +159,7 @@
                             <div class="me-3">
                                 @php
                                     $finishedCount = \App\Models\Appointments::where('status', 1)
-                                    ->whereDate('appointment_date', \Carbon\Carbon::today()->format('Y-m-d'))
+                                        ->whereDate('appointment_date', \Carbon\Carbon::today()->format('Y-m-d'))
                                         ->count();
                                 @endphp
                                 <div class="text-success">Finished Appointments</div>
@@ -211,7 +218,8 @@
         </div>
 
         <div class="card shadow-none">
-            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span></div>
+            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled
+                    Appointments</span></div>
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
@@ -241,7 +249,8 @@
                                         @endphp
                                         @foreach ($pets as $pet)
                                             <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
-                                            {{ $pet->pet_name }} <span class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
+                                                {{ $pet->pet_name }} <span
+                                                    class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
                                             </span>
                                         @endforeach
                                     </td>
@@ -287,60 +296,58 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @section('scripts')
-
-<script>
-    $(document).ready(function() {
-        $('#select-schedule').on('change', function() {
-            let selectedDate = $(this).val();
-            if (selectedDate) {
-                $.ajax({
-                    url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
-                    type: 'GET',
-                    data: {
-                        date: selectedDate
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        let timeSelect = $('#selectAppointmentTime');
-                        timeSelect.empty(); // Clear existing options
-                        timeSelect.append(
-                            '<option value="">--- Select a Time ---</option>');
-
-                        if (response.length > 0) {
-                            let amGroup = $('<optgroup label="AM"></optgroup>');
-                            let pmGroup = $('<optgroup label="PM"></optgroup>');
-
-                            response.forEach(function(time) {
-                                let option =
-                                    `<option value="${time}">${time}</option>`;
-                                let hour = parseInt(time.split(':')[0]);
-                                if (hour < 12) {
-                                    amGroup.append(option);
-                                } else {
-                                    pmGroup.append(option);
-                                }
-                            });
-
-                            timeSelect.append(amGroup);
-                            timeSelect.append(pmGroup);
-                        } else {
+    <script>
+        $(document).ready(function() {
+            $('#select-schedule').on('change', function() {
+                let selectedDate = $(this).val();
+                if (selectedDate) {
+                    $.ajax({
+                        url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
+                        type: 'GET',
+                        data: {
+                            date: selectedDate
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            let timeSelect = $('#selectAppointmentTime');
+                            timeSelect.empty(); // Clear existing options
                             timeSelect.append(
-                                '<option value="">No available times</option>');
+                                '<option value="">--- Select a Time ---</option>');
+
+                            if (response.length > 0) {
+                                let amGroup = $('<optgroup label="AM"></optgroup>');
+                                let pmGroup = $('<optgroup label="PM"></optgroup>');
+
+                                response.forEach(function(time) {
+                                    let option =
+                                        `<option value="${time}">${time}</option>`;
+                                    let hour = parseInt(time.split(':')[0]);
+                                    if (hour < 12) {
+                                        amGroup.append(option);
+                                    } else {
+                                        pmGroup.append(option);
+                                    }
+                                });
+
+                                timeSelect.append(amGroup);
+                                timeSelect.append(pmGroup);
+                            } else {
+                                timeSelect.append(
+                                    '<option value="">No available times</option>');
+                            }
+                        },
+                        error: function(error) {
+                            console.log("Error fetching available times:", error);
                         }
-                    },
-                    error: function(error) {
-                        console.log("Error fetching available times:", error);
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
+
 
 
 @endsection
