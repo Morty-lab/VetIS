@@ -81,6 +81,8 @@ class AppointmentsController extends Controller
         $appointment = Appointments::with(['client', 'pet'])->find($id);
 
         $appointment->status = 0;
+        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($appointment->appointment_date), Carbon::parse($appointment->appointment_time));
+        $appointment->priority_number = $priority_number;
         $appointment->save();
 
         $client = Clients::find($appointment->owner_ID);
@@ -88,7 +90,7 @@ class AppointmentsController extends Controller
         $date = Carbon::parse($appointment->appointment_date)->format('l, F j, Y');
         $time = Carbon::parse($appointment->appointment_time)->format('g:i A');
 
-        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first();
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
 
 
@@ -158,7 +160,7 @@ class AppointmentsController extends Controller
         $time = Carbon::parse($appointment->appointment_time)->format('g:i A');
 
 
-        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first(); // Doctor::getDoctorById($appointment->doctor_ID)->first();
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
 
 
@@ -220,7 +222,7 @@ class AppointmentsController extends Controller
 
 
         // Create a new appointment using the validated data
-        $request->merge(['pet_ID' => implode(',', $request->input('pet_ID')),'status' => 0]);
+        $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
 
         $result = Appointments::createAppointment($request->all());
 
@@ -308,7 +310,7 @@ class AppointmentsController extends Controller
         // Retrieve the veterinarian
         $client = Clients::find($appointment->owner_ID);
         Clients::setEmailAttribute($client, $client->user_id);
-        $veterinarian = Doctor::getDoctorById($appointment->doctor_ID)->first();
+        $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first();
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
 
         $newDate = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024

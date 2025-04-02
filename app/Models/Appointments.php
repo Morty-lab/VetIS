@@ -57,7 +57,6 @@ class Appointments extends Model
 
     public static function createAppointment($data)
     {
-        $data['priority_number'] = self::generateAppointmentNumber(Carbon::parse($data['appointment_date']), Carbon::parse($data['appointment_time']));
         return self::create($data);
     }
 
