@@ -57,13 +57,14 @@
                                 <select class="select-reason-of-visit form-control" id="reasonOfVisit"
                                     name="reasonOfVisit[]" multiple="multiple" data-placeholder="Select a Reason of Visit"
                                     required autocomplete="off">
-                                    <option value="#">Check-Up</option>
-                                    <option value="#">Vaccination</option>
+                                    @foreach ($services as $service)
+                                        <option value="{{ $service->id }}">{{ $service->service_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputPurpose">Other Notes</label>
-                                <textarea class="form-control" name="purpose" id="inputPurpose" rows="4"></textarea>
+                                <textarea class="form-control" name="remarks" id="inputPurpose" rows="4"></textarea>
                             </div>
                             <hr class="mb-0">
                             <div class="col-md-12">
@@ -257,7 +258,17 @@
                                     <td>Dr.
                                         {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
                                     </td>
-                                    <td>{{ \Illuminate\Support\Str::limit($appointment->purpose, 30, '...') }}</td>
+                                    <td>
+                                        @php
+                                            $service_ids = explode(',', $appointment->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        @endphp
+                                        @foreach ($services as $service)
+                                            <span class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
+                                                {{ $service->service_name }}
+                                            </span>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         @if (is_null($appointment->status) == true)
                                             <div class="badge bg-warning-soft text-warning text-xs rounded-pill">

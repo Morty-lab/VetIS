@@ -55,7 +55,17 @@
                                     <td>Dr.
                                         {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
                                     </td>
-                                    <td>{{ $appointment->purpose }}</td>
+                                    <td>
+                                        @php
+                                            $service_ids = explode(',', $appointment->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        @endphp
+                                        @foreach ($services as $service)
+                                            <span class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
+                                                {{ $service->service_name }}
+                                            </span>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <div class="badge bg-danger-soft text-danger rounded-pill">Cancelled</div>
                                     </td>

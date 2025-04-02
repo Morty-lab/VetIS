@@ -10,6 +10,7 @@ use App\Models\Pets;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Services;
 use Illuminate\Support\Facades\Mail;
 
 class AppointmentsController extends Controller
@@ -24,7 +25,10 @@ class AppointmentsController extends Controller
         $pets = Pets::all();
         $appointments = Appointments::with('client')->orderBy('appointment_date', 'asc')->get();
         $vets = Doctor::getAllDoctors();
-        return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+
+        $services = Services::getAllServices();
+
+        return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     }
 
     public function getAvailableTimes(Request $request)
@@ -72,8 +76,10 @@ class AppointmentsController extends Controller
 
         $appointment = Appointments::with(['client', 'pet'])->find($id);
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
-        return view('appointments.view', ["appointment" => $appointment, "vets" => $vets]);
+
+        return view('appointments.view', ["appointment" => $appointment, "vets" => $vets, "services" => $services]);
     }
 
     public function appointmentSchedule($id)
@@ -215,14 +221,21 @@ class AppointmentsController extends Controller
             'doctor_ID' => 'required',
             'appointment_date' => 'required|date',
             'appointment_time' => 'nullable',
-            'purpose' => 'required',
+            'reasonOfVisit' => 'required',
+            'remarks' => 'required',
         ]);
+
+        // dd($validatedData);
 
 
 
 
         // Create a new appointment using the validated data
-        $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
+        // $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
+        $request->merge([
+            'pet_ID' => implode(',', $request->input('pet_ID')),
+            'purpose' => implode(',', $request->input('reasonOfVisit')),
+        ]);
 
         $result = Appointments::createAppointment($request->all());
 
@@ -292,17 +305,16 @@ class AppointmentsController extends Controller
             'appointment_date' => 'required|date|after_or_equal:today', // Appointment date must be valid and not in the past
             'appointment_time' => 'required|date_format:H:i',           // Valid time format
             'doctor_ID' => 'required|exists:users,id',           // Ensure the doctor exists
-            'inputPurpose' => 'required|string|max:500',           // Purpose cannot be empty
         ]);
 
         // Find the appointment by ID
         $appointment = Appointments::findOrFail($appid);
+        // dd($appointment);
 
         // Update the appointment details
         $appointment->appointment_date = $validatedData['appointment_date'];
         $appointment->appointment_time = $validatedData['appointment_time'];
         $appointment->doctor_ID = $validatedData['doctor_ID'];
-        $appointment->purpose = $validatedData['inputPurpose'];
 
         // Save the changes
         $appointment->save();

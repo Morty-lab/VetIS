@@ -30,7 +30,8 @@ class AppointmentsFactory extends Factory
             'appointment_time' => $this->faker->time(),
             'priority_number' => $this->faker->numberBetween(1, 10),
             'status' => ($date < Carbon::now()) ? 1 : 0,
-            'purpose' => $this->faker->sentence(),
+            'purpose' => implode(',', range(1, $this->faker->numberBetween(1, 4))),
+            'remarks' => $this->faker->sentence(),
 
         ];
     }

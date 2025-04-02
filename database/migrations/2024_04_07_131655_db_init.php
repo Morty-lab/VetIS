@@ -223,6 +223,7 @@ return new class extends Migration {
             $table->string("priority_number")->nullable();
             $table->integer("status")->nullable();
             $table->string("purpose")->nullable();
+            $table->text("remarks")->nullable();
             $table->timestamps();
         });
 

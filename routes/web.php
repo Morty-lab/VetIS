@@ -22,6 +22,7 @@ use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
 use App\Models\Pets;
+use App\Models\Services;
 use App\Models\TransactionModel;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -243,17 +244,19 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
-        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.today');
     Route::get('/finishedappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
+        $services = Services::getAllServices();
         $vets = Doctor::getAllDoctors();
 
-        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.finished');
     Route::get('/pendingappointments', function () {
 
@@ -261,8 +264,9 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
-        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.pending');
     Route::get('/cancelledappointments', function () {
 
@@ -270,7 +274,9 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
-        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        $services = Services::getAllServices();
+
+        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.cancelled');
 
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
