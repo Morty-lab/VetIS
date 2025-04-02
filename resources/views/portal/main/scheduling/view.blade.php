@@ -17,7 +17,8 @@
                                 <!-- Select Schedule -->
                                 <label for="select-schedule" class="mb-1">Select Date</label>
                                 <div class="input-group input-group-joined">
-                                    <input type="text" class="form-control" id="select-schedule" name="appointment_date" placeholder="YYYY-MM-DD" value="{{ $appointment->appointment_date }}">
+                                    <input type="text" class="form-control" id="select-schedule" name="appointment_date"
+                                        placeholder="YYYY-MM-DD" value="{{ $appointment->appointment_date }}">
                                     <span class="input-group-text">
                                         <i data-feather="calendar"></i>
                                     </span>
@@ -27,29 +28,49 @@
                                 <!-- Select Schedule -->
                                 <div class="form-group">
                                     <label class="small mb-1">Appointment Time</label>
-                                    <select class="select-appointment-time-edit-portal form-control"
-                                        id="selectAppointmentTime" name="appointment_time" data-placeholder="Select Time"
-                                        required>
+                                    @php
+                                        $selectedTime = \Carbon\Carbon::parse($appointment->appointment_time)->format(
+                                            'g:i A',
+                                        );
+                                    @endphp
+                                    <select class="select-appointment-time-edit form-control" id="selectAppointmentTime"
+                                        name="appointment_time" data-placeholder="Select Time" required disabled>
                                         <option value=""></option>
                                         <optgroup label="AM">
-                                            <option value="8:00 AM">8:00 AM</option>
-                                            <option value="8:30 AM">8:30 AM</option>
-                                            <option value="9:00 AM">9:00 AM</option>
-                                            <option value="9:30 AM">9:30 AM</option>
-                                            <option value="10:00 AM">10:00 AM</option>
-                                            <option value="10:30 AM">10:30 AM</option>
-                                            <option value="11:00 AM">11:00 AM</option>
-                                            <option value="11:30 AM">11:30 AM</option>
+                                            <option value="8:00 AM" {{ $selectedTime === '8:00 AM' ? 'selected' : '' }}>8:00
+                                                AM</option>
+                                            <option value="8:30 AM" {{ $selectedTime === '8:30 AM' ? 'selected' : '' }}>8:30
+                                                AM</option>
+                                            <option value="9:00 AM" {{ $selectedTime === '9:00 AM' ? 'selected' : '' }}>9:00
+                                                AM</option>
+                                            <option value="9:30 AM" {{ $selectedTime === '9:30 AM' ? 'selected' : '' }}>9:30
+                                                AM</option>
+                                            <option value="10:00 AM" {{ $selectedTime === '10:00 AM' ? 'selected' : '' }}>
+                                                10:00 AM</option>
+                                            <option value="10:30 AM" {{ $selectedTime === '10:30 AM' ? 'selected' : '' }}>
+                                                10:30 AM</option>
+                                            <option value="11:00 AM" {{ $selectedTime === '11:00 AM' ? 'selected' : '' }}>
+                                                11:00 AM</option>
+                                            <option value="11:30 AM" {{ $selectedTime === '11:30 AM' ? 'selected' : '' }}>
+                                                11:30 AM</option>
                                         </optgroup>
                                         <optgroup label="PM">
-                                            <option value="1:00 PM">1:00 PM</option>
-                                            <option value="1:30 PM">1:30 PM</option>
-                                            <option value="2:00 PM">2:00 PM</option>
-                                            <option value="2:30 PM">2:30 PM</option>
-                                            <option value="3:00 PM">3:00 PM</option>
-                                            <option value="3:30 PM">3:30 PM</option>
-                                            <option value="4:00 PM">4:00 PM</option>
-                                            <option value="4:30 PM">4:30 PM</option>
+                                            <option value="1:00 PM" {{ $selectedTime === '1:00 PM' ? 'selected' : '' }}>
+                                                1:00 PM</option>
+                                            <option value="1:30 PM" {{ $selectedTime === '1:30 PM' ? 'selected' : '' }}>
+                                                1:30 PM</option>
+                                            <option value="2:00 PM" {{ $selectedTime === '2:00 PM' ? 'selected' : '' }}>
+                                                2:00 PM</option>
+                                            <option value="2:30 PM" {{ $selectedTime === '2:30 PM' ? 'selected' : '' }}>
+                                                2:30 PM</option>
+                                            <option value="3:00 PM" {{ $selectedTime === '3:00 PM' ? 'selected' : '' }}>
+                                                3:00 PM</option>
+                                            <option value="3:30 PM" {{ $selectedTime === '3:30 PM' ? 'selected' : '' }}>
+                                                3:30 PM</option>
+                                            <option value="4:00 PM" {{ $selectedTime === '4:00 PM' ? 'selected' : '' }}>
+                                                4:00 PM</option>
+                                            <option value="4:30 PM" {{ $selectedTime === '4:30 PM' ? 'selected' : '' }}>
+                                                4:30 PM</option>
                                         </optgroup>
                                     </select>
                                     <div class="invalid-feedback">
@@ -61,7 +82,8 @@
                                 <!-- Select Pet -->
                                 <div class="form-group">
                                     <label for="select-pet" class="mb-1">Pet/s</label>
-                                    <select class="select-pet form-control" multiple="multiple" id="select-pet" name="pet_ID" data-placeholder="Select a Pet">
+                                    <select class="select-pet form-control" multiple="multiple" id="select-pet"
+                                        name="pet_ID" data-placeholder="Select a Pet">
                                         @foreach ($pets as $p)
                                             <option value="{{ $p->id }}"
                                                 @if ($p->id == $pet->id) selected @endif>{{ $p->pet_name }}
@@ -90,17 +112,18 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="edit-rov" class="mb-1">Reason of Visit</label>
-                                    <select class="edit-rov form-control" id="select-appointment-reason" name="" data-placeholder="Select Reason of Visit" multiple="multiple" required autocomplete="off">
+                                    @php
+                                        $service_ids = explode(',', $appointment->purpose);
+                                    @endphp
+                                    <select class="edit-rov form-control" id="select-appointment-reason" name=""
+                                        data-placeholder="Select Reason of Visit" multiple="multiple" required
+                                        autocomplete="off">
                                         <option value=""></option>
-                                        <option value="vaccination">Vaccination (starts at ₱500)</option>
-                                        <option value="deworming">Deworming (starts at ₱200)</option>
-                                        <option value="checkup">Check-Up (₱300)</option>
-                                        <option value="surgery">Consultation (starts at ₱200)</option>
-                                        <option value="lab-test">CBC Test (starts at ₱600)</option>
-                                        <option value="xray-ultrasound">Pregnancy Diagnosis (starts at ₱800)</option>
-                                        <option value="spay-neuter">Spay / Neuter (starts at ₱2,000)</option>
-                                        <option value="emergency">Emergency (additional fees apply)</option>
-                                        <option value="others">Others (please specify)</option>
+                                        @foreach ($services as $service)
+                                            <option value="{{ $service->id }}" {{ in_array($service->id, $service_ids) ? 'selected' : '' }}>
+                                                {{ $service->service_name }} (starts at ₱{{ number_format($service->service_price, 2) }})
+                                            </option>
+                                        @endforeach
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select at least one reason.
@@ -113,7 +136,7 @@
                                 <div class="form-group">
                                     <label for="concern-complain" class="mb-1">Other Notes</label>
                                     <textarea class="form-control" id="concern-complain" name="purpose" rows="5"
-                                        placeholder="Enter the purpose of your appointment"> {{ $appointment->purpose }}</textarea>
+                                        placeholder="Enter the purpose of your appointment"> {{ $appointment->remarks }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +153,8 @@
     </div>
 
     <!-- Cancel Appointment Request Modal -->
-    <div class="modal fade" id="cancelRequestModal" tabindex="-1" aria-labelledby="cancelRequestLabel" aria-hidden="true">
+    <div class="modal fade" id="cancelRequestModal" tabindex="-1" aria-labelledby="cancelRequestLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content py-3">
                 <div class="modal-header border-0 text-center d-block">
@@ -141,9 +165,11 @@
                     Are you sure you want to <strong>Cancel</strong> this appointment request? This action cannot be undone.
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
-                    <form action="{{ route('portal.appointments.cancel', ['appid' => $appointment->id]) }}" method="POST">
+                    <form action="{{ route('portal.appointments.cancel', ['appid' => $appointment->id]) }}"
+                        method="POST">
                         @csrf
-                        <button type="button" class="btn btn-light text-dark" data-bs-dismiss="modal">No, Keep It</button>
+                        <button type="button" class="btn btn-light text-dark" data-bs-dismiss="modal">No, Keep
+                            It</button>
                         <button type="submit" class="btn btn-warning">Yes, Cancel Request</button>
                     </form>
                 </div>
@@ -189,7 +215,8 @@
                                                 data-bs-target="#editAppointmentRequestModal">Edit Request</a></li>
                                         <li>
                                             <a class="dropdown-item" data-bs-toggle="modal"
-                                               data-bs-target="#cancelRequestModal">Cancel Request</a></li>
+                                                data-bs-target="#cancelRequestModal">Cancel Request</a>
+                                        </li>
                                         </li>
                                     @endif
 
@@ -255,24 +282,26 @@
                                         $pet_ids = explode(',', $appointment->pet_ID);
                                         $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
                                     @endphp
-                                        @foreach ($pets as $pet)
-                                            <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
-                                            {{ $pet->pet_name }} <span class="badge bg-white text-primary text-sm rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
-                                            </span>
-                                        @endforeach
+                                    @foreach ($pets as $pet)
+                                        <span class="badge bg-primary-soft text-primary text-sm rounded-pill">
+                                            {{ $pet->pet_name }} <span
+                                                class="badge bg-white text-primary text-sm rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
+                                        </span>
+                                    @endforeach
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <div class="border py-3 px-3 border-top-lg border-top-primary rounded">
                                         <label class="mb-1 text-primary fw-bold b">Reason of Visit</label>
                                         <table class="table table-bordered mt-2 mb-0">
-                                            <tr>
-                                                <td>Grooming</td>
-                                                <td>500.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Grooming</td>
-                                                <td>500.00</td>
-                                            </tr>
+                                            @php
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            @endphp
+                                            @foreach ($services as $service)
+                                                <tr>
+                                                    <td>{{ $service->service_name }}</td>
+                                                    <td>{{ number_format($service->service_price, 2) }}</td>
+                                                </tr>
+                                            @endforeach
                                         </table>
                                     </div>
                                 </div>
@@ -280,7 +309,7 @@
                                     <div class="border py-3 px-3 border-top-lg border-top-dark rounded">
                                         <label class="mb-1 text-gray-700 fw-bold b">Other Notes</label>
                                         <p class="mb-0 mt-2">
-                                            {{ $appointment->purpose }}
+                                            {{ $appointment->remarks }}
                                         </p>
                                     </div>
                                 </div>
@@ -369,6 +398,55 @@
             minTime: "08:00",
             maxTime: "17:00",
             minuteIncrement: 5, // Optional: set minute increment
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#select-schedule').on('change', function() {
+                let selectedDate = $(this).val();
+                if (selectedDate) {
+                    $.ajax({
+                        url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
+                        type: 'GET',
+                        data: {
+                            date: selectedDate
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            let timeSelect = $('#selectAppointmentTime');
+                            timeSelect.empty(); // Clear existing options
+                            timeSelect.append(
+                                '<option value="">--- Select a Time ---</option>');
+
+                            if (response.length > 0) {
+                                let amGroup = $('<optgroup label="AM"></optgroup>');
+                                let pmGroup = $('<optgroup label="PM"></optgroup>');
+
+                                response.forEach(function(time) {
+                                    let option =
+                                        `<option value="${time}">${time}</option>`;
+                                    let hour = parseInt(time.split(':')[0]);
+                                    if (hour < 12) {
+                                        amGroup.append(option);
+                                    } else {
+                                        pmGroup.append(option);
+                                    }
+                                });
+
+                                timeSelect.append(amGroup);
+                                timeSelect.append(pmGroup);
+                            } else {
+                                timeSelect.append(
+                                    '<option value="">No available times</option>');
+                            }
+                            $('#selectAppointmentTime').prop('disabled', false);
+                        },
+                        error: function(error) {
+                            console.log("Error fetching available times:", error);
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection
