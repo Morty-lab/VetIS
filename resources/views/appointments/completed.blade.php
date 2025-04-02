@@ -35,49 +35,100 @@
                     </thead>
                     <tbody>
                         @foreach ($appointments->sortBy('created_at') as $appointment)
-                            @if ($appointment->status == 1)
-                                <tr>
-                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
-                                    </td>
-                                    <td>{{ $appointment->client->client_name }}</td>
-                                    <td>
-                                        @php
-                                            $pet_ids = explode(',', $appointment->pet_ID);
-                                            $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
-                                        @endphp
-                                        @foreach ($pets as $pet)
-                                            <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
-                                                {{ $pet->pet_name }} <span
-                                                    class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $appointment->pet->pet_type }}</span></span>
-                                            </span>
-                                        @endforeach
-                                    </td>
-                                    <td>Dr.
-                                        {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
-                                    </td>
-                                    <td>
-                                        @php
-                                            $service_ids = explode(',', $appointment->purpose);
-                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
-                                        @endphp
-                                        @foreach ($services as $service)
-                                            <span class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
-                                                {{ $service->service_name }}
-                                            </span>
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        <div class="badge bg-success-soft text-success rounded-pill">Finished</div>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-primary px-5 py-3"
-                                            href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
-                                    </td>
+                            @if (auth()->user()->role == 'veterinarian')
+                            @php
+                                $vetID = App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id;
+                            @endphp
+                            @if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() && $appointment->doctor_ID == $vetID)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                    {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                                </td>
+                                <td>{{ $appointment->client->client_name }}</td>
+                                <td>
+                                    @php
+                                        $pet_ids = explode(',', $appointment->pet_ID);
+                                        $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
+                                    @endphp
+                                    @foreach ($pets as $pet)
+                                        <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                            {{ $pet->pet_name }} <span
+                                                class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $appointment->pet->pet_type }}</span></span>
+                                        </span>
+                                    @endforeach
+                                </td>
+                                <td>Dr.
+                                    {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
+                                </td>
+                                <td>
+                                    @php
+                                        $service_ids = explode(',', $appointment->purpose);
+                                        $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                    @endphp
+                                    @foreach ($services as $service)
+                                        <span class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
+                                            {{ $service->service_name }}
+                                        </span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <div class="badge bg-success-soft text-success rounded-pill">Finished</div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3"
+                                        href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
+                                </td>
 
-                                </tr>
+                            </tr>
+                        @else
+                            @continue
+                        @endif
                             @else
-                                @continue
+                                @if ($appointment->status == 1)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
+                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                                        </td>
+                                        <td>{{ $appointment->client->client_name }}</td>
+                                        <td>
+                                            @php
+                                                $pet_ids = explode(',', $appointment->pet_ID);
+                                                $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
+                                            @endphp
+                                            @foreach ($pets as $pet)
+                                                <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                                    {{ $pet->pet_name }} <span
+                                                        class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $appointment->pet->pet_type }}</span></span>
+                                                </span>
+                                            @endforeach
+                                        </td>
+                                        <td>Dr.
+                                            {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
+                                        </td>
+                                        <td>
+                                            @php
+                                                $service_ids = explode(',', $appointment->purpose);
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            @endphp
+                                            @foreach ($services as $service)
+                                                <span
+                                                    class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
+                                                    {{ $service->service_name }}
+                                                </span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <div class="badge bg-success-soft text-success rounded-pill">Finished</div>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-datatable btn-primary px-5 py-3"
+                                                href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
+                                        </td>
+
+                                    </tr>
+                                @else
+                                    @continue
+                                @endif
                             @endif
                         @endforeach
                     </tbody>
