@@ -91,12 +91,6 @@
                                 <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color" autocomplete="off"/>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight (kg) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="inputWeight" type="number" value="" placeholder="Weight (kg)" name="pet_weight" step="0.01" autocomplete="off"/>
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate <span class="text-danger">*</span></label>
                                 <div class="input-group input-group-joined">
                                     <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" placeholder="Select a Date"/>
@@ -105,6 +99,8 @@
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender <span class="text-danger">*</span></label>
                                 <select class="select-pet-gender form-control" id="selectGender" name="pet_gender" data-placeholder="Select Gender">

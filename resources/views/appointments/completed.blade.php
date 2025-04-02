@@ -33,8 +33,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($appointments as $appointment)
-                    @if ( $appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() )
+                    @foreach ($appointments->sortBy('created_at') as $appointment)
+                    @if ( $appointment->status == 1)
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
@@ -60,7 +60,6 @@
                     @else
                     @continue
                     @endif
-
                     @endforeach
                 </tbody>
             </table>

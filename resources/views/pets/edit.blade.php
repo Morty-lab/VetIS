@@ -96,17 +96,12 @@
                                     placeholder="Color" name="pet_color" autocomplete="off"/>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight (kg) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="inputWeight" type="number"
-                                    value="{{ $pet->pet_weight }}" placeholder="Weight (kg)" name="pet_weight" step="0.01" autocomplete="off"/>
+                                <label class="small mb-1" for="inputBirthdate">Birthdate <span class="text-danger">*</span></label>
+                                <input class="form-control" id="inputBirthdate" type="date"
+                                       value="{{ $pet->pet_birthdate }}" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthdate">Birthdate <span class="text-danger">*</span></label>
-                                <input class="form-control" id="inputBirthdate" type="date"
-                                    value="{{ $pet->pet_birthdate }}" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
-                            </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="selectGender">Gender <span class="text-danger">*</span></label>
                                 <select class="edit-select-pet-gender form-control" id="selectGender" name="pet_gender" data-placeholder="Select Gender">

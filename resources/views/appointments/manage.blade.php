@@ -211,8 +211,7 @@
         </div>
 
         <div class="card shadow-none">
-            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled
-                    Appointments</span></div>
+            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled Appointments</span></div>
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
