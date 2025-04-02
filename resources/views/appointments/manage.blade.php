@@ -138,10 +138,18 @@
                             <div class="me-3">
                                 <div class="text-primary">Today's Appointments</div>
                                 @php
-                                    $todayCount = \App\Models\Appointments::where('status', 0)
-                                        ->whereDate('appointment_date', \Carbon\Carbon::today()->format('Y-m-d'))
-                                        ->count();
-                                @endphp
+                                $todayCount = 0;
+                                foreach ($appointments as $appointment) {
+                                if (
+                                $appointment->status === 0 &&
+                                \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                ) {
+                                $todayCount++;
+                                } else {
+                                continue;
+                                }
+                                }
+                            @endphp
                                 <div class="text-lg fw-bold">{{ $todayCount }}</div>
                             </div>
                             <i class="fa-regular fa-calendar text-gray-400 fa-2x"></i>
@@ -159,10 +167,18 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
                                 @php
-                                    $finishedCount = \App\Models\Appointments::where('status', 1)
-                                        ->whereDate('appointment_date', \Carbon\Carbon::today()->format('Y-m-d'))
-                                        ->count();
-                                @endphp
+                                $finishedCount = 0;
+                                foreach ($appointments as $appointment) {
+                                if (
+                                $appointment->status == 1 &&
+                                \Carbon\Carbon::parse($appointment->updated_at)->isToday()
+                                ) {
+                                $finishedCount++;
+                                } else {
+                                continue;
+                                }
+                                }
+                            @endphp
                                 <div class="text-success">Finished Appointments</div>
                                 <div class="text-lg fw-bold">{{ $finishedCount }}</div>
                             </div>

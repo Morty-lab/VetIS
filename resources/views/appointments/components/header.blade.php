@@ -24,7 +24,7 @@
                                         $todayCount = 0;
                                         foreach ($appointments as $appointment) {
                                         if (
-                                        $appointment->status == 0 &&
+                                        $appointment->status === 0 &&
                                         \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
                                         ) {
                                         $todayCount++;
