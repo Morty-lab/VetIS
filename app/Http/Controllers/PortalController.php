@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Models\PetRecords;
 use App\Models\Pets;
 use App\Models\Prescriptions;
+use App\Models\Services;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -219,10 +220,11 @@ class PortalController extends Controller
         $pet = Pets::getPetByID($petID);
         $pets = Pets::getPetByClient($pet->owner_ID);
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
 
 
-        return view('portal.main.scheduling.view', ['appointment' => $appointment, 'pet' => $pet, 'pets' => $pets, 'vets' => $vets]);
+        return view('portal.main.scheduling.view', ['appointment' => $appointment, 'pet' => $pet, 'pets' => $pets, 'vets' => $vets, 'services' => $services]);
     }
 
     public function updateMyAppointment(Request $request)

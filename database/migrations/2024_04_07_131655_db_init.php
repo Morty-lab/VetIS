@@ -220,9 +220,10 @@ return new class extends Migration {
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
             $table->date("appointment_date");
             $table->time("appointment_time")->nullable();
-            $table->string("priority_number");
+            $table->string("priority_number")->nullable();
             $table->integer("status")->nullable();
             $table->string("purpose")->nullable();
+            $table->text("remarks")->nullable();
             $table->timestamps();
         });
 

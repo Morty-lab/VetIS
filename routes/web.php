@@ -22,8 +22,10 @@ use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
 use App\Models\Pets;
+use App\Models\Services;
 use App\Models\TransactionModel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -54,12 +56,48 @@ Route::get('/appointments/available-times', [AppointmentsController::class, 'get
 Auth::routes(['login' => false]);
 
 Route::get('/dashboard', function () {
-    $appointmentCount = Appointments::where('status', 0)->where('appointment_date', \Carbon\Carbon::today())->count();
-    $finishedAppointments = Appointments::where('status', 2)->where('updated_at', now())->count();
-    $appointmentRequests = Appointments::where('status', null)->count();
+    $today = Carbon::today();
+
+    $appointments = Appointments::all();
+    $todayCount = 0;
+    foreach ($appointments as $appointment) {
+    if (
+    $appointment->status == 0 &&
+    \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+    ) {
+    $todayCount++;
+    } else {
+    continue;
+    }
+    }
+
+
+    // Count today's pending (status 0) appointments
+    $todayCount = Appointments::where('status', 0)
+        ->whereDate('appointment_date', $today)
+        ->count();
+
+    // Count today's finished (status 1) appointments
+    $finishedCount = Appointments::where('status', 1)
+        ->whereDate('updated_at', $today)
+        ->count();
+
+    // Count appointment requests with null status
+    $appointmentRequests = Appointments::whereNull('status')->count();
+
+    // Count all pets
     $petCount = Pets::count();
+
+    // Fetch daily sales report
     $dailySales = TransactionModel::getDailySalesReport();
-    return view('dashboard', ['appointmentCount' => $appointmentCount, 'finishedAppointments' => $finishedAppointments, 'petCount' => $petCount, 'appointmentRequests' => $appointmentRequests, 'dailySales' => $dailySales]);
+
+    return view('dashboard', compact(
+        'todayCount',
+        'finishedCount',
+        'petCount',
+        'appointmentRequests',
+        'dailySales'
+    ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
@@ -243,17 +281,19 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
-        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        return view('appointments.today', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.today');
     Route::get('/finishedappointments', function () {
 
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
+        $services = Services::getAllServices();
         $vets = Doctor::getAllDoctors();
 
-        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        return view('appointments.completed', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.finished');
     Route::get('/pendingappointments', function () {
 
@@ -261,8 +301,9 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
-        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        return view('appointments.request', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.pending');
     Route::get('/cancelledappointments', function () {
 
@@ -270,7 +311,9 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();
         $vets = Doctor::getAllDoctors();
-        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets]);
+        $services = Services::getAllServices();
+
+        return view('appointments.cancelled', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     })->name('appointments.cancelled');
 
     Route::get('/viewappointments/{id}/done', [AppointmentsController::class, 'appointmentDone'])->name('appointments.done');
@@ -291,7 +334,7 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
     Route::post('/products/addStocks/{id}', [ProductsController::class, 'addStocks'])->name("products.addStocks");
-Route::post('/products/repackStocks', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
+    Route::post('/products/repackStocks', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
 
     Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
     Route::post('/products/update/{id}', [ProductsController::class, 'update'])->name("products.update");

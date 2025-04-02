@@ -37,7 +37,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-primary">Today's Appointments</div>
-                            <div class="text-xl fw-bold">{{$appointmentCount}}</div>
+                            <div class="text-xl fw-bold">{{$todayCount}}</div>
                         </div>
                         <i class="fa-regular fa-calendar text-gray-400 fa-2x"></i>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-success">Finished Appointments</div>
-                            <div class="text-xl fw-bold">{{$finishedAppointments}}</div>
+                            <div class="text-xl fw-bold">{{$finishedCount}}</div>
                         </div>
                         <i class="fa-regular fa-calendar-check text-gray-400 fa-2x"></i>
                     </div>

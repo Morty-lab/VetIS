@@ -51,10 +51,16 @@
                                     <div class="border py-3 px-3 rounded">
                                         <label class="mb-1">Reason of Visit</label>
                                         <table class="table table-bordered mt-2 mb-0">
-                                            <tr>
-                                                <td>Grooming</td>
-                                                <td>500.00</td>
-                                            </tr>
+                                            @php
+                                                $service_ids = explode(',', $appointment->purpose);
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            @endphp
+                                            @foreach ($services as $service)
+                                                <tr>
+                                                    <td>{{ $service->service_name }}</td>
+                                                    <td>{{ number_format($service->service_price, 2) }}</td>
+                                                </tr>
+                                            @endforeach
                                         </table>
                                     </div>
                                 </div>
@@ -62,52 +68,66 @@
                                     <div class="border py-3 px-3 rounded">
                                         <label class="mb-1">Other Notes</label>
                                         <p class="mb-0 mt-2">
-                                            {{ $appointment->purpose }}
+                                            {{ $appointment->remarks }}
                                         </p>
                                     </div>
                                 </div>
                             <hr class="mb-0">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
-                                {{--                            <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" value="{{$appointment->appointment_date}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" /> --}}
+                                <label class="small mb-1" for="inputAppointmentDate">Appointment Date</label>
                                 <div class="input-group input-group-joined">
-                                    <input type="text" class="form-control" id="select-schedule" name="appointment_date"
-                                           placeholder="YYYY-MM-DD" value="{{ $appointment->appointment_date }}">
+                                    <input class="form-control select-schedule" id="select-schedule" type="text" name="appointment_date"
+                                        min="{{  $appointment->appointment_date }}" value="{{ $appointment->appointment_date }}" placeholder="Select a Date" />
                                     <span class="input-group-text">
                                         <i data-feather="calendar"></i>
                                     </span>
                                 </div>
                             </div>
+                            {{-- <div class="col-md-6">
+                                <label class="small mb-1" for="inputEmailAddress">Appointment Date</label>
+                                                           <input class="form-control" id="inputEmailAddress" type="date" name="appointment_date" value="{{$appointment->appointment_date}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                <div class="input-group input-group-joined">
+                                    <input type="text" class="form-control" id="select-schedule" name="appointment_date"
+                                           placeholder="YYYY-MM-DD" >
+                                    <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputEmailAddress">Appointment Time</label>
+                                @php
+                                    $selectedTime = \Carbon\Carbon::parse($appointment->appointment_time)->format('g:i A');
+                                @endphp
                                 <select class="select-appointment-time-edit form-control" id="selectAppointmentTime"
-                                        name="appointment_time" data-placeholder="Select Time" required>
+                                        name="appointment_time" data-placeholder="Select Time" required disabled>
                                     <option value=""></option>
                                     <optgroup label="AM">
-                                        <option value="8:00 AM">8:00 AM</option>
-                                        <option value="8:30 AM">8:30 AM</option>
-                                        <option value="9:00 AM">9:00 AM</option>
-                                        <option value="9:30 AM">9:30 AM</option>
-                                        <option value="10:00 AM">10:00 AM</option>
-                                        <option value="10:30 AM">10:30 AM</option>
-                                        <option value="11:00 AM">11:00 AM</option>
-                                        <option value="11:30 AM">11:30 AM</option>
+                                        <option value="8:00 AM" {{ $selectedTime === '8:00 AM' ? 'selected' : '' }}>8:00 AM</option>
+                                        <option value="8:30 AM" {{ $selectedTime === '8:30 AM' ? 'selected' : '' }}>8:30 AM</option>
+                                        <option value="9:00 AM" {{ $selectedTime === '9:00 AM' ? 'selected' : '' }}>9:00 AM</option>
+                                        <option value="9:30 AM" {{ $selectedTime === '9:30 AM' ? 'selected' : '' }}>9:30 AM</option>
+                                        <option value="10:00 AM" {{ $selectedTime === '10:00 AM' ? 'selected' : '' }}>10:00 AM</option>
+                                        <option value="10:30 AM" {{ $selectedTime === '10:30 AM' ? 'selected' : '' }}>10:30 AM</option>
+                                        <option value="11:00 AM" {{ $selectedTime === '11:00 AM' ? 'selected' : '' }}>11:00 AM</option>
+                                        <option value="11:30 AM" {{ $selectedTime === '11:30 AM' ? 'selected' : '' }}>11:30 AM</option>
                                     </optgroup>
                                     <optgroup label="PM">
-                                        <option value="1:00 PM">1:00 PM</option>
-                                        <option value="1:30 PM">1:30 PM</option>
-                                        <option value="2:00 PM">2:00 PM</option>
-                                        <option value="2:30 PM">2:30 PM</option>
-                                        <option value="3:00 PM">3:00 PM</option>
-                                        <option value="3:30 PM">3:30 PM</option>
-                                        <option value="4:00 PM">4:00 PM</option>
-                                        <option value="4:30 PM">4:30 PM</option>
+                                        <option value="1:00 PM" {{ $selectedTime === '1:00 PM' ? 'selected' : '' }}>1:00 PM</option>
+                                        <option value="1:30 PM" {{ $selectedTime === '1:30 PM' ? 'selected' : '' }}>1:30 PM</option>
+                                        <option value="2:00 PM" {{ $selectedTime === '2:00 PM' ? 'selected' : '' }}>2:00 PM</option>
+                                        <option value="2:30 PM" {{ $selectedTime === '2:30 PM' ? 'selected' : '' }}>2:30 PM</option>
+                                        <option value="3:00 PM" {{ $selectedTime === '3:00 PM' ? 'selected' : '' }}>3:00 PM</option>
+                                        <option value="3:30 PM" {{ $selectedTime === '3:30 PM' ? 'selected' : '' }}>3:30 PM</option>
+                                        <option value="4:00 PM" {{ $selectedTime === '4:00 PM' ? 'selected' : '' }}>4:00 PM</option>
+                                        <option value="4:30 PM" {{ $selectedTime === '4:30 PM' ? 'selected' : '' }}>4:30 PM</option>
                                     </optgroup>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select an appointment time.
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputEmailAddress">Veterinarian</label>
                                 <select class="select-attending-vet-edit form-control" id="vetSelect" name="doctor_ID">
@@ -277,14 +297,16 @@
                                             <div class="border py-3 px-3 border-top-lg border-top-primary rounded">
                                                 <label class="mb-1 text-primary fw-bold b">Reason of Visit</label>
                                                 <table class="table table-bordered mt-2 mb-0">
-                                                    <tr>
-                                                        <td>Grooming</td>
-                                                        <td>500.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Grooming</td>
-                                                        <td>500.00</td>
-                                                    </tr>
+                                                    @php
+                                                        $service_ids = explode(',', $appointment->purpose);
+                                                        $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                                    @endphp
+                                                    @foreach ($services as $service)
+                                                        <tr>
+                                                            <td>{{ $service->service_name }}</td>
+                                                            <td>{{ number_format($service->service_price, 2) }}</td>
+                                                        </tr>
+                                                    @endforeach
                                                 </table>
                                             </div>
                                         </div>
@@ -292,7 +314,7 @@
                                             <div class="border py-3 px-3 border-top-lg border-top-dark rounded">
                                                 <label class="mb-1 text-gray-700 fw-bold b">Other Notes</label>
                                                 <p class="mb-0 mt-2">
-                                                    {{ $appointment->purpose }}
+                                                    {{ $appointment->remarks }}
                                                 </p>
                                             </div>
                                         </div>
@@ -493,4 +515,56 @@
     @endsection
 
     @section('scripts')
+
+    <script>
+        $(document).ready(function() {
+            $('#select-schedule').on('change', function() {
+                let selectedDate = $(this).val();
+
+                if (selectedDate) {
+                    $.ajax({
+                        url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
+                        type: 'GET',
+                        data: {
+                            date: selectedDate
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            let timeSelect = $('#selectAppointmentTime');
+                            timeSelect.empty(); // Clear existing options
+                            timeSelect.append(
+                                '<option value="">--- Select a Time ---</option>');
+
+                            if (response.length > 0) {
+                                let amGroup = $('<optgroup label="AM"></optgroup>');
+                                let pmGroup = $('<optgroup label="PM"></optgroup>');
+
+                                response.forEach(function(time) {
+                                    let option =
+                                        `<option value="${time}"  >${time}</option>`;
+                                    let hour = parseInt(time.split(':')[0]);
+                                    if (hour < 12) {
+                                        amGroup.append(option);
+                                    } else {
+                                        pmGroup.append(option);
+                                    }
+                                });
+
+                                timeSelect.append(amGroup);
+                                timeSelect.append(pmGroup);
+                            } else {
+                                timeSelect.append(
+                                    '<option value="">No available times</option>');
+                            }
+
+                            $('#selectAppointmentTime').prop('disabled', false);
+                        },
+                        error: function(error) {
+                            console.log("Error fetching available times:", error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     @endsection
