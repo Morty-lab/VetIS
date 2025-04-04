@@ -308,7 +308,7 @@
                                 @if ($appointment->status === 0 && $appointment->doctor_ID == $vetID)
                                     <tr>
                                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                         </td>
                                         <td>{{ $appointment->client->client_name }}</td>
                                         <td>
@@ -317,9 +317,9 @@
                                                 $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
                                             @endphp
                                             @foreach ($pets as $pet)
-                                                <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                                <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
                                                     {{ $pet->pet_name }} <span
-                                                        class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
+                                                        class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
                                                 </span>
                                             @endforeach
                                         </td>
@@ -333,26 +333,26 @@
                                             @endphp
                                             @foreach ($services as $service)
                                                 <span
-                                                    class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
+                                                    class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
                                                     {{ $service->service_name }}
                                                 </span>
                                             @endforeach
                                         </td>
                                         <td>
                                             @if (is_null($appointment->status) == true)
-                                                <div class="badge bg-warning-soft text-warning text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">
                                                     Pending
                                                 </div>
                                             @elseif ($appointment->status == 0)
-                                                <div class="badge bg-secondary-soft text-secondary text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
                                                     Scheduled
                                                 </div>
                                             @elseif ($appointment->status == 2)
-                                                <div class="badge bg-danger-soft text-danger text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">
                                                     Canceled
                                                 </div>
                                             @elseif ($appointment->status == 1)
-                                                <div class="badge bg-success-soft text-success text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-success-soft text-success rounded-pill">
                                                     Finished
                                                 </div>
                                             @endif
@@ -373,7 +373,7 @@
                                 @if ($appointment->status === 0)
                                     <tr>
                                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                         </td>
                                         <td>{{ $appointment->client->client_name }}</td>
                                         <td>
@@ -382,9 +382,9 @@
                                                 $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
                                             @endphp
                                             @foreach ($pets as $pet)
-                                                <span class="badge bg-primary-soft text-primary text-xs rounded-pill">
+                                                <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
                                                     {{ $pet->pet_name }} <span
-                                                        class="badge bg-white text-primary text-xs rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
+                                                        class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
                                                 </span>
                                             @endforeach
                                         </td>
@@ -398,26 +398,26 @@
                                             @endphp
                                             @foreach ($services as $service)
                                                 <span
-                                                    class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
+                                                    class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
                                                     {{ $service->service_name }}
                                                 </span>
                                             @endforeach
                                         </td>
                                         <td>
                                             @if (is_null($appointment->status) == true)
-                                                <div class="badge bg-warning-soft text-warning text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">
                                                     Pending
                                                 </div>
                                             @elseif ($appointment->status == 0)
-                                                <div class="badge bg-secondary-soft text-secondary text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
                                                     Scheduled
                                                 </div>
                                             @elseif ($appointment->status == 2)
-                                                <div class="badge bg-danger-soft text-danger text-xs rounded-pill">
+                                                <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">
                                                     Canceled
                                                 </div>
                                             @elseif ($appointment->status == 1)
-                                                <div class="badge bg-success-soft text-success text-xs rounded-pill">
+                                                <div class="badge bg-success-soft text-success rounded-pill">
                                                     Finished
                                                 </div>
                                             @endif
@@ -451,7 +451,7 @@
                 let selectedDate = $(this).val();
                 if (selectedDate) {
                     $.ajax({
-                        url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
+                        url: '{{ route('appointments.available-times') }}',
                         type: 'GET',
                         data: {
                             date: selectedDate
@@ -459,17 +459,18 @@
                         success: function(response) {
                             console.log(response);
                             let timeSelect = $('#selectAppointmentTime');
-                            timeSelect.empty(); // Clear existing options
-                            timeSelect.append(
-                                '<option value="">--- Select a Time ---</option>');
+                            timeSelect.empty();
+                            timeSelect.append('<option value="">--- Select a Time ---</option>');
 
                             if (response.length > 0) {
                                 let amGroup = $('<optgroup label="AM"></optgroup>');
                                 let pmGroup = $('<optgroup label="PM"></optgroup>');
 
                                 response.forEach(function(time) {
-                                    let option =
-                                        `<option value="${time}">${time}</option>`;
+                                    // Convert 24-hour format to 12-hour display format
+                                    let displayTime = convertTo12HourDisplay(time);
+                                    let option = `<option value="${time}">${displayTime}</option>`;
+
                                     let hour = parseInt(time.split(':')[0]);
                                     if (hour < 12) {
                                         amGroup.append(option);
@@ -481,8 +482,7 @@
                                 timeSelect.append(amGroup);
                                 timeSelect.append(pmGroup);
                             } else {
-                                timeSelect.append(
-                                    '<option value="">No available times</option>');
+                                timeSelect.append('<option value="">No available times</option>');
                             }
                         },
                         error: function(error) {
@@ -491,6 +491,15 @@
                     });
                 }
             });
+
+            // Helper function to convert 24-hour time to 12-hour display format
+            function convertTo12HourDisplay(time24) {
+                const [hours, minutes] = time24.split(':');
+                const hour = parseInt(hours);
+                const period = hour < 12 ? 'AM' : 'PM';
+                const displayHour = hour % 12 || 12;
+                return `${displayHour}:${minutes} ${period}`;
+            }
         });
     </script>
 @endsection

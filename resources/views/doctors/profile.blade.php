@@ -407,11 +407,11 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                         <thead>
                             <tr>
                                 <th>Date & Time</th>
-                                <th>Appointment ID</th>
+{{--                                <th>Appointment ID</th>--}}
                                 <th>Pet Owner</th>
                                 <th>Pet</th>
-                                <th>Pet Type</th>
-                                <th>Purpose</th>
+{{--                                <th>Pet Type</th>--}}
+                                <th>Reason of Visit</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -426,8 +426,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                     {{ \Carbon\Carbon::parse($schedule->appointment_date)->format('j F, Y') }} |
                                     {{ \Carbon\Carbon::parse($schedule->appointment_time)->format('H:i') }}
                                 </td>
-                                <td>{{ sprintf("VetIS-%05d", $schedule->id)}}</td>
-
+{{--                                <td>{{ sprintf("VetIS-%05d", $schedule->id)}}</td>--}}
                                 <td>
                                     {{ $clients->firstWhere('id', $schedule->owner_ID)->client_name ?? 'N/A' }}
                                 </td>
@@ -435,9 +434,9 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                 <td>
                                     {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_name ?? 'N/A' }}
                                 </td>
-                                <td>
-                                    {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_type ?? 'N/A' }}
-                                </td>
+{{--                                <td>--}}
+{{--                                    {{ $pets->firstWhere('id', $schedule->pet_ID)->pet_type ?? 'N/A' }}--}}
+{{--                                </td>--}}
                                 <td>
                                     {{$schedule->purpose}}
                                 </td>

@@ -19,7 +19,6 @@ class ClientsController extends Controller
     {
         $clients  =  Clients::getAllClients();
         return view('owners.manage', ["clients" => $clients]);
-
     }
 
     /**

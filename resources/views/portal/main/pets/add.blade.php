@@ -32,10 +32,6 @@
                             <input class="form-control" id="inputColor" type="text" value="" placeholder="Color" name="pet_color">
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputWeight">Weight (kg)</label>
-                            <input class="form-control" id="inputWeight" type="number" value="" placeholder="Weight (kg)" name="pet_weight" step="0.01">
-                        </div>
-                        <div class="col-md-6">
                             <label class="small mb-1" for="inputBirthdate">Birthdate</label>
                             <input class="form-control" id="inputBirthdate" type="date" value="" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->toDateString() }}">
                         </div>

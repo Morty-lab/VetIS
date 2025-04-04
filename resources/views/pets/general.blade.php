@@ -63,28 +63,45 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <label for="vaccineType">Vaccine Type</label>
-                                <input type="text" name="vaccineType" id="vaccineType" class="form-control" required>
+                                <select class="form-select" name="pet_vaccination" id="pet_vaccination">
+                                    <option value="">Select Vaccination Type</option>
+                                    <option value="distemper_virus">Distemper Virus</option>
+                                    <option value="parvovirus">Parvovirus</option>
+                                    <option value="adenovirus">Adenovirus – Hepatitis</option>
+                                    <option value="rabies">Rabies</option>
+                                    <option value="leptospirosis">Leptospirosis</option>
+                                    <option value="bordetella">Bordetella (Kennel Cough)</option>
+                                    <option value="coronavirus">Coronavirus</option>
+                                    <option value="lyme_disease">Lyme Disease</option>
+                                    <option value="panleukopenia">Panleukopenia</option>
+                                    <option value="calicivirus">Calicivirus</option>
+                                    <option value="herpesvirus">Herpesvirus</option>
+                                    <option value="leukemia">Leukemia Virus</option>
+                                    <option value="immunodeficiency">Immunodeficiency Virus</option>
+                                    <option value="infectious_peritonitis">Infectious Peritonitis</option>
+                                    <option value="chlamydia">Chlamydia</option>
+                                </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="nextDueDate">Next Due Date</label>
+                                <label for="nextDueDate">Return Date</label>
                                 <input type="date" name="nextDueDate" id="nextDueDate" class="form-control">
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input" id="noNextDueDate">
-                                    <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
+                                    <label for="noNextDueDate" class="form-check-label">No Return Date</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="selectVeterinarian">Administered By</label>
                                 <select class="form-control" id="selectVeterinarian" name="doctor_id">
                                     @foreach($vets as $vet)
-                                        <option value={{$vet->id}}>{{$vet->firstname. ' ' . $vet->lastname}}</option>
+                                        <option value={{$vet->id}}>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</option>
 
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label for="selectStatus">Status</label>
-                                <select class="form-control" id="selectStatus" name="status">
+                                <select class="form-select" id="selectStatus" name="status">
                                     <option value=1>Completed</option>
                                     <option value=0>Scheduled</option>
                                 </select>
@@ -120,8 +137,10 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="" class="mb-1">Attending Veterinarian</label>
-                                <select name="" id="" class="form-select">
-                                    <option value=""></option>
+                                <select name="" id="" class="form-select attending-vet-med-rec">
+                                    @foreach($vets as $vet)
+                                        <option value={{$vet->id}}>Dr. {{$vet->firstname. ' ' . $vet->lastname}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-12">
@@ -189,7 +208,7 @@
                                 </div> -->
                             </div>
                             <div class="col-md-6">
-                                <label for="">Next Due Date</label>
+                                <label for="">Return Date</label>
                                 <p class="text-primary">{{\Carbon\Carbon::parse($vac->next_vaccine_date)->format('F j, Y')}}</p>
                             </div>
                         </div>
@@ -226,12 +245,12 @@
                                            value="{{$vac->vaccine_type}}" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="nextDueDate">Next Due Date</label>
+                                    <label for="nextDueDate">Return Date</label>
                                     <input type="date" name="nextDueDate" id="nextDueDate" class="form-control"
                                            value="{{$vac->next_vaccine_date}}">
                                     <div class="form-check mt-2">
                                         <input type="checkbox" class="form-check-input" id="noNextDueDate">
-                                        <label for="noNextDueDate" class="form-check-label">No Next Due Date</label>
+                                        <label for="noNextDueDate" class="form-check-label">No Return Date</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -481,7 +500,7 @@
                         <div class="row">
                                 <div class="row gx-3">
                                     @php
-                                        Clients::setEmailAttribute($pet->client, $pet->client->id);
+                                        Clients::setEmailAttribute($pet->client, $pet->client->user_id);
                                     @endphp
                                     <div class="col-md-12">
                                         <p class="small mb-1" for="inputOwnerName">Owner Name</p>
@@ -683,7 +702,7 @@
                                     <tr>
                                         <th>Date</th>
                                         <th>Vaccine Type</th>
-                                        <th>Next Due Date</th>
+                                        <th>Next Return Date</th>
                                         <th>Administered By</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -739,6 +758,19 @@
             } else {
                 nextDueDateInput.disabled = false;
             }
+        });
+
+        $(document).ready(function(){
+            $(".attending-vet-med-rec").select2({
+                theme: "bootstrap-5",
+                dropdownParent: "#addMedicalRecord",
+                width: $(this).data("width")
+                    ? $(this).data("width")
+                    : $(this).hasClass("w-100")
+                        ? "100%"
+                        : "style",
+                placeholder: $(this).data("placeholder"),
+            });
         });
 
         document.addEventListener('DOMContentLoaded', function () {

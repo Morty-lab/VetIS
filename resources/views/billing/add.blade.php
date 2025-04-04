@@ -17,13 +17,9 @@
         </div>
     </div>
 </header>
-<div class="container-xl px-4 mt-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-12">
-            <nav class="nav nav-borders">
-                <a class="nav-link ms-0" href="{{route('billing')}}"><span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back</a>
-            </nav>
-            <hr class="mt-0 mb-4">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
             <div class="card shadow-none mb-4">
                 <div class="card-header">Billing Form</div>
                 <div class="card-body">
@@ -59,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-3 mt-1 mb-3">
+                        <div class="row mb-3">
                             <!-- Owner Dropdown -->
                             <div class="col-md-6">
                                 <label for="owner" class="form-label">Owner</label>
@@ -70,7 +66,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
                             <!-- Pet -->
                             <div class="col-md-6">
                                 <label for="pet" class="form-label">Pet</label>
@@ -138,6 +133,11 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-none">
+                Hello
             </div>
         </div>
     </div>
