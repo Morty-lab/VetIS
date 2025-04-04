@@ -68,10 +68,6 @@
                                 <p>{{$pet->pet_color}}</p>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputWeight">Weight</label>
-                                <p>{{$pet->pet_weight}}kg</p>
-                            </div>
-                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthdate">Birthdate</label>
                                 <p>{{$pet->pet_birthdate}}</p>
                             </div>

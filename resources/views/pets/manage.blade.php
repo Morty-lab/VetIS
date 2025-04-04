@@ -9,7 +9,7 @@
 <div class="container-xl px-4 mt-4">
     <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
-            <a class="btn btn-primary justify-end" href="{{ route('pet.create') }}">Add Pet</a>
+            <a class="btn btn-primary justify-end" href="{{ route('pet.create') }}"><i class="fa-solid fa-plus me-2"></i> Add Pet</a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -38,15 +38,15 @@
                         <td>{{ $pet->client->client_name }}</td>
                         <td>
                             @if ($pet->vaccinated)
-                            <div class="badge bg-primary-soft text-primary rounded-pill">Vaccinated</div>
+                            <div class="badge badge-sm bg-primary-soft text-primary rounded-pill">Vaccinated</div>
                             @else
-                            <div class="badge bg-orange-soft text-orange rounded-pill">Unvaccinated</div>
+                            <div class="badge badge-sm bg-orange-soft text-orange rounded-pill">Unvaccinated</div>
                             @endif
                             @if ($pet->sterilized)
-                            <div class="badge bg-secondary-soft text-secondary rounded-pill">Sterilized</div>
+                            <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">Sterilized</div>
                             @endif
                             @if($pet->status)
-                                <div class="badge bg-primary-soft text-primary rounded-pill"><i class="fa-solid fa-check"></i></div>
+                                <div class="badge badge-sm bg-primary-soft text-primary rounded-pill"><i class="fa-solid fa-check"></i></div>
 
                             @endif
                         </td>

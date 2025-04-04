@@ -79,7 +79,7 @@
             @if(in_array(auth()->user()->role, ['cashier', 'admin']))
                 <a class="nav-link @if(Request::is('pos')) active @endif" href="{{ route('pos') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-table-columns"></i></div>
-                    POS Dashboard
+                    POS Terminal
                 </a>
             @endif
 

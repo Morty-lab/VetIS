@@ -63,7 +63,8 @@ class Doctor extends Model
     }
 
     public static function getSchedules($id){
-        return Appointments::where('doctor_id', $id)->get();
+        return Appointments::where('doctor_id', $id)->where('status', 0)
+            ->get();
     }
 
 
