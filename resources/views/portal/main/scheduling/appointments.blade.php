@@ -43,8 +43,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content position-relative">
                 <!-- Close Button Floating -->
-                <button type="button" class="btn-close position-absolute end-0 m-3" data-bs-dismiss="modal"
-                    aria-label="Close" style="z-index: 1051;"></button>
+                <button type="button" class="btn-close position-absolute end-0 m-3" data-bs-dismiss="modal" aria-label="Close"
+                    style="z-index: 1051;"></button>
 
                 @if (session('appointment_success'))
                     <div class="modal-body d-flex flex-column justify-content-center align-items-center py-4 px-3">
@@ -70,8 +70,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <p class="fw-bold mb-1">Reason for Appointment</p>
-                                <span
-                                    class="badge border text-body text-sm rounded-pill">Appointment Service</span>
+                                <span class="badge border text-body text-sm rounded-pill">Appointment Service</span>
                             </div>
 
                             <div class="col-md-12 mb-3">
@@ -149,18 +148,20 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="select-reason-of-visit-portal" class="mb-1">Reason of Visit</label>
-                                            <select class="select-reason-of-visit-portal form-control" id="select-appointment-reason" name="" data-placeholder="Select Reason of Visit" multiple="multiple" required autocomplete="off">
+                                            <label for="select-reason-of-visit-portal" class="mb-1">Reason of
+                                                Visit</label>
+                                            <select class="select-reason-of-visit-portal form-control"
+                                                id="select-appointment-reason" name="reasonOfVisit[]"
+                                                data-placeholder="Select Reason of Visit" multiple="multiple" required
+                                                autocomplete="off">
+
                                                 <option value=""></option>
-                                                <option value="vaccination">Vaccination (starts at ₱500)</option>
-                                                <option value="deworming">Deworming (starts at ₱200)</option>
-                                                <option value="checkup">Check-Up (₱300)</option>
-                                                <option value="surgery">Consultation (starts at ₱200)</option>
-                                                <option value="lab-test">CBC Test (starts at ₱600)</option>
-                                                <option value="xray-ultrasound">Pregnancy Diagnosis (starts at ₱800)</option>
-                                                <option value="spay-neuter">Spay / Neuter (starts at ₱2,000)</option>
-                                                <option value="emergency">Emergency (additional fees apply)</option>
-                                                <option value="others">Others (please specify)</option>
+                                                @foreach ($services as $service)
+                                                    <option value="{{ $service->id }}">
+                                                        {{ $service->service_name }} (starts at
+                                                        ₱{{ number_format($service->service_price, 2) }})
+                                                    </option>
+                                                @endforeach
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please select at least one reason.
@@ -170,7 +171,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="concern-complain" class="mb-1">Other Notes</label>
-                                            <textarea class="form-control" id="concern-complain" name="purpose" rows="3"
+                                            <textarea class="form-control" id="concern-complain" name="remarks" rows="3"
                                                 placeholder="Enter other notes of your appointment" autocomplete="off"></textarea>
                                         </div>
                                     </div>
@@ -351,7 +352,18 @@
                                             @endforeach
                                         </td>
                                         <td>Dr. {{ $vet->firstname . ' ' . $vet->lastname }}</td>
-                                        <td>{{ $s->purpose }}</td>
+                                        <td>
+                                            @php
+                                                $service_ids = explode(',', $s->purpose);
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            @endphp
+                                            @foreach ($services as $service)
+                                                <span
+                                                    class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                    {{ $service->service_name }}
+                                                </span>
+                                            @endforeach
+                                        </td>
 
                                         <td>
                                             {{ $s->priority_number }}
@@ -389,9 +401,7 @@
                         <tbody>
                             @foreach ($appointments as $s)
                                 @if (
-                                    $s->status === 0 &&
-                                        (\Carbon\Carbon::parse($s->appointment_date)->isToday() ||
-                                            \Carbon\Carbon::parse($s->appointment_date)->isFuture()))
+                                    $s->status === 0 )
                                     @php
                                         $petIDs = explode(',', $s->pet_ID);
                                         $pets = \App\Models\Pets::whereIn('id', $petIDs)->get();
@@ -411,7 +421,18 @@
                                             @endforeach
                                         </td>
                                         <td>Dr. {{ $vet->firstname . ' ' . $vet->lastname }}</td>
-                                        <td>{{ $s->purpose }}</td>
+                                        <td>
+                                            @php
+                                                $service_ids = explode(',', $s->purpose);
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            @endphp
+                                            @foreach ($services as $service)
+                                                <span
+                                                    class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                    {{ $service->service_name }}
+                                                </span>
+                                            @endforeach
+                                        </td>
 
                                         <td>{{ $s->priority_number }}</td>
                                         <td>
@@ -467,7 +488,17 @@
                                             @endforeach
                                         </td>
                                         <td>Dr. {{ $vet->firstname . ' ' . $vet->lastname }}</td>
-                                        <td>{{ $a->purpose }}</td>
+                                        <td>
+                                            @php
+                                                $service_ids = explode(',', $a->purpose);
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            @endphp
+                                            @foreach ($services as $service)
+                                                <span class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                    {{ $service->service_name }}
+                                                </span>
+                                            @endforeach
+                                        </td>
 
                                         <td>
                                             <a class="btn btn-outline-primary"
@@ -519,7 +550,19 @@
                                         @endforeach
                                     </td>
                                     <td>Dr. {{ $vet->firstname . ' ' . $vet->lastname }}</td>
-                                    <td>{{ $appointment_history->purpose }}</td>
+                                    <td>
+                                        @php
+                                            $service_ids = explode(',', $appointment_history->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        @endphp
+                                        @foreach ($services as $service)
+                                            <span
+                                                class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                {{ $service->service_name }}
+                                            </span>
+                                        @endforeach
+
+                                    </td>
                                     <td>
                                         @if ($appointment_history->status === null)
                                             <span
@@ -662,7 +705,8 @@
                                     // Convert to 12-hour format for display
                                     let period = hour < 12 ? 'AM' : 'PM';
                                     let displayHour = hour % 12 || 12; // 0 => 12
-                                    let displayTime = `${displayHour}:${minute} ${period}`;
+                                    let displayTime =
+                                        `${displayHour}:${minute} ${period}`;
 
                                     // Keep the value in 24-hour format, display in 12-hour format
                                     let option =

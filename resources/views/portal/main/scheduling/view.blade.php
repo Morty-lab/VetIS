@@ -83,7 +83,7 @@
                                 <div class="form-group">
                                     <label for="select-pet" class="mb-1">Pet/s</label>
                                     <select class="select-pet form-control" multiple="multiple" id="select-pet"
-                                        name="pet_ID" data-placeholder="Select a Pet">
+                                        name="pet_ID[]" data-placeholder="Select a Pet">
                                         @foreach ($pets as $p)
                                             <option value="{{ $p->id }}"
                                                 @if ($p->id == $pet->id) selected @endif>{{ $p->pet_name }}
@@ -115,7 +115,7 @@
                                     @php
                                         $service_ids = explode(',', $appointment->purpose);
                                     @endphp
-                                    <select class="edit-rov form-control" id="select-appointment-reason" name=""
+                                    <select class="edit-rov form-control" id="select-appointment-reason" name="reasonOfVisit[]"
                                         data-placeholder="Select Reason of Visit" multiple="multiple" required
                                         autocomplete="off">
                                         <option value=""></option>
@@ -135,7 +135,7 @@
                                 <!-- Concern/Complain -->
                                 <div class="form-group">
                                     <label for="concern-complain" class="mb-1">Other Notes</label>
-                                    <textarea class="form-control" id="concern-complain" name="purpose" rows="5"
+                                    <textarea class="form-control" id="concern-complain" name="remarks" rows="5"
                                         placeholder="Enter the purpose of your appointment"> {{ $appointment->remarks }}</textarea>
                                 </div>
                             </div>

@@ -222,7 +222,7 @@ class AppointmentsController extends Controller
             'appointment_date' => 'required|date',
             'appointment_time' => 'nullable',
             'reasonOfVisit' => 'required',
-            'remarks' => 'required',
+            'remarks' => 'nullable',
         ]);
 
         // dd($validatedData);
