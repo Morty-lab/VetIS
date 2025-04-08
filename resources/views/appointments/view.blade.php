@@ -383,7 +383,7 @@
                                                 foreach ($petIDs as $petID) {
                                                     $pet = \App\Models\Pets::find($petID);
                                                     if ($pet) {
-                                                        $pets[] = ['name' => $pet->pet_name, 'type' => $pet->pet_type, 'breed' => $pet->pet_breed, 'age' => $pet->age];
+                                                        $pets[] = ['id' => $pet->id, 'name' => $pet->pet_name, 'type' => $pet->pet_type, 'breed' => $pet->pet_breed, 'age' => $pet->age];
                                                     }
                                                 }
                                             @endphp
@@ -394,7 +394,7 @@
                                                     <td>{{ $pet['breed'] }}</td>
                                                     <td>{{ $pet['age'] }} year/s old</td>
                                                     <td><a class="btn btn-datatable btn-primary px-5 py-3"
-                                                            href="">View</a></td>
+                                                            href="{{route('pets.show', $pet['id'])}}">View</a></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

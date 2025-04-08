@@ -121,8 +121,10 @@ class PortalController extends Controller
         $appointments = Appointments::getAppointmentByClient($client->id);
         $pets = Pets::getPetByClient($client->id);
         $vets = Doctor::getAllDoctors();
+        $services = Services::getAllServices();
 
-        return view('portal.main.scheduling.appointments', ['appointments' => $appointments, 'pets' => $pets, 'vets' => $vets]);
+
+        return view('portal.main.scheduling.appointments', ['appointments' => $appointments, 'pets' => $pets, 'vets' => $vets, 'services' => $services]);
     }
 
     public function addMyAppointment(Request $request)
@@ -155,7 +157,8 @@ class PortalController extends Controller
                     }
                 },
             ],
-            'purpose' => 'required',
+            'reasonOfVisit' => 'required',
+            'remarks' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -171,7 +174,11 @@ class PortalController extends Controller
                 ->withInput();
         }
 
-        $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
+
+        $request->merge([
+            'pet_ID' => implode(',', $request->input('pet_ID')),
+            'purpose' => implode(',', $request->input('reasonOfVisit')),
+        ]);
 
 
         Appointments::createAppointment($request->all());
@@ -229,19 +236,18 @@ class PortalController extends Controller
 
     public function updateMyAppointment(Request $request)
     {
+        // dd($request->all());
         $id = request('appointmentID');
 
         $appointment = Appointments::getAppointmentById($id);
 
-        $validatedData = $request->validate([
-            'doctor_ID' => 'required',
-            'pet_ID' => 'required',
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required',
-            'purpose' => 'required',
+        $request->merge([
+            'pet_ID' => implode(',', $request->input('pet_ID')),
+            'purpose' => implode(',', $request->input('reasonOfVisit')),
         ]);
 
-        $appointment->updateAppointment($id, $validatedData);
+
+        $appointment->updateAppointment($id, $request->all());
 
         $name = Auth::user()->name;
 

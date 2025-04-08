@@ -222,7 +222,7 @@ class AppointmentsController extends Controller
             'appointment_date' => 'required|date',
             'appointment_time' => 'nullable',
             'reasonOfVisit' => 'required',
-            'remarks' => 'required',
+            'remarks' => 'nullable',
         ]);
 
         // dd($validatedData);
@@ -274,7 +274,8 @@ class AppointmentsController extends Controller
 
         Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
         Mail::to($client->client_email)->cc($client->client_email)->send(new AppointmentSet($data));
-        return redirect()->route('appointments.index');
+        return redirect()->route('appointments.view', ['id' => $result->id]);
+        // return redirect()->route('appointments.index');
 
     }
 
