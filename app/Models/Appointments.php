@@ -19,6 +19,7 @@ class Appointments extends Model
         'priority_number',
         'status',
         'purpose',
+        'remarks',
     ];
 
     public function client()
