@@ -12,6 +12,7 @@ class PetRecords extends Model
     protected $fillable = [
         'petID',
         'ownerID',
+        'subject',
         'doctorID',
         'record_date',
         'consultation_type',
@@ -22,6 +23,7 @@ class PetRecords extends Model
         'procedure_given',
         'remarks',
         'prescription',
+        'status',
     ];
 
      public function pet()

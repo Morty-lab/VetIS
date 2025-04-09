@@ -1022,11 +1022,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             Status
-                                            <p class="text-primary">Completed</p>
+                                            <p class="text-{{ $record->status == 0 ? 'warning' : ($record->status == 1 ? 'success' : 'danger') }}">
+                                                {{ $record->status == 0 ? 'Ongoing' : ($record->status == 1 ? 'Completed' : 'Archived') }}
+                                            </p>
                                         </div>
                                         <div class="col-md-12">
                                             Subject
-                                            <p class="text-primary">The Subject of this pet record</p>
+                                            <p class="text-primary">{{$record->subject}}</p>
                                         </div>
                                         <hr>
                                         <div class="col-md-12">
