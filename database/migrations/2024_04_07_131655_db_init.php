@@ -180,7 +180,7 @@ return new class extends Migration {
             $table->string("pet_color");
             $table->string("pet_picture")->nullable();
             $table->string("pet_description")->nullable();
-            $table->float("pet_weight");
+            // $table->float("pet_weight");
             $table->boolean("vaccinated")->nullable();
             $table->boolean("neutered")->nullable();
 
@@ -235,6 +235,7 @@ return new class extends Migration {
             $table->foreign("doctorID")->references("id")->on("doctors")->onDelete("cascade");
             $table->foreign("ownerID")->references("id")->on("clients")->onDelete("cascade");
             $table->foreign("petID")->references("id")->on("pets")->onDelete("cascade");
+            $table->string("subject");
             $table->date("record_date");
             $table->integer("consultation_type")->nullable();
             $table->longText("complaint")->nullable();
@@ -244,6 +245,7 @@ return new class extends Migration {
             $table->longText('procedure_given')->nullable();
             $table->longText('remarks')->nullable();
             $table->longText('prescription')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
 

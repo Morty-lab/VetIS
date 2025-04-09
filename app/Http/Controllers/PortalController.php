@@ -51,7 +51,7 @@ class PortalController extends Controller
             'pet_gender' => 'required|string|max:10',
             'pet_birthdate' => 'required|date',
             'pet_color' => 'required|string|max:50',
-            'pet_weight' => 'required|numeric',
+            // 'pet_weight' => 'required|numeric',
             'photo' => 'image|mimes:jpeg,png|max:5120', // File validation
         ]);
 
@@ -105,7 +105,7 @@ class PortalController extends Controller
             'pet_gender' => 'required',
             'pet_birthdate' => 'required|date',
             'pet_color' => 'required',
-            'pet_weight' => 'required',
+            // 'pet_weight' => 'required',
         ]);
 
 

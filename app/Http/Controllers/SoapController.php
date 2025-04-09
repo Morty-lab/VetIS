@@ -34,35 +34,22 @@ class SoapController extends Controller
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
 
-
-
         return view('pets.forms.soap_add', ['pet' => $pet, 'vets' => $vets,'owner' => $owner]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(int $id)
+    public function store(Request $request)
     {
-
+        $id = request('pet_id');
         $ownerID = Pets::find($id)->owner_ID;
-
-        $rules = [
-            'petID' => 'required|integer',
-            'ownerID' => 'required|integer',
-            'doctorID' => 'required|integer',
-            'consultation_type' => 'required|string|max:255',
-            'status' => 'required|integer',
-            'complaint' => 'nullable|string|max:255',
-            'date' => 'required|date'
-        ];
 
         $data = [
             'petID' => $id,
             'ownerID' => $ownerID,
-            'doctorID' => request('doctorID'),
-//            'consultation_type' => $consultation_types[$request->consultation_type],
-//            'complaint' => $request->complaint,
+            'doctorID' => $request->input('doctorID'),
+            'subject' => $request->input('subject'),
             'record_date' => Carbon::now()->toDateTimeString(),
         ];
 
