@@ -60,7 +60,7 @@ class PetsController extends Controller
                 'pet_gender' => 'required',
                 'pet_birthdate' => 'required',
                 'pet_color' => 'required',
-                'pet_weight' => 'required|numeric',
+                // 'pet_weight' => 'required|numeric',
                 'pet_vaccinated' => 'nullable',
                 'pet_neutered' => 'nullable',
                 'pet_description' => 'nullable|string',
@@ -94,7 +94,7 @@ class PetsController extends Controller
                     'pet_gender' => $validatedData['pet_gender'],
                     'pet_birthdate' => $validatedData['pet_birthdate'] ?? null,
                     'pet_color' => $validatedData['pet_color'] ?? null,
-                    'pet_weight' => $validatedData['pet_weight'] ?? null,
+                    // 'pet_weight' => $validatedData['pet_weight'] ?? null,
                     'vaccinated' => $request->input('vaccinated'),
                     'neutered' => $request->input('neutered'),
                     'pet_description' => $validatedData['pet_description'] ?? null,
@@ -120,7 +120,7 @@ class PetsController extends Controller
             $pet->save();
 
             // Redirect back with success message
-            return redirect()->route('pet.index')->with('success', 'Pet has been added successfully.');
+            return redirect()->route('pets.show', $pet->id)->with('success', 'Pet has been added successfully.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Redirect back with input data and error messages
             return redirect()
@@ -169,7 +169,7 @@ class PetsController extends Controller
             'pet_gender' => 'required', // Assuming only male and female genders are valid
             'pet_birthdate' => 'nullable|date|before:today',
             'pet_color' => 'nullable|string|max:255',
-            'pet_weight' => 'nullable|numeric|min:0',
+            // 'pet_weight' => 'nullable|numeric|min:0',
             'pet_description' => 'nullable|string',
             'vaccinated' => 'nullable',
             'neutered' => 'nullable',
@@ -210,7 +210,7 @@ class PetsController extends Controller
             'pet_gender' => $validatedData['pet_gender'],
             'pet_birthdate' => $validatedData['pet_birthdate'] ?? null,
             'pet_color' => $validatedData['pet_color'] ?? null,
-            'pet_weight' => $validatedData['pet_weight'] ?? null,
+            // 'pet_weight' => $validatedData['pet_weight'] ?? null,
             'vaccinated' => $request->input('vaccinated'),
             'neutered' => $request->input('neutered'),
             'pet_description' => $validatedData['pet_description'] ?? null,

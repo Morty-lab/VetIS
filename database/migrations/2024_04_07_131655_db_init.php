@@ -180,7 +180,7 @@ return new class extends Migration {
             $table->string("pet_color");
             $table->string("pet_picture")->nullable();
             $table->string("pet_description")->nullable();
-            $table->float("pet_weight");
+            // $table->float("pet_weight");
             $table->boolean("vaccinated")->nullable();
             $table->boolean("neutered")->nullable();
 

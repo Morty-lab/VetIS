@@ -18,7 +18,7 @@ class Pets extends Model
         'pet_gender',
         'pet_birthdate',
         'pet_color',
-        'pet_weight',
+        // 'pet_weight',
         'vaccinated',
         'neutered',
         'pet_description',

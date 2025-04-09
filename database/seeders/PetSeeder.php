@@ -27,7 +27,7 @@ class PetSeeder extends Seeder
                 'pet_color' => $faker->safeColorName,  // English safe color name
                 // 'pet_picture' => $faker->imageUrl($width = 640, $height = 480, 'cats'), // Example for cats, adjust as needed
                 'pet_description' => $faker->sentence,  // Random English sentence for description
-                'pet_weight' => $faker->randomFloat(2, 1, 100), // Random weight between 1 and 100
+                // 'pet_weight' => $faker->randomFloat(2, 1, 100), // Random weight between 1 and 100
                 'vaccinated' => $faker->boolean,  // Random boolean for vaccination status
                 'neutered' => $faker->boolean,  // Random boolean for neutering status
                 'vaccinated_anti_rabies' => $faker->boolean,  // Random boolean for anti-rabies vaccination
