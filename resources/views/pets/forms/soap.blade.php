@@ -493,6 +493,10 @@
                                     <p class="">{{$pet->pet_color}}</p>
                                 </div>
                                 <div class="col-md-3">
+                                    Gender
+                                    <p class="">{{$pet->pet_gender}}</p>
+                                </div>
+                                <div class="col-md-3">
                                     Birthdate
                                     <p class="">{{ \Carbon\Carbon::parse($pet->pet_birthdate)->format('F d, Y') }}</p>
                                 </div>
@@ -718,11 +722,11 @@
                                                         <label class="form-label">Lymph Nodes:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checked" name="lymphNodes" id="normalNodes">
+                                                            <input class="form-check-input" type="checkbox" name="lymphNodes" id="normalNodes">
                                                             <label class="form-check-label" for="normalNodes">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checked" name="lymphNodes" id="swollenNodes">
+                                                            <input class="form-check-input" type="checkbox" name="lymphNodes" id="swollenNodes">
                                                             <label class="form-check-label" for="swollenNodes">Swollen</label>
                                                         </div>
                                                     <div class="form-check form-check-inline">
@@ -881,14 +885,23 @@
                                 <div class="row gy-3">
                                     <div class="col-md-12">
                                         <div class="card shadow-none mb-4">
-                                            <div class="card-header">Medication Given</div>
+                                            <div class="card-header">Medication Received</div>
                                             <div class="card-body" id="medications">
-                                                <div class="row mb-2 medication-entry">
-                                                    <div class="col-md-5">
-                                                        <input type="text" class="form-control med-name" placeholder="Medication Name">
+                                                <div class="row mb-2 gy-2 medication-entry gx-2">
+                                                    <div class="col-md-4">
+{{--                                                        <input type="text" class="form-control med-name" placeholder="Medication Name">--}}
+                                                        <select class="form-control med-name select-med" style="width: 100%;">
+                                                            <option value="">Select Medication</option>
+                                                            <option value="Blood Test">Medication 1</option>
+                                                            <option value="X-Ray">Medication 2</option>
+                                                            <option value="MRI Scan">Medication 3</option>
+                                                        </select>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <input type="text" class="form-control med-dosage" placeholder="Dosage">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control med-frequency" placeholder="Frequency">
                                                     </div>
                                                     <div class="col-md-3">
                                                         <select class="form-control form-select med-type">
@@ -907,7 +920,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="card shadow-none">
-                                            <div class="card-header">Procedure Given</div>
+                                            <div class="card-header">Procedure Received</div>
                                             <div class="card-body" id="procedures">
                                                 <div class="row mb-2 procedure-entry">
                                                     <div class="col-md-6">
@@ -970,12 +983,44 @@
                                     <div class="card shadow-none">
                                         <div class="card-header">Prescription</div>
                                         <div class="card-body">
-                                            <div id="prescription" class="mb-3" style="height: 400px;">
-                                                {!! $record->prescription !!}
+                                            <div class="prescriptions">
+                                                <div class="row mb-2 gy-2 prescription-entry gx-2">
+                                                    <!-- Medication Name -->
+                                                    <div class="col-md-5">
+                                                        <select class="form-control presc-name select-med">
+                                                            <option value=""></option>
+                                                            <option value="Medication 1">Medication 1</option>
+                                                            <option value="Medication 2">Medication 2</option>
+                                                            <option value="Medication 3">Medication 3</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- Dosage -->
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control presc-dosage" placeholder="Dosage">
+                                                    </div>
+                                                    <!-- Frequency -->
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control presc-frequency" placeholder="Frequency">
+                                                    </div>
+                                                    <!-- Duration -->
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control presc-duration" placeholder="Duration">
+                                                    </div>
+                                                    <!-- Add Button -->
+                                                    <div class="col-md-1 d-flex align-items-center">
+                                                        <a href="#" class="btn btn-primary add-med">+</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="othernotes mt-4">
+                                                <label for="" class="text-primary mb-2">Notes:</label>
+                                                <div id="prescription" class="mb-3" style="height: 400px;">
+                                                    {!! $record->prescription !!}
+                                                </div>
                                             </div>
                                             <textarea rows="3" class="mb-3 d-none" name="prescription" id="prescriptionTextArea">
-                                                {!! $record->prescription !!}
-                                            </textarea>
+                                                    {!! $record->prescription !!}
+                                        </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -1049,8 +1094,8 @@
                                             <p class="text-primary">{{$owner->client_name}}</p>
                                         </div>
                                         <div class="col-md-6">
-                                            Pet
-                                            <p class="text-primary">{{$pet->pet_name}}</p>
+                                            Owner Contact No.
+                                            <p class="text-primary">{{$owner->client_no}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1339,6 +1384,66 @@
     });
 </script>
             <script>
+
+                $(document).ready(function () {
+                    // Add new prescription entry
+                    $(document).on('click', '.add-med', function (event) {
+                        event.preventDefault();
+
+                        let lastEntry = $('.prescriptions .prescription-entry').last();
+                        let name = lastEntry.find('.presc-name').val().trim();
+                        let dosage = lastEntry.find('.presc-dosage').val().trim();
+                        let frequency = lastEntry.find('.presc-frequency').val().trim();
+                        let duration = lastEntry.find('.presc-duration').val().trim();
+
+                        if (name !== "" && dosage !== "" && frequency !== "" && duration !== "") {
+                            $('.prescriptions').find('.text-danger').remove(); // Clear previous error
+                            $('.prescriptions').append(`
+                    <div class="row mb-2 gy-2 prescription-entry gx-2">
+                        <div class="col-md-5">
+                            <select class="form-control presc-name select-presc">
+                                <option value="Medication 1">Medication 1</option>
+                                <option value="Medication 2">Medication 2</option>
+                                <option value="Medication 3">Medication 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control presc-dosage" placeholder="Dosage">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control presc-frequency" placeholder="Frequency">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control presc-duration" placeholder="Duration">
+                        </div>
+                        <div class="col-md-1 d-flex align-items-center">
+                            <a href="#" class="btn btn-danger remove-presc">-</a>
+                        </div>
+                    </div>
+                `);
+                        } else {
+                            if ($('.prescriptions').find('.text-danger').length === 0) {
+                                let error = $('<div class="text-danger mt-2">Please fill in all fields before adding another prescription.</div>');
+                                $('.prescriptions').append(error);
+
+                                setTimeout(() => {
+                                    error.fadeOut(500, function () {
+                                        $(this).remove();
+                                    });
+                                }, 4000);
+                            }
+                        }
+                    });
+
+                    // Remove prescription entry
+                    $(document).on('click', '.remove-presc', function (event) {
+                        event.preventDefault();
+                        $(this).closest('.prescription-entry').remove();
+                        $('.prescriptions').find('.text-danger').remove(); // Clear error
+                    });
+                });
+
+
                 $(document).ready(function () {
                     // Medication field validation
                     $('.add-med').click(function () {
@@ -1350,12 +1455,20 @@
 
                         if (name !== "" && dosage !== "" && type !== "") {
                             $('#medications').append(`
-                        <div class="row mb-2 medication-entry">
-                            <div class="col-md-5">
-                                <input type="text" class="form-control med-name" placeholder="Medication Name">
+                        <div class="row mb-2 gy-2 medication-entry gx-2">
+                            <div class="col-md-4">
+                                   <select class="form-control med-name select-med" style="width: 100%;">
+                                    <option value="">Select Medication</option>
+                                    <option value="Blood Test">Medication 1</option>
+                                    <option value="X-Ray">Medication 2</option>
+                                    <option value="MRI Scan">Medication 3</option>
+                              </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <input type="text" class="form-control med-dosage" placeholder="Dosage">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control med-frequency" placeholder="Frequency">
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control form-select med-type">
@@ -1369,6 +1482,14 @@
                                 <a href="" class="btn btn-danger remove-med">-</a>
                             </div>
                         </div> `);
+
+                            $(".select-med").select2({
+                                theme: "bootstrap-5",
+                                tags: true,  // Allow users to add new values
+                                placeholder: "Select or type medication",
+                                allowClear: true
+                            });
+
                             $(".med-type").select2({
                                 theme: "bootstrap-5",
                                 minimumResultsForSearch: -1,

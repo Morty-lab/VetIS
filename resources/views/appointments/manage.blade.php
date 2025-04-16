@@ -295,7 +295,6 @@
                             <th>Veterinarian</th>
                             <th>Reason of Visit</th>
                             <th>Status</th>
-                            <th>Priority Number</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -329,14 +328,11 @@
                                         <td>
                                             @php
                                                 $service_ids = explode(',', $appointment->purpose);
-                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                                $service_list = implode(', ', $services);
                                             @endphp
-                                            @foreach ($services as $service)
-                                                <span
-                                                    class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
-                                                    {{ $service->service_name }}
-                                                </span>
-                                            @endforeach
+
+                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
                                         </td>
                                         <td>
                                             @if (is_null($appointment->status) == true)
@@ -356,9 +352,6 @@
                                                     Finished
                                                 </div>
                                             @endif
-                                        </td>
-                                        <td>
-                                            {{ $appointment->priority_number }}
                                         </td>
                                         <td>
                                             <a class="btn btn-datatable btn-primary px-5 py-3"
@@ -394,14 +387,11 @@
                                         <td>
                                             @php
                                                 $service_ids = explode(',', $appointment->purpose);
-                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                                $service_list = implode(', ', $services);
                                             @endphp
-                                            @foreach ($services as $service)
-                                                <span
-                                                    class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
-                                                    {{ $service->service_name }}
-                                                </span>
-                                            @endforeach
+
+                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
                                         </td>
                                         <td>
                                             @if (is_null($appointment->status) == true)
@@ -421,9 +411,6 @@
                                                     Finished
                                                 </div>
                                             @endif
-                                        </td>
-                                        <td>
-                                            {{ $appointment->priority_number }}
                                         </td>
                                         <td>
                                             <a class="btn btn-datatable btn-primary px-5 py-3"

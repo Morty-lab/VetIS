@@ -364,7 +364,7 @@
                                     <i class="fa fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Update Pet</a>
+                                    <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Edit Pet</a>
                                     </li>
 
                                     @if (!$pet->status)

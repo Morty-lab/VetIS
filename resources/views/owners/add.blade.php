@@ -43,7 +43,7 @@
                             <!-- Form Group (first name)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputFirstName">First name</label>
-                                <input class="form-control @error('firstname') is-invalid @enderror" id="inputFirstName" name="firstname" type="text" placeholder="First Name"  autocomplete="off"/>
+                                <input class="form-control @error('firstname') is-invalid @enderror" id="inputFirstName" name="firstname" type="text" placeholder="First Name"  autocomplete="new-firstname"/>
                                 @error('firstname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -51,7 +51,7 @@
                             <!-- Form Group (last name)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastName">Last name</label>
-                                <input class="form-control @error('lastname') is-invalid @enderror" id="inputLastName" name="lastname" type="text" placeholder="Last Name" autocomplete="off"/>
+                                <input class="form-control @error('lastname') is-invalid @enderror" id="inputLastName" name="lastname" type="text" placeholder="Last Name" autocomplete="new-lastname"/>
                                 @error('lastname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -60,7 +60,7 @@
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            <input class="form-control @error('email') is-invalid @enderror" id="inputEmailAddress" name="email" type="email" placeholder="Email Address" value="" autocomplete="off"/>
+                            <input class="form-control @error('email') is-invalid @enderror" id="inputEmailAddress" name="email" type="email" placeholder="Email Address" value="" autocomplete="new-email"/>
                             @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -69,7 +69,7 @@
                         <!-- Form Group (address)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputAddress">Address</label>
-                            <input class="form-control @error('address') is-invalid @enderror" id="inputAddress" name="address" type="text" placeholder="Address" value="" autocomplete="off"/>
+                            <input class="form-control @error('address') is-invalid @enderror" id="inputAddress" name="address" type="text" placeholder="Address" value="" autocomplete="new-address"/>
                             @error('address')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -79,7 +79,7 @@
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputPhone">Phone number</label>
-                                <input class="form-control @error('phone_number') is-invalid @enderror" id="inputPhone" name="phone_number" type="tel" placeholder="Phone Number" value="" autocomplete="off"/>
+                                <input class="form-control @error('phone_number') is-invalid @enderror" id="inputPhone" name="phone_number" type="tel" placeholder="Phone Number" value="" autocomplete="new-phone"/>
                                 @error('phone_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

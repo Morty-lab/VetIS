@@ -137,7 +137,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/petinfo/soap/print', function () {
-        return view('reports.documents.soap');
+        return view('pets.forms.printRecord');
     })->name("soap.print");
 });
 

@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1">Product ID</label>
+                                    <label class="small mb-1">Barcode</label>
                                     <div class="">
                                         <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">
                                             {{ sprintf('VetIS-%05d', $product->id) }}</p>
@@ -128,20 +128,20 @@
     <!-- Select Product Modal -->
     <div class="modal fade" id="exampleModalXl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
         style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Products List</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control mb-3" placeholder="Enter Product Name, SKU"
+                    <input type="text" class="form-control mb-3" placeholder="Enter Product Name, Barcode"
                         id="customSearchInput">
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table" id="posProdListTable">
                             <thead>
                                 <tr>
-                                    <th>Product ID</th>
+                                    <th>Barcode</th>
                                     <th>Item Name</th>
                                     <th>Category</th>
                                     <th>Unit</th>
@@ -260,7 +260,7 @@
                             <table id="posStockListTable">
                                 <thead>
                                     <tr>
-                                        <th>Product ID</th>
+                                        <th>Barcode</th>
                                         <th>Product Name</th>
                                         <th>Expiry Date</th>
                                         <th>Supplier</th>
@@ -405,11 +405,6 @@
                                         <hr>
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
-                                            <p class="mb-0">Transaction No.</p>
-                                            <p class="text-md text-grey mb-0">1032</p>
-                                        </div>
-                                        <div
-                                            class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Date</p>
                                             <p class="text-md text-grey mb-0">
                                                 {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
@@ -417,7 +412,7 @@
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Customer</p>
-                                            <p class="text-md text-grey mb-0 customer">Juan Dela Cruz</p>
+                                            <p class="text-md text-grey mb-0 customer">Walk-In</p>
                                         </div>
                                         <hr>
                                         <div
@@ -432,8 +427,11 @@
                                         </div>
                                         <hr>
                                         <div class="total-section d-flex justify-content-between align-items-center">
-                                            <p class="mb-0 ">Total</p>
-                                            <p class="text-xl text-blue mb-0 grand-total">₱0</p>
+                                            <p class="mb-0">Total</p>
+                                            <div class="d-flex align-items-center">
+                                                <span class="me-1 text-xl text-blue mb-0">₱</span>
+                                                <p class="text-xl text-blue mb-0 grand-total">0</p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="receipt-cutout"></div>
@@ -558,16 +556,12 @@
                     id="sticky-sidebar">
                     <div class="receipt-section">
                         <div class="receipt-display mt-3 bg-light p-4">
-                            <p class="text-center h3 text-primary">PetHub: Vet Clinic</p>
+                            <p class="text-center h3 text-primary">Pruderich Veterinary Clinic</p>
                             <hr>
-                            <div class="subtotal-section d-flex justify-content-between align-items-center">
-                                <p class="mb-0">Transaction No.</p>
-                                <p class="text-md text-grey mb-0">1032</p>
-                            </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Date</p>
                                 <p class="text-md text-grey mb-0">
-                                    {{ \Carbon\Carbon::now()->format('m/d/yy | h:iA') }}</p>
+                                    {{ \Carbon\Carbon::now()->format('m/d/Y | h:iA') }}</p>
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Customer</p>
@@ -585,7 +579,10 @@
                             <hr>
                             <div class="total-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Total</p>
-                                <p class="text-xl text-blue mb-0 grand-total">0</p>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-1 mb-0 text-xl text-blue">₱</span>
+                                    <p class="text-xl text-blue mb-0 grand-total">0</p>
+                                </div>
                             </div>
                         </div>
                         <div class="receipt-cutout"></div>
@@ -635,7 +632,7 @@
                             <thead class="thead-dark text-primary">
                                 <tr>
                                     <th>Item</th>
-                                    <th>Product ID</th>
+                                    <th>Barcode</th>
                                     <th>Qty</th>
                                     <th>Total</th>
                                     <th>Action</th>
