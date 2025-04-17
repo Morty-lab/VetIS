@@ -371,6 +371,12 @@ $(document).ready(function () {
     });
 
     //     Medical Record
+    $(".select-med").select2({
+        theme: "bootstrap-5",
+        tags: true, // Allow users to add new values
+        placeholder: "Select or type medication",
+        allowClear: true,
+    });
     $(".select-proc").select2({
         theme: "bootstrap-5",
         tags: true, // Allow users to add new values

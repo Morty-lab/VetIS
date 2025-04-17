@@ -7,7 +7,7 @@
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{ route('dashboard') }}">
         <img class="me-0" src="{{ asset('assets/img/favicon.png') }}" alt="PetHub Logo" style=" width: 40px; height: auto; margin-right: 8px;">
-        PetHub
+        <span class="fw-500">PetHub</span>
     </a> <!-- Navbar Search Input-->
     <!-- * * Note: * * Visible only on and above the lg breakpoint-->
     <!-- <form class="form-inline me-auto d-none d-lg-block me-3">
@@ -22,7 +22,7 @@
         <!-- * * Note: * * Visible only below the lg breakpoint-->
         <!-- <li class="nav-item dropdown no-caret me-3 d-lg-none">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="dashboard-1.html#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="search"></i></a>
-         
+
             <div class="dropdown-menu dropdown-menu-end p-3 shadow animated--fade-in-up" aria-labelledby="searchDropdown">
                 <form class="form-inline me-auto w-100">
                     <div class="input-group input-group-joined input-group-solid">

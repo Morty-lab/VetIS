@@ -281,7 +281,7 @@ Doctor::setEmailAttribute($doctor,$doctor->user_id);
                                     <i class="fa fa-ellipsis-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateVetInfo">Update Information</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateVetInfo">Edit Information</a></li>
                                 </ul>
                             </div>
                         </div>

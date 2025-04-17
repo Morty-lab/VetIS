@@ -119,8 +119,8 @@
     </div>
 
     {{--  Create Medical Record Modal  --}}
-    <div class="modal fade " id="addMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="addMedicalRecord"
-        aria-hidden="true">
+    <div class="modal fade" id="addMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="addMedicalRecord"
+         aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
                 <form action="{{ route('soap.add', ['pet_id' => $pet->id]) }}" method="post">
@@ -135,7 +135,11 @@
                             <div class="col-md-12">
                                 <label for="" class="mb-1">Subject</label>
                                 <input type="text" name="subject" id=""
-                                    placeholder="Specify the purpose of this record" class="form-control">
+                                       placeholder="Specify the purpose of this record" class="form-control
+                                @error('subject') is-invalid @enderror" value="{{ old('subject') }}">
+                                @error('subject')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-12">
                                 @php
@@ -144,29 +148,23 @@
                                     }
                                 @endphp
                                 <label for="" class="mb-1">Attending Veterinarian</label>
-                                <select name="doctorID" id="" class="form-select attending-vet-med-rec"
+                                <select name="doctorID" id="" class="form-select attending-vet-med-rec
+                                @error('doctorID') is-invalid @enderror" data-placeholder="Select Attending Veterinarian"
                                     {{ auth()->user()->role === 'veterinarian' ? 'disabled' : '' }}>
-
+                                    <option value=""></option>
                                     @foreach ($vets as $vet)
-                                        <option value={{ $vet->id }}
-                                            {{ auth()->user()->role === 'veterinarian' && $doctor->id === $vet->id ? 'selected' : '' }}>
-                                            Dr. {{ $vet->firstname . ' ' . $vet->lastname }}</option>
+                                        <option value="{{ $vet->id }}"
+                                            {{ old('doctorID') == $vet->id ? 'selected' : (auth()->user()->role === 'veterinarian' && isset($doctor) && $doctor->id === $vet->id ? 'selected' : '') }}>
+                                            Dr. {{ $vet->firstname . ' ' . $vet->lastname }}
+                                        </option>
                                     @endforeach
                                 </select>
+                                @error('doctorID')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                                 @if (auth()->user()->role === 'veterinarian')
                                     <input type="hidden" name="doctorID" value="{{ $doctor->id }}">
                                 @endif
-
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="mb-1">Date of Visit</label>
-                                <div class="input-group input-group-joined">
-                                    <input class="form-control" id="inputBirthdate" type="date" value=""
-                                        name="pet_birthdate" max="" placeholder="Select a Date" />
-                                    <span class="input-group-text">
-                                        <i data-feather="calendar"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +173,6 @@
                         <button class="btn btn-primary" type="submit" id="addVaccinationBtn">Add</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -364,7 +361,7 @@
                                     <i class="fa fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Update Pet</a>
+                                    <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Edit Pet</a>
                                     </li>
 
                                     @if (!$pet->status)
@@ -401,7 +398,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="small mb-1">Verification Status</label>
+                                            <label class="small mb-1">Pet Status</label>
                                             <div>
                                                 @if ($pet->status)
                                                     <p class="badge bg-primary-soft text-primary rounded-pill"><i
@@ -445,13 +442,11 @@
                                         <div class="col-md-4">
                                             <label class="small mb-1">Vacciantion Record</label>
                                             <p>
-                                                @if ($pet->vaccinated == 1)
-                                                    Complete as
-                                                    of
-                                                    {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') }}
-                                                @elseif($pet->vaccinated == 0)
-                                                    Incomplete as of {{ \Carbon\Carbon::now()->format('F j, Y') }}
-                                                @else
+                                                @if ($pet->vaccinated === 1)
+                                                    Complete as of {{ \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F, Y') }}
+                                                @elseif ($pet->vaccinated === 0)
+                                                    Incomplete
+                                                @elseif (is_null($pet->vaccinated))
                                                     No Vaccination record
                                                 @endif
                                             </p>
@@ -459,7 +454,7 @@
                                         <div class="col-md-4">
                                             <label class="small mb-1">Spayed/Neutered</label>
                                             <p>
-                                                {{ $pet->neutered == 1 ? 'Yes' : 'No' }}
+                                                {{ $pet->neutered === 1 ? 'Yes' : ($pet->neutered === 0 ? 'No' : 'No Record') }}
                                             </p>
                                         </div>
                                         <div class="col-md-4">
@@ -470,7 +465,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Date of Anti-Rabies Vaccination</label>
-                                            <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete' }}
+                                            <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F, Y') : 'No Record' }}
                                             </p>
                                         </div>
                                         <div class="col-md-4">
@@ -481,7 +476,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Date of Last Groom</label>
-                                            <p>{{ $pet->last_groom_date ? \Carbon\Carbon::parse($pet->last_groom_date)->format('F j, Y') : 'No Record' }}
+                                            <p>{{ $pet->last_groom_date ? \Carbon\Carbon::parse($pet->last_groom_date)->format('F, Y') : 'No Record' }}
                                             </p>
                                         </div>
                                         <div class="col-md-12">
@@ -527,7 +522,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="">Pet Owner Details</div>
                             <a class="btn btn-datatable btn-primary px-5 py-3 m-0"
-                                href="{{ route('owners.show', $pet->client->user_id) }}"><svg
+                                href="{{ route('owners.show', $pet->client->id) }}"><svg
                                     class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false"
                                     data-prefix="fas" data-icon="arrow-right" role="img"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
@@ -588,22 +583,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($appointments as $appointment)
-                                    @if ($appointment->pet_ID == $pet->id && $appointment->status != 1)
+                            @foreach ($appointments->sortBy(function($appointment) {
+                            return $appointment->appointment_date . ' ' . $appointment->appointment_time;
+                            }) as $appointment)
+                                    @if (in_array($pet->id, explode(',', $appointment->pet_ID)) && $appointment->status == 0)
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }}
-                                                |
-                                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                                                {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                             </td>
-                                            <td>{{ sprintf('VetISAPT-%05d', $appointment->id) }}</td>
+                                            <td>
+                                                @php
+                                                    $service_ids = explode(',', $appointment->purpose);
+                                                    $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                                    $service_list = implode(', ', $services);
+                                                @endphp
 
-                                            <td>{{ $appointment->purpose }}</td>
+                                                {{ \Illuminate\Support\Str::limit($service_list, 35) }}
+                                            </td>
+
+                                            <td>
+                                                Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
+                                            </td>
 
                                             <td>
                                                 @if (is_null($appointment->status) == true)
                                                     Pending
                                                 @elseif($appointment->status == 0)
-                                                    <div class="badge bg-secondary-soft text-secondary rounded-pill">
+                                                    <div class="badge badge-sm bg-secondary-soft text-secondary text-sm rounded-pill">
                                                         Scheduled
                                                     </div>
                                                 @elseif($appointment->status == 2)
@@ -645,17 +651,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($appointments as $appointment)
-                                        @if ($appointment->pet_ID == $pet->id && $appointment->status == 1)
+                                @foreach ($appointments->sortBy(function($appointment) {
+                                return $appointment->appointment_date . ' ' . $appointment->appointment_time;
+                                }) as $appointment)
+                                        @if (in_array($pet->id, explode(',', $appointment->pet_ID)) && $appointment->status == 1)
                                             <tr>
-                                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }}
-                                                    |
-                                                    {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}
+                                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                                 </td>
-                                                <td>Appointment ID</td>
-                                                <td>{{ $appointment->purpose }}</td>
+                                                <td>  @php
+                                                        $service_ids = explode(',', $appointment->purpose);
+                                                        $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                                        $service_list = implode(', ', $services);
+                                                    @endphp
+
+                                                    {{ \Illuminate\Support\Str::limit($service_list, 35) }}</td>
                                                 <td>
-                                                    <div class="badge bg-success-soft text-success rounded-pill">Finished
+                                                    Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
+                                                </td>
+                                                <td>
+                                                    <div class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Finished
                                                     </div>
                                                 </td>
                                                 <td><a href="{{ route('appointments.view', ['id' => $appointment->id]) }}"
@@ -695,10 +709,10 @@
                                             <i class="fa-solid fa-hippo"></i>
                                             No Records Yet
                                         </div> -->
-                                <table id="datatablesSimple">
+                                <table id="medicalRecordsTable">
                                     <thead>
                                         <tr>
-                                            <th>Date of Visit</th>
+                                            <th>Date Created</th>
                                             <th>Subject</th>
                                             <th>Attending Veterinarian</th>
                                             <th>Status</th>
@@ -706,19 +720,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($pet_records as $record)
-                                            <tr>
-                                                <td>{{ $record->record_date }}</td>
-                                                <td>{{ sprintf('VETIS-%05d', $record->id) }}</td>
-                                                <td>{{ $record->complaint }}</td>
-                                                <td>{{ $record->status == 1 ? 'Filled' : 'Ongoing' }}</td>
+                                        @foreach ($pet_records->sortByDesc('record_date') as $record)
+                                        <tr>
+                                                <td>{{ \Carbon\Carbon::parse($record->record_date)->format('F d, Y h:i A') }}</td>
+                                                <td>{{ $record->subject }}</td>
+                                                <td>
+                                                    @php
+                                                        $doctor = \App\Models\Doctor::where('id', $record->doctorID)->first();
+                                                    @endphp
+                                                    Dr. {{ $doctor->firstname}} {{ $doctor->lastname}}
+                                                </td>
+                                                <td>{!! $record->status == 1
+    ? '<span class="badge rounded-pill bg-success-soft text-success text-sm">Completed</span>'
+    : '<span class="badge rounded-pill bg-warning-soft text-warning text-sm">Ongoing</span>' !!}</td>
                                                 <td>
                                                     <a class="btn btn-datatable btn-primary px-5 py-3"
                                                         href="{{ route('soap.view', ['id' => $pet->id, 'recordID' => $record->id]) }}">View</a>
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                     </tbody>
                                 </table>
                             </div>
@@ -814,6 +834,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Nav switch logic
             const tabs = document.querySelectorAll('.nav-tab');
             const cards = {
                 'pet-profile': document.getElementById('petProfileCard'),
@@ -823,9 +844,18 @@
                 'vaccination': document.getElementById('vaccinationCard')
             };
 
-            // Ensure Pet Profile is active initially
-            document.querySelector('.nav-link[href="#pet-profile"]').classList.add('active');
-            cards['pet-profile'].style.display = 'block'; // Show Pet Profile Card by default
+
+            @if ($errors->has('subject') || $errors->has('doctorID'))
+            // Show the modal
+            var addMedicalRecordModal = new bootstrap.Modal(document.getElementById('addMedicalRecord'));
+            addMedicalRecordModal.show();
+
+            document.querySelector('.nav-link[href="#records"]').classList.add('active');
+            document.getElementById('recordsCard').style.display = 'block';
+            @else
+                document.querySelector('.nav-link[href="#pet-profile"]').classList.add('active');
+                cards['pet-profile'].style.display = 'block'; // Show Pet Profile Card by default
+            @endif
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', function(e) {

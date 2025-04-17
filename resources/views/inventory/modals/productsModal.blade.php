@@ -18,8 +18,8 @@
                             value="" name="product_name">
                     </div>
                     <div class="col-md-12">
-                        <label class="small mb-1" for="inputProductSKU">SKU</label>
-                        <input class="form-control" id="inputProductSKU" type="text" maxlength="8" placeholder="SKU"
+                        <label class="small mb-1" for="inputProductSKU">Barcode</label>
+                        <input class="form-control" id="inputProductSKU" type="text" maxlength="8" placeholder="Barcode"
                             name="product_sku">
                     </div>
                     {{--                    <div class="col-md-12"> --}}

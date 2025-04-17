@@ -68,8 +68,9 @@
                                                 }
                                             } else {
                                                 if (
-                                                    $appointment->status == 1 &&
-                                                    \Carbon\Carbon::parse($appointment->updated_at)->isToday()
+                                                    $appointment->status == 1
+//                                                     &&
+//                                                    \Carbon\Carbon::parse($appointment->updated_at)->isToday()
                                                 ) {
                                                     $finishedCount++;
                                                 } else {

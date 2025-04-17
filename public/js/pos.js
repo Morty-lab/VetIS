@@ -1,7 +1,7 @@
 Items = [];
 discount = 0;
 qty = 1;
-customer = "";
+customer = "Walk-In";
 customerID = 0;
 grand_total = 0;
 const posProdListTable = document.getElementById("posProdListTable");

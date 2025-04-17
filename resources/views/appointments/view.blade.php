@@ -50,15 +50,14 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="border py-3 px-3 rounded">
                                         <label class="mb-1">Reason of Visit</label>
-                                        <table class="table table-bordered mt-2 mb-0">
+                                        <table class="table mt-2 mb-0">
                                             @php
                                                 $service_ids = explode(',', $appointment->purpose);
                                                 $services = \App\Models\Services::whereIn('id', $service_ids)->get();
                                             @endphp
                                             @foreach ($services as $service)
                                                 <tr>
-                                                    <td>{{ $service->service_name }}</td>
-                                                    <td>{{ number_format($service->service_price, 2) }}</td>
+                                                    <td class="ps-0">{{ $service->service_name }}</td>
                                                 </tr>
                                             @endforeach
                                         </table>
@@ -296,15 +295,14 @@
                                         <div class="col-md-6 mt-3">
                                             <div class="border py-3 px-3 border-top-lg border-top-primary rounded">
                                                 <label class="mb-1 text-primary fw-bold b">Reason of Visit</label>
-                                                <table class="table table-bordered mt-2 mb-0">
+                                                <table class="table mt-2 mb-0">
                                                     @php
                                                         $service_ids = explode(',', $appointment->purpose);
                                                         $services = \App\Models\Services::whereIn('id', $service_ids)->get();
                                                     @endphp
                                                     @foreach ($services as $service)
                                                         <tr>
-                                                            <td>{{ $service->service_name }}</td>
-                                                            <td>{{ number_format($service->service_price, 2) }}</td>
+                                                            <td class="ps-0">{{ $service->service_name }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </table>
@@ -523,38 +521,48 @@
 
                 if (selectedDate) {
                     $.ajax({
-                        url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
+                        url: '{{ route('appointments.available-times') }}',
                         type: 'GET',
-                        data: {
-                            date: selectedDate
-                        },
+                        data: { date: selectedDate },
                         success: function(response) {
                             console.log(response);
                             let timeSelect = $('#selectAppointmentTime');
-                            timeSelect.empty(); // Clear existing options
-                            timeSelect.append(
-                                '<option value="">--- Select a Time ---</option>');
+                            timeSelect.empty();
+
+                            // Add placeholder option
+                            timeSelect.append('<option value="">--- Select a Time ---</option>');
 
                             if (response.length > 0) {
                                 let amGroup = $('<optgroup label="AM"></optgroup>');
                                 let pmGroup = $('<optgroup label="PM"></optgroup>');
 
                                 response.forEach(function(time) {
-                                    let option =
-                                        `<option value="${time}"  >${time}</option>`;
-                                    let hour = parseInt(time.split(':')[0]);
-                                    if (hour < 12) {
+                                    // Convert 24-hour time to 12-hour display format
+                                    const [hours, minutes] = time.split(':');
+                                    const hourNum = parseInt(hours);
+                                    const ampm = hourNum < 12 ? 'AM' : 'PM';
+                                    const displayHour = hourNum % 12 || 12;
+
+                                    const displayTime = `${displayHour}:${minutes}${ampm}`;
+
+                                    // Create option element with 24-hour value and AM/PM display text
+                                    const option = $('<option>')
+                                        .val(time)                    // Keep 24-hour format for value
+                                        .text(displayTime);           // Use AM/PM format for display
+
+                                    // Add to appropriate group
+                                    if (hourNum < 12) {
                                         amGroup.append(option);
                                     } else {
                                         pmGroup.append(option);
                                     }
                                 });
 
+                                // Append groups to select element
                                 timeSelect.append(amGroup);
                                 timeSelect.append(pmGroup);
                             } else {
-                                timeSelect.append(
-                                    '<option value="">No available times</option>');
+                                timeSelect.append('<option value="">No available times</option>');
                             }
 
                             $('#selectAppointmentTime').prop('disabled', false);

@@ -45,6 +45,14 @@ class SoapController extends Controller
         $id = request('pet_id');
         $ownerID = Pets::find($id)->owner_ID;
 
+        $request->validate([
+            'doctorID' => 'required',
+            'subject' => 'required|string|max:255',
+        ], [
+            'subject.required' => 'Please provide the subject for the medical record.',
+            'doctorID.required' => 'Please select an attending veterinarian',
+        ]);
+
         $data = [
             'petID' => $id,
             'ownerID' => $ownerID,
