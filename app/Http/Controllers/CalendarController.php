@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -12,22 +13,49 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        $appointments = Appointments::all();
+        // Get all services first
+        $services = \App\Models\Services::pluck('service_name', 'id')->toArray();
+
+        // Load appointments with needed relationships and filter out those with null status
+        $appointments = \App\Models\Appointments::with(['client', 'pet'])
+            ->whereNotNull('status')  // Exclude appointments with a null status
+            ->where('status', '!=', 2)  // Exclude appointments where status is equal to 2
+            ->get();
 
         // Format data for FullCalendar
-        $formattedAppointments = $appointments->map(function ($appointment) {
+        $formattedAppointments = $appointments->map(function ($appointment) use ($services) {
+            // Prepare service name(s)
+            $serviceNames = '';
+            if (!empty($appointment->purpose)) {
+                $serviceIds = explode(',', $appointment->purpose);
+                $mappedNames = array_map(function ($id) use ($services) {
+                    return $services[trim($id)] ?? '';
+                }, $serviceIds);
+                $serviceNames = implode(', ', array_filter($mappedNames));
+            }
+
+            // Get Pet Owner Name
+            $ownerName = $appointment->client ? $appointment->client->client_name : 'Unknown Owner';
+
+
+            // Status label
+            $status = $appointment->status == 1 ? 'Completed' : 'Scheduled';
+
+            // Get Attending Veterinarian
+            $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first();
+            $doctorName = $veterinarian ?  $veterinarian->firstname . ' ' . $veterinarian->lastname : 'Unknown Vet';
+
             return [
                 'id' => $appointment->id,
-                'title' => $appointment->purpose, // Show the purpose as the title
+                'title' => "Dr. $doctorName   |   Owner: $ownerName   |   Service: $serviceNames   |   Status: $status",
                 'start' => $appointment->appointment_date . 'T' . $appointment->appointment_time,
-                'end' => $appointment->appointment_date . 'T' . $appointment->appointment_time, // Optional
+                'end' => $appointment->appointment_date . 'T' . $appointment->appointment_time,
             ];
         });
 
-
-
-        return view('schedule.calendar',['appointments' => json_encode($formattedAppointments)]);
+        return view('schedule.calendar', ['appointments' => json_encode($formattedAppointments)]);
     }
+
 
     /**
      * Show the form for creating a new resource.

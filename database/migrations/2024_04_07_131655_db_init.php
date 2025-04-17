@@ -236,7 +236,7 @@ return new class extends Migration {
             $table->foreign("ownerID")->references("id")->on("clients")->onDelete("cascade");
             $table->foreign("petID")->references("id")->on("pets")->onDelete("cascade");
             $table->string("subject");
-            $table->date("record_date");
+            $table->dateTime("record_date");
             $table->integer("consultation_type")->nullable();
             $table->longText("complaint")->nullable();
             $table->longText("examination")->nullable();

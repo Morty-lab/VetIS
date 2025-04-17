@@ -37,6 +37,7 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
             var calendarEl = document.getElementById('calendar');
             var backToMonthViewBtn = document.getElementById('backToMonthView');
 
@@ -44,6 +45,7 @@
             var appointments = {!! $appointments !!};
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
+
                 initialView: 'dayGridMonth',
                 nowIndicator: true, // Show the "now" indicator
                 events: appointments, // Use directly loaded appointments data
@@ -53,6 +55,7 @@
                     // Fade in when entering a new view
                     calendarEl.classList.remove('fc-hidden');
                 },
+
                 viewWillLeave: function() {
                     // Fade out when leaving the current view
                     calendarEl.classList.add('fc-hidden');
@@ -70,7 +73,29 @@
                 // When the view changes, ensure the transition is applied after rendering
                 viewDidChange: function() {
                     calendarEl.classList.remove('fc-hidden'); // Ensure the calendar becomes visible after view change
+                },
+
+                // Add eventClick for showing detailed event information
+                eventClick: function(info) {
+                    // Get the event object
+                    var event = info.event;
+
+                    // Get the event's description
+                    var eventDescription = event.extendedProps.description || 'No description available';
+
+                    // Get the event's start date/time
+                    var eventStartDate = event.start.toLocaleString();
+
+                    // Display event details in the div
+                    document.getElementById('eventTitle').textContent = event.title;
+                    document.getElementById('eventDate').textContent = eventStartDate;
+                    document.getElementById('eventDescription').textContent = eventDescription;
+
+                    // Make the event details section visible
+                    var eventDetailsDiv = document.getElementById('eventDetails');
+                    eventDetailsDiv.style.display = 'block';
                 }
+
             });
 
             calendar.render();
@@ -80,6 +105,7 @@
                 calendar.changeView('dayGridMonth'); // Switch back to month view
                 backToMonthViewBtn.style.display = 'none'; // Hide the back button
             });
+
         });
     </script>
 @endsection

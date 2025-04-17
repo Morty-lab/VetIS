@@ -279,3 +279,329 @@
 </body>
 
 </html>
+
+
+
+{{--New Version--}}
+{{--    <!DOCTYPE html>--}}
+{{--<html lang="en">--}}
+{{--<head>--}}
+{{--    <meta charset="UTF-8">--}}
+{{--    <title>Billing Form</title>--}}
+{{--    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />--}}
+{{--    <style>--}}
+{{--        * { box-sizing: border-box; }--}}
+{{--        body { font-family: Arial, sans-serif; font-size: 13px; margin: 20px; }--}}
+{{--        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }--}}
+{{--        th, td { border: 1px solid #000; padding: 6px; text-align: left; vertical-align: top; }--}}
+{{--        h2 { font-size: 16px; margin: 30px 0 10px; }--}}
+{{--        h3 { font-size: 14px; margin: 20px 0 8px; }--}}
+{{--    </style>--}}
+{{--</head>--}}
+{{--<body>--}}
+
+{{--<div class="text-center mb-3">--}}
+{{--    <h4>Pruderich Veterinary Clinic</h4>--}}
+{{--    <p>Purok - 3, Dologon, Maramag, Bukidnon | +63 917 620 0620</p>--}}
+{{--</div>--}}
+{{--<hr>--}}
+
+{{--<div class="row gx-1 gy-1">--}}
+{{--    <div class="col-6">--}}
+{{--        <table>--}}
+{{--            <tr><td>Billing No.: BILL-0001</td></tr>--}}
+{{--            <tr><td>Date Issued: April 17, 2025</td></tr>--}}
+{{--            <tr><td>Status: Paid</td></tr>--}}
+{{--            <tr><td>Veterinarian: Dr. Jane Doe</td></tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--    <div class="col-6">--}}
+{{--        <table>--}}
+{{--            <tr><td>Owner: Juan Dela Cruz</td></tr>--}}
+{{--            <tr><td>Pet: Lexie (Dog)</td></tr>--}}
+{{--            <tr><td>Contact No.: 09123456789</td></tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--<h2>Billing Details</h2>--}}
+{{--<table>--}}
+{{--    <thead>--}}
+{{--    <tr>--}}
+{{--        <th>#</th>--}}
+{{--        <th>Medication / Service</th>--}}
+{{--        <th>Pet</th>--}}
+{{--        <th>Price</th>--}}
+{{--        <th>Qty</th>--}}
+{{--        <th>Total</th>--}}
+{{--    </tr>--}}
+{{--    </thead>--}}
+{{--    <tbody>--}}
+{{--    <tr>--}}
+{{--        <td>1</td>--}}
+{{--        <td>Consultation</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱300.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱300.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>2</td>--}}
+{{--        <td>Skin Scraping</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱500.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱500.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>3</td>--}}
+{{--        <td>Hydrocortisone Cream</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱250.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱250.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>4</td>--}}
+{{--        <td>Omega-3 Supplement</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱400.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱400.00</td>--}}
+{{--    </tr>--}}
+{{--    </tbody>--}}
+{{--</table>--}}
+
+
+{{--<h3>Summary</h3>--}}
+{{--<table style="width: 50%; float: right;">--}}
+{{--    <tr><td>Subtotal</td><td>₱1,450.00</td></tr>--}}
+{{--    <tr><td>Discount</td><td>₱0.00</td></tr>--}}
+{{--    <tr><td><strong>Total</strong></td><td><strong>₱1,450.00</strong></td></tr>--}}
+{{--    <tr><td>Amount Paid</td><td>₱1,000.00</td></tr>--}}
+{{--    <tr><td>Balance</td><td>₱450.00</td></tr>--}}
+{{--    <tr><td><strong>Due Date</strong></td><td><strong>April 30, 2025</strong></td></tr>--}}
+{{--    <tr><td>Payment Method</td><td>Cash</td></tr>--}}
+{{--    <tr><td>Status</td><td><strong>Partially Paid</strong></td></tr>--}}
+{{--</table>--}}
+
+{{--<div style="clear: both;"></div>--}}
+
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>--}}
+{{--</body>--}}
+{{--</html>--}}
+
+{{-- Second Partial Payment --}}
+{{--<!DOCTYPE html>--}}
+{{--<html lang="en">--}}
+{{--<head>--}}
+{{--    <meta charset="UTF-8">--}}
+{{--    <title>Billing Form - Partial Payment</title>--}}
+{{--    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />--}}
+{{--    <style>--}}
+{{--        * { box-sizing: border-box; }--}}
+{{--        body { font-family: Arial, sans-serif; font-size: 13px; margin: 20px; }--}}
+{{--        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }--}}
+{{--        th, td { border: 1px solid #000; padding: 6px; text-align: left; vertical-align: top; }--}}
+{{--        h2 { font-size: 16px; margin: 30px 0 10px; }--}}
+{{--        h3 { font-size: 14px; margin: 20px 0 8px; }--}}
+{{--    </style>--}}
+{{--</head>--}}
+{{--<body>--}}
+
+{{--<div class="text-center mb-3">--}}
+{{--    <h4>Pruderich Veterinary Clinic</h4>--}}
+{{--    <p>Purok - 3, Dologon, Maramag, Bukidnon | +63 917 620 0620</p>--}}
+{{--</div>--}}
+{{--<hr>--}}
+
+{{--<div class="row gx-1 gy-1">--}}
+{{--    <div class="col-6">--}}
+{{--        <table>--}}
+{{--            <tr><td>Billing No.: BILL-0004</td></tr>--}}
+{{--            <tr><td>Reference: BILL-0002</td></tr>--}}
+{{--            <tr><td>Date Issued: April 18, 2025</td></tr>--}}
+{{--            <tr><td>Status: <strong>Partially Paid</strong></td></tr>--}}
+{{--            <tr><td>Veterinarian: Dr. Jane Doe</td></tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--    <div class="col-6">--}}
+{{--        <table>--}}
+{{--            <tr><td>Owner: Maria Santos</td></tr>--}}
+{{--            <tr><td>Pet: Coco (Cat)</td></tr>--}}
+{{--            <tr><td>Contact No.: 09987654321</td></tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--<h2>Billing Details</h2>--}}
+{{--<table>--}}
+{{--    <thead>--}}
+{{--    <tr>--}}
+{{--        <th>#</th>--}}
+{{--        <th>Medication / Service</th>--}}
+{{--        <th>Pet</th>--}}
+{{--        <th>Price</th>--}}
+{{--        <th>Qty</th>--}}
+{{--        <th>Total</th>--}}
+{{--    </tr>--}}
+{{--    </thead>--}}
+{{--    <tbody>--}}
+{{--    <tr>--}}
+{{--        <td>1</td>--}}
+{{--        <td>Consultation</td>--}}
+{{--        <td>Coco</td>--}}
+{{--        <td>₱300.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱300.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>2</td>--}}
+{{--        <td>Flea Treatment</td>--}}
+{{--        <td>Coco</td>--}}
+{{--        <td>₱700.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱700.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>3</td>--}}
+{{--        <td>Vitamins</td>--}}
+{{--        <td>Coco</td>--}}
+{{--        <td>₱200.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱200.00</td>--}}
+{{--    </tr>--}}
+{{--    </tbody>--}}
+{{--</table>--}}
+
+{{--<h3>Updated Payment Summary</h3>--}}
+{{--<table style="width: 50%; float: right;">--}}
+{{--    <tr><td>Total Amount</td><td>₱1,200.00</td></tr>--}}
+{{--    <tr><td>Previous Payment</td><td>₱500.00</td></tr>--}}
+{{--    <tr><td>Current Payment</td><td>₱300.00</td></tr>--}}
+{{--    <tr><td><strong>Total Paid</strong></td><td><strong>₱800.00</strong></td></tr>--}}
+{{--    <tr><td><strong>Balance</strong></td><td><strong>₱400.00</strong></td></tr>--}}
+{{--    <tr><td>Date Paid</td><td>April 18, 2025</td></tr>--}}
+{{--    <tr><td>Payment Method</td><td>Cash</td></tr>--}}
+{{--    <tr><td>Status</td><td><strong>Partially Paid</strong></td></tr>--}}
+{{--</table>--}}
+
+{{--<div style="clear: both;"></div>--}}
+
+{{--</body>--}}
+{{--</html>--}}
+
+
+{{--Final PArtial Payment--}}
+
+{{--    <!DOCTYPE html>--}}
+{{--<html lang="en">--}}
+{{--<head>--}}
+{{--    <meta charset="UTF-8">--}}
+{{--    <title>Billing Form</title>--}}
+{{--    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />--}}
+{{--    <style>--}}
+{{--        * { box-sizing: border-box; }--}}
+{{--        body { font-family: Arial, sans-serif; font-size: 13px; margin: 20px; }--}}
+{{--        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }--}}
+{{--        th, td { border: 1px solid #000; padding: 6px; text-align: left; vertical-align: top; }--}}
+{{--        h2 { font-size: 16px; margin: 30px 0 10px; }--}}
+{{--        h3 { font-size: 14px; margin: 20px 0 8px; }--}}
+{{--        .payment-history { margin-top: 30px; }--}}
+{{--        .payment-history h4 { font-size: 14px; margin-bottom: 5px; }--}}
+{{--        .payment-history table { width: 60%; }--}}
+{{--    </style>--}}
+{{--</head>--}}
+{{--<body>--}}
+
+{{--<div class="text-center mb-3">--}}
+{{--    <h4>Pruderich Veterinary Clinic</h4>--}}
+{{--    <p>Purok - 3, Dologon, Maramag, Bukidnon | +63 917 620 0620</p>--}}
+{{--</div>--}}
+{{--<hr>--}}
+
+{{--<div class="row gx-1 gy-1">--}}
+{{--    <div class="col-6">--}}
+{{--        <table>--}}
+{{--            <tr><td>Billing No.: BILL-0001</td></tr>--}}
+{{--            <tr><td>Date Issued: April 17, 2025</td></tr>--}}
+{{--            <tr><td>Status: Paid</td></tr>--}}
+{{--            <tr><td>Veterinarian: Dr. Jane Doe</td></tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--    <div class="col-6">--}}
+{{--        <table>--}}
+{{--            <tr><td>Owner: Juan Dela Cruz</td></tr>--}}
+{{--            <tr><td>Pet: Lexie (Dog)</td></tr>--}}
+{{--            <tr><td>Contact No.: 09123456789</td></tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--<h2>Billing Details</h2>--}}
+{{--<table>--}}
+{{--    <thead>--}}
+{{--    <tr>--}}
+{{--        <th>#</th>--}}
+{{--        <th>Medication / Service</th>--}}
+{{--        <th>Pet</th>--}}
+{{--        <th>Price</th>--}}
+{{--        <th>Qty</th>--}}
+{{--        <th>Total</th>--}}
+{{--    </tr>--}}
+{{--    </thead>--}}
+{{--    <tbody>--}}
+{{--    <tr>--}}
+{{--        <td>1</td>--}}
+{{--        <td>Consultation</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱300.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱300.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>2</td>--}}
+{{--        <td>Skin Scraping</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱500.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱500.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>3</td>--}}
+{{--        <td>Hydrocortisone Cream</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱250.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱250.00</td>--}}
+{{--    </tr>--}}
+{{--    <tr>--}}
+{{--        <td>4</td>--}}
+{{--        <td>Omega-3 Supplement</td>--}}
+{{--        <td>Lexie</td>--}}
+{{--        <td>₱400.00</td>--}}
+{{--        <td>1</td>--}}
+{{--        <td>₱400.00</td>--}}
+{{--    </tr>--}}
+{{--    </tbody>--}}
+{{--</table>--}}
+
+
+{{--<h3>Summary</h3>--}}
+{{--<table style="width: 50%; float: right;">--}}
+{{--    <tr><td>Subtotal</td><td>₱1,450.00</td></tr>--}}
+{{--    <tr><td>Discount</td><td>₱0.00</td></tr>--}}
+{{--    <tr><td><strong>Total</strong></td><td><strong>₱1,450.00</strong></td></tr>--}}
+{{--    <tr><td>Amount Paid</td><td>₱1,450.00</td></tr>--}}
+{{--    <tr><td>Balance</td><td>₱0.00</td></tr>--}}
+{{--    <tr><td><strong>Due Date</strong></td><td><strong>April 30, 2025</strong></td></tr>--}}
+{{--    <tr><td>Payment Method</td><td>Cash</td></tr>--}}
+{{--    <tr><td>Status</td><td><strong>Paid</strong></td></tr>--}}
+{{--</table>--}}
+
+{{--<div style="clear: both;"></div>--}}
+
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>--}}
+{{--</body>--}}
+{{--</html>--}}
+

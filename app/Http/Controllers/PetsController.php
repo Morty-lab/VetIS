@@ -76,8 +76,6 @@ class PetsController extends Controller
                 'pet_condition' => 'nullable|string',
             ]);
 
-
-
             $lastGroomDate = $validatedData['last_groom_date']
                 ? Carbon::parse($validatedData['last_groom_date'])->startOfMonth()->toDateString()
                 : null;
@@ -95,26 +93,22 @@ class PetsController extends Controller
                     'pet_birthdate' => $validatedData['pet_birthdate'] ?? null,
                     'pet_color' => $validatedData['pet_color'] ?? null,
                     // 'pet_weight' => $validatedData['pet_weight'] ?? null,
-                    'vaccinated' => $request->input('vaccinated'),
-                    'neutered' => $request->input('neutered'),
+                    'vaccinated' => $request->input('vaccinated') === 'null' ? null : $request->input('vaccinated'),
+                    'neutered' => $request->input('neutered') ?? null,
                     'pet_description' => $validatedData['pet_description'] ?? null,
-                    'vaccinated_anti_rabies' => $request->input('vaccinated_anti_rabies'),
+                    'vaccinated_anti_rabies' => $request->input('vaccinated_anti_rabies') ?? null,
                     'anti_rabies_vaccination_date' => $antiRabiesVaccinationDate,
                     'history_of_aggression' => $validatedData['history_of_aggression'] ?? null,
                     'food_allergies' => $validatedData['food_allergies'] ?? null,
                     'pet_food' => $validatedData['pet_food'] ?? null,
                     'okay_to_give_treats' => $request->input('okay_to_give_treats'),
                     'last_groom_date' => $lastGroomDate,
-                    'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? 0,
+                    'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? null,
                     'pet_condition' => $validatedData['pet_condition'] ?? null,
                 ]);
 
             // Set the owner ID from the request data
             $pet->owner_ID = $request->owner_name;
-
-            // Handle boolean values for vaccinated and neutered fields
-            $pet->vaccinated = $request->has('pet_vaccinated');
-            $pet->neutered = $request->has('pet_neutered');
 
             // Save the new pet to the database
             $pet->save();
@@ -165,10 +159,10 @@ class PetsController extends Controller
         $validatedData = $request->validate([
             'pet_name' => 'required|string|max:255',
             'pet_type' => 'required|string|max:255',
-            'pet_breed' => 'nullable|string|max:255',
+            'pet_breed' => 'required|string|max:255',
             'pet_gender' => 'required', // Assuming only male and female genders are valid
-            'pet_birthdate' => 'nullable|date|before:today',
-            'pet_color' => 'nullable|string|max:255',
+            'pet_birthdate' => 'required|date|before_or_equal:today',
+            'pet_color' => 'required|string|max:255',
             // 'pet_weight' => 'nullable|numeric|min:0',
             'pet_description' => 'nullable|string',
             'vaccinated' => 'nullable',
@@ -211,17 +205,17 @@ class PetsController extends Controller
             'pet_birthdate' => $validatedData['pet_birthdate'] ?? null,
             'pet_color' => $validatedData['pet_color'] ?? null,
             // 'pet_weight' => $validatedData['pet_weight'] ?? null,
-            'vaccinated' => $request->input('vaccinated'),
-            'neutered' => $request->input('neutered'),
+            'vaccinated' => $request->input('vaccinated') === 'null' ? null : $request->input('vaccinated'),
+            'neutered' => $request->input('neutered') ?? null,
             'pet_description' => $validatedData['pet_description'] ?? null,
-            'vaccinated_anti_rabies' => $request->input('vaccinated_anti_rabies'),
+            'vaccinated_anti_rabies' => $request->input('vaccinated_anti_rabies') ?? null,
             'anti_rabies_vaccination_date' => $antiRabiesVaccinationDate,
             'history_of_aggression' => $validatedData['history_of_aggression'] ?? null,
             'food_allergies' => $validatedData['food_allergies'] ?? null,
             'pet_food' => $validatedData['pet_food'] ?? null,
             'okay_to_give_treats' => $request->input('okay_to_give_treats'),
             'last_groom_date' => $lastGroomDate,
-            'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? 0,
+            'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? null,
             'pet_condition' => $validatedData['pet_condition'] ?? null,
         ]);
 

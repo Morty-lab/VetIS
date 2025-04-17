@@ -79,7 +79,7 @@
                         <div class="col-md-7">
                             <form id="paymentForm">
                                 <!-- Payment Type -->
-                                <div class="row gy-3" style="display:none">
+                                <div class="row gy-3" style="">
                                     <div class="col-md-6">
                                             <label for="paymentType" class="form-label">Payment Type</label>
                                             <select class="form-select" id="paymentType" name="payment_type" required>

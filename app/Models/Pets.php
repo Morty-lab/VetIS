@@ -96,7 +96,21 @@ class Pets extends Model
 
     public function getAgeAttribute()
     {
-        return Carbon::parse($this->attributes['pet_birthdate'])->age;
+        $birthdate = Carbon::parse($this->attributes['pet_birthdate']);
+        $now = Carbon::now();
+
+        $years = $birthdate->diffInYears($now);
+        if ($years > 0) {
+            return $years . ' year' . ($years > 1 ? 's' : '') . ' old';
+        }
+
+        $months = $birthdate->diffInMonths($now);
+        if ($months > 0) {
+            return $months . ' month' . ($months > 1 ? 's' : '') . ' old';
+        }
+
+        $days = $birthdate->diffInDays($now);
+        return $days . ' day' . ($days > 1 ? 's' : '') . ' old';
     }
 
 }

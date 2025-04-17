@@ -134,4 +134,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
             }
         });
     }
+
+//     Pet Medical Records Table
+    const medicalRecordsTable = document.getElementById("medicalRecordsTable");
+    if (medicalRecordsTable) {
+        new simpleDatatables.DataTable(medicalRecordsTable);
+    }
 });

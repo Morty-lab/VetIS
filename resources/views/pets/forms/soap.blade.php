@@ -459,7 +459,7 @@
 <div class="container-xl px-4 mt-4">
 
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href="javascript:void(0);" onclick="window.history.back();">
+        <a class="nav-link ms-0" href="{{ url('petinfo/' . $pet->id) }}">
             <span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back
         </a>
     </nav>
@@ -503,18 +503,18 @@
                                 <div class="col-md-3">
                                     <label class="small mb-1">Spayed/Neutered</label>
                                     <p>
-                                        {{$pet->neutered == 1 ? 'Yes' : 'No'}}
+                                        {{$pet->neutered === null ? 'No Record' : ($pet->neutered == 1 ? 'Yes' : 'No')}}
                                     </p>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="small mb-1">Vaccinated with Anti-Rabies?</label>
                                     <p>
-                                        {{$pet->vaccinated_anti_rabies == 1 ? 'Yes' : 'No'}}
+                                        {{$pet->vaccinated_anti_rabies === null ? 'No Record' : ($pet->vaccinated_anti_rabies == 1 ? 'Yes' : 'No')}}
                                     </p>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="small mb-1">Date of Vaccination</label>
-                                    <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'Incomplete'}}</p>
+                                    <p>{{ $pet->anti_rabies_vaccination_date ? \Carbon\Carbon::parse($pet->anti_rabies_vaccination_date)->format('F j, Y') : 'No Record'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -619,15 +619,15 @@
                                                 <div class="col-md-6">
                                                     <label class="form-label">Body Condition:</label> <br>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="underweight">
+                                                        <input class="form-check-input" type="radio" name="body_condition" id="underweight">
                                                         <label class="form-check-label" for="underweight">Underweight</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="normal">
+                                                        <input class="form-check-input" type="radio" name="body_condition" id="normal">
                                                         <label class="form-check-label" for="normal">Normal</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="overweight">
+                                                        <input class="form-check-input" type="radio" name="body_condition" id="overweight">
                                                         <label class="form-check-label" for="overweight">Overweight</label>
                                                     </div>
                                                 </div>
@@ -1063,7 +1063,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             Date Created
-                                            <p class="text-primary">{{\Carbon\Carbon::parse($record->record_date)->format('F d, Y')}}</p>
+                                            <p class="text-primary">{{ \Carbon\Carbon::parse($record->record_date)->format('F d, Y h:i A') }}</p>
                                         </div>
                                         <div class="col-md-6">
                                             Status
