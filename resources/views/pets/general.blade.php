@@ -583,7 +583,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($appointments as $appointment)
+                            @foreach ($appointments->sortBy(function($appointment) {
+                            return $appointment->appointment_date . ' ' . $appointment->appointment_time;
+                            }) as $appointment)
                                     @if (in_array($pet->id, explode(',', $appointment->pet_ID)) && $appointment->status == 0)
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }}
@@ -649,7 +651,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($appointments as $appointment)
+                                @foreach ($appointments->sortBy(function($appointment) {
+                                return $appointment->appointment_date . ' ' . $appointment->appointment_time;
+                                }) as $appointment)
                                         @if (in_array($pet->id, explode(',', $appointment->pet_ID)) && $appointment->status == 1)
                                             <tr>
                                                 <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
