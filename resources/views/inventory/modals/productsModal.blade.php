@@ -100,6 +100,18 @@
                             <input type="hidden" name="supplier_price" value="{{ $stockP->supplier_price }}">
                             <input type="hidden" name="supplier" value="{{ $stockP->supplier_id }}">
 
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputRepackQuantity">Repacked product name</label>
+                                <input class="form-control" id="inputRepackQuantity" type="text"
+                                    placeholder="Enter Quantity" name="product_name" value="{{ $product->product_name }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputRepackedSKU">Repacked product SKU</label>
+                                <input class="form-control" id="inputRepackedSKU" type="text"
+                                    placeholder="Enter SKU" name="repacked_SKU" value=""
+                                    maxlength="24" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                            </div>
 
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputRepackQuantity">Repack Quantity</label>

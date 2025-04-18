@@ -131,8 +131,8 @@ class ProductsController extends Controller
         Stocks::subtractStock($request->product_id, $request->quantity);
         $products = Products::where('id',$request->product_id)->first();
         $newProduct = Products::createProduct([
-            'SKU' => $products->SKU,
-            'product_name' => $products->product_name . ' ' . Unit::find($request->unit)->name,
+            'SKU' => $request->repacked_SKU,
+            'product_name' => $request->product_name,
             'product_category' => $products->product_category,
             'unit' => $request->unit,
         ]);
