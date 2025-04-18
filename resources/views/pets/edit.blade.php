@@ -407,7 +407,7 @@
                     <img class="img-account-profile rounded-circle mb-2"
                          id="petPhotoPreview"
                         src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}"
-                        alt="" />
+                        alt="" style="width: 150px; height: 150px; object-fit: cover;"/>
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->

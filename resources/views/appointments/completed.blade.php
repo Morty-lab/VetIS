@@ -41,8 +41,7 @@
                             @endphp
                             @if ($appointment->status == 1 && \Carbon\Carbon::parse($appointment->updated_at)->isToday() && $appointment->doctor_ID == $vetID)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                    {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
+                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
                                 </td>
                                 <td>{{ $appointment->client->client_name }}</td>
                                 <td>
@@ -86,8 +85,7 @@
                             @else
                                 @if ($appointment->status == 1)
                                     <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
+                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
                                         </td>
                                         <td>{{ $appointment->client->client_name }}</td>
                                         <td>

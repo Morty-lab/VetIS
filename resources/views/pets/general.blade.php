@@ -378,14 +378,15 @@
                             </div>
                         </div>
                         <div class=" card-body">
-                            <div class="row gx-5 px-3">
-                                <div class="col-md-3 d-flex justify-content-center p-0 h-50 align-items-center">
-                                    <img class="img-account-profile rounded-circle p-1"
-                                        src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png') }}"
-                                        alt="" style="width: 100%; height: 100%; object-fit: cover;" />
+                            <div class="row gx-5 px-2">
+                                <div class="col-md-3 d-flex justify-content-center p-0 align-items-center">
+                                    <img class="img-account-profile rounded-circle"
+                                         src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png') }}"
+                                         alt=""
+                                         style="width: 200px; height: 200px; object-fit: cover;"/>
                                 </div>
-                                <div class="col-md-9 ps-md-5 p-0">
-                                    <div class="row gx-3">
+                                <div class="col-md-9">
+                                    <div class="row gx-3 p-xs-3">
                                         <div class="col-md-5">
                                             <label class="small mb-1">Pet Name</label>
                                             <p class="text-primary">{{ $pet->pet_name }}</p>
