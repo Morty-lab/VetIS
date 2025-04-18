@@ -288,142 +288,75 @@
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Pet Owner</th>
-                            <th>Pet/s</th>
-                            <th>Veterinarian</th>
-                            <th>Reason of Visit</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Pet Owner</th>
+                        <th>Pet/s</th>
+                        <th>Veterinarian</th>
+                        <th>Reason of Visit</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($appointments as $appointment)
-                            @if (auth()->user()->role == 'veterinarian')
-                                @php
-                                    $vetID = App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id;
-                                @endphp
-                                @if ($appointment->status === 0 && $appointment->doctor_ID == $vetID)
-                                    <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
-                                        </td>
-                                        <td>{{ $appointment->client->client_name }}</td>
-                                        <td>
-                                            @php
-                                                $pet_ids = explode(',', $appointment->pet_ID);
-                                                $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
-                                            @endphp
-                                            @foreach ($pets as $pet)
-                                                <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
-                                                    {{ $pet->pet_name }} <span
-                                                        class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
-                                                </span>
-                                            @endforeach
-                                        </td>
-                                        <td>Dr.
-                                            {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
-                                        </td>
-                                        <td>
-                                            @php
-                                                $service_ids = explode(',', $appointment->purpose);
-                                                $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
-                                                $service_list = implode(', ', $services);
-                                            @endphp
+                    @foreach ($appointments as $appointment)
+                        @php
+                            $vetID = auth()->user()->role == 'veterinarian'
+                                ? App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id
+                                : null;
+                        @endphp
 
-                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
-                                        </td>
-                                        <td>
-                                            @if (is_null($appointment->status) == true)
-                                                <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">
-                                                    Pending
-                                                </div>
-                                            @elseif ($appointment->status == 0)
-                                                <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
-                                                    Scheduled
-                                                </div>
-                                            @elseif ($appointment->status == 2)
-                                                <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">
-                                                    Canceled
-                                                </div>
-                                            @elseif ($appointment->status == 1)
-                                                <div class="badge badge-sm bg-success-soft text-success rounded-pill">
-                                                    Finished
-                                                </div>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-datatable btn-primary px-5 py-3"
-                                                href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
-                                        </td>
-
-                                    </tr>
-                                    {{-- @else --}}
-                                    {{-- @continue --}}
-                                @endif
-                            @else
-                                @if ($appointment->status === 0)
-                                    <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
-                                        </td>
-                                        <td>{{ $appointment->client->client_name }}</td>
-                                        <td>
-                                            @php
-                                                $pet_ids = explode(',', $appointment->pet_ID);
-                                                $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
-                                            @endphp
-                                            @foreach ($pets as $pet)
-                                                <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
-                                                    {{ $pet->pet_name }} <span
-                                                        class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span></span>
-                                                </span>
-                                            @endforeach
-                                        </td>
-                                        <td>Dr.
-                                            {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
-                                        </td>
-                                        <td>
-                                            @php
-                                                $service_ids = explode(',', $appointment->purpose);
-                                                $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
-                                                $service_list = implode(', ', $services);
-                                            @endphp
-
-                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
-                                        </td>
-                                        <td>
-                                            @if (is_null($appointment->status) == true)
-                                                <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">
-                                                    Pending
-                                                </div>
-                                            @elseif ($appointment->status == 0)
-                                                <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
-                                                    Scheduled
-                                                </div>
-                                            @elseif ($appointment->status == 2)
-                                                <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">
-                                                    Canceled
-                                                </div>
-                                            @elseif ($appointment->status == 1)
-                                                <div class="badge bg-success-soft text-success rounded-pill">
-                                                    Finished
-                                                </div>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-datatable btn-primary px-5 py-3"
-                                                href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
-                                        </td>
-
-                                    </tr>
-                                    {{-- @else --}}
-                                    {{-- @continue --}}
-                                @endif
-                            @endif
-                        @endforeach
-
+                        @if ((auth()->user()->role != 'veterinarian' && $appointment->status === 0) ||
+                             ($appointment->status === 0 && $appointment->doctor_ID == $vetID))
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
+                                <td>{{ $appointment->client->client_name }}</td>
+                                <td>
+                                    @php
+                                        $pet_ids = explode(',', $appointment->pet_ID);
+                                        $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
+                                    @endphp
+                                    @foreach ($pets as $pet)
+                                        <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
+                                                {{ $pet->pet_name }}
+                                                <span
+                                                    class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span>
+                                            </span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
+                                <td>
+                                    @php
+                                        $service_ids = explode(',', $appointment->purpose);
+                                        $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                        $service_list = implode(', ', $services);
+                                    @endphp
+                                    {{ \Illuminate\Support\Str::limit($service_list, 35) }}
+                                </td>
+                                <td>
+                                    @if (is_null($appointment->status))
+                                        <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">Pending
+                                        </div>
+                                    @elseif ($appointment->status === 0)
+                                        <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
+                                            Scheduled
+                                        </div>
+                                    @elseif ($appointment->status === 2)
+                                        <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">Canceled
+                                        </div>
+                                    @elseif ($appointment->status === 1)
+                                        <div class="badge badge-sm bg-success-soft text-success rounded-pill">Finished
+                                        </div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-primary px-5 py-3"
+                                       href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
                     </tbody>
                 </table>
             </div>

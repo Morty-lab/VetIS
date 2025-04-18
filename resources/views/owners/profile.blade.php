@@ -467,20 +467,27 @@
                             <tbody>
                                 @foreach ($pets as $pet)
                                     <tr>
-                                        <td>{{ sprintf('%05d', $pet->id) }}</td>
+                                        <td>PETID-{{ sprintf('%05d', $pet->id) }}</td>
                                         <td>{{ $pet->pet_name }}</td>
                                         <td>{{ $pet->pet_type }}</td>
                                         <td>{{ $pet->pet_breed }}</td>
-                                        <td>{{ $pet->age }} Months</td>
+                                        <td>{{ $pet->age }}</td>
                                         <td>{{ $pet->pet_gender }}</td>
                                         {{-- <td>{{ $pet->client->client_name }}</td> --}}
                                         <td>
-                                            @if ($pet->vaccinated)
-                                                <div class="badge bg-primary text-white rounded-pill">Vaccinated</div>
-                                            @elseif ($pet->sterilized)
-                                                <div class="badge bg-primary text-white rounded-pill">Sterilized</div>
-                                            @else
-                                                <div class="badge bg-primary text-white rounded-pill">Unvaccinated</div>
+                                            @if ($pet->vaccinated === 1)
+                                                <div class="badge badge-sm bg-primary-soft text-primary rounded-pill">Vaccinated</div>
+                                            @elseif ($pet->vaccinated === 0)
+                                                <div class="badge badge-sm bg-orange-soft text-orange rounded-pill">Unvaccinated</div>
+                                            @elseif (is_null($pet->vaccinated))
+                                                <div class="badge badge-sm bg-gray-200 text-body rounded-pill">No Vaccination Record</div>
+                                            @endif
+                                            @if ($pet->neutered)
+                                                <div class="badge badge-sm rounded-pill bg-success-soft text-success">Sterilized</div>
+                                            @endif
+                                            @if($pet->status)
+                                                <div class="badge badge-sm bg-primary-soft text-primary rounded-pill"><i class="fa-solid fa-check"></i></div>
+
                                             @endif
                                         </td>
                                         <td>

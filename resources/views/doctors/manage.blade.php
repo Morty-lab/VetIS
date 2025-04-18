@@ -32,7 +32,7 @@
           \App\Models\Doctor::setEmailAttribute($doctor,$doctor->user_id);
           @endphp
           <tr>
-            <td>Dr. {{ $doctor->firstname ." " . $doctor->lastname }}</td>
+            <td>Dr. {{ $doctor->fullname() }}</td>
             <td><a class="text-body" href="mailto:{{ $doctor->doctor_email }}">{{ $doctor->doctor_email }}</a></td>
             <td><a class="text-body" href="tel:{{ $doctor->phone_number }}">{{ $doctor->phone_number }}</a></td>
 {{--            <td>{{ $doctor->position }}</td>--}}
@@ -51,7 +51,7 @@
 {{--              <span class="badge {{$doctor->status ? 'bg-primary-soft text-primary' : 'bg-orange-soft text-orange'}}  rounded-pill">{{$doctor->status ? 'Active' : 'Disabled'}}</span>--}}
 {{--            </td>--}}
             <td>
-              <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->id)}}"><i class="fa-solid fa-eye me-2"></i>View</a>
+              <a class="btn btn-datatable btn-primary px-5 py-3" href="{{route('doctor.profile', $doctor->id)}}">View</a>
             </td>
           </tr>
           @endforeach

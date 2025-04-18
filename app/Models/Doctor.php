@@ -11,7 +11,7 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'firstname', 'lastname', 'address', 'phone_number', 'birthday', 'position','license_number','profile_picture'];
+    protected $fillable = ['user_id', 'firstname', 'middlename', 'lastname', 'extensionname', 'address', 'phone_number', 'birthday', 'position','license_number', 'ptr_number','profile_picture'];
 
 
     protected $casts = [
@@ -28,6 +28,16 @@ class Doctor extends Model
     public static function getAllDoctors()
     {
         return self::all();
+    }
+
+    public function fullname()
+    {
+        $first = ucfirst($this->firstname);
+        $middleInitial = $this->middlename ? strtoupper(substr($this->middlename, 0, 1)) . '.' : '';
+        $last = ucfirst($this->lastname);
+        $extension = $this->extensionname ?? '';
+
+        return trim("{$first} {$middleInitial} {$last} {$extension}");
     }
 
 

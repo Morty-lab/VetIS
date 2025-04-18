@@ -25,13 +25,16 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('firstname');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
+            $table->string('extensionname')->nullable();
             $table->string('address');
             $table->string('phone_number');
             $table->date('birthday');
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->string('profile_picture')->nullable();
             $table->string('license_number')->nullable();
+            $table->string('ptr_number')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -41,7 +44,9 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('firstname');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
+            $table->string('extensionname')->nullable();
             $table->string('address');
             $table->string('phone_number');
             $table->date('birthday');
@@ -56,7 +61,9 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('firstname');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
+            $table->string('extensionname')->nullable();
             $table->string('address');
             $table->string('phone_number');
             $table->date('birthday');
@@ -71,7 +78,9 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('firstname');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
+            $table->string('extensionname')->nullable();
             $table->string('address');
             $table->string('phone_number');
             $table->date('birthday');

@@ -133,7 +133,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
     Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');
-    Route::post('petinfo/soap/add', [SoapController::class, 'store'])->name('soap.add');
+    Route::post('petinfo/soa p/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/petinfo/soap/print', function () {
@@ -153,8 +153,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::put('/profiledoctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 
-    Route::get('/securitydoctor/{id}', function (string $id) {
+    Route::put('/doctors/{id}/update-email', [DoctorController::class, 'updateEmail'])->name('doctor.update.email');
 
+    Route::put('/doctors/{id}/reset-password', [DoctorController::class, 'resetPassword'])->name('doctor.resetpassword');
+
+    Route::put('/doctors/{id}/disable-vet', [DoctorController::class, 'disableVet'])->name('doctor.disable');
+
+    Route::put('/doctors/{id}/enable-vet', [DoctorController::class, 'enableVet'])->name('doctor.enable');
+
+    Route::put('/doctors/{id}/upload-vet-image', [DoctorController::class, 'uploadVetPhoto'])->name('doctor.upload.photo');
+
+    Route::get('/securitydoctor/{id}', function (string $id) {
         $user = User::with('doctor')->find($id);
 
         // If the user or doctor information is not found, handle it accordingly
@@ -261,8 +270,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/um/staff/update', [StaffController::class, 'update'])->name("staffs.update");
     Route::post('/um/staff/resetpassword', [StaffController::class, "resetPassword"])->name("staffs.resetpassword");
     Route::post('/um/staff/switchstatus', [StaffController::class, 'switchstatus'])->name("staffs.switchstatus");
-
-
     Route::get('/profileowner/umsettings', function () {
         return view('owners.options');
     });
