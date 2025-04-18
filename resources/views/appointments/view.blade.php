@@ -132,7 +132,7 @@
                                 <select class="select-attending-vet-edit form-control" id="vetSelect" name="doctor_ID">
                                     @foreach ($vets as $vet)
                                         <option class="form-control" value={{ $vet->id }}
-                                            {{ $appointment->doctor_ID === $vet->id ?? 'selected' }}>Dr.
+                                            @if ($vet->id == $appointment->doctor_ID) selected @endif>Dr.
                                             {{ $vet->firstname . ' ' . $vet->lastname }}</option>
                                     @endforeach
                                 </select>
