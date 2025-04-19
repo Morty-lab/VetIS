@@ -204,6 +204,7 @@ return new class extends Migration {
             $table->boolean("okay_to_use_photos_online")->nullable();  // Can use photos online?
             $table->text("pet_condition")->nullable();  // Seizures/Illnesses/Conditions
             $table->boolean('status')->default(false);
+            $table->boolean('isArchived')->default(false);
             $table->timestamps();
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
         });

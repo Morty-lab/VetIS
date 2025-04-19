@@ -21,8 +21,6 @@ class SoapController extends Controller
     public function index()
     {
 
-
-
     }
 
     /**
