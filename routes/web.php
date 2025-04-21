@@ -6,6 +6,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PetPlanController;
 use App\Http\Controllers\PetsController;
 use App\Http\Controllers\PortalController;
@@ -133,7 +134,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
     Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');
-    Route::post('petinfo/soa p/add', [SoapController::class, 'store'])->name('soap.add');
+    Route::post('petinfo/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/petinfo/soap/print', function () {
@@ -481,5 +482,11 @@ Route::middleware(['auth', 'role:client'])->group(function () {
         return view('portal.main.scheduling.request');
     })->name("portal.scheduling.request");
 
+});
+
+Route::middleware(['auth'])->group(function () {
+
+Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+Route::get('/notifications/load', [NotificationsController::class, 'load'])->name('notifications.load');
 });
 require __DIR__ . '/auth.php';

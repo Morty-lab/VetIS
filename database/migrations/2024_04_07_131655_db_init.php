@@ -374,8 +374,9 @@ return new class extends Migration {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('visible_to');
-            $table->string('title');
+            $table->string('notification_type');
             $table->string('message');
+            $table->string('link')->nullable();
             $table->boolean('read')->default(false);
             $table->timestamps();
         });
