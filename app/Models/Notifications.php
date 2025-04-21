@@ -14,8 +14,10 @@ class Notifications extends Model
     protected $fillable = [
 
         'visible_to',
+        'notification_type',
         'title',
         'message',
+        'link',
     ];
 
     public static function getNotifsForUser($user_id){
