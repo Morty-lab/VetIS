@@ -457,14 +457,10 @@
 
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
-
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href="{{ url('petinfo/' . $pet->id) }}">
-            <span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back
-        </a>
+        <a class="nav-link ms-0" href="javascript:window.history.back();"><span class="px-2"><i class="fa-solid fa-arrow-left"></i></span> Back</a>
     </nav>
     <hr class="mt-0 mb-4">
-
     <div class="row">
         <form action="{{route('soap.update', ['id' => $pet->id,'recordID' => $record->id ])}}" method="post" id="updateForm">
             @csrf

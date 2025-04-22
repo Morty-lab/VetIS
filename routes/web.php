@@ -137,13 +137,12 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
     Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
     Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');
-    Route::post('petinfo/soa p/add', [SoapController::class, 'store'])->name('soap.add');
+    Route::post('petinfo/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/petinfo/soap/print', function () {
         return view('pets.forms.printRecord');
     })->name("soap.print");
-
 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
     Route::post('/records/create', [RecordsController::class, 'createMedicalRecord'])->name('records.create');

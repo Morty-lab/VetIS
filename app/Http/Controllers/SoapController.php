@@ -71,18 +71,14 @@ class SoapController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, int $recordID)
+    public function show(int $recordID)
     {
-        $pet = Pets::find($id);
+        $record = PetRecords::getPetRecordById($recordID);
+        $pet = Pets::find($record->petID);
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
-        $record = PetRecords::getPetRecordById($recordID);
-//        $petPlan = PetPlan::getAllByRecordID($id);
-//        $examination = Examination::getExaminationByRecordID($recordID);
-//        $diagnosis = PetDiagnosis::getDiagnosisByPet($recordID);
 
-//        dd($diagnosis);
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets,'owner' => $owner ,'record' => $record ]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record]);
     }
 
     /**

@@ -72,7 +72,7 @@
                 Medical Records
             </a>
             @endif
-    
+
             <!-- Vaccination Records -->
             @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
             <a class="nav-link @if(Str::startsWith(request()->path(), ['vaccinationrecords'])) active @endif" href="#">
