@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
+use App\Models\Clients;
 use App\Models\Doctor;
 use App\Models\PetRecords;
 use App\Models\Pets;
-use App\Models\Clients;
 use App\Models\Vaccination;
 use Carbon\Carbon;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 
 class PetsController extends Controller
@@ -19,9 +18,16 @@ class PetsController extends Controller
      */
     public function index()
     {
-        $pets = Pets::all();
+        $pets = Pets::where('isArchived', false)->get();
         return view('pets.manage', ["pets" => $pets]);
     }
+
+    public function archive()
+    {
+        $pets = Pets::where('isArchived', true)->get();
+        return view('pets.archive', ["pets" => $pets]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -259,6 +265,20 @@ class PetsController extends Controller
 
         return redirect()->route('pets.show', request('pet_id'))->with('success', 'Pet verified successfully.');
     }
+
+    public function archivePet(){
+        Pets::getPetById(request('pet_id'))->update(['isArchived' => true]);
+
+        return redirect()->route('pets.show', request('pet_id'))->with('success', 'Pet archived successfully.');
+    }
+
+    public function unarchivePet(){
+        Pets::getPetById(request('pet_id'))->update(['isArchived' => false]);
+
+        return redirect()->route('pets.show', request('pet_id'))->with('success', 'Pet unarchived successfully.');
+    }
+
+
 
 
     /**

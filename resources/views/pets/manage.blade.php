@@ -9,7 +9,18 @@
 <div class="container-xl px-4 mt-4">
     <div class="card shadow-none">
         <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets List</span>
-            <a class="btn btn-primary justify-end" href="{{ route('pet.create') }}"><i class="fa-solid fa-plus me-2"></i> Add Pet</a>
+            <div class="d-flex align-items-center">
+                <a class="btn btn-primary justify-end" href="{{ route('pet.create') }}"><i class="fa-solid fa-plus me-2"></i> Add Pet</a>
+                <div class="dropdown">
+                    <button class="btn btn-link text-muted p-0 ms-3" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-ellipsis-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-divider"></div>
+                        <div><a class="dropdown-item" href="{{route('pet.archive')}}"><i class="fa-solid fa-box-archive me-2"></i> Pets Archive</a></div>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">

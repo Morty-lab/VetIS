@@ -24,6 +24,7 @@ class Pets extends Model
         'pet_description',
         'pet_picture',
         'status',
+        'isArchived',
         'vaccinated_anti_rabies',
         'anti_rabies_vaccination_date',
         'history_of_aggression',

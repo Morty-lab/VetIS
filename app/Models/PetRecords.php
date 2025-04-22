@@ -28,7 +28,22 @@ class PetRecords extends Model
 
      public function pet()
      {
-         return $this->belongsTo(Pets::class);
+         return $this->belongsTo(Pets::class, 'petID');
+     }
+     /**
+      * Get the owner/client associated with this record
+      */
+     public function clients()
+     {
+         return $this->belongsTo(Clients::class, 'ownerID');
+     }
+ 
+     /**
+      * Get the doctor associated with this record
+      */
+     public function doctor()
+     {
+         return $this->belongsTo(Doctor::class, 'doctorID');
      }
 
     public static function getAllPetRecords()

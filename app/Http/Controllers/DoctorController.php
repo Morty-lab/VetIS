@@ -21,6 +21,11 @@ class DoctorController extends Controller
         $doctors = Doctor::getAllDoctors();
         return view('doctors.manage', ['doctors' => $doctors]);
     }
+    public function archive()
+    {
+        $doctors = Doctor::getAllDoctors();
+        return view('doctors.archive', ['doctors' => $doctors]);
+    }
 
     /**
      * Store a newly created resource in storage.

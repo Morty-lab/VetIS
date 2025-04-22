@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($clients as $client)
+                @foreach($clients->sortBy('client_name') as $client)
                         @php
                             \App\Models\Clients::setEmailAttribute($client,$client->user_id);
                         @endphp

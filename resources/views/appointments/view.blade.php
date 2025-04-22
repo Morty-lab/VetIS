@@ -158,7 +158,7 @@
                     <h5 class="modal-title mt-2" id="doneAppointmentLabel">Confirm Completion</h5>
                 </div>
                 <div class="modal-body text-center">
-                    Are you sure you want to mark this appointment as <strong>Completed</strong>?
+                    Are you sure you want to mark this appointment as <strong>Finished</strong>?
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
                     <button type="button" class="btn btn-light text-primary" data-bs-dismiss="modal">Cancel</button>

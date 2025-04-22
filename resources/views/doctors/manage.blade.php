@@ -10,8 +10,19 @@
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
   <div class="card shadow-none">
-    <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Veterinarian List</span>
-      <a class="btn btn-primary justify-end" href="/adddoctor"><i class="fa-solid fa-plus me-2"></i> Add Veterinarian</a>
+    <div class="card-header d-flex justify-content-between align-items-center"><span>Veterinarian List</span>
+        <div class="d-flex align-items-center">
+            <a class="btn btn-primary justify-end" href="/adddoctor"><i class="fa-solid fa-plus me-2"></i> Add Veterinarian</a>
+            <div class="dropdown">
+                <button class="btn btn-link text-muted p-0 ms-3" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-vertical"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-divider"></div>
+                    <div><a class="dropdown-item" href="{{route('doctor.archive')}}"><i class="fa-solid fa-box-archive me-2"></i> Veterinarian Archive</a></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card-body">
       <table id="datatablesSimple">
@@ -27,7 +38,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($doctors as $doctor)
+        @foreach ($doctors->where('status', '!=', 0)->sortBy(fn($doctor) => $doctor->fullname()) as $doctor)
           @php
           \App\Models\Doctor::setEmailAttribute($doctor,$doctor->user_id);
           @endphp

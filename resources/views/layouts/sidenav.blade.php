@@ -58,11 +58,28 @@
                     Reports
                 </a>
             @endif
-            <!-- @if(Request::is('reports*')) active @endif -->
+            {{-- <!-- @if(Request::is('reports*')) active @endif -->
             <a class="nav-link" href="{{ route('reports.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-bell"></i></div>
                     Notifications
-                </a>
+                </a> --}}
+
+                <!-- Medical Records -->
+            @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
+            <div class="sidenav-menu-heading">Records</div>
+            <a class="nav-link @if(Str::startsWith(request()->path(), ['records'])) active @endif" href="{{ route('records.medical') }}">
+                <div class="nav-link-icon"><i class="fa-solid fa-file-medical"></i></div>
+                Medical Records
+            </a>
+            @endif
+
+            <!-- Vaccination Records -->
+            @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
+            <a class="nav-link @if(Str::startsWith(request()->path(), ['vaccinationrecords'])) active @endif" href="#">
+                <div class="nav-link-icon"><i class="fa-solid fa-syringe"></i></div>
+                Vaccination Records
+            </a>
+            @endif
 
 
             <!-- Billing & Services (Accessible to Cashier, Admin) -->

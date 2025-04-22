@@ -12,6 +12,7 @@ use App\Http\Controllers\PetsController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RecordsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SoapController;
@@ -116,10 +117,13 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
 Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () {
     //Pet Routes
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
+    Route::get('/managepet/archive', [PetsController::class, 'archive'])->name('pet.archive');
     Route::get('/profilepet/{pets}', [PetsController::class, 'show'])->name('pets.show');
     Route::get('/editpet/{pets}', [PetsController::class, 'edit'])->name('pets.edit');
     Route::put('/editpet/{petID}', [PetsController::class, 'update'])->name('pets.update');
     Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
+    Route::post('/pets/archive', [PetsController::class, 'archivePet'])->name('pets.archivePet');
+    Route::post('/pets/unarchive', [PetsController::class, 'unarchivePet'])->name('pets.unarchivePet');
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 });
@@ -140,12 +144,17 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::get('/petinfo/soap/print', function () {
         return view('pets.forms.printRecord');
     })->name("soap.print");
+
+    Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
+    Route::post('/records/create', [RecordsController::class, 'createMedicalRecord'])->name('records.create');
 });
 
 //User Managemnt
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // Doctors
     Route::get('/managedoctor', [DoctorController::class, 'index'])->name('doctor.index');
+    Route::get('/managedoctor/archives', [DoctorController::class, 'archive'])->name('doctor.archive');
+
     Route::post('/adddoctor', [DoctorController::class, 'store'])->name('doctor.add');
     Route::get('/adddoctor', function () {
         return view('doctors.add');

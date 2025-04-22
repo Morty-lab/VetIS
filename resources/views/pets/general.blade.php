@@ -25,28 +25,80 @@
         </div>
     </div>
 
+
+    @if(!$pet -> status)
     <!-- Verify Pet Modal -->
-    <div class="modal fade" id="verifyPetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+        <div class="modal fade" id="verifyPetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Verify Pet</h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to verify this Pet?</p>
+                        <form id="verifyPetForm" action="{{ route('pets.verify', ['pet_id' => $pet->id]) }}" method="POST">
+                            @csrf
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" form="verifyPetForm" type="submit">Verify Pet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+    @if(!$pet -> isArchived)
+        <!-- Archive Pet Modal -->
+    <div class="modal fade" id="archivePetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Verify Pet</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Archive Pet</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to verify this Pet?</p>
-                    <form id="verifyPetForm" action="{{ route('pets.verify', ['pet_id' => $pet->id]) }}" method="POST">
+                    <p>Are you sure you want to archive this Pet?</p>
+                    <form id="archivePetForm" action="{{ route('pets.archivePet', ['pet_id' => $pet->id]) }}" method="POST">
                         @csrf
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" form="verifyPetForm" type="submit">Verify Pet</button>
+                    <button class="btn btn-primary-soft text-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" form="archivePetForm" type="submit">Archive</button>
                 </div>
             </div>
         </div>
     </div>
+    @else
+    <!-- Unarchive Pet Modal -->
+    <div class="modal fade" id="unarchivePetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Unarchive Pet</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Unarchive this Pet?</p>
+                    <form id="unarchivePetForm" action="{{ route('pets.unarchivePet', ['pet_id' => $pet->id]) }}" method="POST">
+                        @csrf
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary-soft text-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" form="unarchivePetForm" type="submit">Unarchive</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <!-- Vaccination Modal -->
     <div class="modal fade" id="addVaccination" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -136,7 +188,7 @@
                                 <label for="" class="mb-1">Subject</label>
                                 <input type="text" name="subject" id=""
                                        placeholder="Specify the purpose of this record" class="form-control
-                                @error('subject') is-invalid @enderror" value="{{ old('subject') }}">
+                                @error('subject') is-invalid @enderror" value="{{ old('subject') }}" autocomplete="off">
                                 @error('subject')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -360,21 +412,39 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-ellipsis-v"></i>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}">Edit Pet</a>
-                                    </li>
-
-                                    @if (!$pet->status)
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                    @if (!$pet->isArchived)
+                                    <div>
+                                        <a class="dropdown-item" href="{{ route('pets.edit', $pet->id) }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Pet</a>
+                                    </div>
+                                    @endif
+                                    @if (!$pet->status && !$pet->isArchived)
                                         <div class="dropdown-divider"></div>
-                                        <li>
+                                        <div>
                                             <button class="dropdown-item text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#verifyPetModal">Verify Pet
+                                                data-bs-target="#verifyPetModal"><i class="fa-solid fa-circle-check me-2"></i>Verify Pet
                                             </button>
-                                        </li>
+                                        </div>
+                                    @endif
+                                    @if (!$pet->isArchived)
+                                    <div class="dropdown-divider"></div>
+                                    <div class="">
+                                        <button class="dropdown-item text-danger" data-bs-toggle="modal"
+                                                data-bs-target="#archivePetModal">
+                                            <i class="fa-solid fa-box-archive me-2"></i> Archive Pet
+                                        </button>
+                                    </div>
+                                    @else
+                                    <div class="">
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#unarchivePetModal"><i class="fa-solid fa-inbox me-2"></i> Unarchive Pet
+                                        </button>
+                                    </div>
                                     @endif
                                     {{--                            <div class="dropdown-divider"></div> --}}
                                     {{--                            <li><button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deletePetModal">Delete Pet</button></li> --}}
-                                </ul>
+                                </div>
                             </div>
                         </div>
                         <div class=" card-body">
@@ -401,13 +471,18 @@
                                         <div class="col-md-3">
                                             <label class="small mb-1">Pet Status</label>
                                             <div>
-                                                @if ($pet->status)
+                                                @if ($pet->status && !$pet->isArchived)
                                                     <p class="badge bg-primary-soft text-primary rounded-pill"><i
                                                             class="fa-solid fa-check"></i> Verified</p>
-                                                @else
+                                                @elseif(!$pet->status && !$pet->isArchived)
                                                     <p class="badge bg-light text-body rounded-pill"><i
                                                             class="fa-solid fa-minus"></i> Not Verified</p>
                                                 @endif
+                                                @if ($pet->isArchived)
+                                                <p class="badge bg-gray-800 text-white rounded-pill">
+                                                    Archived
+                                                </p>
+                                            @endif
                                             </div>
                                         </div>
                                         <div class="col-md-5">
