@@ -12,7 +12,7 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $services = Services::getAllServices();
+        $services = Services::where('service_type', 'services')->get();
 
         return view('billing.services.list',['services' => $services]);
     }
@@ -20,9 +20,11 @@ class ServicesController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function feesIndex()
     {
-        //
+        $services = Services::where('service_type', 'fees')->get();
+
+        return view('billing.fees.list',['services' => $services]);
     }
 
     /**
@@ -33,6 +35,7 @@ class ServicesController extends Controller
         $validatedData = $request->validate([
             'service_name' => 'required',
             'service_price' => 'required',
+            'service_type' => 'required',
         ]);
 
         Services::addService($validatedData);
@@ -45,9 +48,17 @@ class ServicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function storeFees(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'service_name' => 'required',
+            'service_price' => 'required',
+            'service_type' => 'required',
+        ]);
+
+        Services::addService($validatedData);
+
+        return redirect()->route('billing.fees');
     }
 
     /**
