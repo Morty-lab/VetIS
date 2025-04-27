@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Billing;
 use App\Models\BillingServices;
+use App\Models\Category;
 use App\Models\Clients;
+use App\Models\Doctor;
 use App\Models\Payments;
 use App\Models\Pets;
+use App\Models\Products;
 use App\Models\Services;
 use Illuminate\Http\Request;
 
@@ -21,19 +24,26 @@ class BillingController extends Controller
         $pets = Pets::all();
         $billings = Billing::all();
         $billingServices = BillingServices::all();
-        return view('billing.billing',['billings' => $billings,'clients' => $clients,'pets' => $pets,'billingServices' => $billingServices]);
+        $vets = Doctor::getAllDoctors();
+        return view('billing.billing',['billings' => $billings,'clients' => $clients,'pets' => $pets,'billingServices' => $billingServices, 'vets' => $vets]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $pet = Pets::getAllPets();
-        $owner = Clients::getAllClients();
 
-        $services = Services::getAllServices();
-        return view('billing.add',['pet'=>$pet,'owner'=>$owner ,'services'=>$services]);
+        $owner = Clients::where('id', $request->pet_owner)->first();
+        $vet = Doctor::where('id', $request->vet)->first();
+        $pet = Pets::where('owner_id', $request->pet_owner)->get();
+        $services = Services::where('service_type', 'services')->get();
+        $fees = Services::where('service_type', 'fees')->get();
+        $medication_id = Category::where('category_name', 'Medications')->first()->id;
+        $medications = Products::where('product_category', $medication_id)->get();
+
+
+        return view('billing.add',['pets'=>$pet,'owner'=>$owner ,'services'=>$services, 'vet'=>$vet, 'medications'=>$medications, 'fees'=>$fees]);
     }
 
     /**
@@ -42,38 +52,66 @@ class BillingController extends Controller
     public function store(Request $request)
     {
         // Validate the incoming data
-//        dd(request()->all());
+    //    dd(request()->all());
 
-        $validatedData = $request->validate([
-            'pet_id' => 'required',
-            'user_id' => 'required',
-            'payment_type' => 'required',
-            'total_payable' => 'required',
-            'total_paid' => 'required',
-        ]);
+        // $request->validate([
+        //     'vet_id' => 'required',
+        //     'user_id' => 'required',
+        //     'payment_type' => 'required',
+        //     'total_payable' => 'required',
+        //     'total_paid' => 'required',
+        // ]);
 
         // Create a new billing record and save it
-        $billing = new Billing();
-        $billing->pet_id = $validatedData['pet_id'];
-        $billing->user_id = $validatedData['user_id'];
-        $billing->payment_type = $validatedData['payment_type'];
-        $billing->total_payable = $validatedData['total_payable'];
-        $billing->total_paid = $validatedData['total_paid'];
-        $due = $request->input('due_date');
-        if(isset($due)){
-            $billing->due_date = $due;
-        }
-        $billing->save(); // This ensures the ID is generated and available
+        $billing = Billing::create([
+            'biller_id' => auth()->user()->id,
+            'vet_id' => $request->vet_id,
+            'user_id' => $request->user_id,
+            'payment_type' => $request->payment_type,
+            'total_payable' => $request->total_payable,
+            'total_paid' => $request->cash_given,
+            'due_date' => $request->input('due_date', null),
+        ]);
 
         // Check if services are provided
-        if ($request->has('services') && is_array($request->services)) {
-            foreach ($request->services as $service) {
+        if ($request->has('bill') && is_array($request->bill)) {
+            foreach ($request->bill as $service) {
                 BillingServices::create([
+                    'pet_id' => $service['petID'],
                     'billing_id' => $billing->id, // Use the ID of the saved billing record
-                    'service_id' => $service,
+                    'service_id' => $service['serviceID'],
+                    'service_price' => $service['price'],
+                    'quantity' => 1                ]);
+            }
+        }
+
+        // Check if fees are provided
+        if ($request->has('fees') && is_array($request->fees)) {
+            foreach ($request->fees as $fee) {
+                BillingServices::create([
+                    'pet_id' => $fee['petID'],
+                    'billing_id' => $billing->id, // Use the ID of the saved billing record
+                    'service_id' => $fee['serviceID'],
+                    'service_price' => $fee['price'],
+                    'quantity' => 1
                 ]);
             }
         }
+
+        // Check if medications are provided
+        if ($request->has('medications') && is_array($request->medications)) {
+            foreach ($request->medications as $medication) {
+                BillingServices::create([
+                    'pet_id' => $medication['petID'],
+                    'billing_id' => $billing->id, // Use the ID of the saved billing record
+                    'product_id' => $medication['serviceID'],
+                    'service_price' => $medication['price'],
+                    'quantity' => $medication['quantity']
+                ]);
+            }
+        }
+
+
 
         // Redirect to the billing page
         return redirect()->route('billing')->with('success', 'Billing record created successfully.');

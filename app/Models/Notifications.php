@@ -15,7 +15,7 @@ class Notifications extends Model
 
         'visible_to',
         'notification_type',
-        'title',
+        'read',
         'message',
         'link',
     ];

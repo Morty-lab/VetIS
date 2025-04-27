@@ -10,34 +10,40 @@
 <div class="modal fade" id="addBilling" tabindex="-1" role="dialog" aria-labelledby="addBilling"
      style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Billing</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row gy-2">
-                    <div class="col-md-12">
-                        <label for="" class="mb-1">Pet Owner</label>
-                        <select class="form-select" id="pet" name="pet" required>
-                            <option value="" disabled selected>Select a Pet Owner</option>
-                            <option value="">Pet Owner</option>
-                        </select>
-                    </div>
-                    <div class="col-md-12">
-                        <label for="" class="mb-1">Veterinarian</label>
-                        <select class="form-select" id="vet" name="vet" required>
-                            <option value="" disabled selected>Select a Pet Owner</option>
-                            <option value="">Veterinarian</option>
-                        </select>
+        <form action="{{route('billing.add')}}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Billing</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <label for="" class="mb-1">Pet Owner</label>
+                            <select class="form-select" id="pet" name="pet_owner" required>
+                                <option value="" disabled selected>Select a Pet Owner</option>
+                                @foreach($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="mb-1">Veterinarian</label>
+                            <select class="form-select" id="vet" name="vet" required>
+                                <option value="" disabled selected>Select a Pet Owner</option>
+                                @foreach($vets as $vet)
+                                    <option value="{{ $vet->id }}">Dr. {{ $vet->firstname }} {{ $vet->lastname }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary w-100" type="submit">Start Billing</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary w-100" type="button" data-bs-dismiss="modal"
-                        onclick="">Start Billing</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 <div class="container-xl px-4 mt-4">

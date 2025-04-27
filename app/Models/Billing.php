@@ -11,7 +11,8 @@ class Billing extends Model
 
     protected $table = 'billing';
     protected $fillable = [
-        'pet_id',
+        'biller_id',
+        'vet_id',
         'user_id',
         'payment_type',
         'total_payable',

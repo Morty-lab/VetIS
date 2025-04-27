@@ -13,5 +13,9 @@ class BillingServices extends Model
     protected $fillable = [
         'billing_id',
         'service_id',
+        'service_price',
+        'product_id',
+        'pet_id',
+        'quantity',
     ];
 }

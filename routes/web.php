@@ -368,8 +368,8 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
 
     // billing section
     Route::get('/billing', [BillingController::class, 'index'])->name('billing');
-    Route::get('/billing/add', [BillingController::class, 'create'])->name('billing.add');
-    Route::post('/billing/add', [BillingController::class, 'store'])->name('billing.store');
+    Route::post('/billing/add', [BillingController::class, 'create'])->name('billing.add');
+    Route::post('/billing/store', [BillingController::class, 'store'])->name('billing.store');
     Route::get('/billing/services', [ServicesController::class, 'index'])->name('billing.services');
 
     Route::post('/billing/services/add', [ServicesController::class, 'store'])->name("billing.services.add");

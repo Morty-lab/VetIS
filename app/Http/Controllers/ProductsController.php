@@ -107,7 +107,8 @@ class ProductsController extends Controller
         $productName = Products::getProductById($id)->product_name;
         Notifications::addNotif([
             'visible_to' => "staff",
-            'title' => 'Stocks Added',
+            'link' => 'products.index',
+            'notification_type' => 'success',
             'message' => "$request->stock stocks added to $productName",
         ]);
 

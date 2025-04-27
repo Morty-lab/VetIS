@@ -9,18 +9,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Stocks extends Model
-{protected $fillable = [
-    'stock',
-    'price',
-    'supplier_price',
-    'unit',
-    'status',
-    'products_id',
-    'supplier_id',
-    'user_id',
-    'expiry_date',
-    'subtracted_stock'
-];
+{
+    protected $fillable = [
+        'stock',
+        'price',
+        'supplier_price',
+        'unit',
+        'status',
+        'products_id',
+        'supplier_id',
+        'user_id',
+        'expiry_date',
+        'subtracted_stock'
+    ];
 
 
 
@@ -28,7 +29,7 @@ class Stocks extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Products::class,'id');
+        return $this->belongsTo(Products::class, 'id');
     }
 
     public function suppliers(): BelongsTo
@@ -37,9 +38,9 @@ class Stocks extends Model
     }
 
 
-    public function unit():BelongsTo
+    public function unit(): BelongsTo
     {
-        return $this->belongsTo(Unit::class,'id');
+        return $this->belongsTo(Unit::class, 'id');
     }
 
     public static function addStock($data)
@@ -88,7 +89,8 @@ class Stocks extends Model
     }
 
 
-    public static function getAllStocksByProductId($product_id){
+    public static function getAllStocksByProductId($product_id)
+    {
         return self::where('products_id', $product_id)->orderBy('expiry_date', 'asc')->get();
     }
 
