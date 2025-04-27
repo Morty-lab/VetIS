@@ -5,20 +5,20 @@
 @endsection
 
 @section('content')
-@include('billing.components.header', ['title' => 'Services'], ['icon' => '<i class="fa-solid fa-shield-dog"></i>'])
+@include('billing.components.header', ['title' => 'Fees'], ['icon' => '<i class="fa-solid fa-shield-dog"></i>'])
 
 <div class="container-xl px-4 mt-4">
     <div class="card shadow-none">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Services List</span>
+            <span>Fees List</span>
             <!-- Trigger the modal -->
-            <a class="btn btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#addServiceModal">Add Service</a>
+            <a class="btn btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#addServiceModal">Add Fee</a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>Service</th>
+                        <th>Fee</th>
                         <th>Price</th>
                         <th>Actions</th>
                     </tr>
@@ -50,7 +50,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="serviceModalLabel">Service Details</h5>
+                <h5 class="modal-title" id="serviceModalLabel">Fee Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -84,7 +84,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editPriceModalLabel">Edit Service Price</h5>
+                <h5 class="modal-title" id="editPriceModalLabel">Edit Fee Price</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -113,28 +113,27 @@
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{route('billing.services.add')}}" method="POST">
+            <form action="{{route('billing.fees.add')}}" method="POST">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
+                    <h5 class="modal-title" id="addServiceModalLabel">Add New Fee</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @csrf
-                    <input type="hidden" name="service_type" value="services">
-
+                    <input type="hidden" name="service_type" value="fees">
                     <div class="mb-3">
-                        <label for="serviceName" class="form-label">Service Name</label>
+                        <label for="serviceName" class="form-label">Fee Name</label>
                         <input type="text" class="form-control" id="serviceName" name="service_name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="servicePrice" class="form-label">Service Price</label>
+                        <label for="servicePrice" class="form-label">Fee Price</label>
                         <input type="number" class="form-control" id="servicePrice" name="service_price" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Service</button>
+                    <button type="submit" class="btn btn-primary">Add Fee</button>
                 </div>
             </form>
 

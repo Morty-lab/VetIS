@@ -259,7 +259,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-//        Schema::create("examination", function (Blueprint $table) {
+        //        Schema::create("examination", function (Blueprint $table) {
 //            $table->id();
 //            $table->unsignedBigInteger("pet_record_id");
 //            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
@@ -275,7 +275,7 @@ return new class extends Migration {
 //            $table->timestamps();
 //        });
 
-//        Schema::create("laboratory", function (Blueprint $table) {
+        //        Schema::create("laboratory", function (Blueprint $table) {
 //            $table->id();
 //            $table->unsignedBigInteger("pet_record_id");
 //            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
@@ -285,7 +285,7 @@ return new class extends Migration {
 //            $table->timestamps();
 //        });
 
-//        Schema::create('pet_plan', function (Blueprint $table) {
+        //        Schema::create('pet_plan', function (Blueprint $table) {
 //            $table->id();
 //            $table->unsignedBigInteger("pet_record_id");
 //            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
@@ -300,29 +300,37 @@ return new class extends Migration {
             $table->id();
             $table->string("service_name");
             $table->double("service_price");
+            $table->string("service_type");
             $table->timestamps();
         });
 
         Schema::create('billing', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("pet_id");
             $table->unsignedBigInteger("user_id");
-            $table->foreign('pet_id')->references("id")->on("pets")->onDelete("cascade");
             $table->foreign('user_id')->references("id")->on("users")->onDelete("cascade");
-            $table->string("payment_type");
-            $table->double("total_payable");
-            $table->double('total_paid');
+            $table->unsignedBigInteger("biller_id");
+            $table->foreign('biller_id')->references("id")->on("users")->onDelete("cascade");
+            $table->unsignedBigInteger("vet_id");
+            $table->foreign('vet_id')->references("id")->on("doctors")->onDelete("cascade");
+            $table->string("payment_type")->nullable();
+            $table->double("total_payable")->nullable();
+            $table->double('total_paid')->nullable();
             $table->date('due_date')->nullable();
             $table->timestamps();
         });
 
         Schema::create('billing_services', function (Blueprint $table) {
             $table->id();
+            $table->integer("quantity");
             $table->unsignedBigInteger("billing_id");
             $table->foreign('billing_id')->references("id")->on("billing")->onDelete("cascade");
-            $table->unsignedBigInteger("service_id");
+            $table->unsignedBigInteger("service_id")->nullable();
             $table->foreign('service_id')->references("id")->on("services")->onDelete("cascade");
+            $table->unsignedBigInteger("product_id")->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->float('service_price');
+            $table->unsignedBigInteger("pet_id");
+            $table->foreign('pet_id')->references("id")->on("pets")->onDelete("cascade");
             $table->timestamps();
         });
 
@@ -337,7 +345,7 @@ return new class extends Migration {
         });
 
 
-//        Schema::create('prescriptions', function (Blueprint $table) {
+        //        Schema::create('prescriptions', function (Blueprint $table) {
 //            $table->id();
 //            $table->unsignedBigInteger("recordID");
 //            $table->unsignedBigInteger("productID");
@@ -348,7 +356,7 @@ return new class extends Migration {
 //            $table->timestamps();
 //        });
 
-//        Schema::create("pet_diagnosis", function (Blueprint $table) {
+        //        Schema::create("pet_diagnosis", function (Blueprint $table) {
 //            $table->id();
 //            $table->unsignedBigInteger("pet_record_id");
 //            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
@@ -360,7 +368,7 @@ return new class extends Migration {
 //
 //        });
 
-//        Schema::create('medications', function (Blueprint $table) {
+        //        Schema::create('medications', function (Blueprint $table) {
 //            $table->id();
 //            $table->unsignedBigInteger("recordID");
 //            $table->unsignedBigInteger("productID");
@@ -392,12 +400,12 @@ return new class extends Migration {
     {
         Schema::dropIfExists('notifications');
         Schema::dropIfExists('appointments');
-//        Schema::dropIfExists('medications');
+        //        Schema::dropIfExists('medications');
         Schema::dropIfExists('payments');
         Schema::dropIfExists('billing_services');
         Schema::dropIfExists('billing');
         Schema::dropIfExists('services');
-//        Schema::dropIfExists('prescriptions');
+        //        Schema::dropIfExists('prescriptions');
 //        Schema::dropIfExists('pet_diagnosis');
 //        Schema::dropIfExists('pet_plan');
 //        Schema::dropIfExists('laboratory');

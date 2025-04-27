@@ -14,6 +14,9 @@
                         <a href="{{ route('billing.services') }}" class="btn btn-outline-primary me-2 {{ request()->is('billing/services*') ? 'active' : '' }}">
                             <i class="fa-solid fa-shield-dog me-1"></i>Services
                         </a>
+                        <a href="{{ route('billing.fees') }}" class="btn btn-outline-primary me-2 {{ request()->is('billing/fees*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-shield-dog me-1"></i>Fees
+                        </a>
                     </div>
                 </div>
             </div>

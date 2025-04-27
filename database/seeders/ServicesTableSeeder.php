@@ -14,31 +14,58 @@ class ServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('services')->insert([
-            [
-                'service_name' => 'Grooming',
-                'service_price' => 50.00,
+
+        $services = [
+            'Grooming',
+            'Vaccination',
+            'Deworming',
+            'Dental',
+            'Surgery',
+            'X-Ray',
+            'Lab Test',
+            'Ultrasound',
+            'ECG',
+        ];
+
+        $fees = [
+            'Admission Fee',
+            'Room Fee',
+            'ICU Fee',
+            'Surgery Fee',
+            'Lab Test Fee',
+            'Medicine Fee',
+            'Diet Fee',
+        ];
+
+        foreach ($services as $service) {
+            $price = rand(50, 500);
+            if ($price % 5 !== 0) {
+                $price = $price + (5 - $price % 5);
+            }
+
+            DB::table('services')->insert([
+                'service_name' => $service,
+                'service_price' => $price,
+                'service_type' => 'services',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'service_name' => 'Vaccination',
-                'service_price' => 25.00,
+            ]);
+        }
+
+
+        foreach ($fees as $fee) {
+            $price = rand(100, 500);
+            if ($price % 10 !== 0) {
+                $price = $price + (10 - $price % 10);
+            }
+
+            DB::table('services')->insert([
+                'service_name' => $fee,
+                'service_price' => $price,
+                'service_type' => 'fees',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'service_name' => 'Health Checkup',
-                'service_price' => 30.00,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'service_name' => 'Boarding',
-                'service_price' => 100.00,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ]);
+        }
     }
 }
