@@ -70,7 +70,7 @@
                             <div class="col-md-12">
                                 <label class="small mb-1" for="inputEmailAddress">Attending Veterinarian</label>
                                 <select class="select-attending-vet form-control" id="vetSelect" name="doctor_ID"
-                                    data-placeholder="Select a Veterinarian">
+                                    data-placeholder="Select a Veterinarian" onchange="selectVet(this.value)">
                                     <option value=""></option>
                                     @foreach ($vets as $vet)
                                         <option class="form-control" value={{ $vet->id }}>Dr.
@@ -288,75 +288,82 @@
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
-                    <tr>
-                        <th>Date & Time</th>
-                        <th>Pet Owner</th>
-                        <th>Pet/s</th>
-                        <th>Veterinarian</th>
-                        <th>Reason of Visit</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Pet Owner</th>
+                            <th>Pet/s</th>
+                            <th>Veterinarian</th>
+                            <th>Reason of Visit</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach ($appointments as $appointment)
-                        @php
-                            $vetID = auth()->user()->role == 'veterinarian'
-                                ? App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id
-                                : null;
-                        @endphp
+                        @foreach ($appointments as $appointment)
+                            @php
+                                $vetID =
+                                    auth()->user()->role == 'veterinarian'
+                                        ? App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id
+                                        : null;
+                            @endphp
 
-                        @if ((auth()->user()->role != 'veterinarian' && $appointment->status === 0) ||
-                             ($appointment->status === 0 && $appointment->doctor_ID == $vetID))
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
-                                <td>{{ $appointment->client->client_name }}</td>
-                                <td>
-                                    @php
-                                        $pet_ids = explode(',', $appointment->pet_ID);
-                                        $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
-                                    @endphp
-                                    @foreach ($pets as $pet)
-                                        <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
+                            @if (
+                                (auth()->user()->role != 'veterinarian' && $appointment->status === 0) ||
+                                    ($appointment->status === 0 && $appointment->doctor_ID == $vetID))
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }}
+                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
+                                    <td>{{ $appointment->client->client_name }}</td>
+                                    <td>
+                                        @php
+                                            $pet_ids = explode(',', $appointment->pet_ID);
+                                            $pets = \App\Models\Pets::whereIn('id', $pet_ids)->get();
+                                        @endphp
+                                        @foreach ($pets as $pet)
+                                            <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
                                                 {{ $pet->pet_name }}
                                                 <span
                                                     class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span>
                                             </span>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
-                                <td>
-                                    @php
-                                        $service_ids = explode(',', $appointment->purpose);
-                                        $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
-                                        $service_list = implode(', ', $services);
-                                    @endphp
-                                    {{ \Illuminate\Support\Str::limit($service_list, 35) }}
-                                </td>
-                                <td>
-                                    @if (is_null($appointment->status))
-                                        <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">Pending
-                                        </div>
-                                    @elseif ($appointment->status === 0)
-                                        <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
-                                            Scheduled
-                                        </div>
-                                    @elseif ($appointment->status === 2)
-                                        <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">Canceled
-                                        </div>
-                                    @elseif ($appointment->status === 1)
-                                        <div class="badge badge-sm bg-success-soft text-success rounded-pill">Finished
-                                        </div>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a class="btn btn-datatable btn-primary px-5 py-3"
-                                       href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        Dr.
+                                        {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
+                                    </td>
+                                    <td>
+                                        @php
+                                            $service_ids = explode(',', $appointment->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)
+                                                ->pluck('service_name')
+                                                ->toArray();
+                                            $service_list = implode(', ', $services);
+                                        @endphp
+                                        {{ \Illuminate\Support\Str::limit($service_list, 35) }}
+                                    </td>
+                                    <td>
+                                        @if (is_null($appointment->status))
+                                            <div class="badge badge-sm bg-warning-soft text-warning rounded-pill">Pending
+                                            </div>
+                                        @elseif ($appointment->status === 0)
+                                            <div class="badge badge-sm bg-secondary-soft text-secondary rounded-pill">
+                                                Scheduled
+                                            </div>
+                                        @elseif ($appointment->status === 2)
+                                            <div class="badge badge-sm bg-danger-soft text-danger rounded-pill">Canceled
+                                            </div>
+                                        @elseif ($appointment->status === 1)
+                                            <div class="badge badge-sm bg-success-soft text-success rounded-pill">Finished
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-primary px-5 py-3"
+                                            href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -366,60 +373,89 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
-            $('#select-schedule').on('change', function() {
-                let selectedDate = $(this).val();
-                if (selectedDate) {
-                    $.ajax({
-                        url: '{{ route('appointments.available-times') }}',
-                        type: 'GET',
-                        data: {
-                            date: selectedDate
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            let timeSelect = $('#selectAppointmentTime');
-                            timeSelect.empty();
-                            timeSelect.append('<option value="">--- Select a Time ---</option>');
+        let selectedVet = 0;
+        let selectedDate = 0;
 
-                            if (response.length > 0) {
-                                let amGroup = $('<optgroup label="AM"></optgroup>');
-                                let pmGroup = $('<optgroup label="PM"></optgroup>');
+        function selectVet(vet) {
+            selectedVet = vet
+            console.log(selectedVet)
+        }
 
-                                response.forEach(function(time) {
-                                    // Convert 24-hour format to 12-hour display format
-                                    let displayTime = convertTo12HourDisplay(time);
-                                    let option = `<option value="${time}">${displayTime}</option>`;
+        function selectDate(date) {
+            selectedDate = date;
+            console.log(selectedDate)
+        }
 
-                                    let hour = parseInt(time.split(':')[0]);
-                                    if (hour < 12) {
-                                        amGroup.append(option);
-                                    } else {
-                                        pmGroup.append(option);
-                                    }
-                                });
+        function sendRequest(selectedDate, selectedVet) {
+            $.ajax({
+                url: '{{ route('appointments.available-times') }}',
+                type: 'GET',
+                data: {
+                    date: selectedDate,
+                    vet: selectedVet
+                },
+                success: function(response) {
+                    console.log(response);
+                    let timeSelect = $('#selectAppointmentTime');
+                    timeSelect.empty();
+                    timeSelect.append('<option value="">--- Select a Time ---</option>');
 
-                                timeSelect.append(amGroup);
-                                timeSelect.append(pmGroup);
+                    if (response.length > 0) {
+                        let amGroup = $('<optgroup label="AM"></optgroup>');
+                        let pmGroup = $('<optgroup label="PM"></optgroup>');
+
+                        response.forEach(function(time) {
+                            // Convert 24-hour format to 12-hour display format
+                            let displayTime = convertTo12HourDisplay(time);
+                            let option = `<option value="${time}">${displayTime}</option>`;
+
+                            let hour = parseInt(time.split(':')[0]);
+                            if (hour < 12) {
+                                amGroup.append(option);
                             } else {
-                                timeSelect.append('<option value="">No available times</option>');
+                                pmGroup.append(option);
                             }
-                        },
-                        error: function(error) {
-                            console.log("Error fetching available times:", error);
-                        }
-                    });
+                        });
+
+                        timeSelect.append(amGroup);
+                        timeSelect.append(pmGroup);
+                    } else {
+                        timeSelect.append('<option value="">No available times</option>');
+                    }
+                },
+                error: function(error) {
+                    console.log("Error fetching available times:", error);
+                }
+            });
+        }
+
+        function convertTo12HourDisplay(time24) {
+            const [hours, minutes] = time24.split(':');
+            const hour = parseInt(hours);
+            const period = hour < 12 ? 'AM' : 'PM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${period}`;
+        }
+
+        $(document).ready(function() {
+            $('#vetSelect').on('change', function() {
+                selectVet(this.value);
+                console.log(selectedVet);
+                if (selectVet) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            $('#select-schedule').on('change', function() {
+                selectDate(this.value);
+
+                if (selectedDate) {
+                    sendRequest(selectedDate, selectedVet);
                 }
             });
 
             // Helper function to convert 24-hour time to 12-hour display format
-            function convertTo12HourDisplay(time24) {
-                const [hours, minutes] = time24.split(':');
-                const hour = parseInt(hours);
-                const period = hour < 12 ? 'AM' : 'PM';
-                const displayHour = hour % 12 || 12;
-                return `${displayHour}:${minutes} ${period}`;
-            }
+
         });
     </script>
 @endsection

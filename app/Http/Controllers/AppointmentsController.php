@@ -26,7 +26,7 @@ class AppointmentsController extends Controller
         $appointments = Appointments::with('client')->orderBy('appointment_date', 'asc')->get();
         $vets = Doctor::getAllDoctors();
 
-        $services = Services::getAllServices();
+        $services = Services::where('service_type', 'services')->get();
 
         return view('appointments.manage', ["clients" => $clients, "pets" => $pets, "appointments" => $appointments, "vets" => $vets, "services" => $services]);
     }
@@ -34,6 +34,7 @@ class AppointmentsController extends Controller
     public function getAvailableTimes(Request $request)
     {
         $selectedDate = $request->input('date');
+        $selectedVet = $request->input('vet');
 
         // Define available time slots
         $allTimes = [
@@ -57,6 +58,7 @@ class AppointmentsController extends Controller
 
         // Get booked times for the selected date
         $bookedTimes = Appointments::where('appointment_date', $selectedDate)
+            ->where('doctor_ID', $selectedVet)
             ->pluck('appointment_time')
             ->map(function ($time) {
                 return Carbon::parse($time)->format('H:i');
@@ -232,9 +234,12 @@ class AppointmentsController extends Controller
 
         // Create a new appointment using the validated data
         // $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
+        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($request->appointment_date), Carbon::parse($request->appointment_time));
         $request->merge([
             'pet_ID' => implode(',', $request->input('pet_ID')),
             'purpose' => implode(',', $request->input('reasonOfVisit')),
+            'status' => 0,
+            'priority_number' => $priority_number
         ]);
 
         $result = Appointments::createAppointment($request->all());
@@ -316,6 +321,8 @@ class AppointmentsController extends Controller
         $appointment->appointment_date = $validatedData['appointment_date'];
         $appointment->appointment_time = $validatedData['appointment_time'];
         $appointment->doctor_ID = $validatedData['doctor_ID'];
+        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($appointment->appointment_date), Carbon::parse($appointment->appointment_time));
+        $appointment->priority_number = $priority_number;
 
         // Save the changes
         $appointment->save();

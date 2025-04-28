@@ -18,18 +18,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-    //    Stocks::factory()->count(10)->create();
-    Products::factory()->count(10)->create();
-//
+        //    Stocks::factory()->count(10)->create();
+        Products::factory()->count(10)->create();
+        //
 
 
 
 
-        $this->call([UsersTableSeeder::class,ClientsTableSeeder::class,ServicesTableSeeder::class,PetSeeder::class,NotificationSeeder::class]);
+        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, ServicesTableSeeder::class, PetSeeder::class, NotificationSeeder::class, CategorySeeder::class]);
 
 
 
-         \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
         Appointments::factory()->count(10)->create();
 
 
