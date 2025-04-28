@@ -36,8 +36,18 @@ class Appointments extends Model
     public static function generateAppointmentNumber($date,$time)
     {
         $prefix = $date->isSameDay(Carbon::today()) ? 'W' : 'A';
+        // Check for similar appointment times on the selected date
+        $similarAppointmentsCount = self::where('appointment_date', $date->format('Y-m-d'))
+            ->where('appointment_time', $time->format('H:i'))
+            ->count();
 
-        return $prefix . '-' . $time->format('Hi');
+        // Add a letter suffix (a-z) if there are similar times
+        $letterSuffix = $similarAppointmentsCount > 0 ? chr(64 + $similarAppointmentsCount) : '';
+
+        return $prefix . '-' . $time->format('Hi') . $letterSuffix;
+
+
+        // return $prefix . '-' . $time->format('Hi');
     }
 
     public static function getAllAppointments()
