@@ -349,7 +349,7 @@ class ProductsFactory extends Factory
         return [
             'product_name' => $this->faker->randomElement($petProducts),
             'product_category' => Category::factory(),
-            'SKU' => $this->faker->regexify('[A-Z0-9]{8}'),
+            'SKU' => $this->faker->numberBetween(100000000000, 999999999999),
             'unit' => Unit::factory(),
             'status' => $this->faker->randomElement([0, 1]),
         ];
