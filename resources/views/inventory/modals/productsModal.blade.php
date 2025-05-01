@@ -101,25 +101,25 @@
                             <input type="hidden" name="supplier" value="{{ $stockP->supplier_id }}">
 
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackQuantity">Repacked product name</label>
+                                <label class="small mb-1" for="inputRepackQuantity">Product Name (Repacked)</label>
                                 <input class="form-control" id="inputRepackQuantity" type="text"
                                     placeholder="Enter Quantity" name="product_name" value="{{ $product->product_name }}">
                             </div>
 
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackedSKU">Repacked product SKU</label>
+                                <label class="small mb-1" for="inputRepackedSKU">Barcode</label>
                                 <input class="form-control" id="inputRepackedSKU" type="text"
-                                    placeholder="Enter SKU" name="repacked_SKU" value=""
+                                    placeholder="Enter unique barcode for repacked product" name="repacked_SKU" value=""
                                     maxlength="24" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                             </div>
 
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackQuantity">Repack Quantity</label>
+                                <label class="small mb-1" for="inputRepackQuantity">Quantity Used for Repacking</label>
                                 <input class="form-control" id="inputRepackQuantity" type="number"
-                                    placeholder="Enter Quantity" name="quantity">
+                                    placeholder="Enter amount of original stock used" name="quantity">
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1" for="selectRepackUnit">Repack Unit</label>
+                                <label class="small mb-1" for="selectRepackUnit">Repacked Unit Type</label>
                                 <select class="form-control" id="selectRepackUnit" name="unit">
                                     <option disabled="" selected="">-- Select
                                         Unit --</option>
@@ -130,16 +130,16 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputNumberRepackedUnits">Number of Repacked
-                                    Stocks</label>
+                                <label class="small mb-1" for="inputNumberRepackedUnits">Total Units Produced
+                                </label>
                                 <input class="form-control" id="inputNumberRepackedUnits" type="number"
-                                    placeholder="Enter Number of Repacked Units" name="number_repacked_units">
+                                    placeholder="Enter number of units after repacking" name="number_repacked_units">
                             </div>
 
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackStockPrice">Stock Price</label>
+                                <label class="small mb-1" for="inputRepackStockPrice">Unit Price (Repacked)</label>
                                 <input class="form-control" id="inputRepackStockPrice" type="number" step="0.01"
-                                    placeholder="Enter Stock Price" name="stock_price">
+                                    placeholder="Enter price per repacked unit" name="stock_price">
                             </div>
 
 

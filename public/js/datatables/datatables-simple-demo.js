@@ -6,6 +6,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (datatablesSimple) {
         new simpleDatatables.DataTable(datatablesSimple);
     }
+    const todaysAppointmentsTable = document.getElementById("todaysAppointmentsTable");
+    if (todaysAppointmentsTable) {
+        new simpleDatatables.DataTable(todaysAppointmentsTable);
+    }
 
     const billingTable = document.getElementById("billingTable");
     if (billingTable) {

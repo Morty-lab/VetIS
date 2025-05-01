@@ -17,7 +17,7 @@
         </nav>
         <hr class="mt-0 mb-4">
         <div class="card shadow-none">
-            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Today's
+            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled
                     Appointments</span>
             </div>
             <div class="card-body">
@@ -30,17 +30,18 @@
                             <th>Veterinarian</th>
                             <th>Reason of Visit</th>
                             <th>Status</th>
-                            <th>Priority Number</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($appointments as $appointment)
+                        @foreach ($appointments->sortBy(['appointment_date', 'appointment_time']) as $appointment)
                             @if (auth()->user()->role == 'veterinarian')
                             @php
                                 $vetID = App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id;
                             @endphp
-                            @if ($appointment->status === 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() && $appointment->doctor_ID == $vetID)
+                            @if ((auth()->user()->role != 'veterinarian' && $appointment->status === 0) ||
+                            ($appointment->status === 0 && $appointment->doctor_ID == $vetID))
+{{--                            @if ($appointment->status === 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday() && $appointment->doctor_ID == $vetID)--}}
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                 </td>
@@ -62,20 +63,17 @@
                                 <td>
                                     @php
                                         $service_ids = explode(',', $appointment->purpose);
-                                        $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                        $service_list = implode(', ', $services);
                                     @endphp
-                                    @foreach ($services as $service)
-                                        <span class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
-                                            {{ $service->service_name }}
-                                        </span>
-                                    @endforeach
+                                    {{ \Illuminate\Support\Str::limit($service_list, 35) }}
                                 </td>
                                 <td>
                                     <div class="badge bg-primary-soft text-primary rounded-pill">Scheduled</div>
                                 </td>
-                                <td>
-                                    {{ $appointment->priority_number }}
-                                </td>
+{{--                                <td>--}}
+{{--                                    {{ $appointment->priority_number }}--}}
+{{--                                </td>--}}
                                 <td>
                                     <a class="btn btn-datatable btn-primary px-5 py-3"
                                         href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
@@ -85,9 +83,10 @@
                             @continue
                         @endif
                             @else
-                            @if ($appointment->status === 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday())
+                                @if ((auth()->user()->role != 'veterinarian' && $appointment->status === 0) || ($appointment->status === 0 && $appointment->doctor_ID == $vetID))
+{{--                            @if ($appointment->status === 0 && \Carbon\Carbon::parse($appointment->appointment_date)->isToday())--}}
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                     </td>
                                     <td>{{ $appointment->client->client_name }}</td>
                                     <td>
@@ -107,20 +106,17 @@
                                     <td>
                                         @php
                                             $service_ids = explode(',', $appointment->purpose);
-                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                            $service_list = implode(', ', $services);
                                         @endphp
-                                        @foreach ($services as $service)
-                                            <span class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
-                                                {{ $service->service_name }}
-                                            </span>
-                                        @endforeach
+                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
                                     </td>
                                     <td>
                                         <div class="badge bg-primary-soft text-primary rounded-pill">Scheduled</div>
                                     </td>
-                                    <td>
-                                        {{ $appointment->priority_number }}
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        {{ $appointment->priority_number }}--}}
+{{--                                    </td>--}}
                                     <td>
                                         <a class="btn btn-datatable btn-primary px-5 py-3"
                                             href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>

@@ -37,7 +37,7 @@
 
             <!-- Appointments (Accessible to Admin, Secretary, Veterinarian) -->
             @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
-                <a class="nav-link @if(Str::startsWith(request()->path(), ['manageappointments', 'todayappointments', 'finishedappointments', 'pendingappointments', 'cancelledappointments', 'viewappointments'])) active @endif" href="{{ route('appointments.index') }}">
+                <a class="nav-link @if(Str::startsWith(request()->path(), ['manageappointments', 'scheduledappointments', 'finishedappointments', 'pendingappointments', 'cancelledappointments', 'viewappointments'])) active @endif" href="{{ route('appointments.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-calendar-plus"></i></div>
                     Appointments
                 </a>
@@ -67,7 +67,7 @@
                 <!-- Medical Records -->
             @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
             <div class="sidenav-menu-heading">Records</div>
-            <a class="nav-link @if(Str::startsWith(request()->path(), ['records'])) active @endif" href="{{ route('records.medical') }}">
+            <a class="nav-link @if(Str::startsWith(request()->path(), ['records/medical'])) active @endif" href="{{ route('records.medical') }}">
                 <div class="nav-link-icon"><i class="fa-solid fa-file-medical"></i></div>
                 Medical Records
             </a>
@@ -75,7 +75,7 @@
 
             <!-- Vaccination Records -->
             @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
-            <a class="nav-link @if(Str::startsWith(request()->path(), ['vaccinationrecords'])) active @endif" href="#">
+            <a class="nav-link @if(Str::startsWith(request()->path(), ['records/vaccination'])) active @endif" href="{{ route('records.vaccination') }}">
                 <div class="nav-link-icon"><i class="fa-solid fa-syringe"></i></div>
                 Vaccination Records
             </a>
