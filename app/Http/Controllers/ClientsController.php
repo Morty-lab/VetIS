@@ -115,7 +115,7 @@ class ClientsController extends Controller
      */
 
     public function disable($id){
-        $client = Clients::find($id)->get()->first();
+        $client = Clients::where('id' ,$id)->first();
 
         $client->update(['status' => !$client->status]);
 

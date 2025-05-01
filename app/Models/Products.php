@@ -19,7 +19,7 @@ class Products extends Model
         'status',
         'stock',
         'SKU',
-
+        'brand'
     ];
 
 

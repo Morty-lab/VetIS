@@ -22,6 +22,11 @@
                         <input class="form-control" id="inputProductSKU" type="text" maxlength="8" placeholder="Barcode"
                             name="product_sku">
                     </div>
+                    <div class="col-md-12">
+                        <label class="small mb-1" for="inputProductBrand">Brand</label>
+                        <input class="form-control" id="inputProductBrand" type="text" placeholder="Brand"
+                            value="" name="brand">
+                    </div>
                     {{--                    <div class="col-md-12"> --}}
                     {{--                        <label class="small mb-1" for="inputProductSKU">SKU</label> --}}
                     {{--                        <input class="form-control" id="inputProductSKU" type="number" placeholder="Product SKU" --}}

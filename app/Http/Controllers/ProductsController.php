@@ -60,6 +60,7 @@ class ProductsController extends Controller
             'category' => 'required|string|max:255',
             'product_sku' => 'required|string|unique:products,SKU|max:255',
             'unit' => 'required|string|max:255',
+            'brand' => 'string|max:255'
         ]);
 
         // Check validation
@@ -77,6 +78,7 @@ class ProductsController extends Controller
             'product_name' => $request->product_name,
             'product_category' => $request->category,
             'unit' => $request->unit,
+            'brand' => $request->brand
         ];
 
         // Create product
@@ -133,6 +135,7 @@ class ProductsController extends Controller
         $products = Products::where('id',$request->product_id)->first();
         $newProduct = Products::createProduct([
             'SKU' => $request->repacked_SKU,
+            'brand' => $products->brand,
             'product_name' => $request->product_name,
             'product_category' => $products->product_category,
             'unit' => $request->unit,
