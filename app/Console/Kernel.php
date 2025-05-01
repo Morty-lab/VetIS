@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CheckLowStocks;
 use App\Console\Commands\SendAppointmentReminders;
 use App\Console\Commands\SendVaccinationReminders;
 use Illuminate\Console\Scheduling\Schedule;
@@ -16,11 +17,14 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         SendAppointmentReminders::class,
         SendVaccinationReminders::class,
+        CheckLowStocks::class,
     ];
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('appointments:send-reminders')->dailyAt('06:00');
         $schedule->command('vaccination:send-reminders')->dailyAt('06:00');
+        // $schedule->command('stocks:check-low')->dailyAt('06:00');
+        $schedule->command('stocks:check-low')->everyMinute();
     }
 
     /**
