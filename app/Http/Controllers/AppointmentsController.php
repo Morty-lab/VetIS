@@ -6,6 +6,7 @@ use App\Mail\AppointmentSet;
 use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\Notifications;
 use App\Models\Pets;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -126,12 +127,19 @@ class AppointmentsController extends Controller
 
         Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
         Mail::to($client->client_email)->cc($client->client_email)->send(new AppointmentSet($data));
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('appointments.view', ['id' => $id]),
+            'notification_type' => 'info',
+            'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been scheduled.",
+        ]);
         return redirect()->route('appointments.view', ['id' => $id]);
     }
 
     public function appointmentDone($id)
     {
         $appointment = Appointments::with(['client', 'pet'])->find($id);
+        $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first();
 
         $appointment->status = 1;
         $appointment->save();
@@ -151,6 +159,12 @@ class AppointmentsController extends Controller
         ];
 
         Mail::to($client->client_email)->send(new AppointmentSet($data));
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('appointments.view', ['id' => $id]),
+            'notification_type' => 'success',
+            'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been Conducted.",
+        ]);
 
         return redirect()->route('appointments.view', ['id' => $id]);
     }
@@ -170,6 +184,13 @@ class AppointmentsController extends Controller
 
         $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first(); // Doctor::getDoctorById($appointment->doctor_ID)->first();
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
+
+        Notifications::addNotif([
+            'visible_to' => "staff,veterinarian",
+            'link' => route('appointments.view', ['id' => $id]),
+            'notification_type' => 'danger',
+            'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been cancelled.",
+        ]);
 
 
         $ownerData = [
@@ -255,6 +276,8 @@ class AppointmentsController extends Controller
         $veterinarian->setEmailAttribute($veterinarian, $veterinarian->user_id);
 
 
+
+
         $data = [
             'subject' => 'Appointment Approved',
             'content' => "Dear $client->client_name,\n\n" .
@@ -279,6 +302,12 @@ class AppointmentsController extends Controller
 
         Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
         Mail::to($client->client_email)->cc($client->client_email)->send(new AppointmentSet($data));
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('appointments.view', ['id' => $result->id]),
+            'notification_type' => 'success',
+            'message' => "Appointment for Dr. $veterinarian->firstname $veterinarian->lastname on $date at $time has been scheduled.",
+        ]);
         return redirect()->route('appointments.view', ['id' => $result->id]);
         // return redirect()->route('appointments.index');
 
@@ -365,6 +394,13 @@ class AppointmentsController extends Controller
         Mail::to($veterinarian->doctor_email)->send(new AppointmentSet($veterinarianData));
 
         Mail::to($client->client_email)->send(new AppointmentSet($clientData));
+
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('appointments.view', ['id' => $appid]),
+            'notification_type' => 'success',
+            'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $appointment->appointment_date at $appointment->appointment_time has been re-scheduled to $newDate at $newTime.",
+        ]);
 
         // Redirect back with a success message
         return redirect()->route('appointments.view', ['id' => $appid])->with('success', 'Appointment updated successfully!');

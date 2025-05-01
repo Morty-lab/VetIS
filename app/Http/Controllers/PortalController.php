@@ -6,6 +6,7 @@ use App\Mail\AppointmentSet;
 use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\Notifications;
 use App\Models\PetRecords;
 use App\Models\Pets;
 use App\Models\Prescriptions;
@@ -68,8 +69,23 @@ class PortalController extends Controller
         $client = Clients::getClientByUserID(Auth::user()->id);
         $pet->owner_ID = $client->id;
 
+
+        Notifications::addNotif([
+            'visible_to' => $client->id,
+            'link' => route('appointments.mypets'),
+            'notification_type' => 'success',
+            'message' => "A new pet has been added",
+        ]);
+
         // Save the pet
         $pet->save();
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('pets.show', $pet->id),
+            'notification_type' => 'success',
+            'message' => $client->client_name.  "Has added a new pet",
+        ]);
+
 
         // Redirect to the pets page
         return redirect()->route('portal.mypets')->with('success', 'Pet registered successfully!');
@@ -122,6 +138,8 @@ class PortalController extends Controller
         $pets = Pets::getPetByClient($client->id);
         $vets = Doctor::getAllDoctors();
         $services = Services::getAllServices();
+
+
 
 
         return view('portal.main.scheduling.appointments', ['appointments' => $appointments, 'pets' => $pets, 'vets' => $vets, 'services' => $services]);
@@ -181,12 +199,13 @@ class PortalController extends Controller
         ]);
 
 
-        Appointments::createAppointment($request->all());
+        $newapp = Appointments::createAppointment($request->all());
 
 
         $date = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
         $time = Carbon::parse($request->input('appointment_time'))->format('g:i A'); // E.g., 3:00 PM
         $name = Auth::user()->name;
+        $veterinarian = Doctor::where('id', $request->input('doctor_ID'))->first();
 
 
         $data = [
@@ -204,6 +223,12 @@ class PortalController extends Controller
             ->positionClass('toast-bottom-right')
             ->addSuccess('Appointment request submitted successfully.');
 
+            Notifications::addNotif([
+                'visible_to' => "staff",
+                'link' => route('appointments.view', ['id' => $newapp->id]),
+                'notification_type' => 'info',
+                'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been requested by $name.",
+            ]);
 
         return redirect()->route('portal.appointments')->with([
             'appointment_success' => true,
@@ -250,6 +275,7 @@ class PortalController extends Controller
         $appointment->updateAppointment($id, $request->all());
 
         $name = Auth::user()->name;
+        $veterinarian = Doctor::where('id', $appointment->doctor_ID)->first();
 
 
 
@@ -257,17 +283,26 @@ class PortalController extends Controller
         $time = Carbon::parse($appointment->appointment_time)->format('g:i A');
 
         $data = [
-            'subject' => 'Appointment Updated',
+            'subject' => 'Appointment Rescheduled',
             'content' => "Dear $name,\n\n" .
-                "Your appointment has been **updated**. The new schedule is as follows:\n" .
+                "Your appointment has been **re-scheduled**. The new schedule is as follows:\n" .
                 "**Date**: $date\n" .
                 "**Time**: $time\n\n" .
                 "If you have any questions or need further assistance, feel free to reach out.\n\n" .
                 "Thank you for choosing us!",
-            'status' => 'Updated'
+            'status' => 'Re-scheduled'
         ];
 
+
+
         Mail::to(Auth::user()->email)->send(new AppointmentSet($data));
+
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('appointments.view', ['id' => $appointment->id]),
+            'notification_type' => 'info',
+            'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been requested by $name.",
+        ]);
 
 
         return redirect()->route('portal.appointments.view', ['petid' => $appointment->pet_ID, 'appid' => $appointment->id]);
@@ -323,6 +358,13 @@ class PortalController extends Controller
 
             Mail::to($vetEmail)->send(new AppointmentSet($vetData));
         }
+
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('appointments.view', ['id' => $appointment->id]),
+            'notification_type' => 'danger',
+            'message' => "Appointment for $doctor->firstname $doctor->lastname on $date at $time has been cancelled by $name.",
+        ]);
 
 
         toastr()

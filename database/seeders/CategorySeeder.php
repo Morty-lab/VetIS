@@ -13,8 +13,16 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        if (!Category::where('category_name', 'Medications')->exists()) {
-            Category::factory()->create(['category_name' => 'Medications']);
+        $categories = [
+            "Medication",
+            "Vaccine"
+
+        ];
+
+        foreach ($categories as $categoryName) {
+            if (!Category::where('category_name', $categoryName)->exists()) {
+                Category::factory()->create(['category_name' => $categoryName]);
+            }
         }
     }
 }

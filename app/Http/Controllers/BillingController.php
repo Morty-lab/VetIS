@@ -7,6 +7,7 @@ use App\Models\BillingServices;
 use App\Models\Category;
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\Notifications;
 use App\Models\Payments;
 use App\Models\Pets;
 use App\Models\Products;
@@ -111,7 +112,12 @@ class BillingController extends Controller
             }
         }
 
-
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('billing'),
+            'notification_type' => 'success',
+            'message' => "Bill for client " . Clients::where('id', $request->user_id)->first()->client_name . " has been created.",
+        ]);
 
         // Redirect to the billing page
         return redirect()->route('billing')->with('success', 'Billing record created successfully.');
@@ -156,6 +162,13 @@ class BillingController extends Controller
         $payment->amount_to_pay = $request->input('amount_to_pay');
         $payment->cash_given = $request->input('cash_given');
         $payment->save();
+
+        Notifications::addNotif([
+            'visible_to' => "staff",
+            'link' => route('billing.view', ['billingID' => $id]),
+            'notification_type' => 'success',
+            'message' => "Pethub has received " . $request->input('cash_given') . "From client " . Clients::where('id', $request->user_id)->first()->client_name . " for bill " . Billing::where('id', $id)->first()->billing_number,
+        ]);
 
         return redirect()->route('billing.view',['billingID' => $id])->with('success', 'Payment record created successfully.');
     }
