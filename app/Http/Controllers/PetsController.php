@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\Notifications;
 use App\Models\PetRecords;
 use App\Models\Pets;
 use App\Models\Vaccination;
@@ -119,6 +120,12 @@ class PetsController extends Controller
             // Save the new pet to the database
             $pet->save();
 
+            Notifications::addNotif([
+                'visible_to' => "staff",
+                'link' => route('pets.show', $pet->id),
+                'notification_type' => 'success',
+                'message' => "A new pet has been added for ". Clients::where('id', $request->owner_name)->first()->client_name,
+            ]);
             // Redirect back with success message
             return redirect()->route('pets.show', $pet->id)->with('success', 'Pet has been added successfully.');
         } catch (\Illuminate\Validation\ValidationException $e) {
