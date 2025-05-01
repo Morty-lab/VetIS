@@ -17,6 +17,10 @@
                         <a href="{{ route('billing.fees') }}" class="btn btn-outline-primary me-2 {{ request()->is('billing/fees*') ? 'active' : '' }}">
                             <i class="fa-solid fa-shield-dog me-1"></i>Fees
                         </a>
+                        <a href="{{ route('billing.discounts') }}" class="btn btn-outline-primary me-2 {{ request()->is('billing/discounts*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-tag me-1"></i>Discounts
+                        </a>
+
                     </div>
                 </div>
             </div>

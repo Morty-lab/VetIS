@@ -37,6 +37,36 @@ class ServicesTableSeeder extends Seeder
             'Diet Fee',
         ];
 
+        $discounts = [
+            [
+                'discount_name' => 'Senior Citizen Discount',
+                'discount_rate' => 0.20,  // 20% discount
+            ],
+            [
+                'discount_name' => 'PWD Discount',
+                'discount_rate' => 0.20,            // 20% discount
+            ],
+            [
+                'discount_name' => 'Student Discount',
+                'discount_rate' => 0.10,        // 10% discount
+            ],
+            [
+                'discount_name' => 'Loyalty Discount',
+                'discount_rate' => 0.05,        // 5% discount
+            ],
+        ];
+
+        foreach ($discounts as $discount) {
+            DB::table('services')->insert([
+                'service_name' => $discount['discount_name'],
+                'service_price' => $discount['discount_rate'],
+                'service_type' => 'discounts',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+
         foreach ($services as $service) {
             $price = rand(50, 500);
             if ($price % 5 !== 0) {

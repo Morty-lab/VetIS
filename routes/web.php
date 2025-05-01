@@ -387,6 +387,9 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::get('/billing/fees', [ServicesController::class, 'feesIndex'])->name('billing.fees');
     Route::post('/billing/fees/add', [ServicesController::class, 'storeFees'])->name("billing.fees.add");
 
+    Route::get('/billing/discounts', [ServicesController::class, 'discountIndex'])->name('billing.discounts');
+    Route::post('/billing/discounts/add', [ServicesController::class, 'storeDiscount'])->name("billing.discounts.add");
+
     Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
     Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');

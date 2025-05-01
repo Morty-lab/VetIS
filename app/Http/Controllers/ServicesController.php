@@ -14,7 +14,7 @@ class ServicesController extends Controller
     {
         $services = Services::where('service_type', 'services')->get();
 
-        return view('billing.services.list',['services' => $services]);
+        return view('billing.services.list', ['services' => $services]);
     }
 
     /**
@@ -24,8 +24,19 @@ class ServicesController extends Controller
     {
         $services = Services::where('service_type', 'fees')->get();
 
-        return view('billing.fees.list',['services' => $services]);
+        return view('billing.fees.list', ['services' => $services]);
     }
+
+    /**
+     * Display a listing of the discounts.
+     */
+    public function discountIndex()
+    {
+        $discounts = Services::where('service_type', 'discounts')->get();
+
+        return view('billing.discounts.list', ['discounts' => $discounts]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -59,6 +70,26 @@ class ServicesController extends Controller
         Services::addService($validatedData);
 
         return redirect()->route('billing.fees');
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeDiscount(Request $request)
+    {
+        $validatedData = $request->validate([
+            'service_name' => 'required',
+            'service_price' => 'required',
+            'service_type' => 'required',
+        ]);
+
+        $validatedData['service_price'] = $validatedData['service_price'] / 100;
+
+        Services::addService($validatedData);
+
+        return redirect()->route('billing.discounts');
+
     }
 
     /**

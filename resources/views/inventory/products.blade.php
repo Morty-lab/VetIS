@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>Barcode</th>
+                        <th>Brand</th>
                         <th>Product Name</th>
                         <th>Category</th>
                         <th>Unit</th>
@@ -41,6 +42,7 @@
                         @endphp
                     <tr>
                         <td class="text-center">{{ $product->SKU }}</td>
+                        <td class="text-ceter">{{$product->brand}}</td>
                         <td class="text-center">{{ $product->product_name }}</td>
                         <td class="text-center">{{ \App\Models\Category::where('id', $product->product_category)->first()->category_name }}</td>
                         <td class="text-center">{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
