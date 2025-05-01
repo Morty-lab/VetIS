@@ -9,7 +9,7 @@
 <div class="modal fade" id="addMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="addMedicalRecord" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
-        <form action="{{ route('records.create') }}" method="post">
+        <form action="{{ route('records.medical.create') }}" method="post">
             @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Create Medical Record<span
@@ -126,7 +126,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($petRecords as $record)
+                    @foreach($petRecords as $record)
                         <tr>
                             <td>File-{{ str_pad($record->id, 5, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $record->created_at->format('M d, Y g:i A') }}</td>
@@ -146,11 +146,7 @@
                                 <a href="" class="btn btn-datatable btn-primary px-5 py-3">View</a>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center">No medical records found</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

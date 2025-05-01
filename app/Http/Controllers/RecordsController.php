@@ -26,7 +26,12 @@ class RecordsController extends Controller
     }
     public function showVaccinationRecords()
     {
-        return view('records.vaccinationRecordsList');
+        $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])->orderBy('created_at', 'desc')->get();
+        $pets = Pets::where('isArchived', 0)->get();
+        $doctors = Doctor::all();
+        $clients = Clients::all();
+
+        return view('records.vaccinationRecordsList', compact('pets', 'doctors', 'clients', 'petRecords'));
     }
 
     public function createMedicalRecord(Request $request)

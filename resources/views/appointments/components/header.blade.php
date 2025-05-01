@@ -27,7 +27,6 @@
                                                     ->id;
                                                 if (
                                                     $appointment->status === 0 &&
-                                                    \Carbon\Carbon::parse($appointment->appointment_date)->isToday() &&
                                                     $appointment->doctor_ID == $vet
                                                 ) {
                                                     $todayCount++;
@@ -36,8 +35,7 @@
                                                 }
                                             } else {
                                                 if (
-                                                    $appointment->status === 0 &&
-                                                    \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                                    $appointment->status === 0
                                                 ) {
                                                     $todayCount++;
                                                 } else {
@@ -46,8 +44,8 @@
                                             }
                                         }
                                     @endphp
-                                    Today <span
-                                        class="badge bg-primary-soft text-primary ms-auto">{{ $todayCount }}</span>
+                                    Scheduled <span
+                                        class="badge bg-secondary-soft text-secondary ms-auto">{{ $todayCount }}</span>
                                 </a>
                                 <a class="nav-link {{ Route::is('appointments.finished') ? 'active' : '' }}"
                                     href="{{ route('appointments.finished') }}">

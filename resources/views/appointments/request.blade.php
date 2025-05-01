@@ -35,14 +35,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($appointments as $appointment)
+                        @foreach ($appointments->sortBy('created_at') as $appointment)
                             @if (auth()->user()->role == 'veterinarian')
                             @php
                                 $vetID = App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id;
                             @endphp
                                 @if ($appointment->status === null && $appointment->doctor_ID == $vetID)
                                     <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
+                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                         </td>
                                         <td>{{ $appointment->client->client_name }}</td>
                                         <td>
@@ -63,14 +63,10 @@
                                         <td>
                                             @php
                                                 $service_ids = explode(',', $appointment->purpose);
-                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                                $service_list = implode(', ', $services);
                                             @endphp
-                                            @foreach ($services as $service)
-                                                <span
-                                                    class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
-                                                    {{ $service->service_name }}
-                                                </span>
-                                            @endforeach
+                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
                                         </td>
                                         <td>
                                             <div class="badge bg-warning-soft text-warning text-xs rounded-pill">
@@ -88,7 +84,7 @@
                             @else
                                 @if ($appointment->status === null)
                                     <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i A') }}
+                                        <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                         </td>
                                         <td>{{ $appointment->client->client_name }}</td>
                                         <td>
@@ -109,14 +105,10 @@
                                         <td>
                                             @php
                                                 $service_ids = explode(',', $appointment->purpose);
-                                                $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                                $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
+                                                $service_list = implode(', ', $services);
                                             @endphp
-                                            @foreach ($services as $service)
-                                                <span
-                                                    class="badge bg-secondary-soft text-secondary text-xs rounded-pill me-1">
-                                                    {{ $service->service_name }}
-                                                </span>
-                                            @endforeach
+                                            {{ \Illuminate\Support\Str::limit($service_list, 35) }}
                                         </td>
                                         <td>
                                             <div class="badge bg-warning-soft text-warning text-xs rounded-pill">

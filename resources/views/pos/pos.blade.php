@@ -62,8 +62,7 @@
     <!-- Modals -->
     <!-- Quantity Modal -->
     @foreach ($products as $product)
-        <div class="modal fade" id="enterQty{{ $product->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="enterQty" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal fade" id="enterQty{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="enterQty" aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -74,7 +73,7 @@
                         <div class="item-description px-2">
                             <div class="row g-2">
                                 <div class="col-md-6">
-                                    <label class="small mb-1">Product</label>
+                                    <label class="small mb-1">Item</label>
                                     <p class="mb-0 fw-bold text-primary"> {{ $product->product_name }}</p>
                                 </div>
                                 <div class="col-md-6">
@@ -88,42 +87,66 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1">Barcode</label>
                                     <div class="">
-                                        <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">
-                                            {{ sprintf('VetIS-%05d', $product->id) }}</p>
+                                        <p class="mb-0">{{ $product->SKU }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Category</label>
                                     <div class="">
                                         <p class="mb-0 badge bg-primary-soft text-primary rounded-pill">
-                                            {{ $product->category?->category_name ?? 'No Category' }}</p>
+                                            {{ $product->category?->category_name ?? 'No Category' }}
+                                        </p>
                                     </div>
                                 </div>
                                 <hr class="mt-3 mb-2">
                                 <div class="col-md-12">
                                     <h6 class="mb-2 text-primary">Enter Quantity</h6>
-                                    <input type="number" id="quantityInput" class="form-control"
-                                        placeholder="Enter Quantity" min="1" max="10" step="1"
-                                        oninput="setQuantity(this.value, {{ \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock') - \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock') }}); ">
+                                    <input type="number" id="quantityInputs{{ $product->id }}" class="form-control" placeholder="Enter Quantity" min="1" max="10" step="1" oninput="setQuantity(this.value, {{ \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock') - \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock') }}, {{ $product->id }});">
+                                    <div id="qty-error-message{{ $product->id }}" class="text-danger mt-2" style="display: none;">Not Enough Stocks</div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
-                            onclick="addItem({
+                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal" onclick="addItem({
                         'sku' : {{ $product->id }},
+                        'barcode' : {{ $product->SKU }},
                         'name' : '{{ $product->product_name }}',
                         'price' : {{ optional(App\Models\Stocks::where('products_id', $product->id)->first())->price ?? 'N/A' }},
-                        'qty' : document.getElementById('quantityInput').value
-                        })">Add
-                            Product</button>
+                        'qty' : document.getElementById('quantityInputs{{ $product->id }}').value,
+                        'stock' : {{ \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock') - \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock') }}
+                    })">Add Product</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Hidden input to store stock information for each product -->
+        <input type="hidden"
+               data-product-stock="{{ $product->id }}"
+               value="{{ \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock') - \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock') }}">
     @endforeach
+
+    {{-- Edit Quantity Modal --}}
+    <div class="modal fade" id="editQtyModal" tabindex="-1" aria-labelledby="editQtyLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xs modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Quantity for <span id="productName"></span></h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="mb-2 text-primary">Enter Quantity</h6>
+                    <input type="number" id="newquantityInput" class="form-control" min="1" step="1" oninput="setNewQuantity(this.value)">
+                    <div id="error-message" class="text-danger mt-2" style="display: none;">Not Enough Stocks</div>
+                    <input type="hidden" id="productIdInput">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" onclick="confirmEdit()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Select Product Modal -->
     <div class="modal fade" id="exampleModalXl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
@@ -142,7 +165,7 @@
                             <thead>
                                 <tr>
                                     <th>Barcode</th>
-                                    <th>Item Name</th>
+                                    <th>Item</th>
                                     <th>Category</th>
                                     <th>Unit</th>
                                     <th>Stocks</th>
@@ -189,7 +212,7 @@
                                     @endphp
                                     @if ($stocks - $subtracted != 0)
                                         <tr>
-                                            <td>{{ sprintf('VetIS-%05d', $product->id) }}</td>
+                                            <td>{{ $product->SKU }}</td>
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ \App\Models\Category::where('id', $product->product_category)->first()->category_name }}
                                             </td>
@@ -372,15 +395,15 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Void Transaction</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Clear Transaction</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to void this transaction?</p>
+                    <p>Are you sure you want to clear this transaction?</p>
                 </div>
-                <div class="modal-footer"><button class="btn btn-primary" type="button"
+                <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
                         data-bs-dismiss="modal">Cancel</button><button class="btn btn-danger" type="button"
-                        data-bs-toggle="modal">Void Transaction</button>
+                        data-bs-toggle="modal" id="clearTransaction" onclick="clearTransaction()">Clear Transaction</button>
                 </div>
             </div>
         </div>
@@ -401,7 +424,7 @@
                             <div class="col-12 pb-3 px-2">
                                 <div class="receipt-section">
                                     <div class="receipt-display mt-3 bg-light p-4">
-                                        <p class="text-center h3 text-primary">PetHub: Vet Clinic</p>
+                                        <p class="text-center h3 text-primary">Pruderich Veterinary Clinic</p>
                                         <hr>
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
@@ -418,12 +441,12 @@
                                         <div
                                             class="subtotal-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Sub Total</p>
-                                            <p class="text-lg text-grey mb-0 sub-total">1000</p>
+                                            <p class="text-lg text-grey mb-0 sub-total">₱0.00</p>
                                         </div>
                                         <div
                                             class="discount-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0 ">Discount %</p>
-                                            <p class="text-lg text-grey mb-0 discount"></p>
+                                            <p class="text-lg text-grey mb-0 discount">--</p>
                                         </div>
                                         <hr>
                                         <div class="total-section d-flex justify-content-between align-items-center">
@@ -445,7 +468,8 @@
                                 <div class="row mt-3">
                                     <div class="col-12" id="cashGivenDiv">
                                         <label for="">Cash Given</label>
-                                        <input type="text" class="form-control" id="cashGivenInput">
+                                        <input type="text" class="form-control" id="cashGivenInput" placeholder="Enter cash amount" autocomplete="off">
+                                        <div id="cashError" class="text-danger mt-1 d-none">Invalid cash amount.</div>
                                         <input type="hidden" name="customer_id" id="customer_id">
                                         <input type="hidden" name="sub_total" id="sub_total">
                                         <input type="hidden" name="discount" id="discountInput">
@@ -461,7 +485,7 @@
 
                             <!-- Mo gawas rani sila if nabayaran na -->
                             <div style="display:none" id="change">
-                                <div class="thank-you-purchase fw-500 mt-3">
+                                <div class="thank-you-purchase fw-500">
                                     Thank you for your Purchase!
                                 </div>
                                 <hr>
@@ -478,10 +502,16 @@
                                     <p class="display-6 text-blue mb-0 h5 fw-500 " id="change-cash"></p>
                                 </div>
                             </div>
-
                             {{-- <hr class="mt-3"> --}}
                             {{-- <a href="" class="btn btn-outline-primary mt-3 w-100">New Transaction</a> --}}
                             <!-- ---- -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="progress w-100" style="height: 20px;">
+                        <div id="progressBar" class="progress-bar bg-primary" role="progressbar"
+                             style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
                 </div>
@@ -565,16 +595,16 @@
                             </div>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Customer</p>
-                                <p class="text-md text-grey mb-0 customer">Juan Dela Cruz</p>
+                                <p class="text-md text-grey mb-0 customer">---</p>
                             </div>
                             <hr>
                             <div class="subtotal-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0 ">Sub Total</p>
-                                <p class="text-lg text-grey mb-0 sub-total">0</p>
+                                <p class="text-lg text-grey mb-0 sub-total">₱0.00</p>
                             </div>
                             <div class="discount-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Discount %</p>
-                                <p class="text-lg text-grey mb-0 discount">5%</p>
+                                <p class="text-lg text-grey mb-0 discount">--</p>
                             </div>
                             <hr>
                             <div class="total-section d-flex justify-content-between align-items-center">
@@ -587,17 +617,16 @@
                         </div>
                         <div class="receipt-cutout"></div>
                     </div>
-                    <div class="col-12">
-                        <div class="proceed-payment">
+                    <div class="col-12 pb-3">
+                        <div class="proceed-payment" id="proceedPaymentContainer" style="display: none;">
                             <a href="#" class="btn btn-primary w-100 mb-2" data-bs-toggle="modal"
                                 data-bs-target="#paymentModal">Proceed Payment</a>
                         </div>
-                        <!-- Only shows when transaction is completed -->
-                        <div class="new-transaction">
-                            <a href="#" class="btn btn-outline-primary w-100 mb-4"
-                                onclick="newTransaction()">New Transaction</a>
-                        </div>
-                        <!-- -- -->
+{{--                        <!-- Only shows when transaction is completed -->--}}
+{{--                        <div class="new-transaction">--}}
+{{--                            <a href="#" class="btn btn-outline-primary w-100 mb-4"--}}
+{{--                                onclick="newTransaction()">New Transaction</a>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -622,7 +651,7 @@
                                     Billing</a></li>
                             <hr class="my-2">
                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#voidTransactionModal"
-                                    class="dropdown-item text-danger">Void Transaction</a></li>
+                                    class="dropdown-item">Clear Transaction</a></li>
                         </ul>
                     </div>
                 </div>
@@ -630,13 +659,13 @@
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table bg-white">
                             <thead class="thead-dark text-primary">
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Barcode</th>
-                                    <th>Qty</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
+                            <tr>
+                                <th class="col-4">Item</th> <!-- Occupies more space -->
+                                <th class="col-2">Price</th> <!-- Smaller width -->
+                                <th class="col-2">Quantity</th> <!-- Smaller width -->
+                                <th class="col-2">Total</th> <!-- Smaller width -->
+                                <th class="col-1"></th> <!-- Smaller width -->
+                            </tr>
                             </thead>
                             <tbody id="ItemContainer">
                             </tbody>

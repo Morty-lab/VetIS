@@ -388,6 +388,11 @@ $(document).ready(function () {
         minimumResultsForSearch: -1,
         placeholder: "Medication Type",
     });
+    $(".vac-type").select2({
+        theme: "bootstrap-5",
+        minimumResultsForSearch: -1,
+        placeholder: "Select Vaccination Type",
+    });
 });
 
 function fetchOwnedPets(ownerID) {

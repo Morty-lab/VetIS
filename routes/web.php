@@ -146,7 +146,8 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     })->name("soap.print");
 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
-    Route::post('/records/create', [RecordsController::class, 'createMedicalRecord'])->name('records.create');
+    Route::post('/records/medical/create', [RecordsController::class, 'createMedicalRecord'])->name('records.medical.create');
+    Route::get('/records/vaccination', [RecordsController::class, 'showVaccinationRecords'])->name('records.vaccination');
 });
 
 //User Managemnt
@@ -293,7 +294,7 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
     Route::get('/manageappointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::post('addappontments', [AppointmentsController::class, 'store'])->name('appointments.add');
     Route::get('viewappointments/{id}', [AppointmentsController::class, 'view'])->name('appointments.view');
-    Route::get('/todayappointments', function () {
+    Route::get('/scheduledappointments', function () {
         $clients = Clients::all();
         $pets = Pets::all();
         $appointments = Appointments::with('client')->get();

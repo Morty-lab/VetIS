@@ -132,11 +132,11 @@
     <div class=" container-xl px-4 mt-4">
         <div class="row">
             <div class="col-lg-6 col-xl-3 mb-4">
-                <div class="card bg-white border-start-lg border-start-primary shadow-none text-dark h-100">
+                <div class="card bg-white border-start-lg border-start-secondary shadow-none text-dark h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-primary">Today's Appointments</div>
+                                <div class="text-secondary">Scheduled Appointments</div>
                                 @php
                                     $todayCount = 0;
                                     foreach ($appointments as $appointment) {
@@ -145,7 +145,6 @@
                                                 ->id;
                                             if (
                                                 $appointment->status === 0 &&
-                                                \Carbon\Carbon::parse($appointment->appointment_date)->isToday() &&
                                                 $appointment->doctor_ID == $vet
                                             ) {
                                                 $todayCount++;
@@ -154,8 +153,7 @@
                                             }
                                         } else {
                                             if (
-                                                $appointment->status === 0 &&
-                                                \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+                                                $appointment->status === 0
                                             ) {
                                                 $todayCount++;
                                             } else {
@@ -170,7 +168,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-primary stretched-link" href="/todayappointments">View Today's Appointments</a>
+                        <a class="text-secondary stretched-link" href="/scheduledappointments">View Scheduled Appointments</a>
                         <div class=""><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -283,36 +281,44 @@
         </div>
 
         <div class="card shadow-none">
-            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Scheduled
+            <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Today's
                     Appointments</span></div>
             <div class="card-body">
-                <table id="datatablesSimple">
+                <table id="todaysAppointmentsTable">
                     <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Pet Owner</th>
-                            <th>Pet/s</th>
-                            <th>Veterinarian</th>
-                            <th>Reason of Visit</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Pet Owner</th>
+                        <th>Pet/s</th>
+                        <th>Veterinarian</th>
+                        <th>Reason of Visit</th>
+                        <th>Priority Number</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($appointments as $appointment)
-                            @php
-                                $vetID =
-                                    auth()->user()->role == 'veterinarian'
-                                        ? App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id
-                                        : null;
-                            @endphp
+                    @php
+                        $vetID = auth()->user()->role == 'veterinarian'
+                            ? App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id
+                            : null;
 
-                            @if (
-                                (auth()->user()->role != 'veterinarian' && $appointment->status === 0) ||
-                                    ($appointment->status === 0 && $appointment->doctor_ID == $vetID))
+                        $sortedAppointments = $appointments->sortBy(function ($appointment) {
+                            return $appointment->appointment_date . ' ' . $appointment->appointment_time;
+                        });
+                    @endphp
+                    @foreach ($sortedAppointments as $appointment)
+
+                        @if (
+       (
+           auth()->user()->role != 'veterinarian' && $appointment->status === 0
+       ) || (
+           $appointment->status === 0 && $appointment->doctor_ID == $vetID
+       )
+   )
+                            @if (\Carbon\Carbon::parse($appointment->appointment_date)->isToday())
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }}
-                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
                                     <td>{{ $appointment->client->client_name }}</td>
                                     <td>
                                         @php
@@ -321,25 +327,24 @@
                                         @endphp
                                         @foreach ($pets as $pet)
                                             <span class="badge badge-sm bg-primary-soft text-primary rounded-pill">
-                                                {{ $pet->pet_name }}
-                                                <span
-                                                    class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span>
-                                            </span>
+                                                    {{ $pet->pet_name }}
+                                                    <span
+                                                        class="badge badge-sm bg-white text-primary rounded-pill ms-1">{{ $pet->pet_type }}</span>
+                                                </span>
                                         @endforeach
                                     </td>
                                     <td>
-                                        Dr.
-                                        {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}
-                                    </td>
+                                        Dr. {{ $vets->firstWhere('id', $appointment->doctor_ID)->lastname ?? 'No Vet Found' }}</td>
                                     <td>
                                         @php
                                             $service_ids = explode(',', $appointment->purpose);
-                                            $services = \App\Models\Services::whereIn('id', $service_ids)
-                                                ->pluck('service_name')
-                                                ->toArray();
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->pluck('service_name')->toArray();
                                             $service_list = implode(', ', $services);
                                         @endphp
                                         {{ \Illuminate\Support\Str::limit($service_list, 35) }}
+                                    </td>
+                                    <td>
+                                        {{ $appointment->priority_number }}
                                     </td>
                                     <td>
                                         @if (is_null($appointment->status))
@@ -359,11 +364,12 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-datatable btn-primary px-5 py-3"
-                                            href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
+                                           href="{{ route('appointments.view', ['id' => $appointment->id]) }}">View</a>
                                     </td>
                                 </tr>
                             @endif
-                        @endforeach
+                        @endif
+                    @endforeach
                     </tbody>
                 </table>
             </div>
