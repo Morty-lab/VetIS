@@ -133,7 +133,7 @@ class AppointmentsController extends Controller
             'notification_type' => 'info',
             'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been scheduled.",
         ]);
-        return redirect()->route('appointments.view', ['id' => $id]);
+        return redirect()->route('appointments.view', ['id' => $id])->with('success', 'Appointment has been scheduled successfully!');
     }
 
     public function appointmentDone($id)
@@ -166,7 +166,7 @@ class AppointmentsController extends Controller
             'message' => "Appointment for $veterinarian->firstname $veterinarian->lastname on $date at $time has been Conducted.",
         ]);
 
-        return redirect()->route('appointments.view', ['id' => $id]);
+        return redirect()->route('appointments.view', ['id' => $id])->with('success', 'Appointment has been completed successfully!');
     }
 
     public function appointmentCancel($id)
@@ -219,7 +219,7 @@ class AppointmentsController extends Controller
         Mail::to($veterinarian->doctor_email)->cc($veterinarian->doctor_email)->send(new AppointmentSet($ownerData));
         Mail::to($client->client_email)->send(new AppointmentSet($data));
 
-        return redirect()->route('appointments.view', ['id' => $id]);
+        return redirect()->route('appointments.view', ['id' => $id])->with('success', 'Appointment has been cancelled successfully!');
     }
 
     /**
@@ -308,7 +308,7 @@ class AppointmentsController extends Controller
             'notification_type' => 'success',
             'message' => "Appointment for Dr. $veterinarian->firstname $veterinarian->lastname on $date at $time has been scheduled.",
         ]);
-        return redirect()->route('appointments.view', ['id' => $result->id]);
+        return redirect()->route('appointments.view', ['id' => $result->id])->with('success', 'Appointment has been scheduled successfully!');
         // return redirect()->route('appointments.index');
 
     }

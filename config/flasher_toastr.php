@@ -24,4 +24,13 @@ return array(
             '/vendor/flasher/flasher-toastr.min.css',
         ),
     ),
+    'options' => array(
+        'positionClass' => 'toast-bottom-right', // 👈 Default position here
+        'closeButton' => true,
+        'progressBar' => true,
+        'timeOut' => 5000,
+        'extendedTimeOut' => 1000,
+        'showMethod' => 'fadeIn',
+        'hideMethod' => 'fadeOut',
+    ),
 );

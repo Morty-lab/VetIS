@@ -346,6 +346,7 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     // POS Routes
 
     Route::get('/pos', [POSController::class, 'index'])->name('pos');
+    Route::get('/pos/receipt', [POSController::class, 'receipt'])->name('pos.receipt');
     Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
     // Inventory Routes
 
@@ -383,6 +384,8 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
 
     Route::get('/billing/services', [ServicesController::class, 'index'])->name('billing.services');
     Route::post('/billing/services/add', [ServicesController::class, 'store'])->name("billing.services.add");
+    Route::put('/billing/services/edit/{id}', [ServicesController::class, 'update'])->name('billing.services.update');
+    Route::delete('/billing/services/delete/{id}', [ServicesController::class, 'destroy'])->name("billing.services.delete");
 
     Route::get('/billing/fees', [ServicesController::class, 'feesIndex'])->name('billing.fees');
     Route::post('/billing/fees/add', [ServicesController::class, 'storeFees'])->name("billing.fees.add");

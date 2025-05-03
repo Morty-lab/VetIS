@@ -4,9 +4,7 @@ qty = 1;
 customer = "Walk-In";
 customerID = 0;
 grand_total = 0;
-
-// Store current product stock and edit index
-let currentProductStock = 0;
+currentProductStock = 0;
 let currentEditIndex = -1;
 
 // Object to track the quantity added for each product (by SKU or id)
@@ -403,6 +401,8 @@ function handlePayment() {
     const customerId = customerID;
     const subtotal = document.querySelector(".sub-total").textContent;
     const products = Items;
+    const cashier = document.getElementById('authUserName').textContent || "Unknown User";
+    const transaction = document.getElementById('receiptNumber').textContent || "00";
     const transactionDetails = generateTransactionDetails(
         cashGivenInput.value,
         grandTotal,
@@ -423,11 +423,13 @@ function handlePayment() {
         change.style.display = "block";
         cashgivvendiv.style.display = 'none';
         change_cash.textContent = '₱' + (cashGivenInput.value - grandTotal).toFixed(2);
-        console.log(cashGivenInput.value)
-        console.log(grandTotal)
+        console.log(cashGivenInput.value);
+        console.log(grandTotal);
+
         // Animate progress bar for 5 seconds
         let start = null;
-        const duration = 5000;
+        const duration = 20000;
+
         function animateProgress(timestamp) {
             if (!start) start = timestamp;
             const elapsed = timestamp - start;
@@ -440,11 +442,59 @@ function handlePayment() {
                 requestAnimationFrame(animateProgress);
             }
         }
+
+        // Disable escape key during the timeout period
+        function disableEscapeKey(event) {
+            if (event.key === "Escape") {
+                event.preventDefault(); // Disable escape key press
+            }
+        }
+
+        // Add event listener to disable escape key
+        document.addEventListener('keydown', disableEscapeKey);
+
+        // Hide the payment close modal for 20 seconds
+        const paymentCloseModal = document.getElementById("paymentCloseModal");
+        paymentCloseModal.style.display = 'none'; // Hide the modal
+
+        // Show modal again after 20 seconds
+        setTimeout(() => {
+            paymentCloseModal.style.display = 'block'; // Show the modal again
+            document.removeEventListener('keydown', disableEscapeKey); // Re-enable escape key
+        }, 20000);
+
+
         requestAnimationFrame(animateProgress);
-        // Submit after 5 seconds
+
+        const printReceiptButton = document.getElementById('printReceiptButton'); // Assuming this is the button's ID
+        printReceiptButton.addEventListener('click', () => {
+            // Save to localStorage
+            localStorage.setItem("receiptData", JSON.stringify({
+                customer_id: customerId,
+                products: products, // [{ name: "Item", price: 100, quantity: 2 }]
+                subtotal: subtotal,
+                discount: discount,
+                total: grandTotal,
+                cash: cashGivenInput.value,
+                cashier: cashier,
+                change: (cashGivenInput.value - grandTotal).toFixed(2),
+                receipt_no: transaction // optional
+            }));
+
+            // Open receipt page
+            const newTab = window.open('/pos/receipt', '_blank');
+
+            document.getElementById("paymentForm").submit();
+        });
+
+        const newTransactionButton = document.getElementById('newTransactionButton'); // Assuming this is the button's ID
+        newTransactionButton.addEventListener('click', () => {
+            document.getElementById("paymentForm").submit();
+        });
+
         setTimeout(() => {
             document.getElementById("paymentForm").submit();
-        }, 5000);
+        }, 20000);
     }
 }
 
@@ -606,3 +656,5 @@ function confirmEdit() {
     // Close the modal
     bootstrap.Modal.getInstance(document.getElementById("editQtyModal")).hide();
 }
+
+

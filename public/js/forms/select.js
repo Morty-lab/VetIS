@@ -393,6 +393,27 @@ $(document).ready(function () {
         minimumResultsForSearch: -1,
         placeholder: "Select Vaccination Type",
     });
+
+    $(".select-pet-owner-billing").select2({
+        theme: "bootstrap-5",
+        dropdownParent: "#addBilling",
+        width: $(this).data("width")
+            ? $(this).data("width")
+            : $(this).hasClass("w-100")
+                ? "100%"
+                : "style",
+        placeholder: $(this).data("placeholder"),
+    });
+    $(".select-veterinarian-billing").select2({
+        theme: "bootstrap-5",
+        dropdownParent: "#addBilling",
+        width: $(this).data("width")
+            ? $(this).data("width")
+            : $(this).hasClass("w-100")
+                ? "100%"
+                : "style",
+        placeholder: $(this).data("placeholder"),
+    });
 });
 
 function fetchOwnedPets(ownerID) {
@@ -426,4 +447,6 @@ function fetchOwnedPets(ownerID) {
             petSelect.trigger("change.select2");
         },
     });
+
+
 }

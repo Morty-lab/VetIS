@@ -29,7 +29,17 @@ return array(
     | "sweetalert" : composer require php-flasher/flasher-sweetalert-laravel
     | "pnotify"    : composer require php-flasher/flasher-pnotify-laravel
     */
-    'default' => 'flasher',
+    'default' => 'toastr',
+
+    'options' => array(
+        'position' => 'bottom-right', // ✅ CORRECT: Flasher uses 'position', not 'positionClass'
+        'closeButton' => true,
+        'progressBar' => true,
+        'timeOut' => 5000,
+        'extendedTimeOut' => 1000,
+        'showMethod' => 'fadeIn',
+        'hideMethod' => 'fadeOut',
+    ),
 
     /*
     |---------------------------------------------------------------------------
