@@ -416,7 +416,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Payment</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close" id="paymentCloseModal" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
                     <div class="row">
@@ -501,6 +501,9 @@
                                     <p class="mb-0">Change:</p>
                                     <p class="display-6 text-blue mb-0 h5 fw-500 " id="change-cash"></p>
                                 </div>
+                                <hr>
+                                <button type="button" class="btn btn-primary w-100 mt-3" id="printReceiptButton">Print Receipt</button>
+                                <button type="button" class="btn btn-outline-primary w-100 mt-1" id="newTransactionButton">New Transaction</button>
                             </div>
                             {{-- <hr class="mt-3"> --}}
                             {{-- <a href="" class="btn btn-outline-primary mt-3 w-100">New Transaction</a> --}}
@@ -647,8 +650,11 @@
                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#discountModal"
                                     class="dropdown-item">Discount</a></li>
                             <hr class="my-2">
-                            <li><a href="{{ route('billing.add') }}" class="dropdown-item text-primary">Services
-                                    Billing</a></li>
+                            <li>
+                                <a href="{{ route('billing', ['openModal' => 'add']) }}" class="dropdown-item text-primary">
+                                    Service Billing
+                                </a>
+                            </li>
                             <hr class="my-2">
                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#voidTransactionModal"
                                     class="dropdown-item">Clear Transaction</a></li>
@@ -676,6 +682,8 @@
             </div>
         </div>
     </div>
+    <span id="receiptNumber" hidden>{{ str_pad($nextReceiptNumber, 8, '0', STR_PAD_LEFT) }}</span>
+    <span id="authUserName" hidden>{{ auth()->user()->name }}</span>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>

@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between small">
-                    <a class="text-primary stretched-link" href="/todayappointments">View Appointments</a>
+                    <a class="text-primary stretched-link" href="/manageappointments">View Appointments</a>
                     <div class=""><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>

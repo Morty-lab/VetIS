@@ -27,7 +27,7 @@
                     @foreach($services as $service)
                     <tr>
                         <td>{{$service->service_name}}</td>
-                        <td>PHP {{$service->service_price}}</td>
+                        <td>₱ {{ number_format($service->service_price, 2)}}</td>
                         <td>
                             <!-- Open modal with service details -->
                             <a href="#" class="btn btn-datatable btn-primary px-5 py-3" data-bs-toggle="modal" data-bs-target="#serviceModal-{{$service->id}}"

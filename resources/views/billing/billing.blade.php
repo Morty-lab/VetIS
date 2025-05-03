@@ -8,8 +8,8 @@
 @include('billing.components.header', ['title' => 'Billing'], ['icon' => '<i class="fa-solid fa-file-invoice"></i>'])
 {{--  Medication Qty --}}
 <div class="modal fade" id="addBilling" tabindex="-1" role="dialog" aria-labelledby="addBilling"
-     style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <form action="{{route('billing.add')}}" method="POST">
             @csrf
             <div class="modal-content">
@@ -21,8 +21,9 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <label for="" class="mb-1">Pet Owner</label>
-                            <select class="form-select" id="pet" name="pet_owner" required>
-                                <option value="" disabled selected>Select a Pet Owner</option>
+                            <select class="form-select select-pet-owner-billing" id="pet" name="pet_owner" required
+                                    data-placeholder="Select a Pet Owner">
+                                <option value=""></option>
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->client_name }}</option>
                                 @endforeach
@@ -30,10 +31,12 @@
                         </div>
                         <div class="col-md-12">
                             <label for="" class="mb-1">Veterinarian</label>
-                            <select class="form-select" id="vet" name="vet" required>
-                                <option value="" disabled selected>Select a Pet Owner</option>
+                            <select class="form-select select-veterinarian-billing" id="vet" name="vet" required
+                                    data-placeholder="Select a Veterinarian">
+                                <option value=""></option>
                                 @foreach($vets as $vet)
-                                    <option value="{{ $vet->id }}">Dr. {{ $vet->firstname }} {{ $vet->lastname }}</option>
+                                    <option value="{{ $vet->id }}">
+                                        Dr. {{ $vet->firstname }} {{ $vet->lastname }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -106,4 +109,15 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+    @if(request('openModal') === 'add')
+        <script>
+            window.addEventListener('DOMContentLoaded', function () {
+                var myModal = new bootstrap.Modal(document.getElementById('addBilling'));
+                myModal.show();
+            });
+        </script>
+    @endif
 @endsection

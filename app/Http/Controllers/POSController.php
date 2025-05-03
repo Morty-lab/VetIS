@@ -19,10 +19,16 @@ class POSController extends Controller
     {
         $products = Products::getAllProducts();
         $customers = Clients::getAllClients();
+        $latestTransaction = TransactionModel::latest('id')->first();
+        $nextReceiptNumber = $latestTransaction ? $latestTransaction->id + 1 : 1;
 
         // dd(json_encode($customers));
 
-        return view('pos.pos', ["products" => $products, "customers" => $customers]);
+        return view('pos.pos', ["products" => $products, "customers" => $customers, 'nextReceiptNumber' => $nextReceiptNumber]);
+    }
+
+    public function receipt() {
+        return view('pos.posReceipt');
     }
 
     /**
@@ -86,10 +92,7 @@ class POSController extends Controller
 
 
         }
-
-
-
-        return redirect('/pos');
+        return redirect('/pos')->with('success', 'Transaction successful!.');
     }
 
     /**

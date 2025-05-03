@@ -405,6 +405,7 @@
             </div>
             <div class="col-xl-4">
                 <div class="row">
+                    @if (!in_array($appointment->status, [2]))
                     <div class="col-12">
                         <div class="card shadow-none border mb-4">
                             <div class="card-header">
@@ -419,6 +420,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if($appointment->status !== 2)
                     <div class="col-12">
                         <div class="card shadow-none mb-4 mb-xl-4">
                             <div class="card-header">
@@ -454,19 +457,26 @@
                                                 </button>
                                             </div>
                                         @endif
-                                        @if (!is_null($appointment->status) && ($appointment->status == 0))
-                                            <div class="col-md-12">
-                                                <button class="btn btn-outline-green w-100" type="button" data-bs-toggle="modal" data-bs-target="#doneAppointmentModal">
-                                                    <i class="fa-solid fa-check me-2"></i> Done Appointment
-                                                </button>
-                                            </div>
+                                        @php
+                                            $today = \Carbon\Carbon::today();
+                                            $appointmentDate = \Carbon\Carbon::parse($appointment->appointment_date);
+                                        @endphp
+
+                                        @if (!is_null($appointment->status) && $appointment->status == 0)
+                                            @if ($appointmentDate->isToday())
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-outline-green w-100" type="button" data-bs-toggle="modal" data-bs-target="#doneAppointmentModal">
+                                                        <i class="fa-solid fa-check me-2"></i> Done Appointment
+                                                    </button>
+                                                </div>
+                                            @endif
                                             <div class="col-md-12">
                                                 <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="modal" data-bs-target="#cancelAppointmentModal">
                                                     <i class="fa-solid fa-x me-2"></i> Cancel Appointment
                                                 </button>
                                             </div>
                                         @endif
-                                        @if(is_null($appointment->status) || in_array($appointment->status, [0, 2]))
+                                        @if(is_null($appointment->status) || in_array($appointment->status, [0]))
                                             <div class="col-md-12">
                                                 <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="modal" data-bs-target="#editAppointmentModal">
                                                     <i class="fa-solid fa-calendar-days me-2"></i> Reschedule Appointment
@@ -484,6 +494,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
