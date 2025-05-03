@@ -37,7 +37,7 @@ class PetRecords extends Model
      {
          return $this->belongsTo(Clients::class, 'ownerID');
      }
- 
+
      /**
       * Get the doctor associated with this record
       */
@@ -58,7 +58,7 @@ class PetRecords extends Model
 
     public static function getPetRecordById($id)
     {
-        return self::find($id);
+        return self::where('id', $id)->first();
     }
 
     public static function findByPetId($petId)

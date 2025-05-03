@@ -260,21 +260,34 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        //        Schema::create("examination", function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger("pet_record_id");
-//            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
-//            $table->float("heart_rate")->nullable();
-//            $table->float("respiration_rate")->nullable();
-//            $table->float("weight")->nullable();
-//            $table->float("length")->nullable();
-//            $table->float("crt")->nullable();
-//            $table->float("bcs")->nullable();
-//            $table->float("lymph_nodes")->nullable();
-//            $table->float("palpebral_reflex")->nullable();
-//            $table->float("temperature")->nullable();
-//            $table->timestamps();
-//        });
+        Schema::create("examinations", function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_record_id");
+            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
+
+            // Basic vitals
+            $table->float("temperature")->nullable(); // °C
+            $table->integer("heart_rate")->nullable(); // bpm
+            $table->integer("respiration_rate")->nullable(); // bpm
+            $table->float("weight")->nullable(); // kg
+            $table->float("length")->nullable(); // cm
+            $table->float("height")->nullable(); // cm
+
+            // Assessments - JSON to allow multiple selectable values
+            $table->json("body_condition")->nullable(); // Underweight, Normal, Overweight
+            $table->json("general_appearance")->nullable(); // Active, Lethargic, etc.
+            $table->json("skin_coat_condition")->nullable(); // Healthy, Dry, etc.
+            $table->json("eyes_ears_nose_throat")->nullable(); // Clear, Discharge, etc.
+            $table->json("mouth_teeth")->nullable(); // Healthy, Tartar, etc.
+            $table->json("lymph_nodes")->nullable(); // Normal, Swollen, etc.
+            $table->json("cardiovascular_system")->nullable(); // Normal, Murmurs, etc.
+            $table->json("respiratory_system")->nullable(); // Normal, Wheezing, etc.
+            $table->json("digestive_system")->nullable(); // Normal, Bloating, etc.
+            $table->json("musculoskeletal_system")->nullable(); // Normal, Limping, etc.
+            $table->json("neurological_system")->nullable(); // Normal, Seizures, etc.
+
+            $table->timestamps();
+        });
 
         //        Schema::create("laboratory", function (Blueprint $table) {
 //            $table->id();

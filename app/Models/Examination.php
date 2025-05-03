@@ -13,18 +13,26 @@ class Examination extends Model
 
     protected $fillable = [
         'pet_record_id',
+        'temperature',
         'heart_rate',
         'respiration_rate',
         'weight',
         'length',
-        'crt',
-        'bcs',
+        'height',
+        'body_condition',
+        'general_appearance',
+        'skin_coat_condition',
+        'eyes_ears_nose_throat',
+        'mouth_teeth',
         'lymph_nodes',
-        'palpebral_reflexes',
-        'temperature'
+        'cardiovascular_system',
+        'respiratory_system',
+        'digestive_system',
+        'musculoskeletal_system',
+        'neurological_system'
     ];
 
-    protected $table = 'examination';
+    protected $table = 'examinations';
 
 
     public static function getAllExaminations(){
