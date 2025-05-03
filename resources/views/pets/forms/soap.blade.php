@@ -571,7 +571,7 @@
                                                 <div class="col-md-4">
                                                     <label class="form-label">Temperature:</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                    <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)" name="temperature" value="{{$examination->temperature ?? ''}}">
                                                         <span class="input-group-text">°C</span>
                                                     </div>
                                                 </div>
@@ -579,7 +579,7 @@
                                                 <div class="col-md-4">
                                                     <label class="form-label">Heart Rate:</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="heart_rate" value="{{ $examination->heart_rate ?? '' }}">
                                                         <span class="input-group-text">bpm</span>
                                                     </div>
                                                 </div>
@@ -587,43 +587,43 @@
                                                 <div class="col-md-4">
                                                     <label class="form-label">Respiratory Rate:</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="respiratory_rate" value="{{ $examination->respiration_rate ?? '' }}">
                                                         <span class="input-group-text">bpm</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-label">Weight:</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)" name="weight" value="{{ $examination->weight ?? '' }}">
                                                         <span class="input-group-text">kg</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-label">Length:</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)" name="length" value="{{ $examination->length ?? '' }}">
                                                         <span class="input-group-text">cm</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-label">Height:</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)">
+                                                        <input type="text" class="form-control" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" autocorrect="off" autocapitalize="off" onkeypress="return (event.charCode == 46 || event.charCode >= 48 && event.charCode <= 57)" name="height" value="{{ $examination->height ?? '' }}">
                                                         <span class="input-group-text">cm</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Body Condition:</label> <br>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="body_condition" id="underweight">
+                                                        <input class="form-check-input" type="checkbox" name="body_condition[underweight]" id="underweight" @if (isset($examination->body_condition) && array_key_exists('underweight', json_decode($examination->body_condition, true)) && json_decode($examination->body_condition, true)['underweight'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="underweight">Underweight</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="body_condition" id="normal">
+                                                        <input class="form-check-input" type="checkbox" name="body_condition[normal]" id="normal" @if (isset($examination->body_condition) && array_key_exists('normal', json_decode($examination->body_condition, true)) && json_decode($examination->body_condition, true)['normal'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="normal">Normal</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="body_condition" id="overweight">
+                                                        <input class="form-check-input" type="checkbox" name="body_condition[overweight]" id="overweight" @if (isset($examination->body_condition) && array_key_exists('overweight', json_decode($examination->body_condition, true)) && json_decode($examination->body_condition, true)['overweight'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="overweight">Overweight</label>
                                                     </div>
                                                 </div>
@@ -631,19 +631,19 @@
                                                     <label class="form-label">General Appearance:</label>
                                                     <br>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="active">
+                                                        <input class="form-check-input" type="checkbox" name="general_appearance[active]" id="active" @if (isset($examination->general_appearance) && array_key_exists('active', json_decode($examination->general_appearance, true)) && json_decode($examination->general_appearance, true)['active'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="active">Active</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="lethargic">
+                                                        <input class="form-check-input" type="checkbox" name="general_appearance[lethargic]" id="lethargic" @if (isset($examination->general_appearance) && array_key_exists('lethargic', json_decode($examination->general_appearance, true)) && json_decode($examination->general_appearance, true)['lethargic'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="lethargic">Lethargic</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="unresponsive">
+                                                        <input class="form-check-input" type="checkbox" name="general_appearance[unresponsive]" id="unresponsive" @if (isset($examination->general_appearance) && array_key_exists('unresponsive', json_decode($examination->general_appearance, true)) && json_decode($examination->general_appearance, true)['unresponsive'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="unresponsive">Unresponsive</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="appearance" id="aggressive">
+                                                        <input class="form-check-input" type="checkbox" name="general_appearance[aggresive]" id="aggressive" @if (isset($examination->general_appearance) && array_key_exists('aggresive', json_decode($examination->general_appearance, true)) && json_decode($examination->general_appearance, true)['aggresive'] == 'on') checked @endif>
                                                         <label class="form-check-label" for="unresponsive">Aggressive</label>
                                                     </div>
                                                 </div>
@@ -651,23 +651,23 @@
                                                         <label class="form-label">Skin & Coat Condition:</label>
                                                         <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="healthySkin">
+                                                            <input class="form-check-input" type="checkbox" name="skin_coat_condition[healthy]" id="healthySkin" @if (isset($examination->skin_coat_condition) && array_key_exists('healthy', json_decode($examination->skin_coat_condition, true)) && json_decode($examination->skin_coat_condition, true)['healthy'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="healthySkin">Healthy</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="dry">
+                                                            <input class="form-check-input" type="checkbox" name="skin_coat_condition[dry]" id="dry" @if (isset($examination->skin_coat_condition) && array_key_exists('dry', json_decode($examination->skin_coat_condition, true)) && json_decode($examination->skin_coat_condition, true)['dry'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="dry">Dry</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="flaky">
+                                                            <input class="form-check-input" type="checkbox" name="skin_coat_condition[flaky]" id="flaky" @if (isset($examination->skin_coat_condition) && array_key_exists('flaky', json_decode($examination->skin_coat_condition, true)) && json_decode($examination->skin_coat_condition, true)['flaky'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="flaky">Flaky</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="hairLoss">
+                                                            <input class="form-check-input" type="checkbox" name="skin_coat_condition[hairLoss]" id="hairLoss" @if (isset($examination->skin_coat_condition) && array_key_exists('hairLoss', json_decode($examination->skin_coat_condition, true)) && json_decode($examination->skin_coat_condition, true)['hairLoss'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="hairLoss">Hair Loss</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="skinCondition" id="parasites">
+                                                            <input class="form-check-input" type="checkbox" name="skin_coat_condition[parasites]" id="parasites" @if (isset($examination->skin_coat_condition) && array_key_exists('parasites', json_decode($examination->skin_coat_condition, true)) && json_decode($examination->skin_coat_condition, true)['parasites'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="parasites">Parasites Present</label>
                                                         </div>
                                                 </div>
@@ -676,19 +676,19 @@
                                                         <label class="form-label">Eyes, Ears, Nose, & Throat:</label>
                                                         <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="clear">
+                                                            <input class="form-check-input" type="checkbox" name="eyes_ears_nose_throat[clear]" id="clear" @if (isset($examination->eyes_ears_nose_throat) && array_key_exists('clear', json_decode($examination->eyes_ears_nose_throat, true)) && json_decode($examination->eyes_ears_nose_throat, true)['clear'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="clear">Clear</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="discharge">
+                                                            <input class="form-check-input" type="checkbox" name="eyes_ears_nose_throat[discharge]" id="discharge" @if (isset($examination->eyes_ears_nose_throat) && array_key_exists('discharge', json_decode($examination->eyes_ears_nose_throat, true)) && json_decode($examination->eyes_ears_nose_throat, true)['discharge'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="discharge">Discharge</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="redness">
+                                                            <input class="form-check-input" type="checkbox" name="eyes_ears_nose_throat[redness]" id="redness" @if (isset($examination->eyes_ears_nose_throat) && array_key_exists('redness', json_decode($examination->eyes_ears_nose_throat, true)) && json_decode($examination->eyes_ears_nose_throat, true)['redness'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="redness">Redness</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="eyesEarsNoseThroat" id="swelling">
+                                                            <input class="form-check-input" type="checkbox" name="eyes_ears_nose_throat[swelling]" id="swelling" @if (isset($examination->eyes_ears_nose_throat) && array_key_exists('swelling', json_decode($examination->eyes_ears_nose_throat, true)) && json_decode($examination->eyes_ears_nose_throat, true)['swelling'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="swelling">Swelling</label>
                                                         </div>
                                                 </div>
@@ -697,19 +697,19 @@
                                                         <label class="form-label">Mouth & Teeth:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="healthyMouth">
+                                                            <input class="form-check-input" type="checkbox" name="mouth_teeth[healthy]" id="healthyMouth" @if (isset($examination->mouth_teeth) && array_key_exists('healthy', json_decode($examination->mouth_teeth, true)) && json_decode($examination->mouth_teeth, true)['healthy'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="healthyMouth">Healthy</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="tartar">
+                                                            <input class="form-check-input" type="checkbox" name="mouth_teeth[tartar]" id="tartar" @if (isset($examination->mouth_teeth) && array_key_exists('tartar', json_decode($examination->mouth_teeth, true)) && json_decode($examination->mouth_teeth, true)['tartar'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="tartar">Tartar</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="gingivitis">
+                                                            <input class="form-check-input" type="checkbox" name="mouth_teeth[gingivitis]" id="gingivitis" @if (isset($examination->mouth_teeth) && array_key_exists('gingivitis', json_decode($examination->mouth_teeth, true)) && json_decode($examination->mouth_teeth, true)['gingivitis'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="gingivitis">Gingivitis</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="mouthTeeth" id="missingTeeth">
+                                                            <input class="form-check-input" type="checkbox" name="mouth_teeth[missingTeeth]" id="missingTeeth" @if (isset($examination->mouth_teeth) && array_key_exists('missingTeeth', json_decode($examination->mouth_teeth, true)) && json_decode($examination->mouth_teeth, true)['missingTeeth'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="missingTeeth">Missing Teeth</label>
                                                         </div>
                                                 </div>
@@ -718,16 +718,16 @@
                                                         <label class="form-label">Lymph Nodes:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="lymphNodes" id="normalNodes">
+                                                            <input class="form-check-input" type="checkbox" name="lymph_nodes[normal]" id="normalNodes" @if (isset($examination->lymph_nodes) && array_key_exists('normal', json_decode($examination->lymph_nodes, true)) && json_decode($examination->lymph_nodes, true)['normal'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="normalNodes">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="lymphNodes" id="swollenNodes">
+                                                            <input class="form-check-input" type="checkbox" name="lymph_nodes[swollen]" id="swollenNodes" @if (isset($examination->lymph_nodes) && array_key_exists('swollen', json_decode($examination->lymph_nodes, true)) && json_decode($examination->lymph_nodes, true)['swollen'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="swollenNodes">Swollen</label>
                                                         </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="lymphNodes" id="enlargedNodes">
-                                                        <label class="form-check-label" for="swollenNodes">Enlarged</label>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="lymph_nodes[enlarged]" id="enlargedNodes" @if (isset($examination->lymph_nodes) && array_key_exists('enlarged', json_decode($examination->lymph_nodes, true)) && json_decode($examination->lymph_nodes, true)['enlarged'] == 'on') checked @endif>
+                                                            <label class="form-check-label" for="enlargedNodes">Enlarged</label>
                                                     </div>
                                                 </div>
 
@@ -735,15 +735,15 @@
                                                         <label class="form-label">Cardiovascular System:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="cardioSystem" id="normalHeart">
+                                                            <input class="form-check-input" type="checkbox" name="cardiovascular_system[normal]" id="normalHeart" @if (isset($examination->cardiovascular_system) && array_key_exists('normal', json_decode($examination->cardiovascular_system, true)) && json_decode($examination->cardiovascular_system, true)['normal'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="normalHeart">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="cardioSystem" id="murmurs">
+                                                            <input class="form-check-input" type="checkbox" name="cardiovascular_system[murmurs]" id="murmurs" @if (isset($examination->cardiovascular_system) && array_key_exists('murmurs', json_decode($examination->cardiovascular_system, true)) && json_decode($examination->cardiovascular_system, true)['murmurs'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="murmurs">Murmurs</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="cardioSystem" id="irregularBeat">
+                                                            <input class="form-check-input" type="checkbox" name="cardiovascular_system[irregularBeat]" id="irregularBeat" @if (isset($examination->cardiovascular_system) && array_key_exists('irregularBeat', json_decode($examination->cardiovascular_system, true)) && json_decode($examination->cardiovascular_system, true)['irregularBeat'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="irregularBeat">Irregular Heartbeat</label>
                                                         </div>
                                                 </div>
@@ -752,19 +752,19 @@
                                                         <label class="form-label">Respiratory System:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="normalResp">
+                                                            <input class="form-check-input" type="checkbox" name="respiratory_system[normal]" id="normalResp" @if (isset($examination->respiratory_system) && array_key_exists('normal', json_decode($examination->respiratory_system, true)) && json_decode($examination->respiratory_system, true)['normal'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="normalResp">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="wheezing">
+                                                            <input class="form-check-input" type="checkbox" name="respiratory_system[wheezing]" id="wheezing" @if (isset($examination->respiratory_system) && array_key_exists('wheezing', json_decode($examination->respiratory_system, true)) && json_decode($examination->respiratory_system, true)['wheezing'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="wheezing">Wheezing</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="coughing">
+                                                            <input class="form-check-input" type="checkbox" name="respiratory_system[coughing]" id="coughing" @if (isset($examination->respiratory_system) && array_key_exists('coughing', json_decode($examination->respiratory_system, true)) && json_decode($examination->respiratory_system, true)['coughing'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="coughing">Coughing</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="respSystem" id="laboredBreathing">
+                                                            <input class="form-check-input" type="checkbox" name="respiratory_system[laboredBreathing]" id="laboredBreathing" @if (isset($examination->respiratory_system) && array_key_exists('laboredBreathing', json_decode($examination->respiratory_system, true)) && json_decode($examination->respiratory_system, true)['laboredBreathing'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="laboredBreathing">Labored Breathing</label>
                                                         </div>
                                                 </div>
@@ -773,19 +773,19 @@
                                                         <label class="form-label">Digestive System:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="normalDigest">
-                                                            <label class="form-check-label" for="normalDigest">Normal</label>
+                                                            <input class="form-check-input" type="checkbox" name="digestive_system[normal]" id="normalDigestive">
+                                                            <label class="form-check-label" for="normalDigestive">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="bloating">
+                                                            <input class="form-check-input" type="checkbox" name="digestive_system[bloating]" id="bloating" @if (isset($examination->digestive_system) && array_key_exists('bloating', json_decode($examination->digestive_system, true)) && json_decode($examination->digestive_system, true)['bloating'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="bloating">Bloating</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="vomiting">
+                                                            <input class="form-check-input" type="checkbox" name="digestive_system[vomiting]" id="vomiting" @if (isset($examination->digestive_system) && array_key_exists('vomiting', json_decode($examination->digestive_system, true)) && json_decode($examination->digestive_system, true)['vomiting'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="vomiting">Vomiting</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="digestSystem" id="diarrhea">
+                                                            <input class="form-check-input" type="checkbox" name="digestive_system[diarrhea]" id="diarrhea" @if (isset($examination->digestive_system) && array_key_exists('diarrhea', json_decode($examination->digestive_system, true)) && json_decode($examination->digestive_system, true)['diarrhea'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="diarrhea">Diarrhea</label>
                                                         </div>
                                                 </div>
@@ -794,19 +794,19 @@
                                                         <label class="form-label">Musculoskeletal System:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="normalMusculo">
+                                                            <input class="form-check-input" type="checkbox" name="musculoskeletal_system[normal]" id="normalMusculo" @if (isset($examination->musculoskeletal_system) && array_key_exists('normal', json_decode($examination->musculoskeletal_system, true)) && json_decode($examination->musculoskeletal_system, true)['normal'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="normalMusculo">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="limping">
+                                                            <input class="form-check-input" type="checkbox" name="musculoskeletal_system[limping]" id="limping" @if (isset($examination->musculoskeletal_system) && array_key_exists('limping', json_decode($examination->musculoskeletal_system, true)) && json_decode($examination->musculoskeletal_system, true)['limping'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="limping">Limping</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="jointPain">
+                                                            <input class="form-check-input" type="checkbox" name="musculoskeletal_system[jointPain]" id="jointPain" @if (isset($examination->musculoskeletal_system) && array_key_exists('jointPain', json_decode($examination->musculoskeletal_system, true)) && json_decode($examination->musculoskeletal_system, true)['jointPain'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="jointPain">Joint Pain</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="musculoSystem" id="muscleAtrophy">
+                                                            <input class="form-check-input" type="checkbox" name="musculoskeletal_system[muscleAtrophy]" id="muscleAtrophy" @if (isset($examination->musculoskeletal_system) && array_key_exists('muscleAtrophy', json_decode($examination->musculoskeletal_system, true)) && json_decode($examination->musculoskeletal_system, true)['muscleAtrophy'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="muscleAtrophy">Muscle Atrophy</label>
                                                         </div>
                                                 </div>
@@ -814,19 +814,19 @@
                                                     <label class="form-label">Neurological System:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="normalNeuro">
+                                                            <input class="form-check-input" type="checkbox" name="neurological_system[normal]" id="normalNeuro" @if (isset($examination->neurological_system) && array_key_exists('normal', json_decode($examination->neurological_system, true)) && json_decode($examination->neurological_system, true)['normal'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="normalNeuro">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="seizures">
+                                                            <input class="form-check-input" type="checkbox" name="neurological_system[seizures]" id="seizures"  @if (isset($examination->neurological_system) && array_key_exists('seizures', json_decode($examination->neurological_system, true)) && json_decode($examination->neurological_system, true)['seizures'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="seizures">Seizures</label>
                                                         </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="weakness">
+                                                            <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="neurological_system[weakness]" id="weakness"  @if (isset($examination->neurological_system) && array_key_exists('weakness', json_decode($examination->neurological_system, true)) && json_decode($examination->neurological_system, true)['weakness'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="weakness">Weakness</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="neuroSystem" id="uncoordinated">
+                                                            <input class="form-check-input" type="checkbox" name="neurological_system[uncoordinatedMovements]" id="uncoordinated" value="uncoordinatedMovements" @if (isset($examination->neurological_system) && array_key_exists('uncoordinatedMovements', json_decode($examination->neurological_system, true)) && json_decode($examination->neurological_system, true)['uncoordinatedMovements'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="uncoordinated">Uncoordinated Movements</label>
                                                         </div>
                                                 </div>

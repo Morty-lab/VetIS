@@ -137,7 +137,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     //Pet Records
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
     Route::get('/petinfo/{id}/soap/create', [SoapController::class, 'create'])->name('soap.create');
-    Route::get('/petinfo/{id}/soap/view/{recordID}', [SoapController::class, 'show'])->name('soap.view');
+    Route::get('/records/medical/view', [SoapController::class, 'show'])->name('soap.view');
     Route::post('petinfo/soap/add', [SoapController::class, 'store'])->name('soap.add');
     Route::post('/petinfo/{id}/soap/update/{recordID}', [SoapController::class, 'update'])->name('soap.update');
     Route::get('/petinfo/{pets}', [PetsController::class, 'show'])->name('pets.show');
