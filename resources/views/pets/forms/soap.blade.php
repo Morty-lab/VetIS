@@ -773,7 +773,7 @@
                                                         <label class="form-label">Digestive System:</label>
                                                     <br>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="digestive_system[normal]" id="normalDigestive">
+                                                            <input class="form-check-input" type="checkbox" name="digestive_system[normal]" id="normalDigestive" @if (isset($examination->digestive_system) && array_key_exists('normal', json_decode($examination->digestive_system, true)) && json_decode($examination->digestive_system, true)['normal'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="normalDigestive">Normal</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
@@ -826,7 +826,7 @@
                                                             <label class="form-check-label" for="weakness">Weakness</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="neurological_system[uncoordinatedMovements]" id="uncoordinated" value="uncoordinatedMovements" @if (isset($examination->neurological_system) && array_key_exists('uncoordinatedMovements', json_decode($examination->neurological_system, true)) && json_decode($examination->neurological_system, true)['uncoordinatedMovements'] == 'on') checked @endif>
+                                                            <input class="form-check-input" type="checkbox" name="neurological_system[uncoordinatedMovements]" id="uncoordinated"  @if (isset($examination->neurological_system) && array_key_exists('uncoordinatedMovements', json_decode($examination->neurological_system, true)) && json_decode($examination->neurological_system, true)['uncoordinatedMovements'] == 'on') checked @endif>
                                                             <label class="form-check-label" for="uncoordinated">Uncoordinated Movements</label>
                                                         </div>
                                                 </div>
@@ -985,9 +985,9 @@
                                                     <div class="col-md-5">
                                                         <select class="form-control presc-name select-med">
                                                             <option value=""></option>
-                                                            <option value="Medication 1">Medication 1</option>
-                                                            <option value="Medication 2">Medication 2</option>
-                                                            <option value="Medication 3">Medication 3</option>
+                                                            @foreach ($medications as $medication)
+                                                                <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <!-- Dosage -->
@@ -1398,9 +1398,9 @@
                     <div class="row mb-2 gy-2 prescription-entry gx-2">
                         <div class="col-md-5">
                             <select class="form-control presc-name select-presc">
-                                <option value="Medication 1">Medication 1</option>
-                                <option value="Medication 2">Medication 2</option>
-                                <option value="Medication 3">Medication 3</option>
+                                @foreach ($medications as $medication)
+                                    <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -1455,9 +1455,9 @@
                             <div class="col-md-4">
                                    <select class="form-control med-name select-med" style="width: 100%;">
                                     <option value="">Select Medication</option>
-                                    <option value="Blood Test">Medication 1</option>
-                                    <option value="X-Ray">Medication 2</option>
-                                    <option value="MRI Scan">Medication 3</option>
+                                    @foreach ($medications as $medication)
+                                        <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
+                                    @endforeach
                               </select>
                             </div>
                             <div class="col-md-2">
