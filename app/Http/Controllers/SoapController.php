@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Clients;
 use App\Models\Doctor;
 use App\Models\Examination;
@@ -9,6 +10,7 @@ use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
+use App\Models\Products;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -78,12 +80,13 @@ class SoapController extends Controller
 
         $record = PetRecords::where('id', request('recordID'))->first();
         $examination = Examination::where('pet_record_id',$record->id)->first();
-        // dd($record);
+        $medications = Products::where('product_category', Category::where('category_name', 'Medications')->first()->id)->get();
+        // dd($medications);
         $pet = Pets::where('id', request('id'))->first(); //Pets::find(request('id'));
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
 
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination'=> $examination]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination'=> $examination, 'medications' => $medications]);
     }
 
     /**

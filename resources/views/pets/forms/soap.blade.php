@@ -888,9 +888,9 @@
 {{--                                                        <input type="text" class="form-control med-name" placeholder="Medication Name">--}}
                                                         <select class="form-control med-name select-med" style="width: 100%;">
                                                             <option value="">Select Medication</option>
-                                                            <option value="Blood Test">Medication 1</option>
-                                                            <option value="X-Ray">Medication 2</option>
-                                                            <option value="MRI Scan">Medication 3</option>
+                                                            @foreach ($medications as $medication)
+                                                                <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2">
