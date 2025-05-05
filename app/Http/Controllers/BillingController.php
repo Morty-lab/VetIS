@@ -107,7 +107,7 @@ class BillingController extends Controller
                     'billing_id' => $billing->id, // Use the ID of the saved billing record
                     'product_id' => $medication['serviceID'],
                     'service_price' => $medication['price'],
-                    'quantity' => $medication['quantity']
+                    'quantity' => $medication['quantity'] 
                 ]);
             }
         }

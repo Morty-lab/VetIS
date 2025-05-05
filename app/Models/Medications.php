@@ -9,9 +9,12 @@ class Medications extends Model
 {
     use HasFactory;
 protected $fillable = [
+    'recordID',
+    'productID',
     'dosage',
     'price',
-    'treatment'
+    'frequency',
+    'medication_type'
 ];
 
 }

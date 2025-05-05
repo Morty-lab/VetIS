@@ -143,7 +143,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="" class="btn btn-datatable btn-primary px-5 py-3">View</a>
+                                <a href="{{route('soap.view', ['id' => $record->petID, 'recordID' => $record->id])}}" class="btn btn-datatable btn-primary px-5 py-3">View</a>
                             </td>
                         </tr>
                     @endforeach
