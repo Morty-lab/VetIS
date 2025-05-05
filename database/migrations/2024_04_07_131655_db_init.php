@@ -252,8 +252,8 @@ return new class extends Migration {
             $table->longText("complaint")->nullable();
             $table->longText("examination")->nullable();
             $table->longText("diagnosis")->nullable();
-            $table->longText('medication_given')->nullable();
-            $table->longText('procedure_given')->nullable();
+            // $table->longText('medication_given')->nullable();
+            // $table->longText('procedure_given')->nullable();
             $table->longText('remarks')->nullable();
             $table->longText('prescription')->nullable();
             $table->integer('status')->default(0);
@@ -382,17 +382,18 @@ return new class extends Migration {
 //
 //        });
 
-        //        Schema::create('medications', function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger("recordID");
-//            $table->unsignedBigInteger("productID");
-//            $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
-//            $table->foreign("productID")->references("id")->on("products")->onDelete("cascade");
-//            $table->float("dosage");
-//            $table->float("price");
-//            $table->string("treatment");
-//            $table->timestamps();
-//        });
+        Schema::create('medications', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("recordID");
+            $table->unsignedBigInteger("productID");
+            $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
+            $table->foreign("productID")->references("id")->on("products")->onDelete("cascade");
+            $table->string("dosage");
+            // $table->float("price");
+            $table->string("frequency");
+            $table->string('medication_type');
+            $table->timestamps();
+        });
 
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();

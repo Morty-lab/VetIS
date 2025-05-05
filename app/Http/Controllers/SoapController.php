@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Clients;
 use App\Models\Doctor;
 use App\Models\Examination;
+use App\Models\Medications;
 use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
@@ -79,14 +80,15 @@ class SoapController extends Controller
     {
 
         $record = PetRecords::where('id', request('recordID'))->first();
-        $examination = Examination::where('pet_record_id',$record->id)->first();
+        $examination = Examination::where('pet_record_id', $record->id)->first();
         $medications = Products::where('product_category', Category::where('category_name', 'Medications')->first()->id)->get();
+        $recordTreatment = Medications::where('recordID', request('recordID'))->get();
         // dd($medications);
         $pet = Pets::where('id', request('id'))->first(); //Pets::find(request('id'));
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
 
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination'=> $examination, 'medications' => $medications]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment]);
     }
 
     /**
@@ -146,11 +148,13 @@ class SoapController extends Controller
             'musculoskeletal_system' => 'nullable|array',
             'neurological_system' => 'nullable|array',
             'diagnosis' => 'nullable|string',
-            'medication_given' => 'nullable|string',
+            'medications' => 'nullable|array',
             'procedure_given' => 'nullable|string',
             'remarks' => 'nullable|string',
             'prescription' => 'nullable|string',
         ]);
+
+        // dd($request->all());
 
         $examination_data = [
             'pet_record_id' => $recordID,
@@ -188,6 +192,38 @@ class SoapController extends Controller
             } else {
                 $examination->update($examination_data);
             }
+
+
+            if (isset($validatedData['medications'])) {
+                foreach ($validatedData['medications'] as $medication) {
+                    if (array_values($medication) === array_filter(array_values($medication), 'is_null')) {
+                        continue;
+                    }
+                    if (array_key_exists('medication_id', $medication)) {
+                        // Update existing medication
+                        $medicationModel = Medications::updateOrCreate(
+                            ['id' => $medication['medication_id']],
+                            [
+                                'recordID' => $recordID,
+                                'productID' => $medication['meds'],
+                                'dosage' => $medication['dosage'],
+                                'frequency' => $medication['frequency'],
+                                'medication_type' => $medication['medication_type'],
+                            ]
+                        );
+                    } else {
+                        // Create new medication
+                        $medicationModel = Medications::create([
+                            'recordID' => $recordID,
+                            'productID' => $medication['meds'],
+                            'dosage' => $medication['dosage'],
+                            'frequency' => $medication['frequency'],
+                            'medication_type' => $medication['medication_type'],
+                        ]);
+                    }
+                }
+            }
+
 
             // Update the record with validated data
             $record->update($validatedData);
