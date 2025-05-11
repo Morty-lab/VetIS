@@ -145,6 +145,10 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
         return view('pets.forms.printRecord');
     })->name("soap.print");
 
+    Route::get('/petinfo/{id}/soap/archive', [SoapController::class, 'archive'])->name('soap.archive');
+    Route::post('/petinfo/{id}/soap/archive', [SoapController::class, 'archiveRecord'])->name('soap.archive.record');
+    Route::post('/petinfo/{id}/soap/unarchive', [SoapController::class, 'unarchiveRecord'])->name('soap.unarchive.record');
+
     Route::delete('/delete-treatment', [SoapController::class, 'deleteTreatment'])->name('pet.treatment.delete');
     Route::delete('/delete-procedure', [SoapController::class, 'deleteProcedure'])->name('pet.procedure.delete');
     Route::delete('/delete-prescription', [SoapController::class, 'deletePrescription'])->name('pet.prescription.delete');

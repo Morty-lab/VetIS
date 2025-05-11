@@ -140,6 +140,8 @@
                                     <span class="badge badge-sm text-sm bg-warning-soft text-warning rounded-pill">Ongoing</span>
                                 @elseif($record->status == 1)
                                     <span class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Completed</span>
+                                @elseif($record->status == 2)
+                                    <span class="badge badge-sm text-sm bg-danger-soft text-danger rounded-pill">Archived</span>
                                 @endif
                             </td>
                             <td>

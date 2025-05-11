@@ -325,6 +325,37 @@ class SoapController extends Controller
 
 
 
+
+    public function archive(int $id)
+    {
+        $record = PetRecords::findOrFail($id);
+        return view('pets.forms.soap-archive', compact('record'));
+    }
+
+    public function archiveRecord(int $id)
+    {
+        try {
+            $record = PetRecords::where('id', $id);
+            $record->update(['status' => 2]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
+    }
+
+    // public function unarchiveRecord(int $id)
+    // {
+    //     try {
+    //         $record = PetRecords::findOrFail($id);
+    //         $record->update(['archived' => false]);
+    //         return redirect()->route('soap.view', ['id' => $record->pet_id, 'recordID' => $id])
+    //             ->with('success', 'Record unarchived successfully.');
+    //     } catch (\Exception $e) {
+    //         return redirect()->route('soap.view', ['id' => $record->pet_id, 'recordID' => $id])
+    //             ->with('error', 'Failed to unarchive record: ' . $e->getMessage());
+    //     }
+    // }
+
     /**
      * Remove the specified resource from storage.
      */

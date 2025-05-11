@@ -246,10 +246,10 @@
                             <input type="text" class="form-control mb-4" placeholder="Enter Service">
                         </div>
                         <!-- <div class="col-md-2  d-flex justify-content-end">
-                                                                                        <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
-                                                                                            <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
-                                                                                        </button>
-                                                                                    </div> -->
+                                                                                            <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
+                                                                                                <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
+                                                                                            </button>
+                                                                                        </div> -->
                     </div>
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover text-sm">
@@ -464,8 +464,12 @@
                                     <div class="col-md-12">
                                         <label for="" class="mb-1">Medical Record Status</label>
                                         <select name="status" id="" class="form-select">
-                                            <option value="0" {{ old('status', $record->status) == 0 ? 'selected' : '' }}>Ongoing</option>
-                                            <option value="1" {{ old('status', $record->status) == 1 ? 'selected' : '' }}>Completed</option>
+                                            <option value="0"
+                                                {{ old('status', $record->status) == 0 ? 'selected' : '' }}>Ongoing
+                                            </option>
+                                            <option value="1"
+                                                {{ old('status', $record->status) == 1 ? 'selected' : '' }}>Completed
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -579,17 +583,17 @@
                                                 <span>Examination</span>
                                             </div>
                                             <!--
-                                                                                                            --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                                                                                            Heart Rate (BPM):
-                                                                                                            Respiration Rate (BRPM):
-                                                                                                            Weight (KG):
-                                                                                                            Length (CM):
-                                                                                                            CRT:
-                                                                                                            BCS:
-                                                                                                            Lymph Nodes:
-                                                                                                            Palpebral Reflex:
-                                                                                                            Temperature:
-                                                                                                        -->
+                                                                                                                --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                                                                                Heart Rate (BPM):
+                                                                                                                Respiration Rate (BRPM):
+                                                                                                                Weight (KG):
+                                                                                                                Length (CM):
+                                                                                                                CRT:
+                                                                                                                BCS:
+                                                                                                                Lymph Nodes:
+                                                                                                                Palpebral Reflex:
+                                                                                                                Temperature:
+                                                                                                            -->
                                             <div class="card-body">
                                                 <div class="row gy-5 mb-5">
                                                     <div class="col-md-4">
@@ -1569,10 +1573,11 @@
                                                     data-bs-toggle="modal" data-bs-target="#editMedicalRecord"><i
                                                         class="fa-solid fa-pen-to-square me-2"></i>Edit Record</a>
                                                 <hr class="mt-0">
-                                                <a class="dropdown-item text-danger" href="#" type="button"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#archiveMedicalRecordModal"><i
+                                                <a class="dropdown-item text-danger" href="javascript:void(0)"
+                                                    type="button" id="archiveMedicalRecordBtn"><i
                                                         class="fa-solid fa-box-archive me-2"></i>Archive Record</a>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -1586,11 +1591,29 @@
                                             </div>
                                             <div class="col-md-6">
                                                 Status
-                                                <p
+                                                <p id="statusText"
                                                     class="text-{{ $record->status == 0 ? 'warning' : ($record->status == 1 ? 'success' : 'danger') }}">
                                                     {{ $record->status == 0 ? 'Ongoing' : ($record->status == 1 ? 'Completed' : 'Archived') }}
                                                 </p>
                                             </div>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $("#archiveMedicalRecordBtn").click(function() {
+                                                        $.ajax({
+                                                            url: "{{ route('soap.archive.record', $record->id) }}",
+                                                            type: "POST",
+                                                            data: {
+                                                                _token: '{{ csrf_token() }}'
+                                                            },
+                                                            success: function(response) {
+                                                                if (response.success) {
+                                                                    $("#statusText").html('<span class="text-danger">Archived</span>');
+                                                                }
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            </script>
                                             <div class="col-md-12">
                                                 Subject
                                                 <p class="text-primary">{{ $record->subject }}</p>
