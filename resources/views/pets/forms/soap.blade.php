@@ -299,10 +299,10 @@
                             <input type="text" class="form-control mb-4" placeholder="Enter Service">
                         </div>
                         <!-- <div class="col-md-2  d-flex justify-content-end">
-                                                                            <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
-                                                                                <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
-                                                                            </button>
-                                                                        </div> -->
+                                                                                    <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
+                                                                                        <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
+                                                                                    </button>
+                                                                                </div> -->
                     </div>
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover text-sm">
@@ -569,17 +569,17 @@
                                                 <span>Examination</span>
                                             </div>
                                             <!--
-                                                                                                --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                                                                                Heart Rate (BPM):
-                                                                                                Respiration Rate (BRPM):
-                                                                                                Weight (KG):
-                                                                                                Length (CM):
-                                                                                                CRT:
-                                                                                                BCS:
-                                                                                                Lymph Nodes:
-                                                                                                Palpebral Reflex:
-                                                                                                Temperature:
-                                                                                            -->
+                                                                                                        --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                                                                        Heart Rate (BPM):
+                                                                                                        Respiration Rate (BRPM):
+                                                                                                        Weight (KG):
+                                                                                                        Length (CM):
+                                                                                                        CRT:
+                                                                                                        BCS:
+                                                                                                        Lymph Nodes:
+                                                                                                        Palpebral Reflex:
+                                                                                                        Temperature:
+                                                                                                    -->
                                             <div class="card-body">
                                                 <div class="row gy-5 mb-5">
                                                     <div class="col-md-4">
@@ -1265,14 +1265,15 @@
                                                 <div class="card-body" id="procedures">
                                                     @if (isset($procedures))
                                                         @php
-                                                            $index = 0;
+                                                            $procedure_index = 0;
                                                         @endphp
                                                         @foreach ($procedures as $procedure)
                                                             <div class="row mb-2 procedure-entry">
+                                                                <input type="hidden" name="procedures[{{ $procedure_index }}][procedure_id]" value="{{ $procedure->id }}">
                                                                 <div class="col-md-6">
                                                                     <select class="form-control proc-name select-proc"
                                                                         style="width: 100%;"
-                                                                        name="procedures[0][services]">
+                                                                        name="procedures[{{ $procedure_index }}][services]">
                                                                         <option value="">Select Procedure</option>
                                                                         @foreach ($services as $service)
                                                                             <option value="{{ $service->id }}"
@@ -1285,7 +1286,7 @@
                                                                     <input type="text"
                                                                         class="form-control proc-outcome"
                                                                         placeholder="Outcome"
-                                                                        name="procedures[0][outcome]"
+                                                                        name="procedures[{{$procedure_index}}][outcome]"
                                                                         value="{{ $procedure->outcome ?? '' }}">
                                                                 </div>
                                                                 <div class="col-md-1">
@@ -1317,6 +1318,9 @@
                                                                 </script>
 
                                                             </div>
+                                                            @php
+                                                                $procedure_index += 1;
+                                                            @endphp
                                                         @endforeach
                                                     @endif
                                                     <div class="row mb-2 procedure-entry">
@@ -1344,9 +1348,11 @@
                                                 <div class="card-header">Treatment Notes</div>
                                                 <div class="card-body">
                                                     <div id="treatmentnotes" class="mb-3" style="height: 200px;">
+                                                        {!! $record->treatment_notes !!}
 
                                                     </div>
-                                                    <textarea rows="3" class="mb-3 d-none" name="treatmentnotes" id="treatmentnotes">
+                                                    <textarea rows="3" class="mb-3 d-none" name="treatment_notes" id="treatmentnotesTextArea">
+                                                    {!! $record->treatment_notes !!}
 
                                                 </textarea>
                                                 </div>
@@ -1379,13 +1385,93 @@
                                 <div id="prescriptionSection" style="display: none">
                                     <div class="col-md-12">
                                         <div class="card shadow-none">
-                                            <div class="card-header">Prescription</div>
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Prescription</span>
+                                                <div class="col-md-1 d-flex align-items-center">
+                                                    <a href="#" class="btn btn-primary add-med">+</a>
+                                                </div>
+                                            </div>
                                             <div class="card-body">
                                                 <div class="prescriptions">
+                                                    @if (isset($prescriptions))
+                                                        @foreach ($prescriptions as $index => $prescription)
+                                                            @php
+                                                                $prescription_index = 0;
+                                                            @endphp
+                                                            <div class="row mb-2 gy-2 prescription-entry gx-2">
+                                                                <!-- Medication Name -->
+                                                                <input type="hidden" name="prescriptions[{{ $prescription_index }}][prescription_id]" value="{{ $prescription->id }}">
+                                                                <div class="col-md-5">
+                                                                    <select class="form-control presc-name select-med"
+                                                                        name="prescriptions[{{ $prescription_index }}][medications]">
+                                                                        <option value=""></option>
+                                                                        @foreach ($medications as $medication)
+                                                                            <option value="{{ $medication->id }}"
+                                                                                {{ $prescription->medication_id == $medication->id ? 'selected' : '' }}>
+                                                                                {{ $medication->product_name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <!-- Dosage -->
+                                                                <div class="col-md-2">
+                                                                    <input type="text"
+                                                                        class="form-control presc-dosage"
+                                                                        placeholder="Dosage"
+                                                                        name="prescriptions[{{ $prescription_index }}][dosage]"
+                                                                        value="{{ $prescription->dosage }}">
+                                                                </div>
+                                                                <!-- Frequency -->
+                                                                <div class="col-md-2">
+                                                                    <input type="text"
+                                                                        class="form-control presc-frequency"
+                                                                        placeholder="Frequency"
+                                                                        name="prescriptions[{{ $prescription_index }}][frequency]"
+                                                                        value="{{ $prescription->frequency }}">
+                                                                </div>
+                                                                <!-- Duration -->
+                                                                <div class="col-md-2">
+                                                                    <input type="text"
+                                                                        class="form-control presc-duration"
+                                                                        placeholder="Duration"
+                                                                        name="prescriptions[{{ $prescription_index }}][duration]"
+                                                                        value="{{ $prescription->duration }}">
+                                                                </div>
+                                                                <div class="col-md-1 d-flex align-items-center">
+                                                                    <a href="#" class="btn btn-danger remove-presc" data-id="{{ $prescription->id }}">-</a>
+                                                                </div>
+
+                                                                <script>
+                                                                    $(document).on('click', '.remove-presc', function(e) {
+                                                                        e.preventDefault();
+                                                                        let id = $(this).data('id');
+
+                                                                        $.ajax({
+                                                                            method: 'DELETE',
+                                                                            url: '{{ route('pet.prescription.delete') }}',
+                                                                            data: {
+                                                                                '_token': '{{ csrf_token() }}',
+                                                                                'id': id
+                                                                            }
+                                                                        }).done(function(response) {
+                                                                            if (response.success) {
+                                                                                $(`.prescription-entry[data-id=${id}]`).remove();
+                                                                            }
+                                                                        });
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                            @php
+                                                                $prescription_index += 1;
+                                                            @endphp
+                                                        @endforeach
+                                                    @endif
+
                                                     <div class="row mb-2 gy-2 prescription-entry gx-2">
                                                         <!-- Medication Name -->
                                                         <div class="col-md-5">
-                                                            <select class="form-control presc-name select-med">
+                                                            <select class="form-control presc-name select-med"
+                                                                name="prescriptions[0][meds]">
                                                                 <option value=""></option>
                                                                 @foreach ($medications as $medication)
                                                                     <option value="{{ $medication->id }}">
@@ -1396,32 +1482,30 @@
                                                         <!-- Dosage -->
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control presc-dosage"
-                                                                placeholder="Dosage">
+                                                                placeholder="Dosage" name="prescriptions[0][dosage]">
                                                         </div>
                                                         <!-- Frequency -->
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control presc-frequency"
-                                                                placeholder="Frequency">
+                                                                placeholder="Frequency"
+                                                                name="prescriptions[0][frequency]">
                                                         </div>
                                                         <!-- Duration -->
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control presc-duration"
-                                                                placeholder="Duration">
+                                                                placeholder="Duration" name="prescriptions[0][duration]">
                                                         </div>
-                                                        <!-- Add Button -->
-                                                        <div class="col-md-1 d-flex align-items-center">
-                                                            <a href="#" class="btn btn-primary add-med">+</a>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="othernotes mt-4">
                                                     <label for="" class="text-primary mb-2">Notes:</label>
                                                     <div id="prescription" class="mb-3" style="height: 400px;">
-                                                        {!! $record->prescription !!}
+                                                        {!! $record->prescription_notes !!}
                                                     </div>
                                                 </div>
-                                                <textarea rows="3" class="mb-3 d-none" name="prescription" id="prescriptionTextArea">
-                                                    {!! $record->prescription !!}
+                                                <textarea rows="3" class="mb-3 d-none" name="prescription_notes" id="prescriptionTextArea">
+                                                    {!! $record->prescription_notes !!}
                                         </textarea>
                                             </div>
                                         </div>
@@ -1671,12 +1755,12 @@
         });
 
         treatmentnotes.on('text-change', function() {
-            document.getElementById('treatmentnotes').value = treatmentnotes.root.innerHTML;
+            document.getElementById('treatmentnotesTextArea').value = treatmentnotes.root.innerHTML;
         });
 
         // Ensure textarea is updated before form submission
         document.querySelector("form").addEventListener("submit", function() {
-            document.getElementById('treatmentnotes').value = treatmentnotes.root.innerHTML;
+            document.getElementById('treatmentnotesTextArea').value = treatmentnotes.root.innerHTML;
         });
 
         var diagnosis = new Quill('#diagnosis', {
@@ -1851,6 +1935,8 @@
         $(document).ready(function() {
             // Add new prescription entry
             $(document).on('click', '.add-med', function(event) {
+                let prescIndex = $('.prescriptions .prescription-entry').length;
+
                 event.preventDefault();
 
                 let lastEntry = $('.prescriptions .prescription-entry').last();
@@ -1864,20 +1950,23 @@
                     $('.prescriptions').append(`
                     <div class="row mb-2 gy-2 prescription-entry gx-2">
                         <div class="col-md-5">
-                            <select class="form-control presc-name select-presc">
+                            <select class="form-control presc-name select-presc" name="prescriptions[${prescIndex}][meds]">
                                 @foreach ($medications as $medication)
                                     <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control presc-dosage" placeholder="Dosage">
+                            <input type="text" class="form-control presc-dosage" name="prescriptions[${prescIndex}][dosage]"
+                                placeholder="Dosage">
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control presc-frequency" placeholder="Frequency">
+                            <input type="text" class="form-control presc-frequency" name="prescriptions[${prescIndex}][frequency]"
+                                placeholder="Frequency">
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control presc-duration" placeholder="Duration">
+                            <input type="text" class="form-control presc-duration" name="prescriptions[${prescIndex}][duration]"
+                                placeholder="Duration">
                         </div>
                         <div class="col-md-1 d-flex align-items-center">
                             <a href="#" class="btn btn-danger remove-presc">-</a>
@@ -1939,11 +2028,11 @@
                                 <input type="text" class="form-control med-frequency" placeholder="Frequency" name='medications[${medicationIndex}][frequency]'>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-control form-select med-type" name='medications[${medicationIndex}][type]'>
+                                <select class="form-control form-select med-type" name='medications[${medicationIndex}][medication_type]'>
                                     <option value="">Medication Type</option>
                                     <option>Oral</option>
-                                    <option>IV</option>
-                                    <option>IM</option>
+                                    <option>IV (Intravenous)</option>
+                                    <option>IM (Intramuscular)</option>
                                 </select>
                             </div>
                             <div class="col-md-1">

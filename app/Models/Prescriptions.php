@@ -8,10 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Prescriptions extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'treatment',
-        'dose'
+        'recordID',
+        'medication_id',
+        'dosage',
+        'frequency',
+        'duration',
     ];
 
+    public function record()
+    {
+        return $this->belongsTo(PetRecords::class, 'recordID', 'id');
+    }
+
+    public function medication()
+    {
+        return $this->belongsTo(Products::class, 'medication_id', 'id');
+    }
 
 }
+

@@ -11,6 +11,7 @@ use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
+use App\Models\Prescriptions;
 use App\Models\ProcedureRecords;
 use App\Models\Products;
 use App\Models\Services;
@@ -91,9 +92,11 @@ class SoapController extends Controller
         $vets = Doctor::all();
         $services = Services::where('service_type', 'services')->get();
         $procedures = ProcedureRecords::where('recordID', request('recordID'))->get();
+        $prescriptions = Prescriptions::where('recordID', request('recordID'))->get();
+
 
         // dd($recordTreatment);
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures, 'prescriptions' => $prescriptions]);
     }
 
     /**
@@ -145,9 +148,9 @@ class SoapController extends Controller
 
     public function deletePrescription(Request $request)
     {
-        // $id = request('id');
-        // Prescriptions::where('id', $id)->delete();
-        // return response()->json(['success' => true]);
+        $id = request('id');
+        Prescriptions::where('id', $id)->delete();
+        return response()->json(['success' => true]);
     }
 
     public function update(Request $request, int $id, int $recordID)
@@ -177,8 +180,12 @@ class SoapController extends Controller
             'medications' => 'nullable|array',
             'procedures' => 'nullable|array',
             'remarks' => 'nullable|string',
-            'prescription' => 'nullable|string',
+            'prescriptions' => 'nullable|array',
+            'treatment_notes' => 'nullable|string',
+            'prescription_notes' => 'nullable|string',
         ]);
+
+        // dd($validatedData);
 
         // dd($request->all());
 
@@ -222,12 +229,12 @@ class SoapController extends Controller
 
             if (isset($validatedData['medications'])) {
                 foreach ($validatedData['medications'] as $medication) {
-                    if (array_values($medication) === array_filter(array_values($medication), 'is_null')) {
+                    if (in_array(null, $medication, true) || in_array('', $medication, true)) {
                         continue;
                     }
                     if (array_key_exists('medication_id', $medication)) {
                         // Update existing medication
-                        $medicationModel = Medications::updateOrCreate(
+                        Medications::updateOrCreate(
                             ['id' => $medication['medication_id']],
                             [
                                 'recordID' => $recordID,
@@ -239,7 +246,7 @@ class SoapController extends Controller
                         );
                     } else {
                         // Create new medication
-                        $medicationModel = Medications::create([
+                        Medications::create([
                             'recordID' => $recordID,
                             'productID' => $medication['meds'],
                             'dosage' => $medication['dosage'],
@@ -251,7 +258,7 @@ class SoapController extends Controller
             }
             if (isset($validatedData['procedures'])) {
                 foreach ($validatedData['procedures'] as $procedure) {
-                    if (array_values($procedure) === array_filter(array_values($procedure), 'is_null')) {
+                    if (in_array(null, $procedure, true) || in_array('', $procedure, true)) {
                         continue;
                     }
                     if (array_key_exists('procedure_id', $procedure)) {
@@ -267,6 +274,33 @@ class SoapController extends Controller
                             'recordID' => $recordID,
                             'serviceID' => $procedure['services'],
                             'outcome' => $procedure['outcome'],
+                        ]);
+                    }
+                }
+            }
+            if (isset($validatedData['prescriptions'])) {
+                foreach ($validatedData['prescriptions'] as $prescription) {
+                    if (in_array(null, $prescription, true) || in_array('', $prescription, true)) {
+                        continue;
+                    }
+
+                    if (array_key_exists('prescription_id', $prescription)) {
+                        // Update existing prescription
+                        Prescriptions::where('id', $prescription['prescription_id'])->update([
+                            'recordID' => $recordID,
+                            'medication_id' => $prescription['meds'],
+                            'dosage' => $prescription['dosage'],
+                            'frequency' => $prescription['frequency'],
+                            'duration' => $prescription['duration'],
+                        ]);
+                    } else {
+                        // Create new prescription
+                        Prescriptions::create([
+                            'recordID' => $recordID,
+                            'medication_id' => $prescription['meds'],
+                            'dosage' => $prescription['dosage'],
+                            'frequency' => $prescription['frequency'],
+                            'duration' => $prescription['duration'],
                         ]);
                     }
                 }
