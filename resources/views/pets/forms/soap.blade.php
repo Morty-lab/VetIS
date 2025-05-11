@@ -299,10 +299,10 @@
                             <input type="text" class="form-control mb-4" placeholder="Enter Service">
                         </div>
                         <!-- <div class="col-md-2  d-flex justify-content-end">
-                                                            <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
-                                                                <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
-                                                            </button>
-                                                        </div> -->
+                                                                <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
+                                                                    <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
+                                                                </button>
+                                                            </div> -->
                     </div>
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover text-sm">
@@ -569,17 +569,17 @@
                                                 <span>Examination</span>
                                             </div>
                                             <!--
-                                                                                --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                                                                Heart Rate (BPM):
-                                                                                Respiration Rate (BRPM):
-                                                                                Weight (KG):
-                                                                                Length (CM):
-                                                                                CRT:
-                                                                                BCS:
-                                                                                Lymph Nodes:
-                                                                                Palpebral Reflex:
-                                                                                Temperature:
-                                                                            -->
+                                                                                    --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                                                    Heart Rate (BPM):
+                                                                                    Respiration Rate (BRPM):
+                                                                                    Weight (KG):
+                                                                                    Length (CM):
+                                                                                    CRT:
+                                                                                    BCS:
+                                                                                    Lymph Nodes:
+                                                                                    Palpebral Reflex:
+                                                                                    Temperature:
+                                                                                -->
                                             <div class="card-body">
                                                 <div class="row gy-5 mb-5">
                                                     <div class="col-md-4">
@@ -1134,7 +1134,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body" id="medications">
-                                                    @if ($recordTreatment != null)
+                                                    @if (!empty($recordTreatment))
                                                         @php
                                                             $index = 1;
                                                         @endphp
@@ -1183,14 +1183,42 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-md-1 d-flex align-items-center">
-                                                                    <a href="#"
-                                                                        class="btn btn-danger remove-med">-</a>
+                                                                    <a href="#" class="btn btn-danger remove-med"
+                                                                        data-id="{{ $treatment->id }}">-</a>
                                                                 </div>
+
+                                                                <script>
+                                                                    document.querySelectorAll('.remove-med').forEach(button => {
+                                                                        button.addEventListener('click', (e) => {
+                                                                            e.preventDefault();
+                                                                            console.log(e.target.dataset.id)
+                                                                            fetch("{{ route('pet.treatment.delete') }}?id=" + e.target.dataset.id, {
+                                                                                    method: 'DELETE',
+                                                                                    headers: {
+                                                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                                                    }
+                                                                                })
+                                                                                .then((response) => {
+                                                                                    if (response.ok) {
+                                                                                        e.target.parentElement.parentElement.remove();
+                                                                                    }
+
+                                                                                    console.log("delete success")
+                                                                                })
+                                                                                .catch((error) => {
+                                                                                    console.log(error);
+                                                                                });
+                                                                        });
+                                                                    });
+                                                                </script>
                                                             </div>
                                                             @php
                                                                 $index += 1;
                                                             @endphp
                                                         @endforeach
+
+
+
                                                     @endif
                                                     <div class="row mb-2 gy-2 medication-entry gx-2">
                                                         <div class="col-md-4">
@@ -1209,19 +1237,24 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control med-frequency"
-                                                                placeholder="Frequency" name="medications[0][frequency]">
+                                                                placeholder="Frequency"
+                                                                name="medications[0][frequency]">
                                                         </div>
                                                         <div class="col-md-3">
                                                             <select class="form-control form-select med-type"
                                                                 name="medications[0][medication_type]">
-                                                                <option value=""></option>
+                                                                <option value=""> </option>
                                                                 <option>Oral</option>
                                                                 <option>IV (Intravenous)</option>
                                                                 <option>IM (Intramuscular)</option>
                                                             </select>
                                                         </div>
+                                                        {{-- <div class="col-md-1">
+                                                            <a href="" class="btn btn-danger remove-med">-</a>
+                                                        </div> --}}
 
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>

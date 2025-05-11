@@ -88,6 +88,7 @@ class SoapController extends Controller
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
 
+        // dd($recordTreatment);
         return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment]);
     }
 
@@ -123,6 +124,12 @@ class SoapController extends Controller
         }
 
         return $data;
+    }
+
+    public function deleteTreatment(Request $request){
+        $id = request('id');
+        Medications::where('id', $id)->delete();
+        return response()->json(['success' => true]);
     }
     public function update(Request $request, int $id, int $recordID)
     {
