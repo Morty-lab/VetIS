@@ -11,7 +11,10 @@ use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
+use App\Models\Prescriptions;
+use App\Models\ProcedureRecords;
 use App\Models\Products;
+use App\Models\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -87,8 +90,13 @@ class SoapController extends Controller
         $pet = Pets::where('id', request('id'))->first(); //Pets::find(request('id'));
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
+        $services = Services::where('service_type', 'services')->get();
+        $procedures = ProcedureRecords::where('recordID', request('recordID'))->get();
+        $prescriptions = Prescriptions::where('recordID', request('recordID'))->get();
 
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment]);
+
+        // dd($recordTreatment);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures, 'prescriptions' => $prescriptions]);
     }
 
     /**
@@ -124,10 +132,34 @@ class SoapController extends Controller
 
         return $data;
     }
+
+    public function deleteTreatment(Request $request)
+    {
+        $id = request('id');
+        Medications::where('id', $id)->delete();
+        return response()->json(['success' => true]);
+    }
+    public function deleteProcedure(Request $request)
+    {
+        $id = request('id');
+        ProcedureRecords::where('id', $id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function deletePrescription(Request $request)
+    {
+        $id = request('id');
+        Prescriptions::where('id', $id)->delete();
+        return response()->json(['success' => true]);
+    }
+
     public function update(Request $request, int $id, int $recordID)
     {
         // Validate the request data
         $validatedData = $request->validate([
+            'subject' => 'required|string|max:255',
+            'doctorID' => 'required|integer|exists:doctors,id',
+            'status' => 'required|integer|in:0,1',
             'complaint' => 'nullable|string',
             'temperature' => 'nullable|string',
             'heart_rate' => 'nullable|string',
@@ -149,10 +181,14 @@ class SoapController extends Controller
             'neurological_system' => 'nullable|array',
             'diagnosis' => 'nullable|string',
             'medications' => 'nullable|array',
-            'procedure_given' => 'nullable|string',
+            'procedures' => 'nullable|array',
             'remarks' => 'nullable|string',
-            'prescription' => 'nullable|string',
+            'prescriptions' => 'nullable|array',
+            'treatment_notes' => 'nullable|string',
+            'prescription_notes' => 'nullable|string',
         ]);
+
+        // dd($validatedData);
 
         // dd($request->all());
 
@@ -196,12 +232,12 @@ class SoapController extends Controller
 
             if (isset($validatedData['medications'])) {
                 foreach ($validatedData['medications'] as $medication) {
-                    if (array_values($medication) === array_filter(array_values($medication), 'is_null')) {
+                    if (in_array(null, $medication, true) || in_array('', $medication, true)) {
                         continue;
                     }
                     if (array_key_exists('medication_id', $medication)) {
                         // Update existing medication
-                        $medicationModel = Medications::updateOrCreate(
+                        Medications::updateOrCreate(
                             ['id' => $medication['medication_id']],
                             [
                                 'recordID' => $recordID,
@@ -213,12 +249,61 @@ class SoapController extends Controller
                         );
                     } else {
                         // Create new medication
-                        $medicationModel = Medications::create([
+                        Medications::create([
                             'recordID' => $recordID,
                             'productID' => $medication['meds'],
                             'dosage' => $medication['dosage'],
                             'frequency' => $medication['frequency'],
                             'medication_type' => $medication['medication_type'],
+                        ]);
+                    }
+                }
+            }
+            if (isset($validatedData['procedures'])) {
+                foreach ($validatedData['procedures'] as $procedure) {
+                    if (in_array(null, $procedure, true) || in_array('', $procedure, true)) {
+                        continue;
+                    }
+                    if (array_key_exists('procedure_id', $procedure)) {
+                        // Update existing procedure
+                        ProcedureRecords::where('id', $procedure['procedure_id'])->update([
+                            'recordID' => $recordID,
+                            'serviceID' => $procedure['services'],
+                            'outcome' => $procedure['outcome'],
+                        ]);
+                    } else {
+                        // Create new procedure
+                        ProcedureRecords::create([
+                            'recordID' => $recordID,
+                            'serviceID' => $procedure['services'],
+                            'outcome' => $procedure['outcome'],
+                        ]);
+                    }
+                }
+            }
+            if (isset($validatedData['prescriptions'])) {
+                foreach ($validatedData['prescriptions'] as $prescription) {
+                    if (in_array(null, $prescription, true) || in_array('', $prescription, true)) {
+                        continue;
+                    }
+
+                    if (array_key_exists('prescription_id', $prescription)) {
+                        // Update existing prescription
+                        Prescriptions::where('id', $prescription['prescription_id'])->update([
+                            'recordID' => $recordID,
+                            'medication_id' => $prescription['meds'],
+                            'dosage' => $prescription['dosage'],
+                            'frequency' => $prescription['frequency'],
+                            'duration' => $prescription['duration'],
+                        ]);
+                    } else {
+                        // Create new prescription
+                        Prescriptions::create([
+                            'recordID' => $recordID,
+                            'medication_id' => $prescription['meds'],
+                            'dosage' => $prescription['dosage'],
+                            'frequency' => $prescription['frequency'],
+                            'duration' => $prescription['duration'],
                         ]);
                     }
                 }
@@ -239,6 +324,37 @@ class SoapController extends Controller
     }
 
 
+
+
+    public function archive(int $id)
+    {
+        $record = PetRecords::findOrFail($id);
+        return view('pets.forms.soap-archive', compact('record'));
+    }
+
+    public function archiveRecord(int $id)
+    {
+        try {
+            $record = PetRecords::where('id', $id);
+            $record->update(['status' => 2]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
+    }
+
+    // public function unarchiveRecord(int $id)
+    // {
+    //     try {
+    //         $record = PetRecords::findOrFail($id);
+    //         $record->update(['archived' => false]);
+    //         return redirect()->route('soap.view', ['id' => $record->pet_id, 'recordID' => $id])
+    //             ->with('success', 'Record unarchived successfully.');
+    //     } catch (\Exception $e) {
+    //         return redirect()->route('soap.view', ['id' => $record->pet_id, 'recordID' => $id])
+    //             ->with('error', 'Failed to unarchive record: ' . $e->getMessage());
+    //     }
+    // }
 
     /**
      * Remove the specified resource from storage.

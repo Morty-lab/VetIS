@@ -22,7 +22,8 @@ class PetRecords extends Model
         'medication_given',
         'procedure_given',
         'remarks',
-        'prescription',
+        'prescription_notes',
+        'treatment_notes',
         'status',
     ];
 

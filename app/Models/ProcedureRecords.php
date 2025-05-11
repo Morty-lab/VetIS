@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Prescriptions extends Model
+class ProcedureRecords extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'recordID',
-        'medication_id',
-        'dosage',
-        'frequency',
-        'duration',
+        'serviceID',
+        'outcome',
     ];
 
     public function record()
@@ -22,10 +20,9 @@ class Prescriptions extends Model
         return $this->belongsTo(PetRecords::class, 'recordID', 'id');
     }
 
-    public function medication()
+    public function service()
     {
-        return $this->belongsTo(Products::class, 'medication_id', 'id');
+        return $this->belongsTo(Services::class, 'serviceID', 'id');
     }
-
 }
 
