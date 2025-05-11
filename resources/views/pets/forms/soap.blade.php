@@ -41,60 +41,7 @@
     </div>
 
 
-    {{--  Edit Medical Record Modal  --}}
-    <div class="modal fade " id="editMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="editMedicalRecord"
-        aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form action="" method="post">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Medical Record for <span
-                                class="text-primary">{{ $pet->pet_name }}</span></h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row gy-2">
-                            <div class="col-md-12">
-                                <label for="" class="mb-1">Subject</label>
-                                <input type="text" name="" id=""
-                                    placeholder="Specify the purpose of this record" class="form-control">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="mb-1">Attending Veterinarian</label>
-                                <select name="" id="" class="form-select">
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="mb-1">Date of Visit</label>
-                                <div class="input-group input-group-joined">
-                                    <input class="form-control" id="inputBirthdate" type="date" value=""
-                                        name="pet_birthdate" max="" placeholder="Select a Date" />
-                                    <span class="input-group-text">
-                                        <i data-feather="calendar"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <hr class="mt-3 mb-2">
-                            <div class="col-md-12">
-                                <label for="" class="mb-1">Medical Record Status</label>
-                                <select name="" id="" class="form-select">
-                                    <option value="">Ongoing</option>
-                                    <option value="">Completed</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" type="submit" id="addVaccinationBtn">Edit</button>
-                    </div>
-                </form>
 
-            </div>
-        </div>
-    </div>
 
     <!-- Attending Veterinarian -->
     <div class="modal fade" id="veterinarianListModal" tabindex="-1" role="dialog"
@@ -154,8 +101,8 @@
         </div>
     </div>
     <!-- Owner Modal -->
-    <div class="modal fade" id="petOwnerListModal" tabindex="-1" role="dialog"
-        aria-labelledby="myExtraLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="petOwnerListModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+        style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -299,10 +246,10 @@
                             <input type="text" class="form-control mb-4" placeholder="Enter Service">
                         </div>
                         <!-- <div class="col-md-2  d-flex justify-content-end">
-                                                                                    <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
-                                                                                        <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
-                                                                                    </button>
-                                                                                </div> -->
+                                                                                        <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
+                                                                                            <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
+                                                                                        </button>
+                                                                                    </div> -->
                     </div>
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover text-sm">
@@ -470,6 +417,69 @@
             <form action="{{ route('soap.update', ['id' => $pet->id, 'recordID' => $record->id]) }}" method="post"
                 id="updateForm">
                 @csrf
+                {{--  Edit Medical Record Modal  --}}
+                <div class="modal fade " id="editMedicalRecord" tabindex="-1" role="dialog"
+                    aria-labelledby="editMedicalRecord" aria-hidden="true">
+                    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            {{-- <form {{ route('soap.update', ['id' => $pet->id, 'recordID' => $record->id]) }}" method="post">
+                    @csrf --}}
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Medical Record for <span
+                                        class="text-primary">{{ $pet->pet_name }}</span></h5>
+                                <button class="btn-close" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row gy-2">
+                                    <div class="col-md-12">
+                                        <label for="" class="mb-1">Subject</label>
+                                        <input type="text" name="subject" id=""
+                                            placeholder="Specify the purpose of this record" class="form-control"
+                                            value="{{ $record->subject }}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="" class="mb-1">Attending Veterinarian</label>
+                                        <select name="doctorID" id="" class="form-select">
+                                            <option value="">Select a Veterinarian</option>
+                                            @foreach ($vets as $vet)
+                                                <option value="{{ $vet->id }}"
+                                                    {{ old('doctorID', $record->doctorID) == $vet->id ? 'selected' : '' }}>
+                                                    Dr. {{ $vet->firstname . ' ' . $vet->lastname }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    {{-- <div class="col-md-12">
+                                <label for="" class="mb-1">Date of Visit</label>
+                                <div class="input-group input-group-joined">
+                                    <input class="form-control" id="inputBirthdate" type="date" value=""
+                                        name="pet_birthdate" max="" placeholder="Select a Date" />
+                                    <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
+                            </div> --}}
+                                    <hr class="mt-3 mb-2">
+                                    <div class="col-md-12">
+                                        <label for="" class="mb-1">Medical Record Status</label>
+                                        <select name="status" id="" class="form-select">
+                                            <option value="0" {{ old('status', $record->status) == 0 ? 'selected' : '' }}>Ongoing</option>
+                                            <option value="1" {{ old('status', $record->status) == 1 ? 'selected' : '' }}>Completed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-primary" type="button"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Edit</button>
+                            </div>
+                            {{-- </form> --}}
+
+                        </div>
+                    </div>
+                </div>
                 <div class="row gy-2">
                     <div class="col-md-8">
                         <div class="card mb-5 shadow-none">
@@ -569,17 +579,17 @@
                                                 <span>Examination</span>
                                             </div>
                                             <!--
-                                                                                                        --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                                                                                        Heart Rate (BPM):
-                                                                                                        Respiration Rate (BRPM):
-                                                                                                        Weight (KG):
-                                                                                                        Length (CM):
-                                                                                                        CRT:
-                                                                                                        BCS:
-                                                                                                        Lymph Nodes:
-                                                                                                        Palpebral Reflex:
-                                                                                                        Temperature:
-                                                                                                    -->
+                                                                                                            --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                                                                            Heart Rate (BPM):
+                                                                                                            Respiration Rate (BRPM):
+                                                                                                            Weight (KG):
+                                                                                                            Length (CM):
+                                                                                                            CRT:
+                                                                                                            BCS:
+                                                                                                            Lymph Nodes:
+                                                                                                            Palpebral Reflex:
+                                                                                                            Temperature:
+                                                                                                        -->
                                             <div class="card-body">
                                                 <div class="row gy-5 mb-5">
                                                     <div class="col-md-4">
@@ -1269,7 +1279,9 @@
                                                         @endphp
                                                         @foreach ($procedures as $procedure)
                                                             <div class="row mb-2 procedure-entry">
-                                                                <input type="hidden" name="procedures[{{ $procedure_index }}][procedure_id]" value="{{ $procedure->id }}">
+                                                                <input type="hidden"
+                                                                    name="procedures[{{ $procedure_index }}][procedure_id]"
+                                                                    value="{{ $procedure->id }}">
                                                                 <div class="col-md-6">
                                                                     <select class="form-control proc-name select-proc"
                                                                         style="width: 100%;"
@@ -1286,7 +1298,7 @@
                                                                     <input type="text"
                                                                         class="form-control proc-outcome"
                                                                         placeholder="Outcome"
-                                                                        name="procedures[{{$procedure_index}}][outcome]"
+                                                                        name="procedures[{{ $procedure_index }}][outcome]"
                                                                         value="{{ $procedure->outcome ?? '' }}">
                                                                 </div>
                                                                 <div class="col-md-1">
@@ -1400,7 +1412,9 @@
                                                             @endphp
                                                             <div class="row mb-2 gy-2 prescription-entry gx-2">
                                                                 <!-- Medication Name -->
-                                                                <input type="hidden" name="prescriptions[{{ $prescription_index }}][prescription_id]" value="{{ $prescription->id }}">
+                                                                <input type="hidden"
+                                                                    name="prescriptions[{{ $prescription_index }}][prescription_id]"
+                                                                    value="{{ $prescription->id }}">
                                                                 <div class="col-md-5">
                                                                     <select class="form-control presc-name select-med"
                                                                         name="prescriptions[{{ $prescription_index }}][medications]">
@@ -1438,7 +1452,8 @@
                                                                         value="{{ $prescription->duration }}">
                                                                 </div>
                                                                 <div class="col-md-1 d-flex align-items-center">
-                                                                    <a href="#" class="btn btn-danger remove-presc" data-id="{{ $prescription->id }}">-</a>
+                                                                    <a href="#" class="btn btn-danger remove-presc"
+                                                                        data-id="{{ $prescription->id }}">-</a>
                                                                 </div>
 
                                                                 <script>

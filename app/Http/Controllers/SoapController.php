@@ -157,6 +157,9 @@ class SoapController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
+            'subject' => 'required|string|max:255',
+            'doctorID' => 'required|integer|exists:doctors,id',
+            'status' => 'required|integer|in:0,1',
             'complaint' => 'nullable|string',
             'temperature' => 'nullable|string',
             'heart_rate' => 'nullable|string',
