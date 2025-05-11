@@ -395,6 +395,17 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        Schema::create('procedure_records', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("recordID");
+            $table->unsignedBigInteger("serviceID");
+            $table->string("outcome")->nullable();
+            $table->foreign('recordID')->references('id')->on('pet_records')->onDelete('cascade');
+            $table->foreign('serviceID')->references('id')->on('services')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('visible_to');

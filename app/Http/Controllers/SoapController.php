@@ -11,7 +11,9 @@ use App\Models\PetDiagnosis;
 use App\Models\PetPlan;
 use App\Models\PetRecords;
 use App\Models\Pets;
+use App\Models\ProcedureRecords;
 use App\Models\Products;
+use App\Models\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -87,9 +89,11 @@ class SoapController extends Controller
         $pet = Pets::where('id', request('id'))->first(); //Pets::find(request('id'));
         $owner = Clients::find($pet->owner_ID);
         $vets = Doctor::all();
+        $services = Services::where('service_type', 'services')->get();
+        $procedures = ProcedureRecords::where('recordID', request('recordID'))->get();
 
         // dd($recordTreatment);
-        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment]);
+        return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures]);
     }
 
     /**
@@ -126,11 +130,26 @@ class SoapController extends Controller
         return $data;
     }
 
-    public function deleteTreatment(Request $request){
+    public function deleteTreatment(Request $request)
+    {
         $id = request('id');
         Medications::where('id', $id)->delete();
         return response()->json(['success' => true]);
     }
+    public function deleteProcedure(Request $request)
+    {
+        $id = request('id');
+        ProcedureRecords::where('id', $id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function deletePrescription(Request $request)
+    {
+        // $id = request('id');
+        // Prescriptions::where('id', $id)->delete();
+        // return response()->json(['success' => true]);
+    }
+
     public function update(Request $request, int $id, int $recordID)
     {
         // Validate the request data
@@ -156,7 +175,7 @@ class SoapController extends Controller
             'neurological_system' => 'nullable|array',
             'diagnosis' => 'nullable|string',
             'medications' => 'nullable|array',
-            'procedure_given' => 'nullable|string',
+            'procedures' => 'nullable|array',
             'remarks' => 'nullable|string',
             'prescription' => 'nullable|string',
         ]);
@@ -226,6 +245,28 @@ class SoapController extends Controller
                             'dosage' => $medication['dosage'],
                             'frequency' => $medication['frequency'],
                             'medication_type' => $medication['medication_type'],
+                        ]);
+                    }
+                }
+            }
+            if (isset($validatedData['procedures'])) {
+                foreach ($validatedData['procedures'] as $procedure) {
+                    if (array_values($procedure) === array_filter(array_values($procedure), 'is_null')) {
+                        continue;
+                    }
+                    if (array_key_exists('procedure_id', $procedure)) {
+                        // Update existing procedure
+                        ProcedureRecords::where('id', $procedure['procedure_id'])->update([
+                            'recordID' => $recordID,
+                            'serviceID' => $procedure['services'],
+                            'outcome' => $procedure['outcome'],
+                        ]);
+                    } else {
+                        // Create new procedure
+                        ProcedureRecords::create([
+                            'recordID' => $recordID,
+                            'serviceID' => $procedure['services'],
+                            'outcome' => $procedure['outcome'],
                         ]);
                     }
                 }

@@ -299,10 +299,10 @@
                             <input type="text" class="form-control mb-4" placeholder="Enter Service">
                         </div>
                         <!-- <div class="col-md-2  d-flex justify-content-end">
-                                                                <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
-                                                                    <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
-                                                                </button>
-                                                            </div> -->
+                                                                            <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
+                                                                                <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
+                                                                            </button>
+                                                                        </div> -->
                     </div>
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover text-sm">
@@ -569,17 +569,17 @@
                                                 <span>Examination</span>
                                             </div>
                                             <!--
-                                                                                    --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                                                                    Heart Rate (BPM):
-                                                                                    Respiration Rate (BRPM):
-                                                                                    Weight (KG):
-                                                                                    Length (CM):
-                                                                                    CRT:
-                                                                                    BCS:
-                                                                                    Lymph Nodes:
-                                                                                    Palpebral Reflex:
-                                                                                    Temperature:
-                                                                                -->
+                                                                                                --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                                                                Heart Rate (BPM):
+                                                                                                Respiration Rate (BRPM):
+                                                                                                Weight (KG):
+                                                                                                Length (CM):
+                                                                                                CRT:
+                                                                                                BCS:
+                                                                                                Lymph Nodes:
+                                                                                                Palpebral Reflex:
+                                                                                                Temperature:
+                                                                                            -->
                                             <div class="card-body">
                                                 <div class="row gy-5 mb-5">
                                                     <div class="col-md-4">
@@ -1216,9 +1216,6 @@
                                                                 $index += 1;
                                                             @endphp
                                                         @endforeach
-
-
-
                                                     @endif
                                                     <div class="row mb-2 gy-2 medication-entry gx-2">
                                                         <div class="col-md-4">
@@ -1237,8 +1234,7 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control med-frequency"
-                                                                placeholder="Frequency"
-                                                                name="medications[0][frequency]">
+                                                                placeholder="Frequency" name="medications[0][frequency]">
                                                         </div>
                                                         <div class="col-md-3">
                                                             <select class="form-control form-select med-type"
@@ -1260,25 +1256,85 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="card shadow-none">
-                                                <div class="card-header">Procedure Received</div>
+                                                <div class="card-header d-flex justify-content-between align-items-center">
+                                                    <span>Procedure Received</span>
+                                                    <div class="col-md-1">
+                                                        <a href="" class="btn btn-primary add-proc">+</a>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body" id="procedures">
+                                                    @if (isset($procedures))
+                                                        @php
+                                                            $index = 0;
+                                                        @endphp
+                                                        @foreach ($procedures as $procedure)
+                                                            <div class="row mb-2 procedure-entry">
+                                                                <div class="col-md-6">
+                                                                    <select class="form-control proc-name select-proc"
+                                                                        style="width: 100%;"
+                                                                        name="procedures[0][services]">
+                                                                        <option value="">Select Procedure</option>
+                                                                        @foreach ($services as $service)
+                                                                            <option value="{{ $service->id }}"
+                                                                                @if (isset($procedure->serviceID) && $procedure->serviceID === $service->id) selected @endif>
+                                                                                {{ $service->service_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <input type="text"
+                                                                        class="form-control proc-outcome"
+                                                                        placeholder="Outcome"
+                                                                        name="procedures[0][outcome]"
+                                                                        value="{{ $procedure->outcome ?? '' }}">
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <a href="{{ route('pet.procedure.delete', ['id' => $procedure->id]) }}"
+                                                                        class="btn btn-danger remove-procedure">-</a>
+                                                                </div>
+                                                                <script>
+                                                                    document.querySelectorAll('.remove-procedure').forEach(button => {
+                                                                        button.addEventListener('click', (e) => {
+                                                                            e.preventDefault();
+                                                                            const url = e.target.href || e.target.dataset.url;
+                                                                            fetch(url, {
+                                                                                    method: 'DELETE',
+                                                                                    headers: {
+                                                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                                                    }
+                                                                                })
+                                                                                .then((response) => {
+                                                                                    if (response.ok) {
+                                                                                        e.target.parentElement.parentElement.remove();
+                                                                                    }
+                                                                                    console.log("delete success");
+                                                                                })
+                                                                                .catch((error) => {
+                                                                                    console.log(error);
+                                                                                });
+                                                                        });
+                                                                    });
+                                                                </script>
+
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
                                                     <div class="row mb-2 procedure-entry">
                                                         <div class="col-md-6">
                                                             <select class="form-control proc-name select-proc"
-                                                                style="width: 100%;">
+                                                                style="width: 100%;" name="procedures[0][services]">
                                                                 <option value="">Select Procedure</option>
-                                                                <option value="Blood Test">Blood Test</option>
-                                                                <option value="X-Ray">X-Ray</option>
-                                                                <option value="MRI Scan">MRI Scan</option>
+                                                                @foreach ($services as $service)
+                                                                    <option value="{{ $service->id }}">
+                                                                        {{ $service->service_name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="col-md-5">
                                                             <input type="text" class="form-control proc-outcome"
-                                                                placeholder="Outcome">
+                                                                placeholder="Outcome" name="procedures[0][outcome]">
                                                         </div>
-                                                        <div class="col-md-1">
-                                                            <a href="" class="btn btn-primary add-proc">+</a>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -1933,6 +1989,8 @@
             });
 
             $('.add-proc').click(function(event) {
+                let procedureCount = $('#procedures').children().length;
+
                 event.preventDefault(); // Prevents page reload
 
                 let lastEntry = $('#procedures .procedure-entry').last();
@@ -1945,15 +2003,14 @@
                     $('#procedures').append(`
                                 <div class="row mb-2 procedure-entry">
                                     <div class="col-md-6">
-                                        <select class="form-control proc-name select-proc" style="width: 100%;">
-                                            <option value="">Select Procedure</option>
-                                            <option value="Blood Test">Blood Test</option>
-                                            <option value="X-Ray">X-Ray</option>
-                                            <option value="MRI Scan">MRI Scan</option>
+                                        <select class="form-control proc-name select-proc" style="width: 100%;" name="procedures[${procedureCount}][services]">
+                                            @foreach ($services as $service)
+                                                <option value="{{ $service->id }}">{{ $service->service_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control proc-outcome" placeholder="Outcome">
+                                        <input type="text" class="form-control proc-outcome" placeholder="Outcome" name="procedures[${procedureCount}][outcome]">
                                     </div>
                                     <div class="col-md-1">
                                         <a href="#" class="btn btn-danger remove-procedure">-</a>

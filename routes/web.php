@@ -146,6 +146,9 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     })->name("soap.print");
 
     Route::delete('/delete-treatment', [SoapController::class, 'deleteTreatment'])->name('pet.treatment.delete');
+    Route::delete('/delete-procedure', [SoapController::class, 'deleteProcedure'])->name('pet.procedure.delete');
+    Route::delete('/delete-prescription', [SoapController::class, 'deletePrescription'])->name('pet.prescription.delete');
+
 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
     Route::post('/records/medical/create', [RecordsController::class, 'createMedicalRecord'])->name('records.medical.create');
