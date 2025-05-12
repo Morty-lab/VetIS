@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
 
         //    Stocks::factory()->count(10)->create();
-        Products::factory()->count(10)->create();
+        // Products::factory()->count(10)->create();
         //
 
 
