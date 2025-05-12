@@ -181,7 +181,7 @@
                                         <div class="form-group">
                                             <label for="select-veterinarian" class="mb-1">Select Veterinarian</label>
                                             <select class="select-veterinarian form-control" id="select-veterinarian"
-                                                name="doctor_ID" data-placeholder="Select a Veterinarian" required>
+                                                name="doctor_ID" data-placeholder="Select a Veterinarian" required onchange="selectVet(this.value)">
                                                 <option value=""></option>
                                                 @foreach ($vets as $vet)
                                                     <option value={{ $vet->id }}>Dr.
@@ -677,61 +677,89 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
-            $('#select-schedule').on('change', function() {
-                let selectedDate = $(this).val();
-                if (selectedDate) {
-                    $.ajax({
-                        url: '{{ route('appointments.available-times') }}', // Define the route in Laravel
-                        type: 'GET',
-                        data: {
-                            date: selectedDate
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            let timeSelect = $('#selectAppointmentTime');
-                            timeSelect.empty(); // Clear existing options
-                            timeSelect.append(
-                                '<option value="">--- Select a Time ---</option>');
+        let selectedVet = 0;
+        let selectedDate = 0;
 
-                            if (response.length > 0) {
-                                let amGroup = $('<optgroup label="AM"></optgroup>');
-                                let pmGroup = $('<optgroup label="PM"></optgroup>');
+        function selectVet(vet) {
+            selectedVet = vet
+            console.log(selectedVet)
+        }
 
-                                response.forEach(function(time) {
-                                    let [hour, minute] = time.split(':');
-                                    hour = parseInt(hour);
+        function selectDate(date) {
+            selectedDate = date;
+            console.log(selectedDate)
+        }
 
-                                    // Convert to 12-hour format for display
-                                    let period = hour < 12 ? 'AM' : 'PM';
-                                    let displayHour = hour % 12 || 12; // 0 => 12
-                                    let displayTime =
-                                        `${displayHour}:${minute} ${period}`;
+        function sendRequest(selectedDate, selectedVet) {
+            $.ajax({
+                url: '{{ route('appointments.available-times') }}',
+                type: 'GET',
+                data: {
+                    date: selectedDate,
+                    vet: selectedVet
+                },
+                success: function(response) {
+                    console.log(response);
+                    let timeSelect = $('#selectAppointmentTime');
+                    timeSelect.empty();
+                    timeSelect.append('<option value="">--- Select a Time ---</option>');
 
-                                    // Keep the value in 24-hour format, display in 12-hour format
-                                    let option =
-                                        `<option value="${time}">${displayTime}</option>`;
+                    if (response.length > 0) {
+                        let amGroup = $('<optgroup label="AM"></optgroup>');
+                        let pmGroup = $('<optgroup label="PM"></optgroup>');
 
-                                    if (hour < 12) {
-                                        amGroup.append(option);
-                                    } else {
-                                        pmGroup.append(option);
-                                    }
-                                });
+                        response.forEach(function(time) {
+                            // Convert 24-hour format to 12-hour display format
+                            let displayTime = convertTo12HourDisplay(time);
+                            let option = `<option value="${time}">${displayTime}</option>`;
 
-                                timeSelect.append(amGroup);
-                                timeSelect.append(pmGroup);
+                            let hour = parseInt(time.split(':')[0]);
+                            if (hour < 12) {
+                                amGroup.append(option);
                             } else {
-                                timeSelect.append(
-                                    '<option value="">No available times</option>');
+                                pmGroup.append(option);
                             }
-                        },
-                        error: function(error) {
-                            console.log("Error fetching available times:", error);
-                        }
-                    });
+                        });
+
+                        timeSelect.append(amGroup);
+                        timeSelect.append(pmGroup);
+                    } else {
+                        timeSelect.append('<option value="">No available times</option>');
+                    }
+                },
+                error: function(error) {
+                    console.log("Error fetching available times:", error);
                 }
             });
+        }
+
+        function convertTo12HourDisplay(time24) {
+            const [hours, minutes] = time24.split(':');
+            const hour = parseInt(hours);
+            const period = hour < 12 ? 'AM' : 'PM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${period}`;
+        }
+
+        $(document).ready(function() {
+            $('#vetSelect').on('change', function() {
+                selectVet(this.value);
+                console.log(selectedVet);
+                if (selectVet) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            $('#select-schedule').on('change', function() {
+                selectDate(this.value);
+
+                if (selectedDate) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            // Helper function to convert 24-hour time to 12-hour display format
+
         });
     </script>
     <script>
@@ -742,4 +770,5 @@
             @endif
         });
     </script>
+
 @endsection
