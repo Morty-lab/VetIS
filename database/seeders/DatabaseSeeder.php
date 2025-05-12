@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
     {
 
         //    Stocks::factory()->count(10)->create();
-        Products::factory()->count(10)->create();
+        // Products::factory()->count(10)->create();
         //
 
 
 
 
-        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, ServicesTableSeeder::class, PetSeeder::class, NotificationSeeder::class, CategorySeeder::class]);
+        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, ServicesTableSeeder::class, PetSeeder::class, NotificationSeeder::class, CategorySeeder::class, ProductsSeeder::class]);
 
 
 
