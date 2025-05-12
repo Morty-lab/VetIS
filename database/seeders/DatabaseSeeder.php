@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, ServicesTableSeeder::class, PetSeeder::class, NotificationSeeder::class, CategorySeeder::class]);
+        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, ServicesTableSeeder::class, PetSeeder::class, NotificationSeeder::class, CategorySeeder::class, ProductsSeeder::class]);
 
 
 
