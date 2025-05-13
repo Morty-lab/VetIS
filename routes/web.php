@@ -65,7 +65,7 @@ Route::get('/dashboard', function () {
     foreach ($appointments as $appointment) {
     if (
     $appointment->status == 0 &&
-    \Carbon\Carbon::parse($appointment->appointment_date)->isToday()
+    Carbon::parse($appointment->appointment_date)->isToday()
     ) {
     $todayCount++;
     } else {
@@ -156,7 +156,9 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
     Route::post('/records/medical/create', [RecordsController::class, 'createMedicalRecord'])->name('records.medical.create');
+    Route::get('/records/medical/archive', [RecordsController::class, 'showArchivedMedicalRecords'])->name('records.medical.archive');
     Route::get('/records/vaccination', [RecordsController::class, 'showVaccinationRecords'])->name('records.vaccination');
+
 });
 
 //User Managemnt
@@ -365,7 +367,7 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::post('/products/repackStocks', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
 
     Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
-    Route::post('/products/update/{id}', [ProductsController::class, 'update'])->name("products.update");
+    Route::post('/products/update', [ProductsController::class, 'update'])->name("products.update");
     Route::get('/products/{id}', [ProductsController::class, 'destroy'])->name("products.delete");
 
     //categories Sub Routes
@@ -416,6 +418,7 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::get('/reports/pos/', [ReportController::class, 'pos'])->name("reports.pos");
     Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
     Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
+    Route::post('/reports/pos/date-range', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.dateRange");
 
     // Inventory Reports
     Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
@@ -439,10 +442,10 @@ Route::middleware('auth')->group(function () {
                 $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
                 break;
             case 'client':
-                $userInfo = \App\Models\Clients::where('user_id', $user->id)->first();
+                $userInfo = Clients::where('user_id', $user->id)->first();
                 break;
             case 'veterinarian':
-                $userInfo = \App\Models\Doctor::where('user_id', $user->id)->first();
+                $userInfo = Doctor::where('user_id', $user->id)->first();
                 break;
         }
 

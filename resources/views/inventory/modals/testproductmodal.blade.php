@@ -81,90 +81,75 @@
     </div>
 </div>
 
-@foreach ($products as $product)
-    @php
-        $stockforproduct = \App\Models\Stocks::getAllStocksByProductId($product->id);
-    @endphp
-    @foreach ($stockforproduct as $stockP)
-        <!-- Repack Stock Modal -->
-        <div class="modal fade" id="repackStockModal-{{ $product->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Repack
-                            Stock for {{ $product->product_name }}
-                        </h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('products.repackStocks') }}" method="POST">
-                            {{-- {{ route('repackStock') }} --}}
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="supplier_price" value="{{ $stockP->supplier_price }}">
-                            <input type="hidden" name="supplier" value="{{ $stockP->supplier_id }}">
-
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackQuantity">Product Name (Repacked)</label>
-                                <input class="form-control" id="inputRepackQuantity" type="text"
-                                    placeholder="Enter Quantity" name="product_name"
-                                    value="{{ $product->product_name }}">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackedSKU">Barcode</label>
-                                <input class="form-control" id="inputRepackedSKU" type="text"
-                                    placeholder="Enter unique barcode for repacked product" name="repacked_SKU"
-                                    value="" maxlength="24"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackQuantity">Quantity Used for
-                                    Repacking</label>
-                                <input class="form-control" id="inputRepackQuantity" type="number"
-                                    placeholder="Enter amount of original stock used" name="quantity">
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1" for="selectRepackUnit">Repacked Unit Type</label>
-                                <select class="form-control" id="selectRepackUnit" name="unit">
-                                    <option disabled="" selected="">-- Select
-                                        Unit --</option>
-                                    @foreach ($units as $i)
-                                        <option value="{{ $i->id }}">
-                                            {{ $i->unit_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputNumberRepackedUnits">Total Units Produced
-                                </label>
-                                <input class="form-control" id="inputNumberRepackedUnits" type="number"
-                                    placeholder="Enter number of units after repacking" name="number_repacked_units">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputRepackStockPrice">Unit Price (Repacked)</label>
-                                <input class="form-control" id="inputRepackStockPrice" type="number" step="0.01"
-                                    placeholder="Enter price per repacked unit" name="stock_price">
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button"
-                                    data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit">Repack
-                                    Stock</button>
-                            </div>
-                        </form>
-                    </div>
+<!-- Single Dynamic Repack Stock Modal -->
+<div class="modal fade" id="repackStockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="repackStockForm" action="{{ route('products.repackStocks') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="repackModalTitle">Repack Stock</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
+                <div class="modal-body">
+
+                    <input type="hidden" name="product_id" id="modal_product_id">
+                    <input type="hidden" name="supplier_price" id="modal_supplier_price">
+                    <input type="hidden" name="supplier" id="modal_supplier">
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="modal_product_name">Product Name (Repacked)</label>
+                        <input class="form-control" id="modal_product_name" type="text" name="product_name"
+                            readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="modal_repacked_SKU">Barcode</label>
+                        <input class="form-control" id="modal_repacked_SKU" type="text" name="repacked_SKU"
+                            maxlength="24" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="modal_quantity">Quantity Used for Repacking</label>
+                        <input class="form-control" id="modal_quantity" type="number" name="quantity">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="modal_unit">Repacked Unit Type</label>
+                        <select class="form-control" id="modal_unit" name="unit">
+                            <option disabled selected>-- Select Unit --</option>
+                            @foreach ($units as $i)
+                                <option value="{{ $i->id }}">{{ $i->unit_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="modal_number_units">Total Units Produced</label>
+                        <input class="form-control" id="modal_number_units" type="number"
+                            name="number_repacked_units">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="modal_stock_price">Unit Price (Repacked)</label>
+                        <input class="form-control" id="modal_stock_price" type="number" step="0.01"
+                            name="stock_price">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Repack Stock</button>
+                </div>
+            </form>
         </div>
-    @endforeach
-    <!-- View Product Modal -->
-    <div class="modal fade" id="viewProductModal{{ $product->id }}" tabindex="-1" role="dialog"
+    </div>
+</div>
+
+
+<!-- View Product Modal -->
+    <div class="modal fade" id="viewProductModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
@@ -177,7 +162,7 @@
                         <div class="row mx-3">
                             <div class="col-md-4 pt-3 ps-0 border-end">
                                 <div class="label">Product Name</div>
-                                <h3 class="mb-3 text-primary">{{ $product->product_name }}</h3>
+                                <h3 id="modalProductName" class="mb-3 text-primary">{{ $product->product_name }}</h3>
                             </div>
                             <div class="col-md-8 pt-3 pb-1">
                                 <div class="row ps-2">
@@ -195,32 +180,15 @@
                                                 $product->id,
                                             )->sum('subtracted_stock');
                                         @endphp
-                                        <p
-                                            class="badge {{ $productStock - $subtracted == 0 ? 'bg-danger-soft text-danger' : 'bg-primary-soft text-primary' }} rounded-pill">
-
-                                            {{ $productStock - $subtracted == 0 ? 'No' : $productStock - $subtracted }}
-                                            Stocks Available
-                                        </p>
+                                       <p id="modalStockBadge" class="badge rounded-pill"></p>
                                     </div>
                                     <div class="col">
                                         <div class="label">Unit</div>
-                                        <p class="badge bg-primary-soft text-primary rounded-pill">
-                                            @foreach ($units as $u)
-                                                @if ($u->id == $product->unit)
-                                                    {{ $u->unit_name }}
-                                                @endif
-                                            @endforeach
-                                        </p>
+                                        <p id="modalUnitBadge" class="badge bg-primary-soft text-primary rounded-pill"></p>
                                     </div>
                                     <div class="col flex flex-row">
                                         <div class="label">Category</div>
-                                        <p class="badge bg-primary-soft text-primary rounded-pill">
-                                            @foreach ($categories as $i)
-                                                @if ($i->id == $product->product_category)
-                                                    {{ $i->category_name }}
-                                                @endif
-                                            @endforeach
-                                        </p>
+                                          <p id="modalCategoryBadge" class="badge bg-primary-soft text-primary rounded-pill"></p>
                                     </div>
                                     <div class="col-1 p-0">
                                         <div class="d-flex justify-content-end">
@@ -232,7 +200,7 @@
                                                 <div class="dropdown-menu animated--fade-in"
                                                     aria-labelledby="productInfoMenuButton">
                                                     <button class="dropdown-item cursor-pointer"
-                                                        data-bs-toggle="modal" data-bs-target="#editProductModal-{{ $product->id }}">Edit
+                                                        data-bs-toggle="modal" data-bs-target="#editProductModal">Edit
                                                         Product</button>
                                                     <button class="dropdown-item cursor-pointer"
                                                         data-bs-toggle="modal"
@@ -259,16 +227,17 @@
                     </div>
 
                     <div class=" card mt-4 mb-4 mx-3 shadow-none">
-
+                        <!-- <div class="card-header bg-white d-flex d-flex justify-content-between align-items-center py-2">
+                    </div> -->
                         <div class="card-body">
                             <table id="inventoryStocksTable">
-
                                 <thead>
                                     <tr>
-                                        <th>Product Information</th>
+                                        <th>Product Name</th>
+                                        <th>Supplier</th>
                                         <th>Price</th>
-                                        <th>Stock</th>
-                                        <th>Actions</th>
+                                        <th>Qty</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -323,10 +292,14 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#deleteStockModal-{{ $product->id }}""><i
                                                             class="fa-solid fa-trash"></i></button>
-                                                    <button class="btn btn-datatable btn-outline-primary me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#repackStockModal-{{ $product->id }}"><i
-                                                            class="fa-solid fa-box-open"></i></button>
+                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#repackStockModal"
+                                                        data-product-id="{{ $product->id }}"
+                                                        data-product-name="{{ $product->product_name }}"
+                                                        data-supplier-id="{{ $stockP->supplier_id }}"
+                                                        data-supplier-price="{{ $stockP->supplier_price }}">
+                                                        Repack
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -341,68 +314,10 @@
     </div>
 
 
-    <!-- Edit Product Modal -->
-    <div class="modal fade" id="editProductModal-{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form action="{{ route('products.update', ['id' =>$product->id]) }}" method="POST">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Product</h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body row gy-2">
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="inputProductName">Product Name</label>
-                            <input class="form-control" id="inputProductName" type="text" placeholder="Product Name"
-                                value="{{ $product->product_name }}" name="product_name">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="inputProductSKU">Barcode</label>
-                            <input class="form-control" id="inputProductSKU" type="text" maxlength="8"
-                                placeholder="Barcode" value="{{ $product->SKU }}" name="product_sku">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="small mb-1" for="inputProductBrand">Brand</label>
-                            <input class="form-control" id="inputProductBrand" type="text" placeholder="Brand"
-                                value="{{ $product->brand }}" name="brand">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="selectProductCategory">Product Category</label>
-                            <select class="form-control" id="selectProductCategory" name="category">
-                                <option disabled="" selected="">-- Select Product Category --</option>
-                                @foreach ($categories as $i)
-                                    <option value="{{ $i->id }}" {{ $product->product_category == $i->id ? 'selected' : '' }}>{{ $i->category_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1" for="selectUnitType">Unit Type</label>
-                            <select class="form-control" id="selectUnitType" name="unit">
-                                <option disabled="" selected="">-- Select Unit Type --</option>
-                                @foreach ($units as $i)
-                                    <option value="{{ $i->id }}" {{ $product->unit == $i->id ? 'selected' : '' }}>{{ $i->unit_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="row gx-3">
-                        </div>
-                    </div>
-                    <div class="modal-footer"><button class="btn btn-secondary" type="button"
-                            data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Save
-                            changes</button></div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 
-    <!-- View Stock Modal -->
+
+    {{-- <!-- View Stock Modal -->
     <div class="modal fade" id="viewStockInfoModal" tabindex="-1" role="dialog" aria-labelledby="viewStockInfo"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -425,14 +340,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- Add Stocks Modal -->
     <div class="modal fade" id="addStocksModal{{ $product->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <form action="{{ route('products.addStocks', $product->id) }}" method="POST" id="addStockForm">
+            <form action="{{ route('products.addStocks', $product->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="encoder" value="{{ auth()->user()->id }}">
                 <div class="modal-content">
@@ -449,9 +364,18 @@
                             </div>
                             <div class="col-6">
                                 <div class="label">Product Category</div>
-                                <p> {{ App\Models\Category::where('id', $product->product_category)->first()->category_name }}
+                                <p>
+                                    @foreach ($categories as $u)
+                                        @if ($u->id == $product->product_category)
+                                            {{ $u->category_name }}
+                                        @endif
+                                    @endforeach
                                 </p>
                             </div>
+                            {{--                        <div class="col-6"> --}}
+                            {{--                            <div class="label">SKU</div> --}}
+                            {{--                            <p>{{ sprintf("VetIS-%05d", $product->id)}}</p> --}}
+                            {{--                        </div> --}}
                             <div class="col-6">
                                 <div class="label">Product Unit</div>
                                 <p>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</p>
@@ -465,26 +389,22 @@
                                         <option value="{{ $i->id }}">{{ $i->supplier_name }}</option>
                                     @endforeach
                                 </select>
-                                <span id="supplierError" class="text-danger"></span>
                             </div>
                             <div class="col-6">
                                 <div class="label">Supplier Price</div>
-                                <input type="number" name="stockPrice" id="stockPrice" class="form-control">
-                                <span id="stockPriceError" class="text-danger"></span>
+                                <input type="number" name="stockPrice" id="" class="form-control">
                             </div>
                             <div class="col-6">
                                 <div class="label">Selling Price</div>
-                                <input type="number" name="sellingPrice" id="sellingPrice" class="form-control">
-                                <span id="sellingPriceError" class="text-danger"></span>
+                                <input type="number" name="sellingPrice" id="" class="form-control">
                             </div>
                             <div class="col-6">
                                 <div class="label">Stock Amount</div>
-                                <input type="number" name="stock" id="stock" class="form-control">
-                                <span id="stockError" class="text-danger"></span>
+                                <input type="number" name="stock" id="" class="form-control">
                             </div>
                             <div class="col-6">
                                 <div class="label">Expiry Date</div>
-                                <input type="date" name="expiry_date" id="expiry_date" class="form-control">
+                                <input type="date" name="expiry_date" id="" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -492,54 +412,9 @@
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
                         <button class="btn btn-primary" type="submit">Add Stock</button>
                     </div>
+
                 </div>
             </form>
-
-            <script>
-                document.getElementById("addStockForm").addEventListener("submit", function(e) {
-                    e.preventDefault();
-                    var isValid = true;
-
-                    var stockPrice = document.getElementById("stockPrice").value;
-                    var sellingPrice = document.getElementById("sellingPrice").value;
-                    var stock = document.getElementById("stock").value;
-                    var supplier = document.getElementById("selectSupplier").value;
-
-                    document.getElementById("supplierError").textContent = "";
-                    document.getElementById("stockPriceError").textContent = "";
-                    document.getElementById("sellingPriceError").textContent = "";
-                    document.getElementById("stockError").textContent = "";
-
-                    if (supplier === "-- Select Supplier --") {
-                        document.getElementById("supplierError").textContent = "Please select a supplier.";
-                        isValid = false;
-                    }
-
-                    if (stockPrice === "") {
-                        document.getElementById("stockPriceError").textContent = "Supplier price is required.";
-                        isValid = false;
-                    }
-
-                    if (sellingPrice === "") {
-                        document.getElementById("sellingPriceError").textContent = "Selling price is required.";
-                        isValid = false;
-                    }
-
-                    if (stock === "") {
-                        document.getElementById("stockError").textContent = "Stock amount is required.";
-                        isValid = false;
-                    }
-
-                    if (isValid && sellingPrice <= stockPrice) {
-                        document.getElementById("sellingPriceError").textContent = "Selling price should be higher than supplier price.";
-                        isValid = false;
-                    }
-
-                    if (isValid) {
-                        this.submit();
-                    }
-                });
-            </script>
         </div>
     </div>
 
@@ -743,4 +618,3 @@
             </div>
         </div>
     </div>
-@endforeach

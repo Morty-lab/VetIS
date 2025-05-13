@@ -17,7 +17,7 @@ class RecordsController extends Controller
     }
     public function showMedicalRecords()
     {
-        $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])->orderBy('created_at', 'desc')->get();
+        $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])->whereNotIn('status', [2])->orderBy('created_at', 'desc')->get();
         $pets = Pets::where('isArchived', 0)->get();
         $doctors = Doctor::all();
         $clients = Clients::all();
@@ -61,8 +61,14 @@ class RecordsController extends Controller
         return redirect()->route('soap.view', ['id' => $request->input('pet'), 'recordID' => $recordID])->with('success', 'Medical record created successfully.');
     }
 
-    public function store(Request $request)
+    public function showArchivedMedicalRecords(Request $request)
     {
+        $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])->where('status', 2)->orderBy('created_at', 'desc')->get();
+        $pets = Pets::where('isArchived', 1)->get();
+        $doctors = Doctor::all();
+        $clients = Clients::all();
+
+        return view('records.archive', compact('pets', 'doctors', 'clients', 'petRecords'));
 
     }
 
