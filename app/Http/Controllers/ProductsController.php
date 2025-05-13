@@ -21,7 +21,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::getAllProducts();
+        $products = Products::limit(20)->get();
         $suppliers = Suppliers::getAllSuppliers();
         $units = Unit::getAllUnits();
         $categories = Category::getAllCategories();
@@ -183,11 +183,35 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $id = request('id');
+
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required|string',
+            'product_sku' => 'required|string',
+            'brand' => 'required|string',
+            'category' => 'required|exists:category,id',
+            'unit' => 'required|exists:units,id'
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect()
+                ->route('products.index')
+                ->withErrors($validator)
+                ->with('error', 'Validation failed! Please check the inputs and try again.')
+                ->withInput();
+        }
+
         $data = [
             'product_name' => $request->product_name,
+            'SKU' => $request->product_sku,
+            'brand' => $request->brand,
+            'product_category' => $request->category,
+            'unit' => $request->unit
         ];
+
         Products::updateProduct($id, $data);
         return redirect()->route('products.index');
     }
