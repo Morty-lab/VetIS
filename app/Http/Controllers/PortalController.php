@@ -137,7 +137,7 @@ class PortalController extends Controller
         $appointments = Appointments::getAppointmentByClient($client->id);
         $pets = Pets::getPetByClient($client->id);
         $vets = Doctor::getAllDoctors();
-        $services = Services::getAllServices();
+        $services = Services::where('service_type', 'services')->get();
 
 
 

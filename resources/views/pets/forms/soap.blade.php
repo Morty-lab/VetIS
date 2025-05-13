@@ -246,10 +246,10 @@
                             <input type="text" class="form-control mb-4" placeholder="Enter Service">
                         </div>
                         <!-- <div class="col-md-2  d-flex justify-content-end">
-                                                                                            <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
-                                                                                                <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
-                                                                                            </button>
-                                                                                        </div> -->
+                                                                                                    <button class="btn btn-primary mb-4 d-flex justify-content-center align-items-center">
+                                                                                                        <i class="fa-solid fa-plus"></i> <span class="ms-2">New</span>
+                                                                                                    </button>
+                                                                                                </div> -->
                     </div>
                     <div class="card shadow-none pt-2 pb-2 px-3 rounded-3">
                         <table class="table table-hover text-sm">
@@ -414,6 +414,11 @@
         </nav>
         <hr class="mt-0 mb-4">
         <div class="row">
+            <form action="{{ route('billing.add') }}" id="billingForm" method="POST">
+                @csrf
+                <input type="hidden" name="pet_owner" value="{{ $owner->id }}">
+                <input type="hidden" name="vet" value="{{ $record->doctorID }}">
+            </form>
             <form action="{{ route('soap.update', ['id' => $pet->id, 'recordID' => $record->id]) }}" method="post"
                 id="updateForm">
                 @csrf
@@ -583,17 +588,17 @@
                                                 <span>Examination</span>
                                             </div>
                                             <!--
-                                                                                                                --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
-                                                                                                                Heart Rate (BPM):
-                                                                                                                Respiration Rate (BRPM):
-                                                                                                                Weight (KG):
-                                                                                                                Length (CM):
-                                                                                                                CRT:
-                                                                                                                BCS:
-                                                                                                                Lymph Nodes:
-                                                                                                                Palpebral Reflex:
-                                                                                                                Temperature:
-                                                                                                            -->
+                                                                                                                        --- MAO NIY DAPAT MA FILL SA TEMPLATE ---
+                                                                                                                        Heart Rate (BPM):
+                                                                                                                        Respiration Rate (BRPM):
+                                                                                                                        Weight (KG):
+                                                                                                                        Length (CM):
+                                                                                                                        CRT:
+                                                                                                                        BCS:
+                                                                                                                        Lymph Nodes:
+                                                                                                                        Palpebral Reflex:
+                                                                                                                        Temperature:
+                                                                                                                    -->
                                             <div class="card-body">
                                                 <div class="row gy-5 mb-5">
                                                     <div class="col-md-4">
@@ -1422,10 +1427,11 @@
                                                                 <div class="col-md-5">
                                                                     <select class="form-control presc-name select-med"
                                                                         name="prescriptions[{{ $prescription_index }}][medications]">
-                                                                        <option value=""></option>
+                                                                        <option value="{{ $prescription->medication }}">
+                                                                            {{ $prescription->medication }}</option>
                                                                         @foreach ($medications as $medication)
-                                                                            <option value="{{ $medication->id }}"
-                                                                                {{ $prescription->medication_id == $medication->id ? 'selected' : '' }}>
+                                                                            <option
+                                                                                value="{{ $medication->product_name }}">
                                                                                 {{ $medication->product_name }}
                                                                             </option>
                                                                         @endforeach
@@ -1493,7 +1499,7 @@
                                                                 name="prescriptions[0][meds]">
                                                                 <option value=""></option>
                                                                 @foreach ($medications as $medication)
-                                                                    <option value="{{ $medication->id }}">
+                                                                    <option value="{{ $medication->product_name }}">
                                                                         {{ $medication->product_name }}</option>
                                                                 @endforeach
                                                             </select>
@@ -1654,24 +1660,11 @@
                                                     Billing</span>
                                             </button> --}}
 
-                                            <button class="btn btn-secondary" type="button"
-                                                onclick="
-                                                $.ajax({
-                                                    url: '{{ route('billing.store') }}',
-                                                    type: 'POST',
-                                                    data: {
-                                                        '_token': '{{ csrf_token() }}',
-                                                        'user_id': '{{ $owner->id }}',
-                                                        'vet_id': '{{ $record->doctorID }}'
-                                                    },
-                                                    success: function(response) {
-                                                        window.location.href = '{{ route('billing') }}';
-                                                    }
-                                                });
-                                            ">
+                                            <button class="btn btn-secondary" type="button" onclick="document.getElementById('billingForm').submit()">
                                                 <i class="fa-solid fa-credit-card"></i> <span class="ms-2">Proceed to
                                                     Billing</span>
                                             </button>
+
                                             <button class="btn btn-outline-dark dropdown-toggle" id="printMenuButton"
                                                 type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">

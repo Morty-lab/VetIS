@@ -291,7 +291,7 @@ class SoapController extends Controller
                         // Update existing prescription
                         Prescriptions::where('id', $prescription['prescription_id'])->update([
                             'recordID' => $recordID,
-                            'medication_id' => $prescription['meds'],
+                            'medication' => $prescription['meds'],
                             'dosage' => $prescription['dosage'],
                             'frequency' => $prescription['frequency'],
                             'duration' => $prescription['duration'],
@@ -300,7 +300,7 @@ class SoapController extends Controller
                         // Create new prescription
                         Prescriptions::create([
                             'recordID' => $recordID,
-                            'medication_id' => $prescription['meds'],
+                            'medication' => $prescription['meds'],
                             'dosage' => $prescription['dosage'],
                             'frequency' => $prescription['frequency'],
                             'duration' => $prescription['duration'],
