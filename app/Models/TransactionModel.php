@@ -59,4 +59,20 @@ class TransactionModel extends Model
             ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'asc')
             ->get();
     }
+
+
+    public static function getTransactionsByDateRange($dateStart, $dateEnd = null)
+    {
+        $query = self::select('transactions.*')
+            ->distinct()
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->whereBetween('transactions.created_at', [
+                $dateStart,
+                $dateEnd ? $dateEnd . ' 23:59:59' : $dateStart . ' 23:59:59'
+            ])
+            ->orderBy('transactions.created_at', 'asc');
+
+        return $query->get();
+    }
+
 }

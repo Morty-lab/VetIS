@@ -33,6 +33,17 @@ class ReportController extends Controller
             'monthlyReports' => $monthlyReports,]);
     }
 
+    public function getSalesByDateRange(Request $request){
+        $dateStart = request('dateStart');
+        $dateEnd = request('dateEnd');
+
+        // dd($dateStart, $dateEnd);
+
+        $transactions = TransactionModel::getTransactionsByDateRange($dateStart, $dateEnd);
+
+        return response()->json($transactions);
+    }
+
     public function printDaily(Request $request){
         // Get today's date
         $date = request('date');
