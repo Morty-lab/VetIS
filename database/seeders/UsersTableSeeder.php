@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
         // Insert users
         DB::table('users')->insert(
             ['name' => 'Admin', 'email' => 'cabahuganiejoseph@gmail.com', 'role' => 'admin', 'password' => $hashedPassword],
+
         );
 
         $adminLastInsertID = DB::getPdo()->lastInsertId();
@@ -42,7 +43,22 @@ class UsersTableSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
 
-//        DB::table('users')->insert(['name' => 'Anie Joseph Cabahug', 'email' => 'aniejoseph@gmail.com','role' => 'client', 'password' => $hashedPassword]);
+        DB::table('users')->insert(
+            ['name' => 'User', 'email' => 'aniejosephcabahug@gmail.com', 'role' => 'client', 'password' => $hashedPassword],
+        );
+
+        $userLastInsertID = DB::getPdo()->lastInsertId();
+        DB::table('clients')->insert([
+            'user_id' => $userLastInsertID, // Ensure this user_id exists in the users table
+            'client_name' => 'Anie Joseph Cabahug',
+            'client_no' => '1234567890',
+            'client_address' => 'Dummy Address',
+            'client_birthday' => '2002-08-11',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        //        DB::table('users')->insert(['name' => 'Anie Joseph Cabahug', 'email' => 'aniejoseph@gmail.com','role' => 'client', 'password' => $hashedPassword]);
 //
 //        $userLastInsertID = DB::getPdo()->lastInsertId();
 //        DB::table('clients')->insert([

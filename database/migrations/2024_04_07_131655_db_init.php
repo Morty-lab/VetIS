@@ -365,8 +365,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger("recordID");
             $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
-            $table->unsignedBigInteger("medication_id");
-            $table->foreign("medication_id")->references("id")->on("products")->onDelete("cascade");
+            $table->string("medication");
             $table->string("dosage");
             $table->string("frequency");
             $table->string("duration");
