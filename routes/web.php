@@ -156,7 +156,9 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
     Route::post('/records/medical/create', [RecordsController::class, 'createMedicalRecord'])->name('records.medical.create');
+    Route::get('/records/medical/archive', [RecordsController::class, 'showArchivedMedicalRecords'])->name('records.medical.archive');
     Route::get('/records/vaccination', [RecordsController::class, 'showVaccinationRecords'])->name('records.vaccination');
+
 });
 
 //User Managemnt

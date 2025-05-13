@@ -105,7 +105,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <div class="dropdown-divider"></div>
-                        <div><a class="dropdown-item" href="{{route('pet.archive')}}"><i class="fa-solid fa-box-archive me-2"></i> Medical Records Archive</a></div>
+                        <div><a class="dropdown-item" href="{{route('records.medical.archive')}}"><i class="fa-solid fa-box-archive me-2"></i> Medical Records Archive</a></div>
                     </ul>
                 </div>
             </div>
