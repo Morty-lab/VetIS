@@ -32,15 +32,21 @@ class CheckLowStocks extends Command
             }
         }
 
-        foreach ($lowStocks as $stock) {
+        if ($lowStocks->count() > 0) {
+            $message = "The following products have low stock levels:\n";
+
+            foreach ($lowStocks as $stock) {
+                $message .= " - $stock->products_name: $stock->remaining_stocks ". Unit::where('id', $stock->unit)->first()->unit_name ."\n";
+            }
+
             Notifications::addNotif([
                 'visible_to' => "staff",
                 'link' => route('products.index'), // Adjust route name accordingly
                 'notification_type' => 'warning',
-                'message' => "Stock for product $stock->products_name is running low. Only $stock->remaining_stocks ". Unit::where('id', $stock->unit)->first()->unit_name ." left.",
+                'message' => $message,
             ]);
 
-            echo "Stock for product $stock->products_name is running low. Only $stock->remaining_stocks ". Unit::where('id', $stock->unit)->first()->unit_name ." left.\n";
+            echo $message;
         }
 
     }
