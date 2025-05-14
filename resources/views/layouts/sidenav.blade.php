@@ -81,6 +81,13 @@
             </a>
             @endif
 
+            @if(in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
+            <a class="nav-link @if(Str::startsWith(request()->path(), ['lodge'])) active @endif" href="{{ route('lodge.index') }}">
+                <div class="nav-link-icon"><i class="fa-solid fa-house-medical"></i></div>
+                Pet Lodge
+            </a>
+            @endif
+
 
             <!-- Billing & Services (Accessible to Cashier, Admin) -->
             @if(in_array(auth()->user()->role, ['cashier', 'admin']))

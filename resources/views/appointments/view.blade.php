@@ -421,7 +421,7 @@
                         </div>
                     </div>
                     @endif
-                    @if($appointment->status !== 2)
+                    @if(!in_array($appointment->status, [1, 2]))
                     <div class="col-12">
                         <div class="card shadow-none mb-4 mb-xl-4">
                             <div class="card-header">
@@ -480,13 +480,6 @@
                                             <div class="col-md-12">
                                                 <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="modal" data-bs-target="#editAppointmentModal">
                                                     <i class="fa-solid fa-calendar-days me-2"></i> Reschedule Appointment
-                                                </button>
-                                            </div>
-                                        @endif
-                                        @if (in_array($appointment->status, [1]))
-                                            <div class="col-md-12">
-                                                <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#editAppointmentModal">
-                                                    <i class="fa-solid fa-file-invoice me-2"></i> Proceed to Billing
                                                 </button>
                                             </div>
                                         @endif
