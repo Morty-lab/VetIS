@@ -96,6 +96,9 @@ Route::get('/dashboard', function () {
 
     // Fetch daily sales report
     $dailySales = TransactionModel::getDailySalesReport();
+    $monthlySales = TransactionModel::getMonthlySalesReport();
+    $monthlyRevenue = TransactionModel::getMonthlyRevenueReport();
+
 
     return view('dashboard', compact(
         'todayCount',
@@ -103,6 +106,8 @@ Route::get('/dashboard', function () {
         'petCount',
         'appointmentRequests',
         'dailySales'
+        , 'monthlySales',
+        'monthlyRevenue'
     ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 

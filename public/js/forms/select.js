@@ -414,6 +414,32 @@ $(document).ready(function () {
                 : "style",
         placeholder: $(this).data("placeholder"),
     });
+
+
+    // Billing Form Payment
+    $(".billing-payment-type").select2({
+        theme: "bootstrap-5",
+        dropdownParent: "#paymentModal",
+        minimumResultsForSearch: -1,
+        width: $(this).data("width")
+            ? $(this).data("width")
+            : $(this).hasClass("w-100")
+                ? "100%"
+                : "style",
+        placeholder: $(this).data("placeholder"),
+    });
+    $(".billing-discount-type").select2({
+        theme: "bootstrap-5",
+        dropdownParent: "#paymentModal",
+        allowClear: true,
+        minimumResultsForSearch: -1,
+        width: $(this).data("width")
+            ? $(this).data("width")
+            : $(this).hasClass("w-100")
+                ? "100%"
+                : "style",
+        placeholder: $(this).data("placeholder"),
+    });
 });
 
 function fetchOwnedPets(ownerID) {
