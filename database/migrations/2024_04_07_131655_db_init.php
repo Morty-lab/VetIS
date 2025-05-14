@@ -418,6 +418,22 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        Schema::create('pet_lodge_rooms', function (Blueprint $table) {
+            $table->id();
+            $table->integer('status');
+            $table->timestamps();
+        });
+
+        Schema::create('room_occupant', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('pet_id');
+            $table->timestamp('check_in');
+            $table->timestamp('check_out')->nullable();
+            $table->timestamps();
+            $table->foreign('room_id')->references('id')->on('pet_lodge_rooms')->onDelete('cascade');
+            $table->foreign('pet_id')->references('id')->on('pets')->onDelete('cascade');
+        });
 
     }
 
@@ -426,6 +442,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('room_occupant');
+        Schema::dropIfExists('pet_lodge_rooms');
         Schema::dropIfExists('notifications');
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('medications');
