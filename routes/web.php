@@ -20,6 +20,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VaccinationController;
+use App\Http\Controllers\LodgeController;
 use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
@@ -52,6 +53,9 @@ Route::get('/', function () {
     }
     return redirect()->route('portal.login');
 });
+Route::get('/landingpage', function () {
+    return view('landing.index');
+})->name('landing');
 
 Route::get('/appointments/available-times', [AppointmentsController::class, 'getAvailableTimes'])->name('appointments.available-times');
 
@@ -297,6 +301,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
 
+});
+
+
+Route::middleware(['auth', 'role:admin,staff'])->group(function () {
+    //Lodge
+    Route::get('/lodge', [LodgeController::class, 'index'])->name('lodge.index');
+    Route::post('/lodge/add', [LodgeController::class, 'store'])->name('lodge.add');
+    Route::get('/lodge/view/', [LodgeController::class, 'view'])->name('lodge.view');
+    Route::post('/lodge/update', [LodgeController::class, 'update'])->name('lodge.update');
+    Route::get('/lodge/checkout/', [LodgeController::class, 'checkout'])->name('lodge.checkout');
 });
 
 //Appointments

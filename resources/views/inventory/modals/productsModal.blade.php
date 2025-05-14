@@ -279,7 +279,7 @@
                                         <tr>
                                             <td>
                                                 <div class="row">
-                                                    <div class="col-md-12">Product Name: <span
+                                                    <div class="col-md-12"><span
                                                             class="text-primary fw-600">{{ $product->product_name }}</span>
                                                     </div>
                                                     <div class="col-md-12">Supplier:
@@ -290,8 +290,10 @@
                                             <td>
                                                 <div class="row">
                                                     <div class="col-md-8">Retail Price</div>
-                                                    <div class="col-md-4 mb-2"><span
-                                                            class="text-primary">₱{{ $stockP->price }}</span></div>
+                                                    <div class="col-md-4"><span class="text-primary">₱{{ $stockP->price }}</span></div>
+                                                    <div class="col-md-12">
+                                                        <hr>
+                                                    </div>
                                                     <div class="col-md-8">Supplier Price</div>
                                                     <div class="col-md-4"><span
                                                             class="text-primary">₱{{ $stockP->supplier_price }}</span>
@@ -300,14 +302,19 @@
                                             </td>
                                             <td>
                                                 <div class="row">
-                                                    <div class="col-md-12"><span
-                                                            class="text-primary badge badge-sm bg-primary-soft text-primary fw-bold rounded-pill">
-                                                            {{ $stockP->stock - $stockP->subtracted_stock }}
-                                                            {{ \App\Models\Unit::where('id', $stockP->unit)->first()->unit_name }}
-                                                            Available</span></div>
-                                                    <div class="col-md-12">Date Added:
-                                                        {{ $stockP->created_at->format('F d Y') }}</div>
                                                     <div class="col-md-12">
+                                                        @php
+                                                            $availableStock = $stockP->stock - $stockP->subtracted_stock;
+                                                        @endphp
+                                                    
+                                                        <span class="badge badge-sm fw-bold rounded-pill 
+                                                            {{ $availableStock > 0 ? 'bg-primary-soft text-primary' : 'bg-danger-soft text-danger' }}">
+                                                            {{ $availableStock > 0 ? $availableStock . ' Stocks Available' : 'No Stocks' }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-12 mt-2">Date Added:
+                                                        {{ $stockP->created_at->format('F d Y') }}</div>
+                                                    <div class="col-md-12 mt-2">
                                                         Expiry:
                                                         {{ $stockP->expiry_date ? \Carbon\Carbon::parse($stockP->expiry_date)->format('F d Y') : 'No Expiry' }}
                                                     </div>

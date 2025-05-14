@@ -1152,7 +1152,7 @@
                                                         <a href="" class="btn btn-primary add-med">+</a>
                                                     </div>
                                                 </div>
-                                                <div class="card-body" id="medications">
+                                                <div class="card-body pb-1" id="medications">
                                                     @if (!empty($recordTreatment))
                                                         @php
                                                             $index = 1;
@@ -1162,7 +1162,7 @@
                                                                 <input type="hidden"
                                                                     name="medications[{{ $index }}][medication_id]"
                                                                     value="{{ $treatment->id }}">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-11">
                                                                     <select class="form-control med-name select-med"
                                                                         style="width: 100%;"
                                                                         name="medications[{{ $index }}][meds]">
@@ -1173,13 +1173,13 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-2">
+                                                                <div class="col-md-4">
                                                                     <input type="text" class="form-control med-dosage"
                                                                         placeholder="Dosage"
                                                                         name="medications[{{ $index }}][dosage]"
                                                                         value="{{ $treatment->dosage }}">
                                                                 </div>
-                                                                <div class="col-md-2">
+                                                                <div class="col-md-4">
                                                                     <input type="text"
                                                                         class="form-control med-frequency"
                                                                         placeholder="Frequency"
@@ -1205,6 +1205,7 @@
                                                                     <a href="#" class="btn btn-danger remove-med"
                                                                         data-id="{{ $treatment->id }}">-</a>
                                                                 </div>
+                                                                <hr  class="mt-3 mb-2">
 
                                                                 <script>
                                                                     document.querySelectorAll('.remove-med').forEach(button => {
@@ -1237,7 +1238,7 @@
                                                         @endforeach
                                                     @endif
                                                     <div class="row mb-2 gy-2 medication-entry gx-2">
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-11">
                                                             <select class="form-control med-name select-med"
                                                                 style="width: 100%;" name="medications[0][meds]">
                                                                 <option value="">Select Medication</option>
@@ -1247,11 +1248,11 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-4">
                                                             <input type="text" class="form-control med-dosage"
                                                                 placeholder="Dosage" name="medications[0][dosage]">
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-4">
                                                             <input type="text" class="form-control med-frequency"
                                                                 placeholder="Frequency" name="medications[0][frequency]">
                                                         </div>
@@ -1267,7 +1268,8 @@
                                                         {{-- <div class="col-md-1">
                                                             <a href="" class="btn btn-danger remove-med">-</a>
                                                         </div> --}}
-
+                                                        
+                                                        <hr  class="mt-3 mb-2">
                                                     </div>
 
                                                 </div>
@@ -2044,7 +2046,7 @@
                 if (name !== "" && dosage !== "" && type !== "") {
                     $('#medications').append(`
                         <div class="row mb-2 gy-2 medication-entry gx-2">
-                            <div class="col-md-4">
+                            <div class="col-md-11">
                                    <select class="form-control med-name select-med" style="width: 100%;" name='medications[${medicationIndex}][meds]'>
                                     <option value="">Select Medication</option>
                                     @foreach ($medications as $medication)
@@ -2052,10 +2054,10 @@
                                     @endforeach
                               </select>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <input type="text" class="form-control med-dosage" placeholder="Dosage" name='medications[${medicationIndex}][dosage]'>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <input type="text" class="form-control med-frequency" placeholder="Frequency" name='medications[${medicationIndex}][frequency]'>
                             </div>
                             <div class="col-md-3">
