@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                                             <label for="payable" class="form-label">Discount</label>
-                                            <p id="payable" class="">₱0</p>
+                                            <p id="discount" class="">₱0</p>
                                         </div>
                                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                                             <label for="payable" class="form-label ">Total</label>
@@ -97,8 +97,9 @@
                                 <div class="row gy-3" style="">
                                     <div class="col-md-6">
                                         <label for="paymentType" class="form-label">Payment Type</label>
-                                        <select class="form-select billing-payment-type" id="paymentType" name="payment_type"
-                                            onchange="updatePaymentType(this.value)" data-placeholder="Select Payment Type" required>
+                                        <select class="form-select billing-payment-type" id="paymentType"
+                                            name="payment_type" onchange="updatePaymentType(this.value)"
+                                            data-placeholder="Select Payment Type" required>
                                             <option value=""></option>
                                             <option value="Cash">Full Payment</option>
                                             <option value="Partial">Partial Payment</option>
@@ -106,18 +107,25 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="paymentType" class="form-label">Apply Discount</label>
-                                        <select class="form-select billing-discount-type" id="" name="discount" data-placeholder="Select Discount" required>
+                                        <select class="form-select billing-discount-type" id="" name="discount"
+                                            data-placeholder="Select Discount" required
+                                            onchange="applyDiscount(this.value)">
                                             <option value=""></option>
-                                            <option value="Cash">Student Discount (P1000)</option>
-                                            <option value="Partial">Senior Discount (5%)</option>
+                                            @foreach ($discounts as $discount)
+                                                <option value="{{ $discount->service_price }}">
+                                                    {{ $discount->service_name }}
+                                                    ({{ number_format($discount->service_price * 100, 0) }}%)
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-12">
-                                         <!-- Due Date (only for Partial Payment) -->
+                                        <!-- Due Date (only for Partial Payment) -->
                                         <div class="mb-3 d-none" id="dueDateContainer">
                                             <label for="dueDate" class="form-label">Due Date</label>
                                             <div class="input-group input-group-joined">
-                                                <input type="date" class="form-control" id="dueDate" name="due_date" placeholder="Select a Due Date">
+                                                <input type="date" class="form-control" id="dueDate"
+                                                    name="due_date" placeholder="Select a Due Date">
                                                 <span class="input-group-text">
                                                     <i data-feather="calendar"></i>
                                                 </span>
@@ -146,7 +154,7 @@
                                 {{-- Basta ma submit na then successfull mo open sa new tab ang invoice sa billing --}}
                                 <div style="" id="change">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none" id="thankYouMessage">
                                             <h1 class="fw-500 text-primary">
                                                 Thank you for your Purchase!
                                             </h1>
@@ -155,38 +163,38 @@
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Payment Type:</p>
-                                                <p class="text-lg mb-0 fw-400 grand-total">Partial</p>
+                                                <p class="text-lg mb-0 fw-400 payment-type">No Payment Method Chosen</p>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Total:</p>
-                                                <p class="text-lg mb-0 fw-400 grand-total">500</p>
+                                                <p class="text-lg mb-0 fw-400 grand-total total">₱0</p>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Cash Given:</p>
-                                                <p class="text-lg mb-0 fw-400 " id="cash">250</p>
+                                                <p class="text-lg mb-0 fw-400 " id="cashGivenText">₱0</p>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none" id="dueDateTextContainer">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Due Date:</p>
-                                                <p class="text-lg mb-0 fw-400 " id="cash">05/19/2025</p>
+                                                <p class="text-lg mb-0 fw-400 " id="dueDateText">05/19/2025</p>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none" id="remainingBalanceContainer">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0 text-lg">Remaining Balance:</p>
-                                                <p class="display-6 text-blue mb-0 fw-500 " id="cash">250</p>
+                                                <p class="display-6 text-blue mb-0 fw-500 " id="remainingBalanceText">250</p>
                                             </div>
                                         </div>
                                         {{-- Dili ni mag show if Partial Payment ang Change --}}
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none" id="changeContainer">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Change:</p>
-                                                <p class="display-6 text-blue mb-0 h5 fw-500 " id="change-cash">500</p>
+                                                <p class="display-6 text-blue mb-0 h5 fw-500 " id="changeText">500</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1045,71 +1053,98 @@
         let finalPrice = subTotal;
 
         // Initialize when document is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Assume we have a total price from somewhere in your application
-            // For demonstration, let's set a sample price
-            totalPrice = subTotal; // Replace this with your actual price from the system
-            updateFinalPrice();
-            
-            // Initialize select2 if it's being used
-            try {
-                $('.billing-payment-type').select2({
-                    minimumResultsForSearch: Infinity,
-                    placeholder: $(this).data('placeholder')
-                });
-                
-                $('.billing-discount-type').select2({
-                    minimumResultsForSearch: Infinity,
-                    placeholder: $(this).data('placeholder')
-                });
-            } catch (e) {
-                console.log('Select2 not available or already initialized');
-            }
-            
-            // Set up event listeners
-            document.querySelector('.billing-discount-type').addEventListener('change', function() {
-                applyDiscount(this.value);
-            });
-            
-            // Set min date for due date as tomorrow
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            document.getElementById('dueDate').min = tomorrow.toISOString().split('T')[0];
-        });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // Assume we have a total price from somewhere in your application
+        //     // For demonstration, let's set a sample price
+        //     totalPrice = subTotal; // Replace this with your actual price from the system
+        //     updateFinalPrice();
+
+        //     // Initialize select2 if it's being used
+        //     try {
+        //         $('.billing-payment-type').select2({
+        //             minimumResultsForSearch: Infinity,
+        //             placeholder: $(this).data('placeholder')
+        //         });
+
+        //         $('.billing-discount-type').select2({
+        //             minimumResultsForSearch: Infinity,
+        //             placeholder: $(this).data('placeholder')
+        //         });
+        //     } catch (e) {
+        //         console.log('Select2 not available or already initialized');
+        //     }
+
+        //     // Set up event listeners
+
+
+
+        //     // Set min date for due date as tomorrow
+        //     const tomorrow = new Date();
+        //     tomorrow.setDate(tomorrow.getDate() + 1);
+        //     document.getElementById('dueDate').min = tomorrow.toISOString().split('T')[0];
+        // });
 
         // Function to update payment type display and validation
         function updatePaymentType(paymentType) {
             const cashGivenInput = document.getElementById('cashGiven');
             const dueDateContainer = document.getElementById('dueDateContainer');
             const dueDate = document.getElementById('dueDate');
-            
+            const paymentTextElements = document.querySelectorAll('.payment-type');
+            const dueDateTextContainer = document.getElementById('dueDateTextContainer');
+            const dueDateText = document.getElementById('dueDateText');
+
             // Reset validation styling
             cashGivenInput.classList.remove('is-invalid');
-            
+
             if (paymentType === 'Cash') {
                 // Full payment - Due date not needed
                 dueDateContainer.classList.add('d-none');
                 dueDate.required = false;
-                
+
+                // Update payment text
+                paymentTextElements.forEach(element => {
+                    element.textContent = 'Full Payment';
+                });
+
                 // Set minimum cash given to the final price
-                cashGivenInput.min = finalPrice;
-                cashGivenInput.setAttribute('placeholder', `Minimum ${finalPrice.toFixed(2)}`);
-                
+                cashGivenInput.min = total;
+                cashGivenInput.setAttribute('placeholder', `Minimum ${total.toFixed(2)}`);
+
             } else if (paymentType === 'Partial') {
                 // Partial payment - Due date required
+
                 dueDateContainer.classList.remove('d-none');
                 dueDate.required = true;
-                
+
+                // Update due date text on change
+                dueDate.addEventListener('change', function() {
+                    dueDateTextContainer.classList.remove('d-none');
+                    const date = new Date(this.value);
+                    const month = date.toLocaleString('default', {
+                        month: 'long'
+                    });
+                    const day = `0${date.getDate()}`.slice(-2);
+                    const year = date.getFullYear();
+                    dueDateText.textContent = this.value ? `Due on ${month} ${day}, ${year}` : 'Not set';
+                });
+
+                // Update payment text
+                paymentTextElements.forEach(element => {
+                    element.textContent = 'Partial Payment';
+                });
+
+
+
                 // Cash given should be less than the final price but greater than 0
                 cashGivenInput.min = 1;
-                cashGivenInput.max = finalPrice - 0.01;
-                cashGivenInput.setAttribute('placeholder', `Less than ${finalPrice.toFixed(2)}`);
+                cashGivenInput.max = total - 0.01;
+                cashGivenInput.setAttribute('placeholder', `Less than ${total.toFixed(2)}`);
             } else {
                 // No selection - hide due date
                 dueDateContainer.classList.add('d-none');
                 dueDate.required = false;
             }
-            
+
             // Clear cash given value when payment type changes
             cashGivenInput.value = '';
         }
@@ -1118,13 +1153,17 @@
         function updateCashGiven(amount) {
             const cashGivenInput = document.getElementById('cashGiven');
             const paymentType = document.getElementById('paymentType').value;
-            
+            const cashGivenText = document.getElementById('cashGivenText');
+
+            cashGivenText.textContent = `₱ ${amount ? parseFloat(amount).toFixed(2) : '0.00'}`;
+
             // Convert to number
             const cashGiven = parseFloat(amount) || 0;
-            
+
             if (paymentType === 'Cash') {
                 // For full payment, cash must be >= final price
-                if (cashGiven < finalPrice) {
+                console.log('Adding cash given (full): ', amount);
+                if (cashGiven < total) {
                     cashGivenInput.classList.add('is-invalid');
                     return false;
                 } else {
@@ -1132,8 +1171,9 @@
                     return true;
                 }
             } else if (paymentType === 'Partial') {
+                console.log('Adding cash given (partial): ', amount);
                 // For partial payment, cash must be > 0 and < final price
-                if (cashGiven <= 0 || cashGiven >= finalPrice) {
+                if (cashGiven <= 0 || cashGiven >= total) {
                     cashGivenInput.classList.add('is-invalid');
                     return false;
                 } else {
@@ -1141,34 +1181,44 @@
                     return true;
                 }
             }
-            
+
             return false;
         }
 
         // Function to apply selected discount
-        function applyDiscount(discountType) {
-            switch(discountType) {
-                case 'Cash': // Student Discount (P1000)
-                    discountAmount = 1000;
-                    break;
-                case 'Partial': // Senior Discount (5%)
-                    discountAmount = totalPrice * 0.05;
-                    break;
-                default:
-                    discountAmount = 0;
-            }
-            
-            updateFinalPrice();
+        function applyDiscount(discount) {
+            const totalInput = document.getElementById('total_payable');
+            const totalElements = document.querySelectorAll('.total');
+            const discountText = document.getElementById('discount');
+            const cashGivenInput = document.getElementById('cashGiven');
+
+            console.log(discount);
+            discountAmount = subTotal * discount;
+            console.log(discountAmount);
+
+
+            discountText.textContent = discount ? `₱${(discountAmount).toFixed(2)}` : '₱0.00';
+
+
+
+
+            totalElements.forEach(el => {
+                total = parseFloat(el.textContent.replace(/[^\d.]/g, '')) - discountAmount;
+                el.textContent = `₱ ${total.toFixed(2)}`;
+            });
+            cashGivenInput.setAttribute('placeholder', `Minimum ${total.toFixed(2)}`);
+
+            totalInput.value = total;
         }
 
         // Update final price after discount
         function updateFinalPrice() {
             finalPrice = totalPrice - discountAmount;
             if (finalPrice < 0) finalPrice = 0;
-            
+
             // Update any price display elements in your UI
             // For example: document.getElementById('finalPriceDisplay').textContent = `₱${finalPrice.toFixed(2)}`;
-            
+
             // If payment type is already selected, update the validation constraints
             const paymentType = document.getElementById('paymentType').value;
             if (paymentType) {
@@ -1182,18 +1232,18 @@
             const paymentType = document.getElementById('paymentType').value;
             const cashGiven = document.getElementById('cashGiven').value;
             const dueDate = document.getElementById('dueDate');
-            
+
             // Check if payment type is selected
             if (!paymentType) {
                 document.getElementById('paymentType').classList.add('is-invalid');
                 isValid = false;
             }
-            
+
             // Validate cash given based on payment type
             if (!updateCashGiven(cashGiven)) {
                 isValid = false;
             }
-            
+
             // If partial payment, ensure due date is set
             if (paymentType === 'Partial') {
                 if (!dueDate.value) {
@@ -1203,7 +1253,7 @@
                     dueDate.classList.remove('is-invalid');
                 }
             }
-            
+
             return isValid;
         }
 
@@ -1213,19 +1263,32 @@
                 // Calculate change for display (only applicable for full payment)
                 const paymentType = document.getElementById('paymentType').value;
                 const cashGiven = parseFloat(document.getElementById('cashGiven').value) || 0;
-                
+                const thankYouMessage = document.getElementById('thankYouMessage');
+                const changeContainer = document.getElementById('changeContainer');
+                const changeText = document.getElementById('changeText');
+                const remainingBalanceContainer = document.getElementById('remainingBalanceContainer');
+                const remainingBalanceText = document.getElementById('remainingBalanceText');
+
                 if (paymentType === 'Cash') {
-                    const change = cashGiven - finalPrice;
+                    const change = cashGiven - total;
+                    thankYouMessage.classList.remove('d-none');
+                    changeContainer.classList.remove('d-none');
+                    changeText.textContent = `₱ ${change.toFixed(2)}`;
+
                     // You can display the change somewhere in your UI
                     alert(`Payment successful! Change: ₱${change.toFixed(2)}`);
                 } else if (paymentType === 'Partial') {
-                    const remaining = finalPrice - cashGiven;
+                    thankYouMessage.classList.remove('d-none');
+                    remainingBalanceContainer.classList.remove('d-none');
+                    const remaining = total - cashGiven;
                     const dueDate = document.getElementById('dueDate').value;
+                    remainingBalanceText.textContent = `₱ ${remaining.toFixed(2)}`;
+
                     alert(`Partial payment accepted! Remaining balance: ₱${remaining.toFixed(2)} due on ${dueDate}`);
                 }
-                
+
                 // Submit the form or call your API here
-                // document.getElementById('paymentForm').submit();
+                document.getElementById('paymentForm').submit();
             } else {
                 // Show general error message
                 alert('Please check the form for errors and try again.');

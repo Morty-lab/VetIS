@@ -51,7 +51,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
-    return redirect()->route('portal.login');
+    return redirect()->route('landing');
 });
 Route::get('/landingpage', function () {
     return view('landing.index');
@@ -315,7 +315,12 @@ Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     Route::post('/lodge/add', [LodgeController::class, 'store'])->name('lodge.add');
     Route::get('/lodge/view/', [LodgeController::class, 'view'])->name('lodge.view');
     Route::post('/lodge/update', [LodgeController::class, 'update'])->name('lodge.update');
-    Route::get('/lodge/checkout/', [LodgeController::class, 'checkout'])->name('lodge.checkout');
+    Route::post('/lodge/delete', [LodgeController::class, 'destroy'])->name('lodge.delete');
+    Route::post('/lodge/checkIn', [LodgeController::class, 'checkIn'])->name('lodge.checkIn');
+    Route::post('/lodge/checkout/', [LodgeController::class, 'checkOut'])->name('lodge.checkOut');
+    Route::post('/lodge/maintenanceDone', [LodgeController::class, 'maintenanceDone'])->name('lodge.maintenanceDone');
+    Route::post('/lodge/setUnderMaintenance', [LodgeController::class, 'setUnderMaintenance'])->name('lodge.setUnderMaintenance');
+
 });
 
 //Appointments

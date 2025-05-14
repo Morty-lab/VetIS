@@ -1,0 +1,2706 @@
+[33mcommit 7ffca174712988b211d422d4c10e0c3c299843a3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrevisions[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 70d9fa0 3760edd
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed May 14 22:09:41 2025 +0800
+
+    Merge pull request #141 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 3760edd043aabd7a28ab21b7250e02b6342eeb1a[m[33m ([m[1;31morigin/kentbranch[m[33m)[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed May 14 18:47:32 2025 +0800
+
+    minor edits sa inventory
+
+[33mcommit a1f34bc74cea7bcb664e2a211be615b5ce21b966[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed May 14 18:32:14 2025 +0800
+
+    Pet Lodge
+
+[33mcommit 70d9fa0de848ef70914fd564590422cffb7748a4[m
+Merge: 143a451 4f35775
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed May 14 01:31:01 2025 +0800
+
+    Merge pull request #140 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 4f35775deff7d31105f4ac4bfa46b122c2c96f01[m[33m ([m[1;31morigin/revisions[m[33m)[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed May 14 01:28:26 2025 +0800
+
+    done with error trapping on stocks and product edit modal
+
+[33mcommit 709844f31dbaf30421f17ec3c15015aa2354c768[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed May 14 00:05:48 2025 +0800
+
+    done with date range for pos reports
+
+[33mcommit 1b357fe443c860e9c03798ed490c70792588de59[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 13 22:15:11 2025 +0800
+
+    check low stocks command fixed
+
+[33mcommit a08ee473ee98174cf9537b4f4f20aa501e36b6bf[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 13 21:18:33 2025 +0800
+
+    added medical records archive
+
+[33mcommit 143a4513be815c1ac6ec0fb026d9433404a9572f[m
+Merge: 7cc2ea7 e95b993
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 13 20:42:31 2025 +0800
+
+    Merge pull request #139 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit e95b993292f6c4ad03307c0a858fd7a904a1416b[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 13 20:41:52 2025 +0800
+
+    fixes
+
+[33mcommit c09ccefc5a1666d2a27cc6596a335c312d693838[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 13 01:53:22 2025 +0800
+
+    done with setting appointment time depending on the vet
+
+[33mcommit 7cc2ea720b27acda1d5be1b63f547ccc361a6f59[m
+Merge: aad434d 94ef292
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon May 12 21:59:12 2025 +0800
+
+    Merge pull request #138 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 94ef292b1e17e931ac0741e127c79b58a373c9e6[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon May 12 21:58:38 2025 +0800
+
+    seeders initialized
+
+[33mcommit f7ae1419e80c6e5c8812aab9cb3e47bb31f45057[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon May 12 20:42:14 2025 +0800
+
+    edited products seeder
+
+[33mcommit 8655ec4f1945b0f535ccba4c068cd30c3990d602[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon May 12 20:15:05 2025 +0800
+
+    edited services seeder
+
+[33mcommit aad434dc885abaa4e4a9ce58f5db12b4a57268f5[m
+Merge: a15ef74 ecb8f90
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon May 12 00:30:35 2025 +0800
+
+    Merge pull request #137 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit ecb8f9027acd8b1f68b7e523e03fffef65e3e4ee[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 11 22:43:13 2025 +0800
+
+    archived button completed
+
+[33mcommit cca48e68b0cec5aea940bb7968c63898c309ff6a[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 11 22:30:37 2025 +0800
+
+    Done with edit medical record modal
+
+[33mcommit c5a28e108f3cd15ee3bc5502f809eb2577379cfe[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 11 21:52:10 2025 +0800
+
+    done with prescription in medical records
+
+[33mcommit e4a192ccaf9a7196bd4ad43e44ca224e534cf922[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 11 20:36:40 2025 +0800
+
+    inished procedures for medical records
+
+[33mcommit a85b31682272ddd77020d43e9b6d7e51fe46377c[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 11 19:42:31 2025 +0800
+
+    treatment remove button done
+
+[33mcommit a15ef74161726dbcc82dfa2b789d8449d4adfb4a[m
+Merge: ffb8d07 3235cbb
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 6 06:07:24 2025 +0800
+
+    Merge pull request #136 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 3235cbbde0853161459442b08c24498ad7df3b4d[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue May 6 06:06:23 2025 +0800
+
+    done with medications
+
+[33mcommit e6c9a8e307b41f3ca0283fd9ce98fa80f71d62e1[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon May 5 01:25:13 2025 +0800
+
+    fixes
+
+[33mcommit d4aa154a63360959a288071fe884704ed3b71a0a[m
+Merge: fde5b42 ffb8d07
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 4 08:15:39 2025 +0800
+
+    Merge branch 'main' into revisions
+
+[33mcommit fde5b4207b6d39bd85022f934b41db0d0696c8c3[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 4 08:15:13 2025 +0800
+
+    meds
+
+[33mcommit ffb8d0722ec9e836ffba078bec6b94bf08eaf5b4[m
+Merge: 1e634a5 2184530
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 4 07:57:59 2025 +0800
+
+    Merge pull request #135 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 21845309cbd02dc1f343fd6fed508a154b7d167a[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 4 07:57:07 2025 +0800
+
+    Read me Changed: added new commands
+
+[33mcommit c47166b24b66ae0415cec3f6dc37913e9b24b984[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun May 4 07:54:32 2025 +0800
+
+    examination done
+
+[33mcommit 1e634a5930dbfafa3730e25ae0ac78f1df06c889[m
+Merge: 65705a8 869beef
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat May 3 19:53:05 2025 +0800
+
+    Merge pull request #134 from Morty-lab/kentbranch
+    
+    POS error trapping
+
+[33mcommit 869beef53e87c4b4e199022ec2267544b2a45bb0[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sat May 3 18:41:03 2025 +0800
+
+    POS error trapping
+
+[33mcommit 65705a88c6322239127641cd37ce968f3407bcee[m
+Merge: e358609 1687297
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri May 2 02:48:21 2025 +0800
+
+    Merge pull request #133 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 168729777db239c7d0518a62010d47b26c3bd454[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri May 2 02:47:34 2025 +0800
+
+    created discounts page, edited products actory and schema for brand field
+
+[33mcommit 7dca10f327791a29526a9b474bf0424683e25cdb[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri May 2 02:46:18 2025 +0800
+
+    added low stocks reminder command
+
+[33mcommit c1665f183ccb17ca865c8175d988e763d8eb049c[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri May 2 02:44:11 2025 +0800
+
+    changed read me to highlight project and track commands
+
+[33mcommit e358609fe9d26d72619161d4b23b8682636846e2[m
+Merge: 778591c e45542d
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri May 2 00:58:10 2025 +0800
+
+    Merge pull request #132 from Morty-lab/kentbranch
+    
+    POS Error Trapping and Bug Fixes
+
+[33mcommit e45542db7f422bb0d9b8f13067560aafc11287bb[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Thu May 1 23:19:23 2025 +0800
+
+    POS Error Trapping and Bug Fixes
+
+[33mcommit 778591c070dfc5170fb6c6c2d355e81bd9bfef9f[m
+Merge: ed6bcbd a6f93c7
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu May 1 22:08:45 2025 +0800
+
+    Merge pull request #131 from Morty-lab/revisions
+    
+    added notiications to most o the controllers
+
+[33mcommit a6f93c70276bd19ecceca68c884ba68371a38336[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu May 1 22:07:25 2025 +0800
+
+    added notiications to most o the controllers
+
+[33mcommit ed6bcbd35a82e27b442a0805abe87cc27d45be60[m
+Merge: 1229001 62d33b5
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu May 1 18:48:39 2025 +0800
+
+    Merge pull request #128 from Morty-lab/revisions
+    
+    fix for barcode
+
+[33mcommit 62d33b55b9e9301f50f6d01c69a2f26358f8c6e6[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu May 1 18:47:58 2025 +0800
+
+    fix for barcode
+
+[33mcommit 12290016df4b8070415e540fb8a290cd15268f41[m
+Merge: d3d8101 8235932
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Apr 29 04:33:06 2025 +0800
+
+    Merge pull request #127 from Morty-lab/revisions
+    
+    fixed issues for issue #103 - also added seeder for issue #115
+
+[33mcommit 823593200cda88f20ab8b10dbb44e48173ea17ac[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Apr 29 04:31:45 2025 +0800
+
+    fixed issues for issue #103 - also added seeder for issue #115
+
+[33mcommit d3d8101bd0abc23dcfbe975d2f6f468385a4bb7a[m
+Merge: 2ca1ab8 52dbf58
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Apr 27 22:31:33 2025 +0800
+
+    Merge pull request #126 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 52dbf585c111f7bb396ce0f9f7891d1d12916d4d[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Apr 27 22:29:54 2025 +0800
+
+    added fees on list in billing
+
+[33mcommit b4bf80301af49969c9180798ad7ce3fc8de8d2fc[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Apr 27 22:14:21 2025 +0800
+
+    add billing completed
+
+[33mcommit 2ca1ab8eb8db72e942f7ec90d11dace02e9daa52[m
+Merge: 55937e2 dfc590b
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Apr 22 16:52:34 2025 +0800
+
+    Merge pull request #125 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit dfc590b5371bc497ba3f778cb864e014588e074a[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Tue Apr 22 16:49:40 2025 +0800
+
+    mga chuchuess
+
+[33mcommit 55937e2ea8378c82e896a0f5ed5dde515b8e02f1[m
+Merge: 8eb6af2 ee1ef22
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Apr 22 01:37:13 2025 +0800
+
+    Merge pull request #124 from Morty-lab/revisions
+    
+    notifications done
+
+[33mcommit ee1ef2232c2b0b7a4ecf09162e3191ee04ffe41b[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Apr 22 01:36:00 2025 +0800
+
+    notifications done
+
+[33mcommit 6649006b8379d96f37f7e5c80106981834d1e34a[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sat Apr 19 20:40:22 2025 +0800
+
+    Medical Records Tab
+
+[33mcommit 8eb6af295bdd35f2492d6ff50028234fe586d2c9[m
+Merge: 5eb2185 3477668
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 18 23:34:19 2025 +0800
+
+    Merge pull request #123 from Morty-lab/kentbranch
+    
+    Veterinarians Fix | Image Upload, Form Validation, UM Setting, and ot…
+
+[33mcommit 3477668f514670d534c009d155dfdd0d4a27b86e[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Apr 18 23:32:59 2025 +0800
+
+    Veterinarians Fix | Image Upload, Form Validation, UM Setting, and other fixes
+
+[33mcommit 5eb21854f897e3b765b58870e10fc5b82d33c510[m
+Merge: 7a0e35f acb6eb4
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 18 17:54:47 2025 +0800
+
+    Merge pull request #122 from Morty-lab/revisions
+    
+    repack stock edited
+
+[33mcommit acb6eb43aaba527d445eea1cb5b82b8fcc9929e4[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 18 17:54:04 2025 +0800
+
+    repack stock edited
+
+[33mcommit 7a0e35f94a78345a29542ece2c471ffcffc10d94[m
+Merge: d7f26ee 89e1016
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 18 13:28:07 2025 +0800
+
+    Merge pull request #121 from Morty-lab/revisions
+    
+    fix for ticket #103 vet name comment
+
+[33mcommit 89e1016e4c3ec5559ca43c21b5a336cf1c8f2283[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 18 13:27:31 2025 +0800
+
+    fix for ticket #103 vet name comment
+
+[33mcommit d7f26eee4f3f5883989e318790a7437be2570aee[m
+Merge: 72cf723 e2949bc
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 18 02:01:42 2025 +0800
+
+    Merge pull request #119 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit e2949bce02596b3f5f009a0ca4f640bdda848f62[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Apr 18 00:29:04 2025 +0800
+
+    Bug Fixes and Error Trapping on Pets
+
+[33mcommit f60235909e815417c74005aac7a3870aa83ad8e2[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Apr 18 00:15:09 2025 +0800
+
+    Bug Fixes and Error Trapping on Pets
+
+[33mcommit 9108aa5ffae624e1d88b80ec6abf5e768e1cb726[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Thu Apr 17 00:43:03 2025 +0800
+
+    Added Medical Record Print | Billing (WIP)
+
+[33mcommit 72cf723b393067d54d9b3d38601afe232ecd0830[m
+Merge: 1e713b1 09bb9ae
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Apr 9 19:24:52 2025 +0800
+
+    Merge pull request #118 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 09bb9ae5f79e437a1adfc8bed4162c85558b10e3[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Apr 9 19:23:45 2025 +0800
+
+    partially done with issue [] Fix Medical Record (Add the Changes) on ticket #112
+
+[33mcommit 22b9b092969bc043a84891dee724ab1768f56b70[m
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Apr 9 16:10:32 2025 +0800
+
+    Done with issue [] Remove Weight in Pets DB (Update Add, Edit) | Including sa Portal on ticket #112
+
+[33mcommit 1e713b17256677a624fba6ba9f9788668b76f7d3[m
+Merge: 3b23197 8a76d26
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Apr 9 05:59:38 2025 +0800
+
+    Merge pull request #117 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 8a76d2621d823a769d98125b3339c16d55d4f0d4[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Wed Apr 9 05:55:39 2025 +0800
+
+    Done with issue [x] Appointment time kay gaka wala bisag lahi na vet ang gi pili on ticket #103
+
+[33mcommit 5ebce1e52bb199d07b386fa676954235e30b5308[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Wed Apr 9 05:22:34 2025 +0800
+
+    Done with issue [x] Pet Redirect sa Appointments on ticket #103
+
+[33mcommit 42fb0a9b4d838bcdb7eeec2c2c74a2c0c3c0a6d4[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Wed Apr 9 05:19:45 2025 +0800
+
+    Done with issue [x] Other Notes not working on ticket #103
+
+[33mcommit 3b231978c42195fd0235f9874b8df418fac2980c[m
+Merge: 8a8825f df06008
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Apr 5 03:50:43 2025 +0800
+
+    Merge pull request #116 from Morty-lab/kentbranch
+    
+    Pet Records and Other Fixes
+
+[33mcommit df060080f618c7c9a32a637c509aaf1a11f0d4cc[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sat Apr 5 03:24:53 2025 +0800
+
+    Pet Records and Other Fixes
+
+[33mcommit 8a8825f7f0c373747e681202bf2b0d9d00070347[m
+Merge: 60aa590 8782676
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Apr 3 03:21:26 2025 +0800
+
+    Merge pull request #114 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 878267693192a1840ae8eb85eb6bcb008c432bb3[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Thu Apr 3 03:19:21 2025 +0800
+
+    finished issue [] Sa veterinarian account I show ra sa vet ang iyang own na scheduled, finished, appointment requests, cancelled appointments
+
+[33mcommit 931836e578054225c13df8623d70644c97e68ffb[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Thu Apr 3 02:50:51 2025 +0800
+
+    Finished issue [] Pati sa mga counters pa fix
+
+[33mcommit ea0e88df8e42c55b4658900054c8dd85d9584968[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Thu Apr 3 02:28:50 2025 +0800
+
+    finished issue [] Fix Appointment Time sa Edit Appointment both admin and portal
+
+[33mcommit 1367169d73c80b84ec9b200d360fd43e4ebf17d6[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Thu Apr 3 02:11:43 2025 +0800
+
+    finished with issues [] Form Validation Appointments For Admin [] Reschedule Appointment kay di ga work []
+    Appointment Reason of Visit in ticket #103
+
+[33mcommit 8b15d2b84402c2ca2270ec6444103bbd340e80f0[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Thu Apr 3 01:17:52 2025 +0800
+
+    doe with issue no. 3 on ticket #103 [] Multiple Pets Appointment [] Create Appointment
+
+[33mcommit 14e4451b0af0057eb50ef1d75afd6c0c7a05273d[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Thu Apr 3 00:08:59 2025 +0800
+
+    done with  2 issues in ticket #103 [] If I Click and Done, Cancel Ga Error Sya [] Ang Priority Number mag show lang only if ang Appointment Kay Scheduled na
+
+[33mcommit 60aa590cc25c1310b40def0dbec5e40486883f97[m
+Merge: fa4c70f c3687dc
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Apr 2 16:07:41 2025 +0800
+
+    Merge pull request #113 from Morty-lab/kentbranch
+    
+    pet medical record update
+
+[33mcommit c3687dca0911b9ebb4bc510f7c11f2ffe26d1b47[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed Apr 2 02:18:46 2025 +0800
+
+    pet medical record update
+
+[33mcommit fa4c70f72d5977f1f4b4bfed302d90cf06902480[m
+Merge: eb4e5d4 aed2501
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Mar 30 15:34:55 2025 +0800
+
+    Merge pull request #111 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit aed2501e90ac4faebf5b9d9430dd56b59f546daa[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sun Mar 30 15:33:32 2025 +0800
+
+    Appointments
+
+[33mcommit 77a82d59d65209c01b1ac32db113184124a4ebf2[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sun Mar 30 14:49:14 2025 +0800
+
+    Appointments
+
+[33mcommit 386e648ed57ea75d6e9bb22eafe3e10c84a5b0f2[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sun Mar 30 14:04:30 2025 +0800
+
+    appointment
+
+[33mcommit eb4e5d467e738c0d8711cd3061b22bdeee6beb20[m
+Merge: ba42820 d2a8d0c
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Mar 29 13:53:32 2025 +0800
+
+    Merge pull request #110 from Morty-lab/kentbranch
+    
+    appointment improvements
+
+[33mcommit d2a8d0c0f30ffa144558fa6bcce5622914b69f04[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sat Mar 29 13:02:10 2025 +0800
+
+    appointment improvements
+
+[33mcommit ba42820bb267ee4558c5429bfb216d3d6cb1063c[m
+Merge: 16fa276 2958e73
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Mar 28 02:42:09 2025 +0800
+
+    Merge pull request #109 from Morty-lab/kentbranch
+    
+    Appointment Module
+
+[33mcommit 2958e7367883d1674d75de5fb33c79a2e4da0e5d[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Mar 28 02:40:39 2025 +0800
+
+    Appointment Module
+
+[33mcommit 16fa2762e08286ecb47b6d9097350db6d7bad41c[m
+Merge: beea0d2 532f902
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 26 23:02:21 2025 +0800
+
+    Merge pull request #108 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 532f902bfae9fbe0de46e3de94c86b3a9bc05d36[m
+Author: Almerando V. Mendez Jr. <84453499+aidez06@users.noreply.github.com>
+Date:   Wed Mar 26 22:59:43 2025 +0800
+
+    done with some edits pushing for check
+
+[33mcommit afbf1e82ea56868bebd8567a97bf68ebef6dd897[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 24 03:28:43 2025 +0800
+
+    added additonal revisions
+
+[33mcommit 6eef76452461f22b70dca1b745f69620aee74e33[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 24 03:21:16 2025 +0800
+
+    done with staff User management functions
+
+[33mcommit 7203a087692663c5f23ebd773dc92e63f7e6770a[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 24 01:56:44 2025 +0800
+
+    pet image placeholder set sucessfully
+
+[33mcommit beea0d2738e1ffb69d61c4c6e0099ae8a8070a94[m
+Merge: c75e8be a7f4378
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 20 04:51:54 2025 +0800
+
+    Merge pull request #106 from Morty-lab/revisions
+    
+    edited admin related bugs
+
+[33mcommit a7f43787329f983f2b7216f674b1eedb7d7ae9d9[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 20 04:50:10 2025 +0800
+
+    edited admin related bugs
+
+[33mcommit c75e8be32246eb1ee079d06efff4df9976583742[m
+Merge: 21d5174 c7271af
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 19 23:50:47 2025 +0800
+
+    Merge pull request #105 from Morty-lab/revisions
+    
+    Revisions ticket #103
+
+[33mcommit c7271afd6c5659cd8fede47c0cd0528724add1de[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 19 23:49:35 2025 +0800
+
+    added error trapping on add appointment modal
+
+[33mcommit 48064e0aae2be00d65876e5d74740b867502def8[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 19 23:46:29 2025 +0800
+
+    edited view appointment page to apply changes
+
+[33mcommit 3ea30c6eb188bc08f24aaad72726b02df133d9a5[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 19 23:31:16 2025 +0800
+
+    resolved bugs for appointments and addressed portal issues with appointments for ticket #103
+
+[33mcommit 21d5174c9c4aec9298be4955a3e3df792ab4cf3f[m
+Merge: 7f86b05 dadd95d
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 19 08:36:03 2025 +0800
+
+    Merge pull request #102 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit dadd95d40c0ee3f96728c0e483daf6975abe8235[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed Mar 19 06:32:34 2025 +0800
+
+    UI Update
+
+[33mcommit df69c5794367b2c6db02c2d1e35c16615143ec40[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed Mar 19 06:15:13 2025 +0800
+
+    Update UI
+
+[33mcommit 32bd7ef3da15ce2d20237de66b79afd92182b909[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed Mar 19 05:55:38 2025 +0800
+
+    Appointment Module Update UI
+
+[33mcommit 13304e6674005a0aa7b9f4d8d934f66fbe1684f9[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Wed Mar 19 02:32:29 2025 +0800
+
+    added appointment changes
+
+[33mcommit 9b2069e691337f5595f8d54b8f8125f976cc35f6[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Tue Mar 18 04:02:03 2025 +0800
+
+    appointment pet portal side
+
+[33mcommit 7f86b052837211bd9474855ca4a9f3fa32121441[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 17 17:21:13 2025 +0800
+
+    edited web routes
+
+[33mcommit 4a9bf9f4e6eab6ec009da9c6098d0e1867428237[m
+Merge: dec34d9 0311591
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 13 23:26:36 2025 +0800
+
+    Merge pull request #101 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 0311591acc77aedbff27f0767b24389d4590c64e[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 13 23:26:14 2025 +0800
+
+    minor changes
+
+[33mcommit d26d007748198558c48d1cc0cd3074f45cdbc210[m
+Merge: 22afade 80d2ab4
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 13 23:20:12 2025 +0800
+
+    Merge branch 'main' into revisions
+
+[33mcommit 80d2ab4a76abc7e1876422b96ab14dc02acbcd0c[m
+Merge: 60030c0 dec34d9
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 13 23:20:00 2025 +0800
+
+    Merge branch 'main' of https://github.com/Morty-lab/VetIS
+
+[33mcommit 22afadeab0bd9bb767acfe0f9c8fd2e804662268[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 13 23:19:52 2025 +0800
+
+    edited some stuff
+
+[33mcommit dec34d9f19121b33d0fd2fff0db9f5afe3f34232[m
+Merge: d220be7 d888559
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 13 23:18:58 2025 +0800
+
+    Merge pull request #100 from Morty-lab/kentbranch
+    
+    Added date picker
+
+[33mcommit d8885595f1afd6fb96b10a872d7d6003ec269a81[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Thu Mar 13 23:17:53 2025 +0800
+
+    Added date picker
+
+[33mcommit 60030c0a48c3f49ddb182aa80086c8381bac1443[m
+Merge: 035b195 d220be7
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 12 11:16:51 2025 +0800
+
+    Merge branch 'main' of https://github.com/Morty-lab/VetIS
+
+[33mcommit 035b195c5b989f0d4b4d82fc8ee28f115bbe447c[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Wed Mar 12 11:16:47 2025 +0800
+
+    edited subtract stock
+
+[33mcommit d220be7ab7a03d7e7f159496a85b6921cc8d831e[m
+Merge: 2988e05 8af4670
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Mar 11 21:12:56 2025 +0800
+
+    Merge pull request #99 from Morty-lab/kentbranch
+    
+    PR for pets merge
+
+[33mcommit 8af4670da0542e4b1aa0f5680b53060c511703ce[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Tue Mar 11 14:09:18 2025 +0800
+
+    added select.js and minor changes of product stocks
+
+[33mcommit 2988e0520763b101b7394a769fd833b15712386e[m
+Merge: d208308 5768fed
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 10 23:51:04 2025 +0800
+
+    Merge pull request #98 from Morty-lab/revisions
+    
+    added fix to POS issue and edited the db for inventory and stocks
+
+[33mcommit 5768fedcfff78339cf67875248d079f060fb1452[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 10 23:50:32 2025 +0800
+
+    added fix to POS issue and edited the db for inventory and stocks
+
+[33mcommit d20830864f9a0120482c16a0a9e295d2bab3140d[m
+Merge: 011b563 96937d9
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 10 21:58:49 2025 +0800
+
+    Merge pull request #95 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 96937d9162740166c1aad94643dd704f03cc97dc[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Mar 7 21:01:51 2025 +0800
+
+    another changes
+
+[33mcommit ac4055db35a532a07ac6337819d06fc73ed5beeb[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Mar 7 20:53:45 2025 +0800
+
+    minor changes again sa add pets
+
+[33mcommit f923ba02ce252bacc9963afdd50500975fb086b2[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Mar 7 20:45:51 2025 +0800
+
+    Minor changes sa Add Pet
+
+[33mcommit 011b563c398d191e4a778a0b21fa23e6c4658709[m
+Merge: 357412c e6bd3a2
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Mar 1 09:43:31 2025 +0800
+
+    Merge pull request #91 from Morty-lab/revisions
+    
+    fixed errors on doctors
+
+[33mcommit e6bd3a24352192fc66c2c05295670ad2e46a63d6[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Sat Mar 1 09:42:55 2025 +0800
+
+    fixed errors on doctors
+
+[33mcommit 357412c8067d98081c566a06d2c1fb8beaab1e1a[m
+Merge: 1b4e3ef a0007ee
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Feb 28 10:45:59 2025 +0800
+
+    Merge pull request #90 from Morty-lab/revisions
+    
+    edited bug
+
+[33mcommit a0007ee0e2596a87ca390b53aa547d0b7a2ef6b6[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Fri Feb 28 10:45:29 2025 +0800
+
+    edited bug
+
+[33mcommit 1b4e3effba0729f95d950abee5ee700cef756a80[m
+Merge: 7efb46c 45fb6d6
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Feb 11 11:52:20 2025 +0800
+
+    Merge pull request #84 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 45fb6d6a1b437d30a7b3ba90d4059aac82906360[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Tue Feb 11 11:51:43 2025 +0800
+
+    edited routing and arranged routes
+
+[33mcommit d9eab66d4c69493005e81f166219ecc7895055f5[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Tue Feb 11 09:39:31 2025 +0800
+
+    edited reecord storing for pet records to directly record the vet name
+
+[33mcommit 7efb46c7312a31fd5f9bc878cd476d4a9fd4a4c8[m
+Merge: f6f1383 4582614
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Feb 6 10:55:29 2025 +0800
+
+    Merge pull request #83 from Morty-lab/revisions
+    
+    revisions on pet records
+
+[33mcommit 45826146760ee69dd8aa8ffba2cc3bc2e03dd5a0[m
+Author: morty_lab <aniejosephcabahug@gmail.com>
+Date:   Thu Feb 6 10:54:57 2025 +0800
+
+    revisions on pet records
+
+[33mcommit f6f1383e999f505dc73cd8be7340963d019ed48e[m
+Merge: 1fbba56 abfd24c
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Jan 20 23:50:14 2025 +0800
+
+    Merge pull request #82 from Morty-lab/revisions
+    
+    revisions for latest push
+
+[33mcommit abfd24c794bc67a7637bf49b9d4b815e60c0e91a[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Jan 20 23:49:34 2025 +0800
+
+    revisions for latest push
+
+[33mcommit 1fbba56bdb04a96337666cdd41bc201daf090ee4[m
+Merge: 389f19c ba2b763
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Jan 20 16:52:41 2025 +0800
+
+    Merge pull request #81 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit ba2b7630a76f56f955af44f210f0ade709abe768[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Sun Jan 19 01:41:10 2025 +0800
+
+    added quill on records | pls fix pet records not saving anymore | fill template not working too | wala paniy treatment
+
+[33mcommit 1b7c4babc43c4042a77c74d9533ddfccd0249cf3[m
+Author: Prince Zeljay Kent Invento <princeinventorevltn89@gmail.com>
+Date:   Fri Jan 17 00:18:09 2025 +0800
+
+    pet record
+
+[33mcommit 389f19c3ab751c560d5c806a871d30bef88f590a[m
+Merge: 27295b7 cea0312
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Jan 8 23:00:44 2025 +0800
+
+    Merge pull request #80 from Morty-lab/revisions
+    
+    schema changes
+
+[33mcommit cea03126cab696608c6f95b0962a00484b7b0dc3[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Jan 8 22:59:31 2025 +0800
+
+    schema changes
+
+[33mcommit 27295b7143161ac5320a93ae61af133ea1f9531b[m
+Merge: e21094c e9371ca
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Dec 10 12:03:52 2024 +0800
+
+    Merge pull request #79 from Morty-lab/revisios
+    
+    commits beore defense
+
+[33mcommit e9371caae84f5f123b95f262562085ad62be2878[m[33m ([m[1;31morigin/revisios[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Dec 10 12:03:03 2024 +0800
+
+    commits beore defense
+
+[33mcommit e21094c68f523bbdf5a7e49dfa4ad75fa706ff6d[m
+Merge: 69e1a24 afa83b9
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Dec 10 01:08:59 2024 +0800
+
+    Merge pull request #78 from Morty-lab/revisios
+    
+    edits
+
+[33mcommit afa83b9ba63aca515afa03612419740225a317e9[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Dec 10 00:52:41 2024 +0800
+
+    edits
+
+[33mcommit 69e1a24a920ab01f482ee32e90fe5a2ad53cfb2c[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 9 01:14:49 2024 +0800
+
+    kernel update
+
+[33mcommit 6beddb92c801aaeb476279e3f6dd9eb46156ef28[m
+Merge: a09e853 a89878f
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 9 01:09:32 2024 +0800
+
+    Merge pull request #77 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit a89878fe9a79d475f9e4bdef2d2e1a38123d60d0[m
+Merge: 30d37cf a09e853
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 9 01:09:24 2024 +0800
+
+    Merge branch 'main' into revisions
+
+[33mcommit a09e8538097066867dee0e2ed2644f81ff4712d1[m
+Merge: abc0e78 7635348
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 9 01:06:23 2024 +0800
+
+    Merge pull request #76 from Morty-lab/kentbranch
+    
+    added logo, print soap, vetsched table, fixed dates
+
+[33mcommit 76353480a2fd89e79f66e2dc682ac7daeb61cd4f[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Dec 8 21:15:02 2024 +0800
+
+    added logo, print soap, vetsched table, fixed dates
+
+[33mcommit 30d37cf618926e03b7c4f1c66347047911a010fd[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Dec 8 13:39:03 2024 +0800
+
+    vaccination reminder command set
+
+[33mcommit 361c129dd3c522c2b3869721194761d5c6cf1ff8[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Dec 8 13:20:57 2024 +0800
+
+    inverntory revisions
+
+[33mcommit abc0e784cbeea7dbf4929576be2063e7776db716[m
+Merge: 9a64326 63e094d
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Dec 6 02:55:23 2024 +0800
+
+    Merge pull request #75 from Morty-lab/revisions
+    
+    revisions nasad kapuya na uy
+
+[33mcommit 63e094d6252782770fe052d3393c751c0e909e5e[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Dec 6 02:54:26 2024 +0800
+
+    revisions nasad kapuya na uy
+
+[33mcommit 9a6432682d75acd85de7201c83e03a7ce3abd6c9[m
+Merge: 4fb3036 a6c8cd7
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Dec 6 02:30:45 2024 +0800
+
+    Merge pull request #74 from Morty-lab/revisions
+    
+    bug fixes
+
+[33mcommit a6c8cd702579eed40091eed2e129b8e2cdeba9a6[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Dec 6 02:30:21 2024 +0800
+
+    bug fixes
+
+[33mcommit 4fb30369600bccafbbb1d140c82e7d1068eed88c[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Dec 6 00:40:20 2024 +0800
+
+    added route configurations by role
+
+[33mcommit 66b5a3f1273e5bf51a215ae806adbcdf009d06b1[m
+Merge: 09764ab f03efd2
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Dec 5 23:50:06 2024 +0800
+
+    Merge pull request #73 from Morty-lab/revisions
+    
+    minor change
+
+[33mcommit f03efd21e0b41355d8bb8dcab540113dc0995a9f[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Dec 5 23:49:34 2024 +0800
+
+    minor change
+
+[33mcommit 09764ab34a41670a314f2229cce04fedb0eca3a8[m
+Merge: 4d70308 4bd0667
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Dec 5 23:48:59 2024 +0800
+
+    Merge pull request #72 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 4bd0667561bde8d73119a33af2a05ca9477ca7a4[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Dec 5 23:48:22 2024 +0800
+
+    calendar done
+
+[33mcommit 1a0b4edeba00c9852f677cfc5ef18f682c6692f9[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Dec 5 22:10:09 2024 +0800
+
+    configured reports
+
+[33mcommit 3212c0ff939c68db8070b596312080a29f351ed8[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Dec 5 18:35:59 2024 +0800
+
+    some revisions
+
+[33mcommit 487be744780462103d94b1268f100998652aecd2[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Dec 4 16:40:49 2024 +0800
+
+    edited pet update function
+
+[33mcommit 91631e21b7613ae5c3dc1e917183d44e5841351e[m
+Merge: 2d3f090 4d70308
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Dec 4 15:41:00 2024 +0800
+
+    Merge branch 'main' into revisions
+
+[33mcommit 2d3f090f6b24f4f3fff02432f4d46d0cc903da46[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Dec 4 15:40:39 2024 +0800
+
+    commit message
+
+[33mcommit 4d703081956e9ef8dce8c85504bbc8bf43bf9ca5[m
+Merge: d88336a 04f5408
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Dec 4 15:40:02 2024 +0800
+
+    Merge pull request #71 from Morty-lab/kentbranch
+    
+    UM Update
+
+[33mcommit 04f5408957118c3ab5bc3272fa8d19d7150b4534[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Dec 4 15:37:29 2024 +0800
+
+    UM Update
+
+[33mcommit 56d7e900f0919323bd54702510751460c38b48d3[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Dec 4 13:59:56 2024 +0800
+
+    edited add pet owner and edit pet owner
+
+[33mcommit 392e206f7d25b2c3b8a70503a8960e0a2f83982a[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Dec 4 13:49:04 2024 +0800
+
+    fixed clietn registration bug
+
+[33mcommit d88336a1e25e37e2038093cfadd23a32d70a8cd8[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Dec 3 11:04:18 2024 +0800
+
+    bug fixes
+
+[33mcommit 06dadbc4c49d15692d75d15528ee35ef6a7e6075[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Dec 3 04:22:52 2024 +0800
+
+    pet edit and vet info are good
+
+[33mcommit d1224783b89b787bcede3506b466f33bdf5e47a6[m
+Author: root <cabahuganiejoseph@gmail.com>
+Date:   Mon Dec 2 07:53:45 2024 +0000
+
+    backup
+
+[33mcommit f72d2a01eab352e22be427952a016c1c79e98eac[m
+Merge: c68da9e dea0475
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 03:33:24 2024 +0800
+
+    Merge pull request #70 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit dea047542d2b93dc1e19c10931c8fa58d8244b37[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 03:33:01 2024 +0800
+
+    reports somehow needs improvement later natu
+
+[33mcommit 630619cedbd2ce07be45a3bb0b34bda88644a8fb[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 02:29:56 2024 +0800
+
+    billing bug fixed
+
+[33mcommit cfbc918ff2b67b8ff0e8d626bcf4bd16adf45716[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 02:09:54 2024 +0800
+
+    appointmnets Editted
+
+[33mcommit feb0487e277993d297a10fb53dbe8d29e3fdb9fa[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 01:46:27 2024 +0800
+
+    fixed soap bug
+
+[33mcommit 31710f3a001795d3ae85e4041c90c1bdef55e788[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 01:37:55 2024 +0800
+
+    pet vaccination complete
+
+[33mcommit 0c294f6e5703989169e3dbcd2cf5fd91727e81e7[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Dec 2 00:16:38 2024 +0800
+
+    owners finished
+
+[33mcommit c68da9e3d46e9f8c03595916fadf41180d935c16[m
+Merge: 37d19e2 8c96262
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Dec 1 23:35:54 2024 +0800
+
+    Merge pull request #69 from Morty-lab/kentbranch
+    
+    new update
+
+[33mcommit 8c962627710803c92788cfc0f1694cc8dcc0770f[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Dec 1 23:29:53 2024 +0800
+
+    new update
+
+[33mcommit 37d19e20d85adb1cd3221fb8e4b3f2af4f7396f0[m
+Merge: ca4eb26 b62b73f
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 17:46:06 2024 +0800
+
+    Merge pull request #68 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit b62b73f7b475b993fcef33bf5221c9e6c9735f09[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 15:59:44 2024 +0800
+
+    pos stocks revisions
+
+[33mcommit fdc93cb0e3c942517e3f12f577d7266626082007[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 11:35:59 2024 +0800
+
+    changes and revisions
+
+[33mcommit ca4eb26511a4dcf28cf1c4ebef82603ca43ef453[m
+Merge: 7b0ff07 ab5a83e
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 10:05:41 2024 +0800
+
+    Merge pull request #67 from Morty-lab/revisions
+    
+    revisions
+
+[33mcommit ab5a83eb3dcc301b608274e039d5c0beda6a14cd[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 10:05:02 2024 +0800
+
+    revisions
+
+[33mcommit 7b0ff07ef18cd72b263cb1643b18a14112f747e2[m
+Merge: d9aaa2a af72b78
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 09:56:45 2024 +0800
+
+    Merge pull request #66 from Morty-lab/revisions
+    
+    revisions
+
+[33mcommit af72b78bd62d3d04d08687e8ae6b3ec0c2500047[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 09:55:56 2024 +0800
+
+    revisions
+
+[33mcommit d9aaa2ab7c0fd91f2fcf7269dcd01d4d5558da1f[m
+Merge: 5fef196 f53693e
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 09:23:34 2024 +0800
+
+    Merge pull request #65 from Morty-lab/revisions
+    
+    portal changes
+
+[33mcommit f53693e791f65a6474b7c9c264a37d2b7f1497e6[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 09:22:36 2024 +0800
+
+    portal changes
+
+[33mcommit 5fef1965eec8d96b8bad0158fa09badc1c609704[m
+Merge: 442635f a173039
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 29 07:54:25 2024 +0800
+
+    Merge pull request #64 from Morty-lab/kentbranch
+    
+    minor adjustments in portal
+
+[33mcommit a1730393391e3d1866b522abb60d4f585b25bfe4[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Fri Nov 29 03:05:17 2024 +0800
+
+    minor adjustments in portal
+
+[33mcommit 442635f9e3e667e03923784ac7ff165610082ccc[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 12:26:29 2024 +0800
+
+    changes
+
+[33mcommit 485dbdbe3c5253da4d3593bbe3a6acca644c1d8b[m
+Author: root <cabahuganiejoseph@gmail.com>
+Date:   Thu Nov 28 04:18:19 2024 +0000
+
+    changes
+
+[33mcommit 3a3f11e9a9f03fd7fc39a2889b6cd33903a85289[m
+Merge: 66a8911 07088ca
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 10:58:03 2024 +0800
+
+    Merge pull request #63 from Morty-lab/revisions
+    
+    portal revisions
+
+[33mcommit 07088cac770875772ecba36a84047185ebfd3111[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 10:57:35 2024 +0800
+
+    portal revisions
+
+[33mcommit 66a8911deff0bb672f8b2e3972a94ddf1b78f8f3[m
+Merge: 0da88fb e439dc8
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 09:36:01 2024 +0800
+
+    Merge pull request #62 from Morty-lab/kentbranch
+    
+    PORTAL POS UPDATE
+
+[33mcommit e439dc81329931a3625d34adb6903759764066e4[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Thu Nov 28 06:20:12 2024 +0800
+
+    PORTAL POS UPDATE
+
+[33mcommit 0da88fbee7fce6ff307a1755617c95d712eb441f[m
+Merge: a8d0157 31cb060
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 03:43:53 2024 +0800
+
+    Merge pull request #61 from Morty-lab/revisions
+    
+    revisions
+
+[33mcommit 31cb060998c5ebbfd9553e4a8724242200e21a1f[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 03:43:22 2024 +0800
+
+    revisions
+
+[33mcommit a8d0157cdde584bd66d57d33f82c91c19548f06c[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 03:09:28 2024 +0800
+
+    merge conflicts
+
+[33mcommit c9e543743bbc431896d0afa5420ba359d712853c[m
+Author: root <cabahuganiejoseph@gmail.com>
+Date:   Tue Nov 26 17:36:05 2024 +0000
+
+    will improve
+
+[33mcommit 7077d03707bf0976db2edb029c2ffd36e3d32468[m
+Merge: 4264c9c fb052e2
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 02:40:57 2024 +0800
+
+    Merge pull request #60 from Morty-lab/revisions
+    
+    revisions
+
+[33mcommit fb052e21b38b568f37ee2eeeffc45d3de6052da8[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 28 02:40:36 2024 +0800
+
+    revisions
+
+[33mcommit 4264c9c8a2d74f8e54485cc017d012b9b7bb070f[m
+Merge: f5af710 58127a1
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Nov 27 01:33:36 2024 +0800
+
+    Merge pull request #59 from Morty-lab/revisions
+    
+    Routes Clean up
+
+[33mcommit 58127a1e2a11b11bad85952655b63e141fe95817[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Nov 27 01:32:32 2024 +0800
+
+    Routes Clean up
+
+[33mcommit f5af710e2f89bb1833d62788d6bca5a191f6a69e[m
+Merge: 619b66e 5ef4e0d
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 26 12:37:45 2024 +0800
+
+    Merge pull request #58 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 5ef4e0d72ad84b5da2f678e42450d6441c153e44[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 26 12:36:55 2024 +0800
+
+    billing Finished
+
+[33mcommit 13bbb6d8b2342048e7079f4536784bb588dbbb36[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 26 10:08:40 2024 +0800
+
+    appointments edited
+
+[33mcommit 164c9f9ea274985bea26840aa8d22ec5a35638b3[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 26 09:23:20 2024 +0800
+
+    staff changed
+
+[33mcommit ca7dd3a5de93fea1036f2a9cd5c2ca84f7334585[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 25 11:57:56 2024 +0800
+
+    owner ID set
+
+[33mcommit d193bdf6fbb94ef0278843e67cac860dcc130881[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 25 11:29:22 2024 +0800
+
+    Veterinarian Email and Proofole Updated
+
+[33mcommit b3229b7627d9497325258d40c42f61be5a4a23a8[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 25 10:58:22 2024 +0800
+
+    Soap Fix -needs revision
+
+[33mcommit 619b66ef85783bd874dadd02e5c0895717f00b60[m
+Merge: 2e7b105 6449e53
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 25 09:03:15 2024 +0800
+
+    Merge pull request #57 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 6449e53af4047823d4abfd1bcfd94264e0f627ba[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Nov 25 02:53:50 2024 +0800
+
+    Main Update
+
+[33mcommit a806dbed15c0797b1212a26d70aa3aa20f81097c[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Nov 25 02:46:43 2024 +0800
+
+    Updated Main Views
+
+[33mcommit 86fa268e6fcaa0ff4893c24b30a7a7e27da57c85[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Nov 24 01:19:01 2024 +0800
+
+    Appointments | Updated Tables & Back Button on view
+
+[33mcommit dc2b9eb038d830919e11c7e72a3ca64e2db11e82[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Nov 24 00:58:08 2024 +0800
+
+    Admin Appointments Update | Design | Processes
+
+[33mcommit e73e50dbb5dfa1dd34e8d417c54d0a4afbe5b2b8[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sat Nov 23 15:22:56 2024 +0800
+
+    Minor Change in Billing
+
+[33mcommit 2e7b1057d7062f57253a9f78989d685fc16a3bd7[m
+Merge: c70d3ff f530d77
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Nov 23 15:08:01 2024 +0800
+
+    Merge pull request #55 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit f530d776a11ea607e526716736408dc66188187d[m
+Merge: d0406a9 c70d3ff
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sat Nov 23 15:05:23 2024 +0800
+
+    Merge branch 'main' into kentbranch
+
+[33mcommit d0406a97cdea707080223955e611e7658adcc53a[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sat Nov 23 15:03:31 2024 +0800
+
+    Completed Billing | Added Billing Printing | Add Due Date
+
+[33mcommit c70d3ffdd1cfa21575f59e38b6c0e4b89986acd5[m
+Merge: 87c72a1 7698c8d
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Nov 23 14:56:16 2024 +0800
+
+    Merge pull request #54 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 7698c8d338e6c78a644ed07d86c7a0fde997f597[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sat Nov 23 04:57:04 2024 +0800
+
+    small update on add billing
+
+[33mcommit f6dff4efb67bfdab30bc3fc68c6e4a4c53c6195c[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sat Nov 23 04:22:29 2024 +0800
+
+    Billing and Services Fix | Removed the shadow on some pages
+
+[33mcommit 87c72a11459f86c4e5e5b5c50af5d621bf95550b[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sat Nov 23 02:32:38 2024 +0800
+
+    another bug fix
+
+[33mcommit 19f4ef3833b60c3429387048556a065dc34d3c63[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sat Nov 23 02:22:41 2024 +0800
+
+    edited reminders
+
+[33mcommit da9691009288faf41d63998924e310b3b02b5c3e[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 14:28:13 2024 +0800
+
+    bug fixes
+
+[33mcommit b65a8e9b70440a2afe0280a7c484acf3089982ac[m
+Merge: 72181de 0c41500
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 13:57:28 2024 +0800
+
+    Merge pull request #53 from Morty-lab/billing_services
+    
+    Billing services
+
+[33mcommit 0c4150058621b529a39b92011d029fc0b4aa023f[m[33m ([m[1;31morigin/billing_services[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 13:57:00 2024 +0800
+
+    Billing and services configured
+
+[33mcommit 4b8f4781e18aacb382b0f932a3d3a81cb2d3fddd[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 12:18:04 2024 +0800
+
+    addedd services
+
+[33mcommit 72181de2bc5481021f5855816665d4cb8a53c4e2[m
+Merge: 73f0077 950e172
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 11:41:22 2024 +0800
+
+    Merge pull request #52 from Morty-lab/kentbranch
+    
+    billing kinimfiri
+
+[33mcommit 950e1729ff432aaa58267616f968c0990ca546f5[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Fri Nov 22 11:39:26 2024 +0800
+
+    billing kinimfiri
+
+[33mcommit 73f0077f1014ec35c126c3e01216bc8eb40c99f3[m
+Merge: ca09f50 00675f7
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 09:12:25 2024 +0800
+
+    Merge pull request #51 from Morty-lab/portal_configurations
+    
+    Portal configurations
+
+[33mcommit 00675f7cc0cf3544b33bcd852aeba55c6d8ca6d8[m[33m ([m[1;31morigin/portal_configurations[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 22 09:11:38 2024 +0800
+
+    finalized pethub portal
+
+[33mcommit 70100e52e34fda1f4319c46c8d25def4408bf3ef[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 21 14:56:46 2024 +0800
+
+    added appointment configurations
+
+[33mcommit 47a2b7f7022880c26f7a7b573aea4909ebd3a630[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Nov 21 13:18:03 2024 +0800
+
+    added crud functionalities to pet
+
+[33mcommit 29d7370075305aa91ead39010348b0a01b313c99[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Nov 20 09:34:28 2024 +0800
+
+    configured authentication routes
+
+[33mcommit ca09f50ba49f67220201d1fe5d3c6ceacc9b70fb[m
+Merge: a223d4d ba9bfd0
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Nov 20 03:36:46 2024 +0800
+
+    Merge pull request #50 from Morty-lab/kentbranch
+    
+    portallll
+
+[33mcommit ba9bfd0f7b9b87d11a3e0cedd0c6c1cd72bbf462[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Nov 20 02:50:34 2024 +0800
+
+    portallll
+
+[33mcommit a223d4daf8f00cf03730c833320e5ea83869a54e[m
+Merge: 3a6ec14 3824bfa
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 19 03:03:12 2024 +0800
+
+    Merge pull request #49 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 3824bfa91b8f2c18a9ca2bac28c2b25dd0568c38[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 19 03:02:33 2024 +0800
+
+    configured Email Notifications
+
+[33mcommit dd471ec9d91d877f823c01125c87ac9b2762579e[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 19 01:54:33 2024 +0800
+
+    finished the add pet function revisions
+
+[33mcommit cf66421e1548aeaa6648814777c7f1174f731871[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 18 12:33:28 2024 +0800
+
+    configured pet general iunfo
+
+[33mcommit 3a6ec14ebe5b6b805d5a63957b44636c9b5e2919[m
+Merge: c4f9b41 70534ee
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 18 11:32:58 2024 +0800
+
+    Merge pull request #48 from Morty-lab/revisions
+    
+    revisions
+
+[33mcommit 70534eee78281dba78617e1a1cc67227ef92cf98[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Nov 18 11:32:34 2024 +0800
+
+    revisions
+
+[33mcommit c4f9b413e88d9c15e1c0d46505494f88fb68fc39[m
+Author: root <root@srv485549.hstgr.cloud>
+Date:   Tue Nov 5 06:23:35 2024 +0000
+
+    production
+
+[33mcommit 198936bb19a4c471723c1d11cbaf5818942a5c63[m
+Merge: 483b631 2cbc326
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Nov 16 00:20:22 2024 +0800
+
+    Merge pull request #47 from Morty-lab/revisions
+    
+    Revisions
+
+[33mcommit 2cbc3261613e20c257fd14cac5e17d820bab83c7[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 15 23:53:52 2024 +0800
+
+    configured stock adding and other revisions
+
+[33mcommit 253d6445db41e783c69bbea400c758ec7b960f65[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 15 20:27:09 2024 +0800
+
+    added email reminders
+
+[33mcommit c276686d6e2e733d2405c20394a35a40e5b280a4[m
+Merge: 138505e 483b631
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 15 20:13:12 2024 +0800
+
+    merge conflict resolved
+
+[33mcommit 483b631ab2b706a1bb9d64ff8e8a7b36df1b2a75[m
+Merge: 2ff0e77 0331c9f
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 15 20:10:57 2024 +0800
+
+    Merge pull request #46 from Morty-lab/kentbranch
+    
+    mga chuchuness
+
+[33mcommit 0331c9f6f86a1557fced3fbce0e3db90694c43d1[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Fri Nov 15 20:09:43 2024 +0800
+
+    mga chuchuness
+
+[33mcommit 138505e25b033b352be88f70daa10b2e161ecb13[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 15 20:04:31 2024 +0800
+
+    edited dashboard configurations
+
+[33mcommit bc243a902b2c31ad48113fc514fc03f1d94220c4[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Nov 15 18:48:51 2024 +0800
+
+    dashboard routing configured
+
+[33mcommit 2ff0e776186d4c7e5991a87823354312b341ccf7[m
+Merge: 1b29e13 8f19f1c
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 12 04:28:29 2024 +0800
+
+    Merge pull request #45 from Morty-lab/bug_fixes
+    
+    bug Fixed
+
+[33mcommit 8f19f1c77f79e3f71ea0ea5ea39d994cefcf704e[m[33m ([m[1;31morigin/bug_fixes[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 12 04:28:01 2024 +0800
+
+    bug Fixed
+
+[33mcommit 1b29e130db08ccac1759ed5dbf402b0aae9e0d2c[m
+Merge: 054cf45 2fc7b85
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Nov 9 22:11:10 2024 +0800
+
+    Merge pull request #44 from Morty-lab/kentbranch
+    
+    Inventory Update and Dashboard Card Update
+
+[33mcommit 2fc7b8536501f73429b384d2cb24aec3f4559e81[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Fri Nov 8 14:10:35 2024 +0800
+
+    Inventory Update and Dashboard Card Update
+
+[33mcommit 054cf454b112a450c62b55fa74f75cac1a9fe2bb[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 5 14:44:38 2024 +0800
+
+    fixed secret leak
+
+[33mcommit 7141b99f927c31bed189e1a73e177a1564c915bd[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 5 14:37:36 2024 +0800
+
+    another bug fix
+
+[33mcommit 29f62f0717a612fccdc27731dc08705fa41baf91[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 5 14:34:53 2024 +0800
+
+    fixed user email issue
+
+[33mcommit 2c25e051a78b49e54931f4d7d98c7e9c2dceb997[m
+Merge: 4c472fc 52e0419
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 5 14:20:11 2024 +0800
+
+    Merge pull request #43 from Morty-lab/soap
+    
+    added mail notifications on appointments
+
+[33mcommit 52e0419dab4e17363e339b8cf289a2b6c03acba2[m[33m ([m[1;31morigin/soap[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Nov 5 14:18:02 2024 +0800
+
+    added mail notifications on appointments
+
+[33mcommit 4c472fc056e3b2f22f2a7fbd23b79f2177b32511[m
+Merge: 6c835bb e2ac8a0
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 01:25:34 2024 +0800
+
+    Merge pull request #42 from Morty-lab/soap
+    
+    fixed add soap bug
+
+[33mcommit e2ac8a0a502b6b3505d1dd984871602c8cc4f067[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 01:24:47 2024 +0800
+
+    fixed add soap bug
+
+[33mcommit 6c835bb7297ec5d5ab8bbc0000ee9dd1c925f2a0[m
+Merge: 3b23493 9168ebf
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 01:07:12 2024 +0800
+
+    Merge pull request #41 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 9168ebfbde3673cb49b6a81229042f1a2f69a9ce[m
+Merge: 0448a1d 3b23493
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Oct 21 01:00:15 2024 +0800
+
+    ambot unsa nani hahahha
+
+[33mcommit 0448a1dbc6530f5b7b64e4840da08d39b1017cdc[m
+Merge: cd85aab 9f0f1f9
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Oct 21 00:56:15 2024 +0800
+
+    Merge branch 'kentbranch' of https://github.com/Morty-lab/VetIS into kentbranch
+
+[33mcommit 3b2349352cf62912fd85b2194c7c3bfa98404160[m
+Merge: b27755a 9f0f1f9
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 00:53:08 2024 +0800
+
+    Merge pull request #40 from Morty-lab/kentbranch
+    
+    Merge pull request #39 from Morty-lab/main
+
+[33mcommit b27755a286589a009ab05d191d81adfd087b96ed[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 00:52:14 2024 +0800
+
+    nahuman rajud ang atay
+
+[33mcommit 9f0f1f917772eaf185625c42ca1c788900b3380f[m
+Merge: 615c958 6ac6396
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 00:42:52 2024 +0800
+
+    Merge pull request #39 from Morty-lab/main
+    
+    Merge pull request #38 from Morty-lab/kentbranch
+
+[33mcommit cd85aabd9847185e5d1525394c2f980b6e468480[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Oct 21 00:35:01 2024 +0800
+
+    unta na fix na.. naay changes sa soap ani sa pag pick ug vet
+
+[33mcommit 8379dbdb098b21e4ab39254d3e306c3a58546df2[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 21 00:25:04 2024 +0800
+
+    revert
+
+[33mcommit 6ac639660fe48643e4b08ec5a7943849bc184f14[m
+Merge: 727ca5a 615c958
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Oct 20 18:51:05 2024 +0800
+
+    Merge pull request #38 from Morty-lab/kentbranch
+    
+    push utro hahah
+
+[33mcommit 615c958621eee09a23d259e8721fedd0988fa8d3[m
+Merge: 71426b6 727ca5a
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Oct 20 18:50:49 2024 +0800
+
+    Merge branch 'main' into kentbranch
+
+[33mcommit 71426b6d0df764a43f570b7cb3e8c09a65df54ec[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Oct 20 18:46:25 2024 +0800
+
+    push utro hahah
+
+[33mcommit 727ca5af0d9726365b18b31976268f12199d710c[m
+Merge: f47b7e7 d020db5
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Oct 20 18:36:11 2024 +0800
+
+    changes
+
+[33mcommit f47b7e7af930ff208c825f4b6870f91c95138d72[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Oct 20 18:33:15 2024 +0800
+
+    changes
+
+[33mcommit d020db5cfe9b547f987f0ea2e64f63bc042b7b34[m
+Merge: f741030 bcc7e36
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Oct 20 18:31:59 2024 +0800
+
+    Merge pull request #37 from Morty-lab/kentbranch
+    
+    added changes to pet records
+
+[33mcommit bcc7e36f3ff2b55109b13de45f4fb656947746e2[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Oct 20 18:29:15 2024 +0800
+
+    added changes to pet records
+
+[33mcommit f741030fe70ef15d4ff9a490da3589a070ca337e[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Oct 16 02:18:38 2024 +0800
+
+    added destroy and update functionality on petplan
+
+[33mcommit a8862fd094dd1911c55234aeaca5827d038344d8[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Oct 16 00:13:36 2024 +0800
+
+    added update functionality (not yet finished)
+
+[33mcommit 65c48d06731a59c0ae1517dcc8dd2fa49a615559[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Oct 15 10:08:03 2024 +0800
+
+    completed add function
+
+[33mcommit fc3a45e227ab3405f1afe445803b4b9cc794916c[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Oct 14 00:23:14 2024 +0800
+
+    added functrions
+
+[33mcommit c0f9a2e2e07a13dcc6ab15ca0acb8099a3a2875b[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Oct 13 18:52:21 2024 +0800
+
+    created pet medical record schemas
+
+[33mcommit cf5c9ba2b37d53725a9d587e4eaecb9b00fc948d[m
+Merge: 374c061 8eb3453
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Oct 11 22:18:14 2024 +0800
+
+    Merge pull request #36 from Morty-lab/owners_backend
+    
+    Merge pull request #35 from Morty-lab/main
+
+[33mcommit 8eb3453c7006a7040e85cceda55f498cf7313547[m[33m ([m[1;31morigin/owners_backend[m[33m)[m
+Merge: 796ff64 374c061
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Oct 11 22:17:17 2024 +0800
+
+    Merge pull request #35 from Morty-lab/main
+    
+    merge with main
+
+[33mcommit 374c06198bb985485a099b26d3e5e8321613f031[m
+Merge: a2b2186 5813f4e
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Oct 11 22:15:22 2024 +0800
+
+    Merge pull request #34 from Morty-lab/kentbranch
+    
+    Merge pull request #33 from Morty-lab/main
+
+[33mcommit 5813f4e6b69c9097fe214341bff2673b7cf11411[m
+Merge: 596f0ac a2b2186
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Fri Oct 11 22:14:53 2024 +0800
+
+    Merge pull request #33 from Morty-lab/main
+    
+    pet owners modal
+
+[33mcommit a2b218647e17c130f907eba690c0356ae33b11bf[m
+Merge: 5a5738a 796ff64
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Oct 10 00:10:16 2024 +0800
+
+    Merge pull request #32 from Morty-lab/owners_backend
+    
+    update account added addtional revisions needed
+
+[33mcommit 796ff641680c30e9cf3671894c3286abfb8de4ec[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Oct 10 00:09:21 2024 +0800
+
+    update account added addtional revisions needed
+
+[33mcommit 5a5738abed43929ee93ee08203f5b0baedccfa96[m
+Merge: 93f5e60 ca6d8e6
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Oct 9 22:46:03 2024 +0800
+
+    Merge pull request #31 from Morty-lab/owners_backend
+    
+    Merge pull request #30 from Morty-lab/main
+
+[33mcommit ca6d8e6fa9866109de24c6a89062794ba61576d8[m
+Merge: c021d17 93f5e60
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Oct 9 22:44:22 2024 +0800
+
+    Merge pull request #30 from Morty-lab/main
+    
+    Merge backend
+
+[33mcommit 93f5e606a66cc1435593fd3c5b11649f011961ca[m
+Merge: 2c8b32d 596f0ac
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Oct 9 14:47:49 2024 +0800
+
+    Merge pull request #29 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 596f0acd220bfbce4238bb98c746e0f887e44fe5[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Oct 9 00:14:28 2024 +0800
+
+    Added Pet Owners Modals
+
+[33mcommit f85344b5340d034eae82feb219579eaa455ff1f5[m
+Merge: 391e63c 2c8b32d
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Tue Oct 8 19:10:54 2024 +0800
+
+    Merge branch 'main' of https://github.com/Morty-lab/VetIS
+
+[33mcommit 2c8b32d8a7ce478736e1964ccf9a931333149fd2[m
+Merge: 5444ee9 c021d17
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Oct 3 23:09:51 2024 +0800
+
+    Merge pull request #28 from Morty-lab/owners_backend
+    
+    Owners backend
+
+[33mcommit c021d17a45a8f63736e31db377d50510077a39f3[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Oct 3 23:07:38 2024 +0800
+
+    added some configurations, will add test next time
+
+[33mcommit f44d7bb4530c0945c628d542aa220d2e9378e3f0[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Oct 3 00:03:13 2024 +0800
+
+    added create functionality on owners(needs improvement)
+
+[33mcommit 59fa144bf763418912e491d8613d1559c47608fb[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Oct 2 01:32:46 2024 +0800
+
+    created backend for pet owners
+
+[33mcommit 5444ee9a886b49d7f0e9573b842b78d9b18a3200[m
+Merge: ce36985 8179435
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Oct 1 20:27:10 2024 +0800
+
+    Merge pull request #27 from Morty-lab/kentbranch
+    
+    changed um
+
+[33mcommit 8179435ac2f77337e10658af3145f452bb4204dc[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Tue Oct 1 20:18:53 2024 +0800
+
+    changed um
+
+[33mcommit ce36985e4e981d447c192a3e17647625e6a30dff[m
+Merge: 162d350 ef0d934
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Oct 1 20:11:45 2024 +0800
+
+    Merge pull request #26 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit ef0d93418843b4b5e1cf2dd1c6a6d317a3eeb46a[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Sep 29 22:59:56 2024 +0800
+
+    moved the usermanagement
+
+[33mcommit b5ad10e3854b7abdfc819d4c7ae4116da7602a8a[m
+Merge: e12a4f8 162d350
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Sep 29 19:44:53 2024 +0800
+
+    Merge remote-tracking branch 'origin/main' into kentbranch
+
+[33mcommit e12a4f8e33998a6a9a0e03b40dc0b0fc007bca01[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Sep 29 19:25:04 2024 +0800
+
+    web chuchuness
+
+[33mcommit 391e63c829e1eab446877deaea49a219e5c1ed14[m
+Merge: 3ef88dc 162d350
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Sep 25 23:20:38 2024 +0800
+
+    Merge branch 'main' of https://github.com/Morty-lab/VetIS
+
+[33mcommit 162d350b8c3857f408e009b479883090d030e50e[m
+Merge: 14e861d 56c7eeb
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Sep 15 14:19:52 2024 +0800
+
+    Merge pull request #25 from Morty-lab/pet_records
+    
+    Pet records
+
+[33mcommit 56c7eeb1f84da191549acb300fb19c6e75b5af89[m[33m ([m[1;31morigin/pet_records[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Sep 15 14:19:13 2024 +0800
+
+    other changes
+
+[33mcommit 0b030b2da74be4b5057e1122ebf782330e7fd379[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Sep 13 00:13:47 2024 +0800
+
+    edited pet records to handle schedules, also edited appointments: Bug->cancel status was 4 instead of 2
+
+[33mcommit 3ef88dca01bdc8ac5cd798f7b8d0d99e882fb28f[m
+Merge: 2b9b72f 14e861d
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Sep 9 15:08:09 2024 +0800
+
+    Merge branch 'main' of https://github.com/Morty-lab/VetIS
+
+[33mcommit 2b9b72fc5e76f7bfe26bcc09ee908fe722d29b0b[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Mon Sep 9 15:08:03 2024 +0800
+
+    changes
+
+[33mcommit 14e861d3be518b26fa73a2bacc437982d9e65120[m
+Merge: 77960b2 f310e66
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Sep 8 20:50:51 2024 +0800
+
+    Merge pull request #24 from Morty-lab/prodcut_expiry
+    
+    Prodcut expiry
+
+[33mcommit f310e66b688d6f0980313bd9e9c6320ef9a4c743[m[33m ([m[1;31morigin/prodcut_expiry[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Sep 8 20:47:59 2024 +0800
+
+    added expiry function together with change and pos inventory stocks functions
+
+[33mcommit ebfd8cbb4ec54c74d24eafed48953708ce30d996[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Sep 8 20:11:43 2024 +0800
+
+    added some functionalities to pos and inventory
+
+[33mcommit 0e97d040b00b40cbfebb2619df6562c9d5496c53[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Sep 6 15:17:39 2024 +0800
+
+    made some changes
+
+[33mcommit 77960b2589f6d39a28c0cad9b0d6470fbaee08df[m
+Merge: 23dda80 67f9cb1
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Sep 2 23:31:23 2024 +0800
+
+    Merge pull request #23 from Morty-lab/bug_fixes
+    
+    Bug fixes
+
+[33mcommit 67f9cb1b499b4e77e1953503613812ee3bb5e462[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Sep 2 23:30:46 2024 +0800
+
+    added staff and admin crud
+
+[33mcommit ed4b7cd6bb0845b287ac4477fdc88981f75d45eb[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Sep 1 20:59:42 2024 +0800
+
+    checked for bugs and finalized features
+
+[33mcommit d4a9cf7ac403ef3a756e65423bfcaa92ec2ce7a9[m
+Merge: d008002 c6db0c2
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Aug 28 23:14:23 2024 +0800
+
+    Merge branch 'bug_fixes' of https://github.com/Morty-lab/VetIS into bug_fixes
+
+[33mcommit c6db0c2f8ef39f7ff95246179c889bb13aa697f3[m
+Merge: a017354 23dda80
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Aug 28 23:14:10 2024 +0800
+
+    Merge pull request #22 from Morty-lab/main
+    
+    Merge with main
+
+[33mcommit d008002a7f09b7420d62c60fc6dc704ea86af242[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Aug 26 10:55:47 2024 +0800
+
+    fixes
+
+[33mcommit 23dda80ca7fd9171642a728b48e106a75c9fadaf[m
+Merge: 4c2d0e1 4dc97b9
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Aug 26 10:50:14 2024 +0800
+
+    Merge pull request #21 from Morty-lab/kentbranch
+    
+    SOAP (Medical Record Feature) UI Changes on Pet Information
+
+[33mcommit 4dc97b9f57297704a5fca81d6c8c6fae4a27dcae[m
+Merge: a81802b 4c2d0e1
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Aug 26 10:49:58 2024 +0800
+
+    Merge branch 'main' into kentbranch
+
+[33mcommit a81802b643ec748d7dca20a82107197b95ded1db[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Sun Aug 25 21:50:33 2024 +0800
+
+    SOAP (Medical Record Feature) UI Changes on Pet Information
+
+[33mcommit 4c2d0e1a77178ad0d920069a936484b4dd1c408d[m
+Merge: 0a4d450 a017354
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Wed Aug 21 14:54:43 2024 +0800
+
+    Merge pull request #20 from Morty-lab/bug_fixes
+    
+    Bug fixes
+
+[33mcommit a0173541ab961f88dcc71b65612b9acc5b18c217[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Aug 21 14:31:10 2024 +0800
+
+    same additions also fixed bugs
+
+[33mcommit 984ad6c906f2fc1cc633a3abc61637d98bc91a0b[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Aug 21 13:56:47 2024 +0800
+
+    added database integrations
+
+[33mcommit e155fd80dceb9a73630b87cc31fd6d775e5d2fab[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Wed Aug 21 11:07:39 2024 +0800
+
+    bug fixed on pos
+
+[33mcommit 0a4d450e4e4cc1f1e9e27d65c312b9786eef79b2[m
+Merge: ef095ca efbadfb
+Author: revltn <89766618+princeinvento@users.noreply.github.com>
+Date:   Tue Aug 20 15:11:26 2024 +0800
+
+    Merge pull request #19 from Morty-lab/kentbranch
+    
+    user management views
+
+[33mcommit efbadfb70545f8969fdb4fbf0ebbedfc4428d231[m
+Merge: ca2d538 ef095ca
+Author: revltn <89766618+princeinvento@users.noreply.github.com>
+Date:   Tue Aug 20 15:11:14 2024 +0800
+
+    Merge branch 'main' into kentbranch
+
+[33mcommit ca2d538055e772451948a1aac0fe6888824be3ee[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Tue Aug 20 15:09:41 2024 +0800
+
+    user management views
+
+[33mcommit ef095ca3b984417f4f81f81da5fa46df595f36a3[m
+Merge: 939227c 7946ce1
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Aug 20 13:43:29 2024 +0800
+
+    Merge pull request #18 from Morty-lab/terminal_pos
+    
+    Terminal pos
+
+[33mcommit 7946ce17e9c2267be4c5004dc256bea516233234[m[33m ([m[1;31morigin/terminal_pos[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Aug 18 05:14:56 2024 +0800
+
+    created payment logic. no backend yet
+
+[33mcommit 48d99af1230c321455d36226bf6a14a646d371a3[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Aug 15 15:07:20 2024 +0800
+
+    pos configurations
+
+[33mcommit 8e05bb6b4e0b02b94463ab1688c7c22acc3c091c[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Aug 12 23:56:56 2024 +0800
+
+    partial functions added to terminal_pos
+
+[33mcommit 939227ca0da03ace5a84f9364e5476058a345f2d[m
+Merge: 50e55d8 c60c0e2
+Author: revltn <89766618+princeinvento@users.noreply.github.com>
+Date:   Wed Aug 7 20:01:30 2024 +0800
+
+    Merge pull request #17 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit c60c0e2822410cd75274cef40c68284e3b72aec9[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Aug 7 20:00:10 2024 +0800
+
+    changes
+
+[33mcommit d02faf598ac4df0856585f2d26309898d217e852[m
+Merge: 5317b00 4afff18
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Aug 7 19:55:29 2024 +0800
+
+    merge conflict resolved
+
+[33mcommit 4afff18647a9fb9c65754d33ed604caa2573df03[m
+Merge: 426e704 50e55d8
+Author: revltn <89766618+princeinvento@users.noreply.github.com>
+Date:   Wed Aug 7 19:53:52 2024 +0800
+
+    Merge pull request #16 from Morty-lab/main
+    
+    merge request
+
+[33mcommit 5317b00dee84746525bfb7c474f79e81706cf485[m
+Merge: bf78bae 426e704
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Aug 7 19:48:13 2024 +0800
+
+    Merge branch 'kentbranch' of https://github.com/Morty-lab/VetIS into kentbranch
+
+[33mcommit bf78bae9de19f08c8cc99d516527e9cf4fb392c8[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Wed Aug 7 19:47:51 2024 +0800
+
+    pos module
+
+[33mcommit 50e55d8a86532f7f7646c6b5226a02cb26da4e19[m
+Merge: b3e730a 2e46a35
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Thu Aug 1 15:34:06 2024 +0800
+
+    Merge pull request #15 from Morty-lab/inventoryModule
+    
+    completed categories
+
+[33mcommit 2e46a352571a86946cf7a26930b6d86788a20664[m[33m ([m[1;31morigin/inventoryModule[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Aug 1 15:33:38 2024 +0800
+
+    completed categories
+
+[33mcommit b3e730a106292ad31675bc58fbb0789c8db2e1ec[m
+Merge: e8b8c55 ab8fb26
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Tue Jul 23 01:08:22 2024 +0800
+
+    Merge pull request #14 from Morty-lab/inventoryModule
+    
+    Units Done
+
+[33mcommit e8b8c55f70a0a0b47afa98709c67ff83a8af9bf7[m
+Merge: d11b863 ecc7ca2
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Mon Jul 22 23:08:50 2024 +0800
+
+    Merge pull request #13 from Morty-lab/inventoryModule
+    
+    Products is done
+
+[33mcommit ab8fb26da2b5f40274b1c6fd1b7d576deced1d6a[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Jul 22 12:49:01 2024 +0800
+
+    Units Done
+
+[33mcommit ecc7ca2e61f66dcf707e98a71126c45de41268ac[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Jul 22 10:49:31 2024 +0800
+
+    Products is done
+
+[33mcommit d11b863dd9f09093643b81fc4b67c1a898072857[m
+Merge: db47358 acc075c
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sun Jul 21 22:41:46 2024 +0800
+
+    Merge pull request #12 from Morty-lab/inventoryModule
+    
+    Updated suppliers page
+
+[33mcommit acc075ca9629149680e360cb5e6e6549eed536fe[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Jul 21 22:41:20 2024 +0800
+
+    Updated suppliers page
+
+[33mcommit db47358a50d650928673e7def0faed55a65dc0f4[m
+Merge: 9ab43e4 426e704
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Jul 20 14:18:25 2024 +0800
+
+    Merge pull request #11 from Morty-lab/kentbranch
+    
+    Kentbranch
+
+[33mcommit 426e7041ccfe07259743a68571ffc31c62dadce6[m
+Merge: 07a2a82 9ab43e4
+Author: Anie Joseph Cabahug <aniejosephcabahug@gmail.com>
+Date:   Sat Jul 20 14:18:16 2024 +0800
+
+    Merge branch 'main' into kentbranch
+
+[33mcommit 07a2a82e09ccd8b840ea9f2b301a1ad805a27e55[m
+Author: Prince <princeinventorevltn89@gmail.com>
+Date:   Thu Jul 18 00:17:38 2024 +0800
+
+    InventoryVerOne
+
+[33mcommit 9ab43e4f0a6e016e55006af1ea8c46594d580b46[m
+Merge: 65d56a6 1dcb993
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Thu May 9 23:12:16 2024 +0800
+
+    Merge pull request #10 from Morty-lab/appointments
+    
+    Appointments
+
+[33mcommit 1dcb993654aa14e108034bcffc0fe16c9c74b2bf[m[33m ([m[1;31morigin/appointments[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu May 9 23:10:36 2024 +0800
+
+    changes for da defense
+
+[33mcommit 4ed2bfbc52aa8bacf75b1f65e80f871e0b02f959[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Apr 29 02:08:33 2024 +0800
+
+    added crud operations and some minor adjustments to models
+
+[33mcommit 65d56a6b761988cbca84d4ce35125b8c9ed56ae5[m
+Merge: 1dd60fa 43abd0e
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Mon Apr 22 01:03:00 2024 +0800
+
+    Merge pull request #9 from Morty-lab/schema_changes
+    
+    additional changes
+
+[33mcommit 43abd0e45022e82d7acaff320acbe213c6e78c77[m[33m ([m[1;31morigin/schema_changes[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Apr 22 01:02:21 2024 +0800
+
+    additional changes
+
+[33mcommit 7b4e71fae4fc9cb186a3abe27945cae5c545041d[m
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Fri Apr 19 16:08:59 2024 +0800
+
+    hello
+
+[33mcommit 1dd60fa533ac1b97c5cd4b19fd2e44afc1be663c[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 19 15:49:17 2024 +0800
+
+    schema changes
+
+[33mcommit b1ef5d3a5b540775b906f161ee3ec04a12edf319[m
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Fri Apr 19 12:03:33 2024 +0800
+
+    i dunno
+
+[33mcommit f8f4da73c07e5c07860d0d48cea6d9b8491e2b1a[m
+Merge: d12639d 69ce247
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Fri Apr 12 00:23:19 2024 +0800
+
+    Merge pull request #8 from Morty-lab/pet_crud
+    
+    Pets CRUD completed
+
+[33mcommit 69ce2477a7eb0b7045c6b159501c03b981bdc31d[m[33m ([m[1;31morigin/pet_crud[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 12 00:22:33 2024 +0800
+
+    Pets CRUD completed
+
+[33mcommit d12639dc3f06fdebb79885b893c14833fde2a4f2[m
+Merge: 8fd5105 73be2e7
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Thu Apr 11 21:41:38 2024 +0800
+
+    Merge pull request #7 from Morty-lab/doctor_crud
+    
+    basic Crud for doctor finished
+
+[33mcommit 73be2e73e2a9a53cb1040e2e06a16eada7d5a314[m[33m ([m[1;31morigin/doctor_crud[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Apr 11 21:41:03 2024 +0800
+
+    basic Crud for doctor finished
+
+[33mcommit 8fd510501259bd2554f65be4fc849c0322f77c2f[m
+Merge: f242337 92df79d
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Thu Apr 11 20:32:20 2024 +0800
+
+    Merge pull request #6 from Morty-lab/doctor_auth
+    
+    Completed Doctor Authentication
+
+[33mcommit 92df79dc7ee9c53159f5c69238a861c08a4b969a[m[33m ([m[1;31morigin/doctor_auth[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Apr 11 20:31:43 2024 +0800
+
+    Completed Doctor Authentication
+
+[33mcommit d1661025d9d63ba16c15b69bfc0ae7c4fb9cdc82[m[33m ([m[1;31morigin/v2[m[33m)[m
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Mon Apr 8 00:47:34 2024 +0800
+
+    fixed asset errors
+
+[33mcommit 9c03d3291c7c18f7fe60abd1233b0531e9432d12[m
+Merge: a539956 f242337
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Sun Apr 7 23:55:09 2024 +0800
+
+    Merge branch 'v2' of https://github.com/Morty-lab/VetIS into v2
+
+[33mcommit a539956d700e088c2fe3f25e3718b931f7e4d658[m
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Sun Apr 7 23:46:09 2024 +0800
+
+    added calendar
+
+[33mcommit f242337ff1af055a1a848093ebd65e4dd2d61e3c[m
+Merge: f524040 45e96d9
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Sun Apr 7 23:37:45 2024 +0800
+
+    Merge pull request #5 from Morty-lab/doctor_routes
+    
+    added crud for doctor route
+
+[33mcommit 45e96d9ab1a242642a046bb34f5637bca839f0c5[m[33m ([m[1;31morigin/doctor_routes[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Sun Apr 7 23:37:24 2024 +0800
+
+    added crud for doctor route
+
+[33mcommit f5240407641dbcd5dc55768993b377518d5f53a6[m
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Sun Apr 7 15:33:10 2024 +0800
+
+    removed the cancelled text
+
+[33mcommit 705916c45da41d729576a693f422aae3b96c42bf[m
+Author: kent <princeinventorevltn89@gmail.com>
+Date:   Sun Apr 7 15:28:26 2024 +0800
+
+    Cancelled
+
+[33mcommit 90094fc8a7f7f7545a46131a21fba56dc53f12b7[m
+Merge: 65e439a dfb3926
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Sun Apr 7 15:12:39 2024 +0800
+
+    Merge pull request #4 from Morty-lab/view1
+    
+    added new pages
+
+[33mcommit dfb392695bd977ec6862acd9facee008e6b544d2[m
+Author: kent <aniejosephcabahug@gmail.com>
+Date:   Sun Apr 7 15:06:34 2024 +0800
+
+    added new pages
+
+[33mcommit 65e439a30c246e78d31516276fa1611d86443e21[m
+Author: kent <aniejosephcabahug@gmail.com>
+Date:   Sun Apr 7 12:22:49 2024 +0800
+
+    updates
+
+[33mcommit de5ce338c8044f558c5f8fe937ecfd6a7c63150a[m
+Merge: cb0470b 89d7c55
+Author: kent <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 5 13:26:40 2024 +0800
+
+    Merge branch 'main' of https://github.com/Morty-lab/VetIS
+
+[33mcommit cb0470b04899500342997d9da581db5f2ea71466[m
+Author: kent <aniejosephcabahug@gmail.com>
+Date:   Fri Apr 5 13:26:27 2024 +0800
+
+    Committing local changes to routes/web.php
+
+[33mcommit 89d7c55d7846433c571f5fd912682901cc4c42fb[m
+Merge: 21038d7 a855c50
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Thu Mar 28 10:51:36 2024 +0800
+
+    Merge pull request #3 from Morty-lab/models_migrations
+    
+    Added models and migrations for partial system
+
+[33mcommit a855c50bb6d8205bf68709a5f9517853489ad377[m[33m ([m[1;31morigin/models_migrations[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Thu Mar 28 10:51:00 2024 +0800
+
+    Added models and migrations for partial system
+
+[33mcommit 21038d70452fe80841095ec8c0dace64922ef477[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Tue Mar 12 22:41:11 2024 +0800
+
+    edits
+
+[33mcommit 190965b63c25ec9a2095302707d573c344c11fb2[m
+Merge: 8e5a73d 3b401bb
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Mon Mar 4 12:35:24 2024 +0800
+
+    Merge pull request #2 from Morty-lab/add_auth
+    
+    successfully added breeze authentication
+
+[33mcommit 3b401bba63ba945c00e5ad3441f6b1b7570a070e[m[33m ([m[1;31morigin/add_auth[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 4 12:34:47 2024 +0800
+
+    successfully added breeze authentication
+
+[33mcommit 8e5a73d90dcd9d5cd1e4d32e1f4bc748a6f05a08[m
+Merge: ca23b9d 177f636
+Author: Morty-lab <114476973+Morty-lab@users.noreply.github.com>
+Date:   Mon Mar 4 12:24:01 2024 +0800
+
+    Merge pull request #1 from Morty-lab/nav_configuration
+    
+    side nav partially completed
+
+[33mcommit 177f636038b1edc07f383617a06ae05e6fd1e496[m[33m ([m[1;31morigin/nav_configuration[m[33m)[m
+Author: morty <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 4 12:23:27 2024 +0800
+
+    side nav partially completed
+
+[33mcommit ca23b9d756b1a51978a51b91c61013aab2ed5eab[m
+Author: kent <aniejosephcabahug@gmail.com>
+Date:   Mon Mar 4 10:42:08 2024 +0800
+
+    Initial commit

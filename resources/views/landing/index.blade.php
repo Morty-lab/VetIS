@@ -46,7 +46,7 @@
                         Providing quality veterinary care with compassion and dedication—because your furry friends deserve the best.
                         At <strong>Pruderich Veterinary Clinic</strong>, your pet’s health and happiness are our top priority.
                     </p>
-                    <button class="btn btn-primary"><i class="fa-solid fa-paw me-2"></i>Pet Portal</button>
+                    <a class="btn btn-primary" href="{{ route('portal.login') }}"><i class="fa-solid fa-paw me-2"></i>Pet Portal</a>
                 </div>
                 <div class="col-md-6 justify-content-center d-flex align-items-center">
                     <img src="{{ asset('assets/img/landing/hero.png') }}" alt="" class="img-fluid">
@@ -133,7 +133,7 @@
         <h1 class="display-6 text-white fw-700 text-center">Ready to Give Your Pet the Best Care?</h1>
         <p class="text-white text-center mb-5">Book an appointment today and let Pruderich Veterinary Clinic take care of your furry friend.
         </p>
-        <a class="btn btn-outline-white">Book Now</a>
+        <a class="btn btn-outline-white" href="{{ route('portal.login') }}">Book Now</a>
     </div>
     <footer class="bg-white border-top py-4">
         <div class="container">
