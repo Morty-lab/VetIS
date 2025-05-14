@@ -97,22 +97,32 @@
                                 <div class="row gy-3" style="">
                                     <div class="col-md-6">
                                         <label for="paymentType" class="form-label">Payment Type</label>
-                                        <select class="form-select" id="paymentType" name="payment_type"
-                                            onchange="updatePaymentType(this.value)" required>
-                                            <option value="">-- Select Payment Type --</option>
-                                            <option value="Cash">Cash</option>
+                                        <select class="form-select billing-payment-type" id="paymentType" name="payment_type"
+                                            onchange="updatePaymentType(this.value)" data-placeholder="Select Payment Type" required>
+                                            <option value=""></option>
+                                            <option value="Cash">Full Payment</option>
                                             <option value="Partial">Partial Payment</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="paymentType" class="form-label">Apply Discount</label>
-                                        <select class="form-select" id="" name="discount" required>
-                                            <option value="">-- Select Discount --</option>
+                                        <select class="form-select billing-discount-type" id="" name="discount" data-placeholder="Select Discount" required>
+                                            <option value=""></option>
                                             <option value="Cash">Student Discount (P1000)</option>
                                             <option value="Partial">Senior Discount (5%)</option>
                                         </select>
                                     </div>
                                     <div class="col-md-12">
+                                         <!-- Due Date (only for Partial Payment) -->
+                                        <div class="mb-3 d-none" id="dueDateContainer">
+                                            <label for="dueDate" class="form-label">Due Date</label>
+                                            <div class="input-group input-group-joined">
+                                                <input type="date" class="form-control" id="dueDate" name="due_date" placeholder="Select a Due Date">
+                                                <span class="input-group-text">
+                                                    <i data-feather="calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                         <!-- Joined input group prepend example-->
                                         <label for="cashGiven" class="form-label">Cash Given</label>
                                         <div class="input-group">
@@ -122,12 +132,10 @@
                                             <input type="number" class="form-control" id="cashGiven" name="cash_given"
                                                 min="0" step="0.01" oninput="updateCashGiven(this.value)"
                                                 required>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid amount based on the payment type.
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- Due Date (only for Partial Payment) -->
-                                    <div class="mb-3 d-none" id="dueDateContainer">
-                                        <label for="dueDate" class="form-label">Due Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="due_date">
                                     </div>
                                     <div class="col-md-12">
                                         <button class="btn btn-primary w-100" type="button"
@@ -136,13 +144,19 @@
                                 </div>
 
                                 {{-- Basta ma submit na then successfull mo open sa new tab ang invoice sa billing --}}
-                                {{-- <div style="" id="change">
+                                <div style="" id="change">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h1 class="fw-500 text-primary">
                                                 Thank you for your Purchase!
                                             </h1>
                                             <hr>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-0">Payment Type:</p>
+                                                <p class="text-lg mb-0 fw-400 grand-total">Partial</p>
+                                            </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -153,9 +167,22 @@
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Cash Given:</p>
-                                                <p class="text-lg mb-0 fw-400 " id="cash">1000</p>
+                                                <p class="text-lg mb-0 fw-400 " id="cash">250</p>
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-0">Due Date:</p>
+                                                <p class="text-lg mb-0 fw-400 " id="cash">05/19/2025</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-0 text-lg">Remaining Balance:</p>
+                                                <p class="display-6 text-blue mb-0 fw-500 " id="cash">250</p>
+                                            </div>
+                                        </div>
+                                        {{-- Dili ni mag show if Partial Payment ang Change --}}
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-0">Change:</p>
@@ -163,7 +190,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -265,7 +292,7 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $fee->service_name }}</td>
-                                        <td>Php {{ number_format($feePrice, 2) }}</td>
+                                        <td>₱{{ number_format($feePrice, 2) }}</td>
                                         <td>
                                             <button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal"
                                                 data-bs-target="#feeQty-{{ $fee->id }}">Select</button>
@@ -304,7 +331,7 @@
                                 @foreach ($services as $service)
                                     <tr>
                                         <td>{{ $service->service_name }}</td>
-                                        <td>{{ $service->service_price }}</td>
+                                        <td>₱{{ $service->service_price }}</td>
                                         <td>
                                             <button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal"
                                                 data-bs-target="#serviceQty-{{ $service->id }}"
@@ -499,12 +526,14 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1">Veterinarian</label>
-                                <div class="">
-                                    <p class="mb-0">{{ $service->veterinarian }}</p>
+                            @if (!empty($service->veterinarian))
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Veterinarian</label>
+                                    <div>
+                                        <p class="mb-0">{{ $service->veterinarian }}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <hr class="mt-3 mb-2">
                             <div class="col-md-12">
                                 <label for="" class="mb-1">Who is this Service for?</label>
@@ -1011,29 +1040,217 @@
 
         }
 
-        function submitForm() {
-            if (!payment_type) {
-                alert('Payment type is required');
-                return;
+        // Global variables
+        let discountAmount = 0;
+        let finalPrice = subTotal;
+
+        // Initialize when document is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Assume we have a total price from somewhere in your application
+            // For demonstration, let's set a sample price
+            totalPrice = subTotal; // Replace this with your actual price from the system
+            updateFinalPrice();
+            
+            // Initialize select2 if it's being used
+            try {
+                $('.billing-payment-type').select2({
+                    minimumResultsForSearch: Infinity,
+                    placeholder: $(this).data('placeholder')
+                });
+                
+                $('.billing-discount-type').select2({
+                    minimumResultsForSearch: Infinity,
+                    placeholder: $(this).data('placeholder')
+                });
+            } catch (e) {
+                console.log('Select2 not available or already initialized');
             }
+            
+            // Set up event listeners
+            document.querySelector('.billing-discount-type').addEventListener('change', function() {
+                applyDiscount(this.value);
+            });
+            
+            // Set min date for due date as tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('dueDate').min = tomorrow.toISOString().split('T')[0];
+        });
 
-            if (cash_given != 0 && payment_type == 'Partial' && document.getElementById('dueDate').value == '') {
-                alert('Due date is required');
-                return;
+        // Function to update payment type display and validation
+        function updatePaymentType(paymentType) {
+            const cashGivenInput = document.getElementById('cashGiven');
+            const dueDateContainer = document.getElementById('dueDateContainer');
+            const dueDate = document.getElementById('dueDate');
+            
+            // Reset validation styling
+            cashGivenInput.classList.remove('is-invalid');
+            
+            if (paymentType === 'Cash') {
+                // Full payment - Due date not needed
+                dueDateContainer.classList.add('d-none');
+                dueDate.required = false;
+                
+                // Set minimum cash given to the final price
+                cashGivenInput.min = finalPrice;
+                cashGivenInput.setAttribute('placeholder', `Minimum ${finalPrice.toFixed(2)}`);
+                
+            } else if (paymentType === 'Partial') {
+                // Partial payment - Due date required
+                dueDateContainer.classList.remove('d-none');
+                dueDate.required = true;
+                
+                // Cash given should be less than the final price but greater than 0
+                cashGivenInput.min = 1;
+                cashGivenInput.max = finalPrice - 0.01;
+                cashGivenInput.setAttribute('placeholder', `Less than ${finalPrice.toFixed(2)}`);
+            } else {
+                // No selection - hide due date
+                dueDateContainer.classList.add('d-none');
+                dueDate.required = false;
             }
-
-            if (cash_given < total && payment_type == 'Cash') {
-                alert('Cash given is less than the total amount');
-                return;
-            }
-
-
-
-
-
-
-            document.getElementById('paymentForm').submit();
+            
+            // Clear cash given value when payment type changes
+            cashGivenInput.value = '';
         }
+
+        // Function to validate cash given
+        function updateCashGiven(amount) {
+            const cashGivenInput = document.getElementById('cashGiven');
+            const paymentType = document.getElementById('paymentType').value;
+            
+            // Convert to number
+            const cashGiven = parseFloat(amount) || 0;
+            
+            if (paymentType === 'Cash') {
+                // For full payment, cash must be >= final price
+                if (cashGiven < finalPrice) {
+                    cashGivenInput.classList.add('is-invalid');
+                    return false;
+                } else {
+                    cashGivenInput.classList.remove('is-invalid');
+                    return true;
+                }
+            } else if (paymentType === 'Partial') {
+                // For partial payment, cash must be > 0 and < final price
+                if (cashGiven <= 0 || cashGiven >= finalPrice) {
+                    cashGivenInput.classList.add('is-invalid');
+                    return false;
+                } else {
+                    cashGivenInput.classList.remove('is-invalid');
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        // Function to apply selected discount
+        function applyDiscount(discountType) {
+            switch(discountType) {
+                case 'Cash': // Student Discount (P1000)
+                    discountAmount = 1000;
+                    break;
+                case 'Partial': // Senior Discount (5%)
+                    discountAmount = totalPrice * 0.05;
+                    break;
+                default:
+                    discountAmount = 0;
+            }
+            
+            updateFinalPrice();
+        }
+
+        // Update final price after discount
+        function updateFinalPrice() {
+            finalPrice = totalPrice - discountAmount;
+            if (finalPrice < 0) finalPrice = 0;
+            
+            // Update any price display elements in your UI
+            // For example: document.getElementById('finalPriceDisplay').textContent = `₱${finalPrice.toFixed(2)}`;
+            
+            // If payment type is already selected, update the validation constraints
+            const paymentType = document.getElementById('paymentType').value;
+            if (paymentType) {
+                updatePaymentType(paymentType);
+            }
+        }
+
+        // Function to validate the entire form before submission
+        function validateForm() {
+            let isValid = true;
+            const paymentType = document.getElementById('paymentType').value;
+            const cashGiven = document.getElementById('cashGiven').value;
+            const dueDate = document.getElementById('dueDate');
+            
+            // Check if payment type is selected
+            if (!paymentType) {
+                document.getElementById('paymentType').classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate cash given based on payment type
+            if (!updateCashGiven(cashGiven)) {
+                isValid = false;
+            }
+            
+            // If partial payment, ensure due date is set
+            if (paymentType === 'Partial') {
+                if (!dueDate.value) {
+                    dueDate.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    dueDate.classList.remove('is-invalid');
+                }
+            }
+            
+            return isValid;
+        }
+
+        // Function to submit the form
+        function submitForm() {
+            if (validateForm()) {
+                // Calculate change for display (only applicable for full payment)
+                const paymentType = document.getElementById('paymentType').value;
+                const cashGiven = parseFloat(document.getElementById('cashGiven').value) || 0;
+                
+                if (paymentType === 'Cash') {
+                    const change = cashGiven - finalPrice;
+                    // You can display the change somewhere in your UI
+                    alert(`Payment successful! Change: ₱${change.toFixed(2)}`);
+                } else if (paymentType === 'Partial') {
+                    const remaining = finalPrice - cashGiven;
+                    const dueDate = document.getElementById('dueDate').value;
+                    alert(`Partial payment accepted! Remaining balance: ₱${remaining.toFixed(2)} due on ${dueDate}`);
+                }
+                
+                // Submit the form or call your API here
+                // document.getElementById('paymentForm').submit();
+            } else {
+                // Show general error message
+                alert('Please check the form for errors and try again.');
+            }
+        }
+
+        // function submitForm() {
+        //     if (!payment_type) {
+        //         alert('Payment type is required');
+        //         return;
+        //     }
+
+        //     if (cash_given != 0 && payment_type == 'Partial' && document.getElementById('dueDate').value == '') {
+        //         alert('Due date is required');
+        //         return;
+        //     }
+
+        //     if (cash_given < total && payment_type == 'Cash') {
+        //         alert('Cash given is less than the total amount');
+        //         return;
+        //     }
+
+
+        //     document.getElementById('paymentForm').submit();
+        // }
 
 
         function addServiceToTable(serviceId, serviceName, servicePrice, pet) {
