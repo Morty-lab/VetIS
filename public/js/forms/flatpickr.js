@@ -43,3 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
         maxDate: new Date().fp_incr(60), // Limit to 2 months ahead (60 days)
     });
 });
+
+flatpickr("#dueDate", {
+    dateFormat: "Y-m-d", // format like 2025-03-13
+    minDate: "today",     // Restrict selection to today or earlier
+    disableMobile: "true"
+});
