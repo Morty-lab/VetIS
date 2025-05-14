@@ -1208,7 +1208,7 @@
             });
             cashGivenInput.setAttribute('placeholder', `Minimum ${total.toFixed(2)}`);
 
-            totalInput.value = total - discountAmount;
+            totalInput.value = total;
         }
 
         // Update final price after discount
@@ -1288,7 +1288,7 @@
                 }
 
                 // Submit the form or call your API here
-                // document.getElementById('paymentForm').submit();
+                document.getElementById('paymentForm').submit();
             } else {
                 // Show general error message
                 alert('Please check the form for errors and try again.');
