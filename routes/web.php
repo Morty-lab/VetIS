@@ -51,7 +51,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
-    return redirect()->route('portal.login');
+    return redirect()->route('landing');
 });
 Route::get('/landingpage', function () {
     return view('landing.index');
