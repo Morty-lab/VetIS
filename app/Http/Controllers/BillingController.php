@@ -39,12 +39,13 @@ class BillingController extends Controller
         $vet = Doctor::where('id', $request->vet)->first();
         $pet = Pets::where('owner_id', $request->pet_owner)->get();
         $services = Services::where('service_type', 'services')->get();
+        $discounts = Services::where('service_type', 'discounts')->get();
         $fees = Services::where('service_type', 'fees')->get();
         $medication_id = Category::where('category_name', 'Medications')->first()->id;
         $medications = Products::where('product_category', $medication_id)->get();
 
 
-        return view('billing.add',['pets'=>$pet,'owner'=>$owner ,'services'=>$services, 'vet'=>$vet, 'medications'=>$medications, 'fees'=>$fees]);
+        return view('billing.add',['pets'=>$pet,'owner'=>$owner ,'services'=>$services, 'vet'=>$vet, 'medications'=>$medications, 'fees'=>$fees, 'discounts'=>$discounts]);
     }
 
     /**
@@ -107,7 +108,7 @@ class BillingController extends Controller
                     'billing_id' => $billing->id, // Use the ID of the saved billing record
                     'product_id' => $medication['serviceID'],
                     'service_price' => $medication['price'],
-                    'quantity' => $medication['quantity'] 
+                    'quantity' => $medication['quantity']
                 ]);
             }
         }
