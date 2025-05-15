@@ -35,7 +35,7 @@
                         @endphp
                         <tr>
                             <td>Dr. {{ $doctor->fullname() }} @if($doctor->status == 0)
-                                    <span class="badge bg-light text-body ms-2">Account Disabled</span>
+                                    <span class="badge bg-dark rounded-pill text-white ms-2">Disabled</span>
                                 @endif</td>
                             <td><a class="text-body" href="mailto:{{ $doctor->doctor_email }}">{{ $doctor->doctor_email }}</a></td>
                             <td><a class="text-body" href="tel:{{ $doctor->phone_number }}">{{ $doctor->phone_number }}</a></td>

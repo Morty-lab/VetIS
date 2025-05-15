@@ -74,7 +74,7 @@
                 <tbody>
                     @foreach($billings as $billing)
                     <tr>
-                        <td>{{sprintf("VETISBILL-%05d",$billing->id)}}</td>
+                        <td>{{sprintf("#%05d",$billing->id)}}</td>
                         <td>{{$billing->created_at}}</td>
                         <td>
                             {{ $clients->firstWhere('id', $billing->user_id)?->client_name ?? 'Unknown' }}

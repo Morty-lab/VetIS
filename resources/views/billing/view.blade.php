@@ -26,17 +26,17 @@
                     <!-- Billing Info -->
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
-                            <h1 class="mb-0">Pruderich Veterinary Clinic</h1>
+                            <p class="mb-0 text-lg fw-bold">Pruderich Veterinary Clinic</p>
                             <p class="mb-0">Purok - 3, Dologon, Maramag, Bukidnon</p>
                         </div>
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-7 mt-1 mt-md-0">
-                                    <label for="billing_number" class="form-label mb-0 text-primary">Billing Number</label>
-                                    <p class="mb-0">{{sprintf("#VETISBILL-%05d",$billing->id )}}</p>
+                                    <label for="billing_number" class="form-label mb-0">Billing Number</label>
+                                    <p class="mb-0">{{sprintf("#%05d",$billing->id )}}</p>
                                 </div>
                                 <div class="col-md-5 mt-1 mt-md-0">
-                                    <label for="billing_date" class="form-label mb-0 text-primary">Date</label>
+                                    <label for="billing_date" class="form-label mb-0">Date</label>
                                     <p class="mb-0">{{ \Carbon\Carbon::parse($billing->created_at)->format('F d, Y') }}</p>
 
                                 </div>
@@ -45,43 +45,33 @@
                     </div>
                     <hr class="mx-0">
                     <!-- Owner and Pet Info -->
-                    <div class="row g-4 mb-3">
-                        <!-- Owner Details -->
-                        <div class="col-md-6">
-                            <label for="owner" class="form-label mb-1 fw-bold text-primary">Owner Details</label>
-                            <div class="mb-1">
-                                <span class="fw-semibold">Name:</span>  {{$owner->client_name}}
+                    <div class="col-12 mb-3">
+                        <div class="border rounded overflow-auto text-nowrap">
+                            <div class="d-flex border-bottom">
+                                <div class="p-2 border-end w-100">
+                                    <span class="fw-semibold">Name:</span> <br> {{$owner->client_name}}
+                                </div>
+                                <div class="p-2 border-end w-100">
+                                    <span class="fw-semibold">Address:</span> <br> {{$owner->client_address}}
+                                </div>
+                                <div class="p-2 w-100">
+                                    <span class="fw-semibold">Phone:</span> <br> {{$owner->client_no}}
+                                </div>
                             </div>
-                            <div class="mb-1">
-                                <span class="fw-semibold">Address:</span> {{$owner->client_address}}
-                            </div>
-                            <div class="mb-1">
-                                <span class="fw-semibold">Phone:</span> {{$owner->client_no}}
-                            </div>
-                        </div>
-
-                        <!-- Pet Details -->
-                        <div class="col-md-6">
-                            <label for="pet" class="form-label mb-1 fw-bold text-primary">Pet Details</label>
-                            <div class="mb-1">
-                                <span class="fw-semibold">Name:</span> {{$pet->pet_name}}
-                            </div>
-                            <div class="mb-1">
-                                <span class="fw-semibold">Breed:</span> {{$pet->pet_breed}}
-                            </div>
-                            @php
-                                $pet = \App\Models\Pets::find($pet->id); // Retrieve the specific pet instance
-                                $petage = $pet ? $pet->age : 'Unknown';
-                            @endphp
-                            <div class="mb-1">
-                                <span class="fw-semibold">Age:</span> {{$petage}}
+                            <div class="d-flex">
+                                <div class="p-2 border-end w-100">
+                                    <span class="fw-semibold">Pets:</span> <br> Lexie, Blacky
+                                </div>
+                                <div class="p-2 border-end w-100">
+                                    <span class="fw-semibold">Attending Veterinarian:</span> <br> Kent Invento
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                         
                     <hr class="mt-5 mb-3">
                     <!-- Services Availed -->
-                    <div class="row mb-3 rounded mx-0">
-                        <label class="form-label fw-bold text-primary p-0">Services Availed</label>
+                    {{-- <div class="row mb-3 rounded mx-0">
+                        <label class="form-label fw-bold p-0">Services Availed</label>
                         <ul class="list-group p-0">
                             @php
                             $total = 0;
@@ -111,10 +101,129 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
+                    <!-- <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label for="payable" class="form-label mb-1">Total Payable</label>
+                            <p id="payable" class="p-2 ps-3 text-primary fw-bold text-lg rounded border">₱1,000.00</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="amount_paid" class="form-label mb-1">Amount Paid</label>
+                            <p class="p-2 ps-3 rounded border">₱500.00</p>
+                        </div>
+                    </div> -->
 
-                    <hr class="mt-0">
+                    <!-- Remaining Balance -->
+                    <!-- <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <label for="remaining_balance" class="form-label mb-1 fw-bold">Remaining Balance</label>
+                            <p class="rounded text-danger fw-bold">₱500.00</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="card shadow-none mb-4">
+                <div class="card-body">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Service/Medication</th>
+                                    <th>Pet</th>
+                                    <th>Price</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $total = 0;
+                                @endphp
+                        
+                                @foreach($services_availed as $s)
+                                    @php
+                                        $service = $services->firstWhere('id', $s->service_id);
+                                        $lineTotal = $service ? $service->service_price * ($s->quantity ?? 1) : 0;
+                                        $total += $lineTotal;
+                                    @endphp
+                                    @if($service)
+                                        <tr>
+                                            <td>{{ $service->service_name }}</td>
+                                            <td>Lexie</td>
+                                            <td>₱{{ number_format($service->service_price, 2) }}</td>
+                                            <td class="text-center">x{{ $s->quantity ?? 1 }}</td>
+                                            <td class="text-end">₱{{ number_format($lineTotal, 2) }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>       
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end">
+                                    <div class="col-md-9 text-end">
+                                        <span class="fw-bold">Sub Total:</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <span class="text-primary fw-bold me-3">₱{{ number_format($total, 2) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end">
+                                    <div class="col-md-9 text-end">
+                                        <span class="fw-bold">Discount:</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <span class="text-primary fw-bold me-3">3%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end">
+                                    <div class="col-md-9 text-end">
+                                        <span class="fw-bold">Total:</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <span class="text-primary fw-bold me-3">₱{{ number_format($total, 2) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                 
+                    </div>                    
 
+                    {{-- <div class="row mb-3 rounded mx-0">
+                        <label class="form-label fw-bold p-0">Services Availed</label>
+                        <ul class="list-group p-0">
+                            @php
+                            $total = 0;
+                            @endphp
+
+                            @foreach($services_availed as $s)
+                                @php
+                                    // Find the service that matches the current service_id
+                                    $service = $services->firstWhere('id', $s->service_id);
+                                    $total += $service->service_price;
+                                @endphp
+                                @if($service)
+                                    <li class="list-group-item border-0 bg-transparent py-1 px-2 text-body">
+                                        <div class="row">
+                                            <div class="col-5">{{ $service->service_name }}</div>
+                                            <div class="col-3 text-center">x{{ $s->quantity ?? 1 }}</div>
+                                            <div class="col-4 text-end text-primary">₱{{ number_format($service->service_price, 2) }}</div>
+                                        </div>
+                                    </li>
+                                @endif
+                            @endforeach
+                            <!-- Total Row -->
+                            <li class="list-group-item border-0 bg-transparent py-1 pt-3 px-2 text-body fw-bold">
+                                <div class="row">
+                                    <div class="col-md-7 text-end"></div>
+                                    <div class="col-md-5 text-end border-top pt-3">Total: <span class="ms-3 text-primary">₱{{$total}}</span></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> --}}
                     <!-- <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label for="payable" class="form-label mb-1">Total Payable</label>
@@ -145,23 +254,31 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="paymentType" class="form-label fw-bold text-primary">Payment Type</label>
-                            <p class="mb-1 badge text-sm rounded-pill
-                                @if($billing->payment_type === 'full_payment') bg-success-soft text-success
-                                @elseif($billing->payment_type === 'partial_payment') bg-warning-soft text-warning
-                                @elseif($billing->payment_type === 'pending_payment') bg-danger-soft text-danger
-                                @else bg-secondary-soft text-secondary
-                                @endif">
-                                {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}
-                            </p>
+                            <div class="d-block">
+                                <p class="mb-1 badge text-sm rounded-pill
+                                    @if($billing->payment_type === 'full_payment') bg-success-soft text-success
+                                    @elseif($billing->payment_type === 'Partial') bg-secondary-soft text-secondary
+                                    @elseif($billing->payment_type === 'pending_payment') bg-danger-soft text-danger
+                                    @else bg-secondary-soft text-secondary
+                                    @endif">
+                                    @if($billing->payment_type === 'Partial')
+                                    Partial Payment
+                                    @elseif($billing->payment_type === 'full_payment')
+                                        Full Payment
+                                    @else
+                                        {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}
+                                    @endif
+                                </p>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <label for="due_date" class="form-label fw-bold text-primary">Due Date</label>
                             <p class="mb-1">{{\Carbon\Carbon::parse($billing->due_date)->format('F d,Y') ?? ''}}</p>
                         </div>
-                        <hr class="m-0 mt-2">
+                        <hr class="m-0 mt-3 mb-2">
                         <div class="col-md-6">
-                            <label for="service_total" class="form-label fw-bold text-primary">Total</label>
-                            <p class="rounded fw-bold">₱{{$total}}</p>
+                            <label for="service_total" class="form-label fw-bold text-primary">Bill Total</label>
+                            <p class="rounded fw-bold mb-0">₱{{number_format( $total, 2)}}</p>
                         </div>
                         <div class="col-md-6">
                             <label for="remaining_balance" class="form-label fw-bold text-primary">Remaining Balance</label>
@@ -193,20 +310,20 @@
                                 <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
                             @else
                                 <!-- Remaining Balance -->
-                                <p class="rounded text-danger fw-bold">₱{{ number_format($remainingBalance, 2) }}</p>
+                                <p class="rounded text-danger fw-bold mb-0">₱{{ number_format($remainingBalance, 2) }}</p>
                             @endif
                         </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <!-- Trigger Modal -->
+                        @if(!$fullyPaid)
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartialPaymentModal">
+                                Add Payment
+                            </button>
+                        @endif
 
-                        <hr class="m-0">
-                        <div class="col-md-12 d-flex justify-content-end">
-                            <!-- Trigger Modal -->
-                            @if(!$fullyPaid)
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartialPaymentModal">
-                                    Add Payment
-                                </button>
-                            @endif
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -238,7 +355,7 @@
 
                         @foreach($payments as $p)
                             <tr>
-                                <td>{{ sprintf("#VetIS-%05d", $p->id)}}</td>
+                                <td>{{ sprintf("#%05d", $p->id)}}</td>
                                 <td>{{\Carbon\Carbon::parse($p->created_at)->format('m/d/Y')}}</td>
                                 <td>₱ {{$p->amount_to_pay}}</td>
                                 <td>₱ {{$p->cash_given}}</td>
@@ -320,7 +437,7 @@
                     <!-- Payment Amount Section -->
                     <div class="mb-3">
                         <label for="amount_given" class="form-label">Cash Given</label>
-                        <input type="number" name="cash_given" id="amount_given" class="form-control" min="1" placeholder="Enter amount given" required>
+                        <input type="number" name="cash_given" id="amount_given" class="form-control" min="0.01" step="0.01" placeholder="Enter amount given" required>
                         <input type="hidden" name="amount_to_pay" value={{$remainingBalance}}>
                     </div>
 {{--                    <div class="mb-3">--}}

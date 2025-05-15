@@ -147,7 +147,7 @@
         <hr>
         <!-- Billing Info Section -->
         <div class="details mb-3">
-            <div><strong>Billing Number:</strong> {{sprintf("#VETISBILL-%05d",$billing->id )}}</div>
+            <div><strong>Billing Number:</strong> {{sprintf("#%05d",$billing->id )}}</div>
             <div><strong>Date:</strong> {{ \Carbon\Carbon::parse($billing->created_at)->format('F d, Y') }}</div>
         </div>
 
@@ -159,7 +159,7 @@
                 <div><strong>Address:</strong> {{$owner->client_address}}</div>
                 <div><strong>Phone:</strong> {{$owner->client_no}}</div>
             </div>
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <strong>Pet Details</strong>
                 <div><strong>Name:</strong> {{$pet->pet_name}}</div>
                 <div><strong>Breed:</strong> {{$pet->pet_breed}}</div>
@@ -168,41 +168,84 @@
                     $petage = $pet ? $pet->age : 'Unknown';
                 @endphp
                 <div><strong>Age:</strong> {{$petage}} years</div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Services Availed Section as Table -->
         <div class="services mb-4">
-            <h3>Services Availed</h3>
-            <table class="services-table">
-                <tbody>
-                @php
-                    $total = 0;
-                @endphp
-                @foreach($services_availed as $s)
-                    @php
-                        // Find the service that matches the current service_id
-                        $service = $services->firstWhere('id', $s->service_id);
-                        $total += $service->service_price;
-                    @endphp
-                    @if($service)
+            <p class="fw-bold" style="font-size: 20px">Services Availed</p>
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ $service->service_name }}</td>
-                            <td>x{{ $s->quantity ?? 1 }}</td>
-                            <td class="text-primary">₱{{ number_format($service->service_price, 2) }}</td>
+                            <th>Service/Medication</th>
+                            <th>Pet</th>
+                            <th>Price</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-end">Total</th>
                         </tr>
-                    @endif
-
-                @endforeach
-
-
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @php
+                            $total = 0;
+                        @endphp
+                
+                        @foreach($services_availed as $s)
+                            @php
+                                $service = $services->firstWhere('id', $s->service_id);
+                                $lineTotal = $service ? $service->service_price * ($s->quantity ?? 1) : 0;
+                                $total += $lineTotal;
+                            @endphp
+                            @if($service)
+                                <tr>
+                                    <td>{{ $service->service_name }}</td>
+                                    <td>Lexie</td>
+                                    <td>₱{{ number_format($service->service_price, 2) }}</td>
+                                    <td class="text-center">x{{ $s->quantity ?? 1 }}</td>
+                                    <td class="text-end">₱{{ number_format($lineTotal, 2) }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>       
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end">
+                            <div class="col-md-9 text-end">
+                                <span class="fw-bold">Sub Total:</span>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <span class="text-primary fw-bold me-2">₱{{ number_format($total, 2) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end">
+                            <div class="col-md-9 text-end">
+                                <span class="fw-bold">Discount:</span>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <span class="text-primary fw-bold me-2">3%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end">
+                            <div class="col-md-9 text-end">
+                                <span class="fw-bold">Total:</span>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <span class="text-primary fw-bold me-2">₱{{ number_format($total, 2) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>                 
+            </div>             
         </div>
 
         <!-- Billing History Section -->
         <div class="billing-history mb-4">
-            <h3>Billing History</h3>
+            <p class="fw-bold" style="font-size: 20px">Billing History</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -216,7 +259,7 @@
                 <tbody>
                 @foreach($payments as $p)
                     <tr>
-                        <td>{{ sprintf("#VetIS-%05d", $p->id)}}</td>
+                        <td>{{ sprintf("#%05d", $p->id)}}</td>
                         <td>{{\Carbon\Carbon::parse($p->created_at)->format('m/d/Y')}}</td>
                         <td class="text-primary">₱{{$p->amount_to_pay}}</td>
                         <td class="text-primary">₱{{$p->cash_given}}</td>

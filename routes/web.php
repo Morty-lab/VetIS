@@ -53,7 +53,7 @@ Route::get('/', function () {
     }
     return redirect()->route('landing');
 });
-Route::get('/landingpage', function () {
+Route::get('/home', function () {
     return view('landing.index');
 })->name('landing');
 
