@@ -142,6 +142,10 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     //Pet Vaccination
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
     Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
+     Route::get('/records/vaccination', [VaccinationController::class, 'showVaccinationRecords'])->name('records.vaccination');
+    Route::get('/records/vaccination/view', [VaccinationController::class, 'showVaccination'])->name('records.vaccination.view');
+    Route::post('/pets/vaccination/dosage/add', [VaccinationController::class, 'addDosage'])->name('vaccination.dosage.add');
+
 
     //Pet Records
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
@@ -166,8 +170,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
     Route::post('/records/medical/create', [RecordsController::class, 'createMedicalRecord'])->name('records.medical.create');
     Route::get('/records/medical/archive', [RecordsController::class, 'showArchivedMedicalRecords'])->name('records.medical.archive');
-    Route::get('/records/vaccination', [RecordsController::class, 'showVaccinationRecords'])->name('records.vaccination');
-    Route::get('/records/vaccination/view', [RecordsController::class, 'showVaccination'])->name('records.vaccination.view');
+
 
 });
 

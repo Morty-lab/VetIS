@@ -9,7 +9,7 @@
     <div class="modal fade" id="addMedicalRecord" tabindex="-1" role="dialog" aria-labelledby="addMedicalRecord" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action="{{ route('records.medical.create') }}" method="post">
+                <form action="{{ route('vaccination.add') }}" method="post">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalCenterTitle">Create Vaccination Record<span
@@ -118,19 +118,27 @@
                     </tr>
                     </thead>
                     <tbody>
+                        @foreach($petRecords as $record)
                         <tr>
-                            <td>August 30, 2022</td>
-                            <td>Feline 3-in-1 Vaccine</td>
-                            <td>Whiskers</td>
-                            <td>Cat</td>
-                            <td>John Doe</td>
+                            <td>{{ $record->created_at->format('M d, Y') }}</td>
+                            <td>{{ $record->vaccine_type }}</td>
+                            <td>{{ $pets->firstWhere('id', $record->pet_id)->pet_name }}</td>
+                            <td>{{ $pets->firstWhere('id', $record->pet_id)->pet_type }}</td>
+                            <td>{{ $clients->firstWhere('id', $pets->firstWhere('id',$record->pet_id)->owner_ID)->client_name }}</td>
                             <td>
-                                <span class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Completed</span>
+                                @if($record->status == 0)
+                                    <span class="badge badge-sm text-sm bg-warning-soft text-warning rounded-pill">Ongoing</span>
+                                @elseif($record->status == 1)
+                                    <span class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Completed</span>
+                                @elseif($record->status == 2)
+                                    <span class="badge badge-sm text-sm bg-danger-soft text-danger rounded-pill">Archived</span>
+                                @endif
                             </td>
                             <td>
-                                <a href="" class="btn btn-datatable btn-primary px-5 py-3">View</a>
+                                <a href="{{route('records.vaccination.view', [ 'vaccination_id' => $record->id])}}" class="btn btn-datatable btn-primary px-5 py-3">View</a>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
