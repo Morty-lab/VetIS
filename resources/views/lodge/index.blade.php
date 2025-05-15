@@ -124,13 +124,15 @@
 
         </div>
 
-        {{-- If walang rooms ni mag show --}}
-        {{-- <div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
-        <div class="text-center text-muted">
-            <i class="fa-solid fa-plus display-6 mb-2"></i>
-            <p class="mb-0">No rooms found. Set up a room </br> to accommodate pets in the lodge.</p>
-        </div>
-    </div>     --}}
+        @if ($rooms->isEmpty())
+            {{-- This will show if there are no rooms --}}
+            <div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
+                <div class="text-center text-muted">
+                    <i class="fa-solid fa-plus display-6 mb-2"></i>
+                    <p class="mb-0">No rooms found. Set up a room <br> to accommodate pets in the lodge.</p>
+                </div>
+            </div>
+        @endif 
     </div>
 @endsection
 @section('scripts')
