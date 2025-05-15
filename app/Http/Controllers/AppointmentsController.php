@@ -336,10 +336,11 @@ class AppointmentsController extends Controller
     {
         $appid = request('appid');
         // Validate the form fields
+        // dd($request->all());
         $validatedData = $request->validate([
             'appointment_date' => 'required|date|after_or_equal:today', // Appointment date must be valid and not in the past
             'appointment_time' => 'required|date_format:H:i',           // Valid time format
-            'doctor_ID' => 'required|exists:users,id',           // Ensure the doctor exists
+            'doctor_ID' => 'required|exists:doctors,id',           // Ensure the doctor exists
         ]);
 
         // Find the appointment by ID
