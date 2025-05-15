@@ -56,6 +56,7 @@
 </header>
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
+    <form action="{{ route('pets.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
     <!-- Account page navigation-->
     <div class="row">
         <div class="col-xl-8">
@@ -63,7 +64,6 @@
             <div class="card shadow-none mb-4">
                 <div class="card-header">Pet Profile</div>
                 <div class="card-body">
-                    <form action="{{ route('pets.store') }}" method="POST">
                         @csrf
                         <div class="mb-3"><label class="small mb-1" for="inputPetName">Pet Name <span
                                     class="text-danger">*</span></label>
@@ -79,11 +79,22 @@
                                         class="text-danger">*</span></label>
                                 <select class="select-pet-type form-control @error('pet_type') is-invalid @enderror"
                                         id="selectPetType" name="pet_type" data-placeholder="Select Pet Type">
-                                    <option></option>
-                                    <option value="Dog" {{ old('pet_type') == 'Dog' ? 'selected' : '' }}>Dog</option>
-                                    <option value="Cat" {{ old('pet_type') == 'Cat' ? 'selected' : '' }}>Cat</option>
-                                    <option value="Other" {{ old('pet_type') == 'Other' ? 'selected' : '' }}>Other
-                                    </option>
+                                        <option></option>
+                                        <optgroup label="Common Pets">
+                                            <option value="Dog" {{ old('pet_type') == 'Dog' ? 'selected' : '' }}>Dog</option>
+                                            <option value="Cat" {{ old('pet_type') == 'Cat' ? 'selected' : '' }}>Cat</option>
+                                        </optgroup>
+                                        <optgroup label="Other Pets">
+                                            <option value="Chicken" {{ old('pet_type') == 'Chicken' ? 'selected' : '' }}>Chicken</option>
+                                            <option value="Snake" {{ old('pet_type') == 'Snake' ? 'selected' : '' }}>Snake</option>
+                                            <option value="Horse" {{ old('pet_type') == 'Horse' ? 'selected' : '' }}>Horse</option>
+                                            <option value="Rabbit" {{ old('pet_type') == 'Rabbit' ? 'selected' : '' }}>Rabbit</option>
+                                            <option value="Hamster" {{ old('pet_type') == 'Hamster' ? 'selected' : '' }}>Hamster</option>
+                                            <option value="Guinea Pig" {{ old('pet_type') == 'Guinea Pig' ? 'selected' : '' }}>Guinea Pig</option>
+                                            <option value="Bird" {{ old('pet_type') == 'Bird' ? 'selected' : '' }}>Bird</option>
+                                            <option value="Turtle" {{ old('pet_type') == 'Turtle' ? 'selected' : '' }}>Turtle</option>
+                                            <option value="Ferret" {{ old('pet_type') == 'Ferret' ? 'selected' : '' }}>Ferret</option>
+                                        </optgroup>
                                 </select>
                                 @error('pet_type')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -113,8 +124,7 @@
                             </div>
                             <div class="col-md-6"><label class="small mb-1" for="inputBirthdate">Birthdate <span
                                         class="text-danger">*</span></label>
-                                <div
-                                    class="input-group input-group-joined @error('pet_birthdate') has-validation @enderror">
+                                <div class="input-group input-group-joined @error('pet_birthdate') is-invalid border-danger @enderror">
                                     <input class="form-control @error('pet_birthdate') is-invalid @enderror"
                                            id="inputBirthdate" type="date" value="{{ old('pet_birthdate') }}"
                                            name="pet_birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -371,25 +381,43 @@
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" id="regbtn" type="submit">Add Pet</button>
-                    </form>
                 </div>
             </div>
         </div>
         <div class="col-xl-4">
-            <!-- Profile picture card-->
             <div class="card shadow-none mb-4 mb-xl-0">
-                <div class="card-header">Pet Photo</div>
+                <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/pet.png') }}" alt="" />
-                    <!-- Profile picture help block-->
+                    <!-- Profile picture image -->
+                    <img id="profileImagePreview" class="img-account-profile rounded-circle mb-2"
+                         src="{{ old('pet_picture') ? asset('storage/' . old('pet_picture')) : asset('assets/img/illustrations/profiles/pet.png') }}"
+                         alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover;"/>
+                    <!-- Profile picture help block -->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#petPictureModal">Upload Pet Image</button>
+                    <!-- Profile picture upload button -->
+                    <input class="form-control @error('pet_picture') is-invalid @enderror" type="file"
+                           name="pet_picture"
+                           accept="image/png, image/jpg, image/jpeg" style="cursor: pointer;"
+                           onchange="if(this.files[0].size > 5242880) {
+                       alert('File size must be less than 5MB');
+                       this.value = '';
+                       document.getElementById('profileImagePreview').src = '{{ asset('assets/img/illustrations/profiles/pet.png') }}';
+                   } else {
+                       const reader = new FileReader();
+                       reader.onload = function(e) {
+                           document.getElementById('profileImagePreview').src = e.target.result;
+                       };
+                       reader.readAsDataURL(this.files[0]);
+                   }"
+                           value="{{ old('pet_picture') }}"/>
+                    @error('pet_picture')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
         </div>
     </div>
+    </form>
 </div>
 
 <script>

@@ -108,7 +108,7 @@
                 <table id="datatablesSimple">
                     <thead>
                     <tr>
-                        <th>File #</th>
+                        <th>Vac ID</th>
                         <th>Date Created</th>
                         <th>Subject</th>
                         <th>Pet</th>
@@ -122,7 +122,7 @@
                     <tbody>
                     @foreach($petRecords as $record)
                         <tr>
-                            <td>File-{{ str_pad($record->id, 5, '0', STR_PAD_LEFT) }}</td>
+                            <td>VAC-{{ str_pad($record->id, 5, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $record->created_at->format('M d, Y g:i A') }}</td>
                             <td>{{ $record->subject }}</td>
                             <td>{{ $record->pet->pet_name }}</td>

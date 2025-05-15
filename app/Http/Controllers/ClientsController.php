@@ -39,10 +39,10 @@ class ClientsController extends Controller
             'lastname' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'address' => 'required',
-            'phone_number' => 'required',
+            'phone_number' => ['required', 'regex:/^[0-9]+$/'],
             'birthday' => 'required|date',
-            'password' => 'required|min:8',
-            'profile_picture' => 'nullable|image',
+            'password' => ['required', 'min:8', 'confirmed'],
+            'client_profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
 
 
@@ -63,6 +63,7 @@ class ClientsController extends Controller
             'client_address' => $request->address,
             'client_no' => $request->phone_number,
             'client_birthday' => $request->birthday,
+            'client_profile_picture' => $request->file('client_profile_picture') ? $request->file(key: 'client_profile_picture')->store('profile_photos', 'public') : null,
             ]);
 
 

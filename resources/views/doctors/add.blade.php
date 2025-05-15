@@ -127,8 +127,8 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputBirthday">Birthday <span
                                         class="text-danger">*</span></label>
-                                <div class="input-group input-group-joined @error('birthday') is-invalid @enderror">
-                                    <input class="form-control" id="inputBirthdate"
+                                <div class="input-group input-group-joined @error('birthday') is-invalid border-danger @enderror">
+                                    <input class="form-control @error('birthday') is-invalid @enderror" id="inputBirthdate"
                                            name="birthday" type="date" placeholder="mm/dd/yyyy"
                                            value="{{ old('birthday') }}"
                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" autocomplete="off"/>
