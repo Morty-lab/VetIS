@@ -84,6 +84,7 @@ class POSController extends Controller
                 // Stocks::update($product['productId'], ['status' => 0]);
                 Notifications::addNotif([
                     'visible_to' => 'staff',
+                    'notification_type' => 'warning',
                     'title' => 'Stocks Alert',
                     'message' => "{$productName} has less than 20 stocks left",
                 ]);

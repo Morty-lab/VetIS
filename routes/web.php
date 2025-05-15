@@ -443,6 +443,7 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
     Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
     Route::post('/reports/pos/date-range', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.dateRange");
+    Route::post('/reports/pos/generate', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.generate");
 
     // Inventory Reports
     Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
