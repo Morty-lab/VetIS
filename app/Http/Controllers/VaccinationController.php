@@ -93,6 +93,11 @@ class VaccinationController extends Controller
                 'final_dose' => 'nullable|boolean',
             ]);
 
+            // Find the vaccination record
+            $vaccination = Vaccination::where('id', request('vaccination_id'))->first();
+            $vaccination->status = $request->final_dose ?? false;
+            $vaccination->save();
+
             // Create new dosage record
             $dosage = new DosageModel();
             $dosage->date_administered = date('Y-m-d');

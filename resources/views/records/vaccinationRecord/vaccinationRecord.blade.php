@@ -52,12 +52,12 @@
                     </div>
 
                     <!-- Next Scheduled Dose Date -->
-                    @if (isset($dosages) && $dosages->count() > 0)
+                    {{-- @if (isset($dosages) && $dosages->count() > 0) --}}
                     <div class="mb-3">
                         <label for="nextDoseDate" class="form-label">Next Scheduled Dose</label>
                         <div class="input-group input-group-joined">
                             <input type="date" class="form-control" id="nextDoseDate" name="next_dose_date" placeholder="Select date" required
-                                   min="{{ $dosages->last()->next_scheduled_dose }}"
+                                   {{-- min="{{ $dosages->last()->next_scheduled_dose }}" --}}
                                >
                             <span class="input-group-text"><i data-feather="calendar"></i></span>
                             <div class="invalid-feedback">
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                        @endif
+                        {{-- @endif --}}
                 </div>
 
                 <div class="modal-footer">
@@ -106,19 +106,19 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Pet Name</label>
-                            <p>{{ $pet->name }}</p>
+                            <p>{{ $pet->pet_name }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Type</label>
-                            <p>{{ $pet->type }}</p>
+                            <p>{{ $pet->pet_type }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Breed</label>
-                            <p>{{ $pet->breed }}</p>
+                            <p>{{ $pet->pet_breed }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Gender</label>
-                            <p>{{ $pet->gender }}</p>
+                            <p>{{ $pet->pet_gender }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Date of Birth</label>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="">Vaccination Status</label>
-                            <p class="rounded-pill badge badge-sm {{ $vaccinationRecord->is_completed ? 'bg-primary-soft text-primary' : 'bg-warning-soft text-warning' }}">{{ $vaccinationRecord->is_completed ? 'Completed' : 'Ongoing' }}</p>
+                            <p class="rounded-pill badge badge-sm {{ $vaccinationRecord->status ? 'bg-primary-soft text-primary' : 'bg-warning-soft text-warning' }}">{{ $vaccinationRecord->status ? 'Completed' : 'Ongoing' }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Owner Name</label>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="">Owner Contact Number</label>
-                            <p>{{ $client->contact_number }}</p>
+                            <p>{{ $client->client_no }}</p>
                         </div>
                     </div>
                         <table class="table table-bordered mt-4">
@@ -185,15 +185,20 @@
                         </div>
                         <div class="col-md-12">
                             <label for="">Contact Number</label>
-                            <p>{{ $client->contact_number }}</p>
+                            <p>{{ $client->client_no }}</p>
                         </div>
                         <div class="col-md-12">
                             <label for="">Address</label>
-                            <p>{{ $client->address }}</p>
+                            <p>{{ $client->client_address }}</p>
                         </div>
                         <div class="col-md-12">
                             <label for="">Email Address</label>
-                            <p>{{ $client->email }}</p>
+                            @php
+                                $client = App\Models\Clients::where('id', $pet->owner_ID)->first();
+                                $client->setEmailAttribute($client, $client->user_id);
+                            @endphp
+
+                            <p>{{ $client->client_email }}</p>
                         </div>
                     </div>
                 </div>

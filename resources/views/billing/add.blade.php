@@ -833,7 +833,7 @@
                         <button class="btn btn-outline-primary me-2 " data-bs-toggle="modal"
                             data-bs-target="#selectServiceModal">Select Service</button>
                         <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-                            data-bs-target="#selectMedicationModal">Select Medication</button>
+                            data-bs-target="#selectMedicationModal">Select Medication/Vaccine</button>
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                             data-bs-target="#selectFeesModal">Add Fees</button>
                     </div>
