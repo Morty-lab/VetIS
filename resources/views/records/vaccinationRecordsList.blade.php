@@ -108,39 +108,29 @@
                 <table id="datatablesSimple">
                     <thead>
                     <tr>
-                        <th>Vac ID</th>
-                        <th>Date Created</th>
-                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Vaccination Type</th>
                         <th>Pet</th>
                         <th>Pet Type</th>
                         <th>Owner</th>
-                        <th>Attending Veterinarian</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($petRecords as $record)
                         <tr>
-                            <td>VAC-{{ str_pad($record->id, 5, '0', STR_PAD_LEFT) }}</td>
-                            <td>{{ $record->created_at->format('M d, Y g:i A') }}</td>
-                            <td>{{ $record->subject }}</td>
-                            <td>{{ $record->pet->pet_name }}</td>
-                            <td>{{ $record->pet->pet_type }}</td>
-                            <td>{{ $record->clients->client_name }}</td>
-                            <td>Dr. {{ $record->doctor->firstname }} {{ $record->doctor->lastname }}</td>
+                            <td>August 30, 2022</td>
+                            <td>Feline 3-in-1 Vaccine</td>
+                            <td>Whiskers</td>
+                            <td>Cat</td>
+                            <td>John Doe</td>
                             <td>
-                                @if($record->status == 0)
-                                    <span class="badge badge-sm text-sm bg-warning-soft text-warning rounded-pill">Ongoing</span>
-                                @elseif($record->status == 1)
-                                    <span class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Completed</span>
-                                @endif
+                                <span class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Completed</span>
                             </td>
                             <td>
                                 <a href="" class="btn btn-datatable btn-primary px-5 py-3">View</a>
                             </td>
                         </tr>
-                    @endforeach
                     </tbody>
                 </table>
             </div>
