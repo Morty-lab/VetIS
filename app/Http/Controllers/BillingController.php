@@ -42,7 +42,8 @@ class BillingController extends Controller
         $discounts = Services::where('service_type', 'discounts')->get();
         $fees = Services::where('service_type', 'fees')->get();
         $medication_id = Category::where('category_name', 'Medications')->first()->id;
-        $medications = Products::where('product_category', $medication_id)->get();
+        $vaccine_id = Category::where('category_name', 'Vaccines')->first()->id;
+        $medications = Products::whereIn('product_category', [$medication_id, $vaccine_id])->get();
 
 
         return view('billing.add',['pets'=>$pet,'owner'=>$owner ,'services'=>$services, 'vet'=>$vet, 'medications'=>$medications, 'fees'=>$fees, 'discounts'=>$discounts]);
