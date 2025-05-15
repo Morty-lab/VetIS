@@ -29,7 +29,7 @@
                         <div class="col-lg-5">
                             <!-- Basic login form-->
                             <div class="d-flex justify-content-center">
-                                <h1 class=" mt-10 text-primary fw-bold">PetHub Portal</h1>
+                                <h1 class=" mt-10 text-primary fw-bold">PetHub</h1>
                             </div>
                             <div class="card shadow-none border-1 rounded-lg mt-3">
                                 <div class="card-header justify-content-center">

@@ -34,8 +34,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Age</th>
-                        <th>Position</th>
+                        <th>Role</th>
                         <th>Phone Number</th>
                         <th>Email Address</th>
                         <th>Actions</th>
@@ -45,7 +44,6 @@
                     @foreach ($staff as $item)
                     <tr>
                         <td>{{$item->firstname . ' ' . $item->lastname}}</td>
-                        <td>{{$item->age}}</td>
                         <td>{{ ucfirst($item->position) }}</td>
                         <td>{{$item->phone_number}}</td>
                         <td>{{$item->getEmailAttribute($item->user_id)}}</td>

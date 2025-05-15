@@ -8,10 +8,13 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Register - PetHub Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href=" {{ asset('assets/img/favicon.png')}}" />
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body class="bg-white">
@@ -47,38 +50,46 @@
                                                 <!-- Form Group (first name)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputFirstName">First Name</label>
-                                                    <input class="form-control" id="inputFirstName" type="text" name="first_name" placeholder="Enter first name" />
+                                                    <input class="form-control" id="inputFirstName" type="text" name="first_name" placeholder="Enter first name" autocomplete="off"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <!-- Form Group (last name)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputLastName">Last Name</label>
-                                                    <input class="form-control" id="inputLastName" type="text" name="last_name" placeholder="Enter last name" />
+                                                    <input class="form-control" id="inputLastName" type="text" name="last_name" placeholder="Enter last name" autocomplete="off"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- Form Group (email address)            -->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" name="email" placeholder="Enter email address" />
+                                            <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" name="email" placeholder="Enter email address" autocomplete="off"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputAddress">Address</label>
-                                            <input class="form-control" id="inputAddress" type="text" aria-describedby="addressHelp" name="address" placeholder="Enter address" />
+                                            <input class="form-control" id="inputAddress" type="text" aria-describedby="addressHelp" name="address" placeholder="Enter address" autocomplete="off"/>
                                         </div>
                                         <div class="row gx-3">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="inputPhoneNumber" class="small mb-1">Phone Number</label>
-                                                    <input type="text" name="phone_number" class="form-control" id="inputPhoneNumber" placeholder="Enter phone number">
+                                                    <input type="text" name="phone_number" class="form-control" id="inputPhoneNumber" placeholder="Enter phone number" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="inputBirthday" class="small mb-1">Birthday</label>
-                                                    <input type="date" name="birthday" class="form-control @error('birthday') is-invalid @enderror"
-                                                        id="inputBirthday" max="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                    <label for="inputBirthdate" class="small mb-1">Birthday</label>
+                                                    <div class="input-group input-group-joined">
+                                                        <input type="text" name="birthday" id="inputBirthdate" class="form-control @error('birthday') is-invalid @enderror"
+                                                            max="{{ \Carbon\Carbon::now()->toDateString() }}" placeholder="yyyy-mm-dd">
+                                                        <span class="input-group-text">
+                                                            <i class="fa-solid fa-calendar-days"></i>
+                                                        </span>
+                                                    </div>
+                                                    @error('birthday')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -87,14 +98,14 @@
                                                 <!-- Form Group (password)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputPassword">Password</label>
-                                                    <input class="form-control" id="inputPassword" type="password" name="password" placeholder="Enter password" />
+                                                    <input class="form-control" id="inputPassword" type="password" name="password" placeholder="Enter password" autocomplete="off"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <!-- Form Group (confirm password)-->
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
-                                                    <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm password" />
+                                                    <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm password" autocomplete="off"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,6 +134,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
+    <script src="{{ asset('js/forms/flatpickr.js')}}"></script>
 </body>
 
 </html>

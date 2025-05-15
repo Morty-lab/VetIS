@@ -78,23 +78,48 @@
                             @enderror
                         </div>
                         <div class="row gx-3 mb-3">
-                            <div class="col-md-6"><label class="small mb-1" for="selectPetType">Pet Type <span
-                                        class="text-danger">*</span></label>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="selectPetType">
+                                    Pet Type <span class="text-danger">*</span>
+                                </label>
                                 <select
                                     class="edit-select-pet-type form-control @error('pet_type') is-invalid @enderror"
-                                    id="selectPetType" name="pet_type" data-placeholder="Select Pet Type">
-                                    <option value="Dog" @if (old('pet_type', $pet->pet_type) == 'Dog') selected @endif>
-                                        Dog
-                                    </option>
-                                    <option value="Cat" @if (old('pet_type', $pet->pet_type) == 'Cat') selected @endif>
-                                        Cat
-                                    </option>
-                                </select>
-                                @error('pet_type')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    id="selectPetType"
+                                    name="pet_type"
+                                    data-placeholder="Select Pet Type">
 
+                                    @php
+                                        $selectedPetType = old('pet_type', $pet->pet_type);
+                                        $commonOptions = ['Dog', 'Cat'];
+                                        $otherOptions = ['Chicken','Snake','Horse','Rabbit', 'Hamster', 'Guinea Pig', 'Bird', 'Turtle', 'Ferret'];
+                                    @endphp
+
+                                    <option></option>
+
+                                    <optgroup label="Common Pets">
+                                        @foreach ($commonOptions as $option)
+                                            <option value="{{ $option }}" @if ($selectedPetType == $option) selected @endif>{{ $option }}</option>
+                                        @endforeach
+                                    </optgroup>
+
+                                    <optgroup label="Other Pets">
+                                        @foreach ($otherOptions as $option)
+                                            <option value="{{ $option }}" @if ($selectedPetType == $option) selected @endif>{{ $option }}</option>
+                                        @endforeach
+                                    </optgroup>
+
+                                    {{-- Add custom value if not in any predefined options --}}
+                                    @if (!in_array($selectedPetType, array_merge($commonOptions, $otherOptions)) && !empty($selectedPetType))
+                                        <option value="{{ $selectedPetType }}" selected>{{ $selectedPetType }}</option>
+                                    @endif
+
+                                </select>
+
+                                @error('pet_type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+                            
                             <div class="col-md-6"><label class="small mb-1" for="inputBreed">Breed <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control @error('pet_breed') is-invalid @enderror" id="inputBreed"
