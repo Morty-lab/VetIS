@@ -125,20 +125,12 @@
                             <p>{{ \Carbon\Carbon::parse($pet->birthdate)->format('F j, Y') }}</p>
                         </div>
                         <div class="col-md-3">
+                            <label for="">Vaccination Status</label>
+                            <p class="rounded-pill badge badge-sm {{ $vaccinationRecord->status ? 'bg-success-soft text-success' : 'bg-warning-soft text-warning' }}">{{ $vaccinationRecord->status ? 'Completed' : 'Ongoing' }}</p>
+                        </div>
+                        <div class="col-md-6">
                             <label for="">Type of Vaccination</label>
                             <p>{{ $vaccinationRecord->vaccine_type }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="">Vaccination Status</label>
-                            <p class="rounded-pill badge badge-sm {{ $vaccinationRecord->status ? 'bg-primary-soft text-primary' : 'bg-warning-soft text-warning' }}">{{ $vaccinationRecord->status ? 'Completed' : 'Ongoing' }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="">Owner Name</label>
-                            <p>{{ $client->client_name }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="">Owner Contact Number</label>
-                            <p>{{ $client->client_no }}</p>
                         </div>
                     </div>
                         <table class="table table-bordered mt-4">
@@ -165,14 +157,18 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card shadow-none mb-4">
-                <div class="card-header">
-                    Actions
+            @if ($vaccinationRecord->status != 1)
+                <div class="card shadow-none mb-4">
+                    <div class="card-header">
+                        Actions
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#addDoseModal">
+                            <i class="fa-solid fa-plus me-2"></i>Add New Dosage
+                        </button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#addDoseModal"><i class="fa-solid fa-plus me-2"></i>Add New Dosage</button>
-                </div>
-            </div>
+            @endif
             <div class="card shadow-none">
                 <div class="card-header">
                     Owner Information
