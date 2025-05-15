@@ -6,7 +6,7 @@
 @section('content')
     {{--  Create Medical Record Modal  --}}
     <div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="Create Room" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <form action="{{ route('lodge.add') }}" method="POST">
                 @csrf
                 <div class="modal-content py-3">
@@ -17,7 +17,7 @@
                     <div class="modal-body text-center">
                         <div class="row justify-content-center">
                             <div class="col-6">
-                                <label for="roomQuantity" class="form-label">How many rooms do we add?</label>
+                                <label for="roomQuantity" class="form-label">How many rooms do we create?</label>
                                 <input type="number" class="form-control @error('roomQuantity') is-invalid @enderror"
                                     id="roomQuantity" name="roomQuantity" min="1" value="1" required />
                                 @error('roomQuantity')

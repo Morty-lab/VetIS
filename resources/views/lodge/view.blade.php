@@ -188,13 +188,15 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <div class="dropdown-divider"></div>
                         <div>
-                            @if ($room->status !== 2)
-                                <div class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#setRoomUnderMaintenanceModal"> <i class="fa-solid fa-tools me-2"></i>
-                                    Set Under Maintenance</div>
-                            @else
-                                <div class="dropdown-item" data-bs-toggle="modal" data-bs-target="#maintenanceDoneModal">
-                                    <i class="fa-solid fa-check me-2"></i> Maintenance Done</div>
+                            @if ($room->status !== 1)
+                                @if ($room->status !== 2)
+                                    <div class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#setRoomUnderMaintenanceModal"> <i class="fa-solid fa-tools me-2"></i>
+                                        Set Under Maintenance</div>
+                                @else
+                                    <div class="dropdown-item" data-bs-toggle="modal" data-bs-target="#maintenanceDoneModal">
+                                        <i class="fa-solid fa-check me-2"></i> Maintenance Done</div>
+                                @endif
                             @endif
 
                             <div class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"> <i
@@ -214,7 +216,7 @@
             <div class="row gy-3">
                 <div class="col-md-12">
                     <div
-                        class="card shadow-none
+                        class="card border-start-lg shadow-none
                 @if ($room->status === 1 || $room->status === 'Occupied') border-start-warning
                 @elseif ($room->status === 0 || $room->status === 'Available') border-start-success
                 @elseif ($room->status === 2 || $room->status === 'Maintenance') border-start-danger @endif
@@ -357,8 +359,7 @@
                                         @if ($item->check_out)
                                             {{ \Carbon\Carbon::parse($item->check_out)->format('F j, Y') }}
                                         @else
-                                            <span class="badge bg-warning-soft text-warning rounded-pill text-sm">Still
-                                                Occupied</span>
+                                            <span class="badge bg-warning-soft text-warning rounded-pill text-sm">Occupied</span>
                                         @endif
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($item->check_in)->diffInDays(\Carbon\Carbon::parse($item->check_out)) }}
