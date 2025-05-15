@@ -21,7 +21,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::limit(20)->get();
+        $products = Products::getAllProducts();
         $suppliers = Suppliers::getAllSuppliers();
         $units = Unit::getAllUnits();
         $categories = Category::getAllCategories();
