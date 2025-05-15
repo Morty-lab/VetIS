@@ -81,6 +81,7 @@ class PetsController extends Controller
                 'last_groom_date' => 'nullable|date',
                 'okay_to_use_photos_online' => 'nullable',
                 'pet_condition' => 'nullable|string',
+                'pet_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:5120', // Max size 5 MB
             ]);
 
             $lastGroomDate = $validatedData['last_groom_date']
@@ -112,6 +113,7 @@ class PetsController extends Controller
                     'last_groom_date' => $lastGroomDate,
                     'okay_to_use_photos_online' => $request->input('okay_to_use_photos_online') ?? null,
                     'pet_condition' => $validatedData['pet_condition'] ?? null,
+                    'pet_picture' => $request->file('pet_picture') ? $request->file('pet_picture')->store('pet_photos', 'public') : null,
                 ]);
 
             // Set the owner ID from the request data

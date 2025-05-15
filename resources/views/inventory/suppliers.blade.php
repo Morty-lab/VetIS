@@ -46,7 +46,7 @@
                         </div>
                     </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-secondary" type="button"
+            <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
                     data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Add
                     Supplier</button></div>
         </div>

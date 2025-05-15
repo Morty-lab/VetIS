@@ -30,28 +30,28 @@
 <!-- Main page content-->
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
+    <form method="POST" action="{{route('owners.add')}}" enctype="multipart/form-data" autocomplete="off">
     <div class="row">
         <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card shadow-none mb-4">
                 <div class="card-header">Pet Owner Registration</div>
                 <div class="card-body">
-                    <form method="POST" action="{{route('owners.add')}}" enctype="multipart/form-data" autocomplete="off">
                         @csrf
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
                             <!-- Form Group (first name)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <input class="form-control @error('firstname') is-invalid @enderror" id="inputFirstName" name="firstname" type="text" placeholder="First Name"  autocomplete="new-firstname"/>
+                                <label class="small mb-1" for="inputFirstName">First name <span class="text-danger">*</span></label>
+                                <input class="form-control @error('firstname') is-invalid @enderror" id="inputFirstName" name="firstname" type="text" placeholder="First Name"  value="{{ old('firstname') }}"   autocomplete="off"/>
                                 @error('firstname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <!-- Form Group (last name)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                <input class="form-control @error('lastname') is-invalid @enderror" id="inputLastName" name="lastname" type="text" placeholder="Last Name" autocomplete="new-lastname"/>
+                                <label class="small mb-1" for="inputLastName">Last name <span class="text-danger">*</span></label>
+                                <input class="form-control @error('lastname') is-invalid @enderror" id="inputLastName" name="lastname" type="text" placeholder="Last Name" value="{{ old('lastname') }}" autocomplete="off"/>
                                 @error('lastname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -59,8 +59,8 @@
                         </div>
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            <input class="form-control @error('email') is-invalid @enderror" id="inputEmailAddress" name="email" type="email" placeholder="Email Address" value="" autocomplete="new-email"/>
+                            <label class="small mb-1" for="inputEmailAddress">Email address <span class="text-danger">*</span></label>
+                            <input class="form-control @error('email') is-invalid @enderror" id="inputEmailAddress" name="email" type="email" placeholder="Email Address" value="{{ old('email') }}" autocomplete="off"/>
                             @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -68,8 +68,8 @@
                         <!-- Add similar error handling for other fields -->
                         <!-- Form Group (address)-->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputAddress">Address</label>
-                            <input class="form-control @error('address') is-invalid @enderror" id="inputAddress" name="address" type="text" placeholder="Address" value="" autocomplete="new-address"/>
+                            <label class="small mb-1" for="inputAddress">Address <span class="text-danger">*</span></label>
+                            <input class="form-control @error('address') is-invalid @enderror" id="inputAddress" name="address" type="text" placeholder="Address" value="{{ old('address') }}" autocomplete="off"/>
                             @error('address')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -78,22 +78,27 @@
                         <div class="row gx-3 mb-3">
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputPhone">Phone number</label>
-                                <input class="form-control @error('phone_number') is-invalid @enderror" id="inputPhone" name="phone_number" type="tel" placeholder="Phone Number" value="" autocomplete="new-phone"/>
+                                <label class="small mb-1" for="inputPhone">Phone number <span class="text-danger">*</span></label>
+                                <input class="form-control @error('phone_number') is-invalid @enderror" id="inputPhone" name="phone_number" type="tel" placeholder="Phone Number" value="{{ old('phone_number') }}" autocomplete="off"/>
                                 @error('phone_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                <input class="form-control @error('birthday') is-invalid @enderror"
-                                    id="inputBirthday"
+                                <label class="small mb-1" for="inputBirthday">Birthday <span class="text-danger">*</span></label>
+                                <div class="input-group input-group-joined @error('birthday') is-invalid border-danger @enderror">
+                                    <input class="form-control  @error('birthday') is-invalid @enderror"
+                                    id="inputBirthdate"
                                     name="birthday"
                                     type="date"
-                                    placeholder="MM/DD/YYYY"
+                                    placeholder="yyyy-mm-dd"
                                     value="{{ old('birthday') }}"
                                     max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                    <span class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
                                 @error('birthday')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -116,7 +121,7 @@
                 <div class="row gx-3 mb-3">
                     <!-- Form Group (password)-->
                     <div class="col-md-6">
-                        <label class="small mb-1" for="inputPassword">Password</label>
+                        <label class="small mb-1" for="inputPassword">Password <span class="text-danger">*</span></label>
                         <input class="form-control @error('password') is-invalid @enderror" id="inputPassword" name="password" type="password" placeholder="Password" value="" autocomplete="off"/>
                         @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -124,7 +129,7 @@
                     </div>
                     <!-- Form Group (confirm password)-->
                     <div class="col-md-6">
-                        <label class="small mb-1" for="confirmPassword">Confirm Password</label>
+                        <label class="small mb-1" for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
                         <input class="form-control @error('password_confirmation') is-invalid @enderror" id="confirmPassword" name="password_confirmation" type="password" placeholder="Confirm Password" value="" autocomplete="off"/>
                         @error('password_confirmation')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -133,27 +138,43 @@
                 </div>
                 <!-- Save changes button-->
                 <button class="btn btn-primary" id="regbtn" type="submit">Register</button>
-                </form>
-
-
             </div>
         </div>
     </div>
-    <div class="col-xl-4">
-        <!-- Profile picture card-->
+    <div class="col-xl-4"><!-- Profile picture card-->
         <div class="card shadow-none mb-4 mb-xl-0">
             <div class="card-header">Profile Picture</div>
             <div class="card-body text-center">
-                <!-- Profile picture image-->
-                <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="" />
-                <!-- Profile picture help block-->
+                <!-- Profile picture image -->
+                <img id="profileImagePreview" class="img-account-profile rounded-circle mb-2"
+                     src="{{ old('client_profile_picture') ? asset('storage/' . old('client_profile_picture')) : asset('assets/img/illustrations/profiles/profile-1.png') }}"
+                     alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover;"/>
+                <!-- Profile picture help block -->
                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                <!-- Profile picture upload button-->
-                <button class="btn btn-primary" type="button">Upload Image</button>
+                <!-- Profile picture upload button -->
+                <input class="form-control @error('client_profile_picture') is-invalid @enderror" type="file"
+                       name="client_profile_picture"
+                       accept="image/png, image/jpg, image/jpeg" style="cursor: pointer;"
+                       onchange="if(this.files[0].size > 5242880) {
+                   alert('File size must be less than 5MB');
+                   this.value = '';
+                   document.getElementById('profileImagePreview').src = '{{ asset('assets/img/illustrations/profiles/profile-1.png') }}';
+               } else {
+                   const reader = new FileReader();
+                   reader.onload = function(e) {
+                       document.getElementById('profileImagePreview').src = e.target.result;
+                   };
+                   reader.readAsDataURL(this.files[0]);
+               }"
+                       value="{{ old('client_profile_picture') }}"/>
+                @error('client_profile_picture')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
         </div>
     </div>
 </div>
+</form>
 </div>
 
 {{--<script>--}}

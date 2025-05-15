@@ -290,7 +290,7 @@
             <a class="nav-link nav-tab{{ request()->is('pets') ? 'active' : '' }}" href="#pets">Pet List</a>
             <a class="nav-link nav-tab{{ request()->is('billinghistory') ? 'active' : '' }}"
                 href="#billinghistory">Billing History</a>
-            <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">UM Settings</a>
+            <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">Account Settings</a>
         </nav>
         <hr class="mt-0 mb-4" />
 
@@ -318,7 +318,7 @@
                             <div class="card-body">
                                 <div class="row g-2">
                                     <div class="col-md-6">
-                                        <label class="small mb-1">Owner Name</label>
+                                        <label class="small mb-1">Name</label>
                                         <p>{{ $client->client_name }}</p>
                                     </div>
                                     <div class="col-md-3">
@@ -393,55 +393,38 @@
                                 {{--                                    <!-- You can add more items here --> --}}
                                 {{--                                </ul> --}}
                                 {{--                            </div> --}}
+                                <form id="petPhotoForm" action="{{ route('uploadPhoto', $client->user_id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="dropdown">
+                                        <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                            <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
+                                    
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="document.getElementById('petPhotoInput').click(); return false;">
+                                                        Update Profile Picture
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        
+                                    </div>
+                                </form>
                             </div>
                             <div class="card-body text-center">
                                 <!-- Profile picture image-->
-                                <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2"
+                                <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2" style="width: 200px; height: 200px; object-fit: cover;"
                                     src="{{ $client->client_profile_picture ? asset('storage/' . $client->client_profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png') }}"
                                     alt="" />
                             </div>
                             <div class="card-footer text-center">
-                                <form id="petPhotoForm" action="{{ route('uploadPhoto', $client->user_id) }}"
-                                    method="POST">
-                                    @csrf
-
-                                    <input type="file" id="petPhotoInput" name="photo"
-                                        accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
-                                    <button class="btn btn-primary" type="button"
-                                        onclick="document.getElementById('petPhotoInput').click();">Select Photo</button>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-            <script>
-                function uploadPetPhoto() {
-                    const form = document.getElementById('petPhotoForm');
-                    const formData = new FormData(form);
-
-                    fetch(form.action, {
-                            method: 'POST',
-                            body: formData,
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.getElementById('petPhotoPreview').src = data.photo_url;
-                                alert('Photo updated successfully!');
-                            } else {
-                                alert('Failed to upload pet photo. Please try again.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('An error occurred while uploading the pet photo.');
-                        });
-                }
-            </script>
             <div class="col-md-12" id="petsCard" style="display: none;">
                 <div class="card shadow-none mb-4">
                     <div class="card-header d-flex d-flex justify-content-between align-items-center"><span>Pets
@@ -597,6 +580,8 @@
         </div>
     </div>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Get the register button
@@ -652,6 +637,30 @@
             // Trigger the click on the Pet Profile tab to show it initially
             document.querySelector('.nav-tab.active').click();
         });
+    </script>
+    <script>
+            function uploadPetPhoto() {
+                const form = document.getElementById('petPhotoForm');
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('petPhotoPreview').src = data.photo_url;
+                            toastr.success('Photo updated successfully!');
+                        } else {
+                            toastr.error('Failed to upload pet photo. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        toastr.error('An error occurred while uploading the pet photo.');
+                    });
+            }
     </script>
 @endsection
 

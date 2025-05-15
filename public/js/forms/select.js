@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     $(".select-pet-type").select2({
         theme: "bootstrap-5",
+        tags: true, // Allow users to add new values
         width: $(this).data("width")
             ? $(this).data("width")
             : $(this).hasClass("w-100")
@@ -14,6 +15,7 @@ $(document).ready(function () {
     });
     $(".edit-select-pet-type").select2({
         theme: "bootstrap-5",
+        tags: true, // Allow users to add new values
         width: $(this).data("width")
             ? $(this).data("width")
             : $(this).hasClass("w-100")
@@ -438,6 +440,18 @@ $(document).ready(function () {
             : $(this).hasClass("w-100")
                 ? "100%"
                 : "style",
+        placeholder: $(this).data("placeholder"),
+    });
+
+    // Vac
+    $(".vac-select-vet-name").select2({
+        theme: "bootstrap-5",
+        dropdownParent: "#addDoseModal",
+        width: $(this).data("width")
+            ? $(this).data("width")
+            : $(this).hasClass("w-100")
+            ? "100%"
+            : "style",
         placeholder: $(this).data("placeholder"),
     });
 });

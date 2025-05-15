@@ -49,3 +49,9 @@ flatpickr("#dueDate", {
     minDate: "today",     // Restrict selection to today or earlier
     disableMobile: "true"
 });
+
+flatpickr("#nextDoseDate", {
+    dateFormat: "Y-m-d", // format like 2025-03-13
+    minDate: "today",     // Restrict selection to today or earlier
+    disableMobile: "true"
+});
