@@ -518,7 +518,7 @@
 
     @section('scripts')
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#select-schedule').on('change', function() {
                 let selectedDate = $(this).val();
@@ -577,6 +577,94 @@
                     });
                 }
             });
+        });
+    </script> --}}
+
+    <script>
+        let selectedVet = 0;
+        let selectedDate = 0;
+
+        function selectVet(vet) {
+            selectedVet = vet
+            console.log(selectedVet)
+        }
+
+        function selectDate(date) {
+            selectedDate = date;
+            console.log(selectedDate)
+        }
+
+        function sendRequest(selectedDate, selectedVet) {
+            $.ajax({
+                url: '{{ route('appointments.available-times') }}',
+                type: 'GET',
+                data: {
+                    date: selectedDate,
+                    vet: selectedVet
+                },
+                success: function(response) {
+                    console.log(response);
+                    let timeSelect = $('#selectAppointmentTime');
+                    timeSelect.empty();
+                    timeSelect.prop('disabled', false);
+                    timeSelect.append('<option value="">--- Select a Time ---</option>');
+
+                    if (response.length > 0) {
+                        let amGroup = $('<optgroup label="AM"></optgroup>');
+                        let pmGroup = $('<optgroup label="PM"></optgroup>');
+
+                        response.forEach(function(time) {
+                            // Convert 24-hour format to 12-hour display format
+                            let displayTime = convertTo12HourDisplay(time);
+                            let option = `<option value="${time}">${displayTime}</option>`;
+
+                            let hour = parseInt(time.split(':')[0]);
+                            if (hour < 12) {
+                                amGroup.append(option);
+                            } else {
+                                pmGroup.append(option);
+                            }
+                        });
+
+                        timeSelect.append(amGroup);
+                        timeSelect.append(pmGroup);
+                    } else {
+                        timeSelect.append('<option value="">No available times</option>');
+                    }
+                },
+                error: function(error) {
+                    console.log("Error fetching available times:", error);
+                }
+            });
+        }
+
+        function convertTo12HourDisplay(time24) {
+            const [hours, minutes] = time24.split(':');
+            const hour = parseInt(hours);
+            const period = hour < 12 ? 'AM' : 'PM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${period}`;
+        }
+
+        $(document).ready(function() {
+            $('#vetSelect').on('change', function() {
+                selectVet(this.value);
+                console.log(selectedVet);
+                if (selectVet) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            $('#select-schedule').on('change', function() {
+                selectDate(this.value);
+
+                if (selectedDate) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            // Helper function to convert 24-hour time to 12-hour display format
+
         });
     </script>
     @endsection

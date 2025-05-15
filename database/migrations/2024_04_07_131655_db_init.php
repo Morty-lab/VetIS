@@ -214,10 +214,22 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger("pet_id");
             $table->string("vaccine_type");
-            $table->string("doctor_id");
-            $table->date("next_vaccine_date")->nullable();
             $table->boolean("status")->default(false);
             $table->timestamps();
+        });
+
+        Schema::create('dosages', function (Blueprint $table) {
+            $table->id();
+            $table->date("date_administered");
+            $table->date("next_scheduled_dose")->nullable();
+            $table->boolean("status")->default(false);
+            $table->timestamps();
+
+            $table->unsignedBigInteger("administered_by");
+            $table->foreign("administered_by")->references("id")->on("doctors")->onDelete("cascade");
+
+            $table->unsignedBigInteger("vaccination_id");
+            $table->foreign("vaccination_id")->references("id")->on("vaccinations")->onDelete("cascade");
         });
 
 
@@ -455,7 +467,7 @@ return new class extends Migration {
         //        Schema::dropIfExists('pet_diagnosis');
 //        Schema::dropIfExists('pet_plan');
 //        Schema::dropIfExists('laboratory');
-       Schema::dropIfExists('examinations');
+        Schema::dropIfExists('examinations');
         Schema::dropIfExists('pet_records');
         Schema::dropIfExists('pets');
         Schema::dropIfExists('transaction_details');

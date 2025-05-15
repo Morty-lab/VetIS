@@ -9,6 +9,7 @@ use App\Models\Pets;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -117,6 +118,76 @@ class AdminController extends Controller
             'success' => true,
             'photo_url' => asset('storage/' . $photoPath),
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'extensionname' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'birthday' => 'required|date',
+        ]);
+
+        $user = Auth::user();
+        $role = $user->role;
+
+        switch ($role) {
+            case 'admin':
+                $profile = Admin::where('user_id', $user->id)->first();
+                $profile->update([
+                    'firstname' => $request->firstname,
+                    'middlename' => $request->middlename,
+                    'lastname' => $request->lastname,
+                    'extensionname' => $request->extensionname,
+                    'address' => $request->address,
+                    'phone_number' => $request->phone_number,
+                    'birthday' => $request->birthday,
+                ]);
+                break;
+
+            case 'staff':
+            case 'cashier':
+            case 'secretary':
+                $profile = Staff::where('user_id', $user->id)->first();
+                $profile->update([
+                    'firstname' => $request->firstname,
+                    'middlename' => $request->middlename,
+                    'lastname' => $request->lastname,
+                    'extensionname' => $request->extensionname,
+                    'address' => $request->address,
+                    'phone_number' => $request->phone_number,
+                    'birthday' => $request->birthday,
+                ]);
+                break;
+
+            case 'veterinary':
+                $profile = Doctor::where('user_id', $user->id)->first();
+                $profile->update([
+                    'firstname' => $request->firstname,
+                    'middlename' => $request->middlename,
+                    'lastname' => $request->lastname,
+                    'extensionname' => $request->extensionname,
+                    'address' => $request->address,
+                    'phone_number' => $request->phone_number,
+                    'birthday' => $request->birthday,
+                ]);
+                break;
+
+            default:
+                return response()->json(['success' => false, 'message' => 'Role not supported for profile update.'], 400);
+        }
+
+        $userModel = User::find($user->id);
+        $userModel->update([
+            'name' => $request->firstname . ' ' . (is_null($request->middlename) ? '' : $request->middlename . ' ') . $request->lastname . (is_null($request->extensionname) ? '' : ' ' . $request->extensionname),
+        ]);
+
+
+        return redirect()->back()->with('success', 'Your profile has been updated.');
     }
 
 

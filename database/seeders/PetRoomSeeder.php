@@ -17,7 +17,7 @@ class PetRoomSeeder extends Seeder
 
         for ($i = 0; $i < 10; $i++) {
             DB::table('pet_lodge_rooms')->insert([
-                'status' => $faker->randomElement([0, 1, 2]),
+                'status' => $faker->randomElement([0,  2]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

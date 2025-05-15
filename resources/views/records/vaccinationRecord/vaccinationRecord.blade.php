@@ -22,7 +22,8 @@
 <div class="modal fade" id="addDoseModal" tabindex="-1" aria-labelledby="addDoseModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form>
+            <form method="POST" action="{{ route('vaccination.dosage.add', ['vaccination_id' => $vaccinationRecord->id]) }}" id="addDosageForm">
+                @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addDoseModalLabel">Add New Dosage</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -33,11 +34,13 @@
                     <div class="mb-3">
                         <label for="administeredBy" class="form-label">Administered By</label>
                         <select class="form-select vac-select-vet-name" id="administeredBy" name="administered_by" required>
-                            <option value="Dr. Reyes">Dr. Reyes</option>
-                            <option value="Dr. Cruz">Dr. Cruz</option>
-                            <option value="Dr. Santos">Dr. Santos</option>
-                            <!-- Add more staff names as needed -->
+                            @foreach ($doctors as $doctor)
+                                <option value="{{ $doctor->id }}">Dr. {{ $doctor->fullname() }}</option>
+                            @endforeach
                         </select>
+                        <div class="invalid-feedback">
+                            Please select a veterinarian.
+                        </div>
                     </div>
 
                     <!-- Final Dose Checkbox -->
@@ -49,13 +52,20 @@
                     </div>
 
                     <!-- Next Scheduled Dose Date -->
+                    @if (isset($dosages) && $dosages->count() > 0)
                     <div class="mb-3">
                         <label for="nextDoseDate" class="form-label">Next Scheduled Dose</label>
                         <div class="input-group input-group-joined">
-                            <input type="text" class="form-control" id="nextDoseDate" name="next_dose_date" placeholder="Select date" readonly>
+                            <input type="date" class="form-control" id="nextDoseDate" name="next_dose_date" placeholder="Select date" required
+                                   min="{{ $dosages->last()->next_scheduled_dose }}"
+                               >
                             <span class="input-group-text"><i data-feather="calendar"></i></span>
+                            <div class="invalid-feedback">
+                                Please select a date for the next scheduled dose.
+                            </div>
                         </div>
                     </div>
+                        @endif
                 </div>
 
                 <div class="modal-footer">
@@ -63,6 +73,20 @@
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
             </form>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const form = document.getElementById('addDosageForm');
+
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            </script>
         </div>
     </div>
 </div>
@@ -82,31 +106,39 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Pet Name</label>
-                            <p>Lexie</p>
+                            <p>{{ $pet->name }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Type</label>
-                            <p>Dog</p>
+                            <p>{{ $pet->type }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Breed</label>
-                            <p>Japanese Spitz</p>
+                            <p>{{ $pet->breed }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Gender</label>
-                            <p>Female</p>
+                            <p>{{ $pet->gender }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Date of Birth</label>
-                            <p>August 11, 2022</p>
+                            <p>{{ \Carbon\Carbon::parse($pet->birthdate)->format('F j, Y') }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Type of Vaccination</label>
-                            <p>Feline 3-in-1 Vaccine</p>
+                            <p>{{ $vaccinationRecord->vaccine_type }}</p>
                         </div>
                         <div class="col-md-3">
                             <label for="">Vaccination Status</label>
-                            <p class="rounded-pill badge badge-sm bg-primary-soft text-primary">Completed</p>
+                            <p class="rounded-pill badge badge-sm {{ $vaccinationRecord->is_completed ? 'bg-primary-soft text-primary' : 'bg-warning-soft text-warning' }}">{{ $vaccinationRecord->is_completed ? 'Completed' : 'Ongoing' }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Owner Name</label>
+                            <p>{{ $client->client_name }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Owner Contact Number</label>
+                            <p>{{ $client->contact_number }}</p>
                         </div>
                     </div>
                         <table class="table table-bordered mt-4">
@@ -119,25 +151,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dosages as $dosage)
                                 <tr>
-                                    <td>3rd Dose</td>
-                                    <td>August 30, 2022</td>
-                                    <td>Dr. John Doe</td>
-                                    <td>N/A</td>
+                                    <td>{{ $loop->count - $loop->index }}{{ ['th','st','nd','rd'][$loop->count - $loop->index % 10] ?? 'th' }} Dose</td>
+                                    <td>{{ \Carbon\Carbon::parse($dosage->date_administered)->format('M d, Y') }}</td>
+                                    <td>Dr. {{ $doctors->firstWhere('id', $dosage->administered_by)->lastname ?? 'No Vet Found' }}</td>
+                                    <td>{{ $dosage->next_scheduled_dose ? \Carbon\Carbon::parse($dosage->next_scheduled_dose)->format('M d, Y') : 'N/A' }}</td>
                                 </tr>
-                                <tr>
-                                    <td>2nd Dose</td>
-                                    <td>August 13, 2022</td>
-                                    <td>Dr. John Doe</td>
-                                    <td>August 30, 2022</td>
-                                </tr>
-                                <tr>
-                                    <td>1st Dose</td>
-                                    <td>August 11, 2022</td>
-                                    <td>Dr. John Doe</td>
-                                    <td>August 13, 2022</td>
-                                </tr>
-                                <!-- Add more rows as needed -->
+                                @endforeach
                             </tbody>
                         </table>
                 </div>
@@ -160,19 +181,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label for="">Pet Owner</label>
-                            <p>John Doe</p>
+                            <p>{{ $client->client_name }}</p>
                         </div>
                         <div class="col-md-12">
                             <label for="">Contact Number</label>
-                            <p>09123456789</p>
+                            <p>{{ $client->contact_number }}</p>
                         </div>
                         <div class="col-md-12">
                             <label for="">Address</label>
-                            <p>1234 Street Name, City, Country</p>
+                            <p>{{ $client->address }}</p>
                         </div>
                         <div class="col-md-12">
                             <label for="">Email Address</label>
-                            <p>john@email.com</p>
+                            <p>{{ $client->email }}</p>
                         </div>
                     </div>
                 </div>

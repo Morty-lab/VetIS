@@ -12,8 +12,6 @@ class Vaccination extends Model
     protected $fillable = [
         'pet_id',
         'vaccine_type',
-        'doctor_id',
-        'next_vaccine_date',
         'status',
     ];
 
@@ -32,3 +30,4 @@ class Vaccination extends Model
         return self::create($data);
     }
 }
+

@@ -11,7 +11,7 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'firstname', 'middlename', 'lastname', 'extensionname', 'address', 'phone_number', 'birthday', 'position','license_number', 'ptr_number','profile_picture'];
+    protected $fillable = ['user_id', 'firstname', 'middlename', 'lastname', 'extensionname', 'address', 'phone_number', 'birthday', 'position','license_number', 'ptr_number','profile_picture' ];
 
 
     protected $casts = [

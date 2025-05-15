@@ -18,7 +18,10 @@ class Admin extends Model
         'phone_number',
         'birthday',
         'position',
-        'profile_picture'
+        'profile_picture',
+        'middlename',
+        'extensionname',
+
     ];
 
 

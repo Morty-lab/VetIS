@@ -67,7 +67,8 @@
                 @endforeach
 
 
-                <a class="dropdown-item dropdown-notifications-footer" href="{{route('notifications.index')}}">View All Notifications</a>
+                <a class="dropdown-item dropdown-notifications-footer" href="{{ route('notifications.index') }}">View
+                    All Notifications</a>
             </div>
         </li>
 
@@ -111,16 +112,34 @@
             </div>
         </li> -->
         <!-- User Dropdown-->
+        @php
+            $user = \App\Models\User::where('id', Auth::id())->first();
+            switch ($user->role) {
+                case 'admin':
+                    $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
+                    break;
+                case 'staff' || 'secretary' || 'cashier':
+                    $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
+                    break;
+                case 'client':
+                    $userInfo = \App\Models\Clients::where('user_id', $user->id)->first();
+                    break;
+                case 'veterinarian':
+                    $userInfo = \App\Models\Doctor::where('user_id', $user->id)->first();
+                    break;
+            }
+        @endphp
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
                 href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"><img class="img-fluid"
-                    src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" /></a>
+                    src="{{ $userInfo->client_profile_picture ? asset('storage/' . $userInfo->client_profile_picture) : ($userInfo->profile_picture ? asset('storage/' . $userInfo->profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png')) }}" /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
                 aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
+
                     <img class="dropdown-user-img"
-                        src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" />
+                        src="{{ $userInfo->client_profile_picture ? asset('storage/' . $userInfo->client_profile_picture) : ($userInfo->profile_picture ? asset('storage/' . $userInfo->profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png')) }}" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">{{ Auth::user()->name }}</div>
                         <div class="dropdown-user-details-email"><a href="cdn-cgi/l/email-protection.html"

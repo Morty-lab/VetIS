@@ -24,12 +24,15 @@ class TransactionSeeder extends Seeder
             ]);
 
             // Insert 2-4 transaction details per transaction
+            $remainingSubTotal = DB::table('transactions')->where('id', $transactionId)->value('sub_total');
             for ($j = 0; $j < rand(2, 4); $j++) {
+                $price = rand(1, $remainingSubTotal);
+                $remainingSubTotal -= $price;
                 DB::table('transaction_details')->insert([
                     'transaction_id' => $transactionId,
                     'product_id' => rand(1, 20),
                     'quantity' => rand(1, 5),
-                    'price' => rand(20, 150),
+                    'price' => $price,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

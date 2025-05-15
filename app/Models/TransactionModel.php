@@ -68,7 +68,7 @@ class TransactionModel extends Model
                 DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m") as month'),
                 DB::raw('SUM(transaction_details.price * transaction_details.quantity) as total_sales'),
                 DB::raw('SUM(
-                    ((transaction_details.price - stocks.supplier_price) * transaction_details.quantity) 
+                    ((transaction_details.price - stocks.supplier_price) * transaction_details.quantity)
                     * (1 - IFNULL(transactions.total_discount, 0) / 100)
                 ) as revenue'),
                 DB::raw('SUM(transaction_details.quantity) as items_sold')
@@ -77,7 +77,7 @@ class TransactionModel extends Model
             ->orderBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'), 'asc')
             ->get();
     }
-    
+
 
     public static function getTransactionsByDateRange($dateStart, $dateEnd = null)
     {

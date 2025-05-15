@@ -100,30 +100,33 @@
     <div class="container mt-4" id="fiterCard" style="display: none;">
         <div class="row justify-content-center">
             <div class="col-md-6"> <!-- Not too wide -->
-                <div class="card border shadow-none rounded-3">
-                    <div class="card-header fw-semibold">
-                        Filter POS Sales Report
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="dateRange" class="form-label">Select date range for POS Sales Report</label>
-                            <div class="input-group input-group-joined">
-                                <input type="text" id="dateRange" class="form-control" placeholder="YYYY-MM-DD to YYYY-MM-DD">
-                                <span class="input-group-text">
-                                  <i class="fa-solid fa-calendar-days"></i> <!-- Bootstrap Icons -->
-                                </span>
-                              </div>
+                <form action="{{ route('reports.pos.generate') }}" method="post">
+                    @csrf
+                    <div class="card border shadow-none rounded-3">
+                        <div class="card-header fw-semibold">
+                            Filter POS Sales Report
                         </div>
-                        <div class="text-end">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-print me-2"></i> Print
-                            </button>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="dateRange" class="form-label">Select date range for POS Sales Report</label>
+                                <div class="input-group input-group-joined">
+                                    <input type="text" id="dateRange" class="form-control" name="date_range" placeholder="YYYY-MM-DD to YYYY-MM-DD">
+                                    <span class="input-group-text">
+                                      <i class="fa-solid fa-calendar-days"></i> <!-- Bootstrap Icons -->
+                                    </span>
+                                  </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-print me-2"></i> Generate
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 @endsection
 
@@ -134,7 +137,7 @@
         const cards = {
             'daily-sales': document.getElementById('dailySalesCard'),
             'monthly-sales': document.getElementById('monthlySalesCard'),
-            'filter': document.getElementById('fiterCard') 
+            'filter': document.getElementById('fiterCard')
         };
 
         // Ensure Pet Profile is active initially

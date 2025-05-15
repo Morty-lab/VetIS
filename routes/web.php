@@ -142,6 +142,10 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     //Pet Vaccination
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
     Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
+     Route::get('/records/vaccination', [VaccinationController::class, 'showVaccinationRecords'])->name('records.vaccination');
+    Route::get('/records/vaccination/view', [VaccinationController::class, 'showVaccination'])->name('records.vaccination.view');
+    Route::post('/pets/vaccination/dosage/add', [VaccinationController::class, 'addDosage'])->name('vaccination.dosage.add');
+
 
     //Pet Records
     Route::get('/petinfo/{id}/soap', [SoapController::class, 'index'])->name('soap.index');
@@ -166,8 +170,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     Route::get('/records/medical', [RecordsController::class, 'showMedicalRecords'])->name('records.medical');
     Route::post('/records/medical/create', [RecordsController::class, 'createMedicalRecord'])->name('records.medical.create');
     Route::get('/records/medical/archive', [RecordsController::class, 'showArchivedMedicalRecords'])->name('records.medical.archive');
-    Route::get('/records/vaccination', [RecordsController::class, 'showVaccinationRecords'])->name('records.vaccination');
-    Route::get('/records/vaccination/view', [RecordsController::class, 'showVaccination'])->name('records.vaccination.view');
+
 
 });
 
@@ -444,6 +447,7 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
     Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
     Route::post('/reports/pos/date-range', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.dateRange");
+    Route::post('/reports/pos/generate', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.generate");
 
     // Inventory Reports
     Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
@@ -477,7 +481,7 @@ Route::middleware('auth')->group(function () {
         return view('profile.view', ['user' => $user, 'userInfo' => $userInfo]);
     })->name("profile.view");
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [AdminController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/uploadPhoto/{id}', [AdminController::class, 'uploadPhoto'])->name('uploadPhoto');
 
