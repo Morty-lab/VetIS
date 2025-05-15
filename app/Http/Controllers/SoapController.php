@@ -99,6 +99,46 @@ class SoapController extends Controller
         return view('pets.forms.soap', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures, 'prescriptions' => $prescriptions]);
     }
 
+    public function print(Request $request)
+    {
+
+        $record = PetRecords::where('id', request('recordID'))->first();
+        $examination = Examination::where('pet_record_id', $record->id)->first();
+        $medications = Products::where('product_category', Category::where('category_name', 'Medications')->first()->id)->get();
+        $recordTreatment = Medications::where('recordID', request('recordID'))->get();
+        // dd($medications);
+        $pet = Pets::where('id', request('id'))->first(); //Pets::find(request('id'));
+        $owner = Clients::find($pet->owner_ID);
+        $vets = Doctor::all();
+        $services = Services::where('service_type', 'services')->get();
+        $procedures = ProcedureRecords::where('recordID', request('recordID'))->get();
+        $prescriptions = Prescriptions::where('recordID', request('recordID'))->get();
+
+
+        // dd($recordTreatment);
+        return view('pets.forms.printRecord', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures, 'prescriptions' => $prescriptions]);
+    }
+
+    public function printPrescription(Request $request)
+    {
+
+        $record = PetRecords::where('id', request('recordID'))->first();
+        $examination = Examination::where('pet_record_id', $record->id)->first();
+        $medications = Products::where('product_category', Category::where('category_name', 'Medications')->first()->id)->get();
+        $recordTreatment = Medications::where('recordID', request('recordID'))->get();
+        // dd($medications);
+        $pet = Pets::where('id', request('id'))->first(); //Pets::find(request('id'));
+        $owner = Clients::find($pet->owner_ID);
+        $vets = Doctor::all();
+        $services = Services::where('service_type', 'services')->get();
+        $procedures = ProcedureRecords::where('recordID', request('recordID'))->get();
+        $prescriptions = Prescriptions::where('recordID', request('recordID'))->get();
+
+
+        // dd($recordTreatment);
+        return view('pets.forms.printPrescription', ['pet' => $pet, 'vets' => $vets, 'owner' => $owner, 'record' => $record, 'examination' => $examination, 'medications' => $medications, 'recordTreatment' => $recordTreatment, 'services' => $services, 'procedures' => $procedures, 'prescriptions' => $prescriptions]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

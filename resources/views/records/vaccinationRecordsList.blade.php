@@ -26,20 +26,20 @@
                                     <option value=""></option>
                                     <!-- For Dogs -->
                                     <optgroup label="For Dogs">
-                                        <option value="anti_rabies_dog">Anti-Rabies Vaccine</option>
-                                        <option value="5in1_dog">Canine 5-in-1 Vaccine (DHPPI)</option>
-                                        <option value="6in1_dog">Canine 6-in-1 Vaccine (DHPPI + Lepto)</option>
-                                        <option value="8in1_dog">Canine 8-in-1 Vaccine (DHPPI + Lepto + Corona)</option>
-                                        <option value="kennel_cough">Kennel Cough Vaccine (Bordetella)</option>
+                                        <option value="Anti-Rabies Vaccine">Anti-Rabies Vaccine</option>
+                                        <option value="Canine 5-in-1 Vaccine (DHPPI)">Canine 5-in-1 Vaccine (DHPPI)</option>
+                                        <option value="Canine 6-in-1 Vaccine (DHPPI + Lepto)">Canine 6-in-1 Vaccine (DHPPI + Lepto)</option>
+                                        <option value="Canine 8-in-1 Vaccine (DHPPI + Lepto + Corona)">Canine 8-in-1 Vaccine (DHPPI + Lepto + Corona)</option>
+                                        <option value="Kennel Cough Vaccine (Bordetella)">Kennel Cough Vaccine (Bordetella)</option>
                                     </optgroup>
 
                                     <!-- For Cats -->
                                     <optgroup label="For Cats">
-                                        <option value="anti_rabies_cat">Anti-Rabies Vaccine</option>
-                                        <option value="3in1_cat">Feline 3-in-1 Vaccine (FVRCP)</option>
-                                        <option value="4in1_cat">Feline 4-in-1 Vaccine (FVRCP + Chlamydia)</option>
-                                        <option value="feline_leukemia">Feline Leukemia Vaccine (FeLV)</option>
-                                        <option value="fip_vaccine">Feline Infectious Peritonitis Vaccine (FIP)</option>
+                                        <option value="Anti-Rabies Vaccine">Anti-Rabies Vaccine</option>
+                                        <option value="Feline 3-in-1 Vaccine (FVRCP)">Feline 3-in-1 Vaccine (FVRCP)</option>
+                                        <option value="Feline 4-in-1 Vaccine (FVRCP + Chlamydia)">Feline 4-in-1 Vaccine (FVRCP + Chlamydia)</option>
+                                        <option value="Feline Leukemia Vaccine (FeLV)">Feline Leukemia Vaccine (FeLV)</option>
+                                        <option value="Feline Infectious Peritonitis Vaccine (FIP)">Feline Infectious Peritonitis Vaccine (FIP)</option>
                                     </optgroup>
                                 </select>
                                 @error('petOwner')
