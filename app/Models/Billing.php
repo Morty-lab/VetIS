@@ -17,6 +17,7 @@ class Billing extends Model
         'payment_type',
         'total_payable',
         'total_paid',
+        'discount',
         'due_date',
     ];
 

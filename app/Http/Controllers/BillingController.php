@@ -12,6 +12,7 @@ use App\Models\Payments;
 use App\Models\Pets;
 use App\Models\Products;
 use App\Models\Services;
+use App\Models\Stocks;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -73,6 +74,7 @@ class BillingController extends Controller
             'payment_type' => $request->payment_type,
             'total_payable' => $request->total_payable,
             'total_paid' => $request->cash_given,
+            'discount' => $request->discount,
             'due_date' => $request->input('due_date', null),
         ]);
 
@@ -84,7 +86,7 @@ class BillingController extends Controller
                     'billing_id' => $billing->id, // Use the ID of the saved billing record
                     'service_id' => $service['serviceID'],
                     'service_price' => $service['price'],
-                    'quantity' => 1                ]);
+                    'quantity' =>  $service['quantity'] ?? 1]);
             }
         }
 
@@ -111,6 +113,10 @@ class BillingController extends Controller
                     'service_price' => $medication['price'],
                     'quantity' => $medication['quantity']
                 ]);
+
+                $product_id = $medication['serviceID'];
+                $requiredStock = $medication['quantity'];
+                Stocks::subtractStock($product_id, $requiredStock);
             }
         }
 
@@ -137,7 +143,7 @@ class BillingController extends Controller
         $pet = Pets::where('id',$bill->pet_id)->first();
         $services_availed = BillingServices::where('billing_id',$id)->get();
         $services = Services::getAllServices();
-        $payments = Payments::where('billing_id',$id)->get();
+        $payments = Payments::where('billing_id',$id)->orderByDesc('created_at')->get();
 
         return view('billing.view',['billing' => $bill,'owner'=>$owner,'pet'=>$pet,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
     }
@@ -147,12 +153,12 @@ class BillingController extends Controller
 
         $bill = Billing::where('id',$id)->first();
         $owner = Clients::where('id',$bill->user_id)->first();
-        $pet = Pets::where('id',$bill->pet_id)->first();
+        // $pet = Pets::where('id',$bill->pet_id)->first();
         $services_availed = BillingServices::where('billing_id',$id)->get();
         $services = Services::getAllServices();
         $payments = Payments::where('billing_id',$id)->get();
 
-        return view('billing.print',['billing' => $bill,'owner'=>$owner,'pet'=>$pet,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
+        return view('billing.print',['billing' => $bill,'owner'=>$owner,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
 
     }
 
@@ -165,12 +171,16 @@ class BillingController extends Controller
         $payment->cash_given = $request->input('cash_given');
         $payment->save();
 
-        Notifications::addNotif([
-            'visible_to' => "staff",
-            'link' => route('billing.view', ['billingID' => $id]),
-            'notification_type' => 'success',
-            'message' => "Pethub has received " . $request->input('cash_given') . "From client " . Clients::where('id', $request->user_id)->first()->client_name . " for bill " . Billing::where('id', $id)->first()->billing_number,
+        Billing::where('id', $id)->update([
+            'total_paid' => Billing::where('id', $id)->value('total_paid') + $request->input('cash_given'),
         ]);
+
+        // Notifications::addNotif([
+        //     'visible_to' => "staff",
+        //     'link' => route('billing.view', ['billingID' => $id]),
+        //     'notification_type' => 'success',
+        //     'message' => "Pethub has received " . $request->input('cash_given') . "From client " . Clients::where('id', $request->user_id)->first()->client_name . " for bill " . Billing::where('id', $id)->first()->billing_number,
+        // ]);
 
         return redirect()->route('billing.view',['billingID' => $id])->with('success', 'Payment record created successfully.');
     }

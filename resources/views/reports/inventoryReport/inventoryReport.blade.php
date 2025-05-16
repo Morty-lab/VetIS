@@ -60,7 +60,7 @@
                             Php {{$product->price}}
                         </td>
                         <td>
-                            <div class="badge {{$stock-$subtracted !== 0  ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock-$subtracted !  == 0  ? 'Available' : 'Unavailable'}}</div>
+                            <div class="badge {{$stock-$subtracted !== 0  ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock-$subtracted !== 0  ? 'Available' : 'Unavailable'}}</div>
                         </td>
                         <td>
                             {{$stock-$subtracted == 0 ? "No stocks available" : $stock-$subtracted}}
