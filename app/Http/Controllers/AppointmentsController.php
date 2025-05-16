@@ -54,17 +54,25 @@ class AppointmentsController extends Controller
             "15:00",
             "15:30",
             "16:00",
-            "16:30"
+            "16:30",
+            // "17:00",
         ];
 
         // Get booked times for the selected date
         $bookedTimes = Appointments::where('appointment_date', $selectedDate)
-            ->where('doctor_ID', $selectedVet)
+            ->where('doctor_ID', $selectedVet)->where('status', 0)
             ->pluck('appointment_time')
             ->map(function ($time) {
                 return Carbon::parse($time)->format('H:i');
             })
             ->toArray();
+
+        // Get the current time and remove the time from the all times that is less than the current time
+        $currentTime = Carbon::now()->format('H:i');
+        $allTimes = array_filter($allTimes, function ($time) use ($currentTime) {
+            return strtotime($time) > strtotime($currentTime);
+        });
+
 
         // Filter out booked times
         $availableTimes = array_diff($allTimes, $bookedTimes);

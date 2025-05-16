@@ -53,7 +53,7 @@ Route::get('/', function () {
     }
     return redirect()->route('landing');
 });
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('landing.index');
 })->name('landing');
 
@@ -518,6 +518,8 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/portal/mypets/view', [PortalController::class, 'viewMyPet'])->name(name: "portal.mypets.view");
     Route::get('/portal/mypets/edit', [PortalController::class, 'editMyPet'])->name(name: "portal.mypets.edit");
     Route::post('/portal/mypets/update', [PortalController::class, 'updateMyPet'])->name(name: "portal.mypets.update");
+    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+
 
     Route::get('/portal/appointments', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments");
     Route::post('/portal/appoinments/add', [PortalController::class, 'addMyAppointment'])->name(name: "portal.appointments.add");
