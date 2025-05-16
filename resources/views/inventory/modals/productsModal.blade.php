@@ -306,8 +306,8 @@
                                                         @php
                                                             $availableStock = $stockP->stock - $stockP->subtracted_stock;
                                                         @endphp
-                                                    
-                                                        <span class="badge badge-sm fw-bold rounded-pill 
+
+                                                        <span class="badge badge-sm fw-bold rounded-pill
                                                             {{ $availableStock > 0 ? 'bg-primary-soft text-primary' : 'bg-danger-soft text-danger' }}">
                                                             {{ $availableStock > 0 ? $availableStock . ' Stocks Available' : 'No Stocks' }}
                                                         </span>
@@ -485,7 +485,7 @@
                                 <span id="sellingPriceError" class="text-danger"></span>
                             </div>
                             <div class="col-6">
-                                <div class="label">Stock Amount</div>
+                                <div class="label">Stock Quantity</div>
                                 <input type="number" name="stock" id="stock" class="form-control">
                                 <span id="stockError" class="text-danger"></span>
                             </div>
