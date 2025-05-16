@@ -60,14 +60,20 @@
                             </div>
                             <div class="d-flex">
                                 <div class="p-2 border-end w-100">
-                                    <span class="fw-semibold">Pets:</span> <br> Lexie, Blacky
+                                    <span class="fw-semibold">Pets:</span> <br>
+                                    @php
+                                        $petIds = $services_availed->pluck('pet_id')->unique();
+                                        $pets = \App\Models\Pets::whereIn('id', $petIds)->get()->pluck('pet_name');
+                                    @endphp
+                                    {{implode(', ', $pets->toArray())}}
                                 </div>
                                 <div class="p-2 border-end w-100">
-                                    <span class="fw-semibold">Attending Veterinarian:</span> <br> Kent Invento
+                                    <span class="fw-semibold">Attending Veterinarian:</span> <br>
+                                    {{ \App\Models\Doctor::getName($billing->vet_id) }}
                                 </div>
                             </div>
                         </div>
-                    </div>                         
+                    </div>
                     <hr class="mt-5 mb-3">
                     <!-- Services Availed -->
                     {{-- <div class="row mb-3 rounded mx-0">
@@ -139,7 +145,7 @@
                                 @php
                                     $total = 0;
                                 @endphp
-                        
+
                                 @foreach($services_availed as $s)
                                     @php
                                         $service = $services->firstWhere('id', $s->service_id);
@@ -149,7 +155,7 @@
                                     @if($service)
                                         <tr>
                                             <td>{{ $service->service_name }}</td>
-                                            <td>Lexie</td>
+                                            <td>{{ App\Models\Pets::firstWhere('id', $s->pet_id)->pet_name ?? 'Unknown Pet' }}</td>
                                             <td>₱{{ number_format($service->service_price, 2) }}</td>
                                             <td class="text-center">x{{ $s->quantity ?? 1 }}</td>
                                             <td class="text-end">₱{{ number_format($lineTotal, 2) }}</td>
@@ -157,7 +163,7 @@
                                     @endif
                                 @endforeach
                             </tbody>
-                        </table>       
+                        </table>
                         <div class="row">
                             <div class="col-12">
                                 <div class="d-flex justify-content-end">
@@ -175,7 +181,7 @@
                                         <span class="fw-bold">Discount:</span>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <span class="text-primary fw-bold me-3">3%</span>
+                                        <span class="text-primary fw-bold me-3">({{$billing->discount * 100}}%) ₱{{number_format($total * $billing->discount,2)}} </span>
                                     </div>
                                 </div>
                             </div>
@@ -185,12 +191,12 @@
                                         <span class="fw-bold">Total:</span>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <span class="text-primary fw-bold me-3">₱{{ number_format($total, 2) }}</span>
+                                        <span class="text-primary fw-bold me-3">₱{{ number_format(($total - ($total * $billing->discount)), 2) }}</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>                 
-                    </div>                    
+                        </div>
+                    </div>
 
                     {{-- <div class="row mb-3 rounded mx-0">
                         <label class="form-label fw-bold p-0">Services Availed</label>
@@ -278,7 +284,7 @@
                         <hr class="m-0 mt-3 mb-2">
                         <div class="col-md-6">
                             <label for="service_total" class="form-label fw-bold text-primary">Bill Total</label>
-                            <p class="rounded fw-bold mb-0">₱{{number_format( $total, 2)}}</p>
+                            <p class="rounded fw-bold mb-0">₱{{number_format( $total - ($total * $billing->discount), 2)}}</p>
                         </div>
                         <div class="col-md-6">
                             <label for="remaining_balance" class="form-label fw-bold text-primary">Remaining Balance</label>
@@ -289,16 +295,16 @@
                                     $fullyPaid = true;
                                 } else {
                                     // Calculate remaining balance
-                                    $totalPayable = $billing->total_payable;
+                                    $totalPayable = $billing->total_payable - ($billing->total_payable * $billing->discount);
                                     $totalPaid = $billing->total_paid;
 
                                     $remainingBalance = $totalPayable - $totalPaid;
 
-                                    // Check if payments array is not empty
-                                    if (!$payments->isEmpty()) {
-                                        $paymentsSum = $payments->sum('cash_given');
-                                        $remainingBalance -= $paymentsSum;
-                                    }
+                                    // // Check if payments array is not empty
+                                    // if (!$payments->isEmpty()) {
+                                    //     $paymentsSum = $payments->sum('cash_given');
+                                    //     $remainingBalance -= $paymentsSum;
+                                    // }
 
                                     // Determine if fully paid
                                     $fullyPaid = $remainingBalance <= 0;
@@ -307,6 +313,7 @@
 
                             @if($fullyPaid)
                                 <!-- Fully Paid Badge -->
+
                                 <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
                             @else
                                 <!-- Remaining Balance -->
@@ -352,6 +359,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
 
                         @foreach($payments as $p)
                             <tr>

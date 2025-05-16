@@ -88,13 +88,15 @@
 {{--                        <td>₱ {{ number_format($billing->total_payable, 2) }}</td>--}}
 {{--                        <td>₱ {{ number_format($billing->total_payable - $billing->total_paid, 2) }}</td>--}}
                         <td>
-                            @if ($billing->total_paid >= $billing->total_payable)
+                            @if ($billing->total_paid >= ($billing->total_payable - ($billing->total_payable * $billing->discount)))
                             <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
                             @elseif ($billing->total_paid > 0)
                             <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">Partially Paid</div>
                             @else
                             <div class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending Payment</div>
                             @endif
+
+                             {{-- {{$billing->total_payable - ($billing->total_payable * $billing->discount)}} --}}
                         </td>
 {{--                        <td>{{\Carbon\Carbon::parse($billing->due_date)->format('M d, Y')}}</td>--}}
                         <td>

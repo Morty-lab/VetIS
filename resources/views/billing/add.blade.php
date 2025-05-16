@@ -441,7 +441,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
-                            onclick="addMedicationToTable({{ $medication->id }}, '{{ $medication->product_name }}', {{ $medicationPrice }}, medicationQuantity,medpet)">Add
+                            onclick="if (medicationQuantity > 0 && medpet.id) addMedicationToTable({{ $medication->id }}, '{{ $medication->product_name }}', {{ $medicationPrice }}, medicationQuantity,medpet); else alert('Please select a pet and enter a quantity')">Add
                             Medication</button>
 
                     </div>
@@ -499,7 +499,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
-                            onclick="addFeeToTable({{ $fee->id }}, '{{ $fee->service_name }}', {{ $fee->service_price }},feepet)">Add
+                            onclick="if (feepet.id) { addFeeToTable({{ $fee->id }}, '{{ $fee->service_name }}', {{ $fee->service_price }},feepet); } else { alert('Please select a pet.'); }">Add
                             Fee</button>
 
 
@@ -543,6 +543,15 @@
                                 </div>
                             @endif
                             <hr class="mt-3 mb-2">
+                            @if ($service->service_name == 'Pet Lodge')
+                                <div class="col-md-12 mb-2">
+                                    <label for="" class="mb-1">Enter Quantity</label>
+                                    <input type="number" id="quantityInput" class="form-control"
+                                        placeholder="Enter Quantity" min="1" max="10" step="1" required
+                                        oninput="setPetLodgeQuantity(this.value)">
+
+                                </div>
+                            @endif
                             <div class="col-md-12">
                                 <label for="" class="mb-1">Who is this Service for?</label>
                                 <select class="form-select" id="pet" name="pet" required
@@ -556,10 +565,16 @@
 
                                 <script>
                                     let pet = {};
+                                    let petLodgeQuantity = 1;
 
                                     function setPetVariable(selectElement) {
                                         pet.id = selectElement.value;
                                         pet.name = selectElement.selectedOptions[0].dataset.petName;
+                                    }
+
+                                    function setPetLodgeQuantity(value) {
+                                        petLodgeQuantity = value;
+                                        console.log(petLodgeQuantity);
                                     }
                                 </script>
                             </div>
@@ -567,7 +582,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="button" data-bs-dismiss="modal"
-                            onclick="addServiceToTable({{ $service->id }}, '{{ $service->service_name }}', {{ $service->service_price }},pet)">Add
+                            onclick="if (pet.id) { addServiceToTable({{ $service->id }}, '{{ $service->service_name }}', {{ $service->service_price }}, petLodgeQuantity, pet); } else { alert('Please select a pet.'); }">Add
                             Service</button>
 
 
@@ -1159,11 +1174,13 @@
 
             // Convert to number
             const cashGiven = parseFloat(amount) || 0;
+            let totalpayable = parseFloat(document.getElementById('payable').textContent.replace(/[^\d.]/g, '').replace(/\.00$/, ''));
 
             if (paymentType === 'Cash') {
                 // For full payment, cash must be >= final price
                 console.log('Adding cash given (full): ', amount);
-                if (cashGiven < total) {
+                console.log('Total payable: ', totalpayable);
+                if (cashGiven < totalpayable) {
                     cashGivenInput.classList.add('is-invalid');
                     return false;
                 } else {
@@ -1173,7 +1190,7 @@
             } else if (paymentType === 'Partial') {
                 console.log('Adding cash given (partial): ', amount);
                 // For partial payment, cash must be > 0 and < final price
-                if (cashGiven <= 0 || cashGiven >= total) {
+                if (cashGiven <= 0 || cashGiven >= totalpayable) {
                     cashGivenInput.classList.add('is-invalid');
                     return false;
                 } else {
@@ -1193,7 +1210,9 @@
             const cashGivenInput = document.getElementById('cashGiven');
 
             console.log(discount);
-            discountAmount = subTotal * discount;
+            const originalTotal = parseFloat(totalInput.value.replace(/[^\d.]/g, '')) || 0;
+            console.log(originalTotal);
+            discountAmount = originalTotal * discount;
             console.log(discountAmount);
 
 
@@ -1201,14 +1220,12 @@
 
 
 
-
+            let discountedTotal = originalTotal - discountAmount;
             totalElements.forEach(el => {
-                total = parseFloat(el.textContent.replace(/[^\d.]/g, '')) - discountAmount;
-                el.textContent = `₱ ${total.toFixed(2)}`;
+                el.textContent = `₱ ${discountedTotal.toFixed(2)}`;
             });
-            cashGivenInput.setAttribute('placeholder', `Minimum ${total.toFixed(2)}`);
+            cashGivenInput.setAttribute('placeholder', `Minimum ${discountedTotal.toFixed(2)}`);
 
-            totalInput.value = total;
         }
 
         // Update final price after discount
@@ -1270,7 +1287,7 @@
                 const remainingBalanceText = document.getElementById('remainingBalanceText');
 
                 if (paymentType === 'Cash') {
-                    const change = cashGiven - total;
+                    const change = cashGiven - (total - discountAmount);
                     thankYouMessage.classList.remove('d-none');
                     changeContainer.classList.remove('d-none');
                     changeText.textContent = `₱ ${change.toFixed(2)}`;
@@ -1316,8 +1333,8 @@
         // }
 
 
-        function addServiceToTable(serviceId, serviceName, servicePrice, pet) {
-            updateSubTotal(servicePrice);
+        function addServiceToTable(serviceId, serviceName, servicePrice,petLodgeQuantity, pet) {
+            updateSubTotal(servicePrice * petLodgeQuantity);
             index = document.querySelectorAll('table.table-responsive tbody tr').length;
             const tableBody = document.querySelector('table.table-responsive tbody');
             const row = document.createElement('tr');
@@ -1332,10 +1349,10 @@
                 <span>₱</span><span class="price">${servicePrice.toFixed(2)}</span>
             </td>
             <td class="text-center" style="vertical-align: middle;">
-                1
+                ${petLodgeQuantity}
             </td>
             <td class="text-center" style="vertical-align: middle;">
-                <span>₱</span><span class="quantity-total">${servicePrice.toFixed(2)}</span>
+                <span>₱</span><span class="quantity-total">${(servicePrice * petLodgeQuantity).toFixed(2)}</span>
             </td>
             <td class="text-center"
                 style="vertical-align: middle; width: 120px; padding: 5px; font-size: 0.85rem;">
@@ -1366,6 +1383,12 @@
             inputPetID.name = `bill[${index}][petID]`;
             inputPetID.value = pet.id;
 
+            const inputQuantity = document.createElement('input');
+            inputQuantity.type = 'hidden';
+            inputQuantity.name = `bill[${index}][quantity]`;
+            inputQuantity.value = petLodgeQuantity;
+
+            paymentForm.appendChild(inputQuantity);
             paymentForm.appendChild(inputServiceID);
             paymentForm.appendChild(inputPrice);
             paymentForm.appendChild(inputPetID);
@@ -1429,7 +1452,7 @@
         }
 
         function addMedicationToTable(serviceId, serviceName, servicePrice, quantity, pet) {
-            updateSubTotal(servicePrice);
+            updateSubTotal(servicePrice * quantity);
             index = document.querySelectorAll('table.table-responsive tbody tr').length;
             const tableBody = document.querySelector('table.table-responsive tbody');
             const row = document.createElement('tr');
