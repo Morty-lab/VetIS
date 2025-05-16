@@ -67,14 +67,14 @@ Route::get('/dashboard', function () {
     $appointments = Appointments::all();
     $todayCount = 0;
     foreach ($appointments as $appointment) {
-    if (
-    $appointment->status == 0 &&
-    Carbon::parse($appointment->appointment_date)->isToday()
-    ) {
-    $todayCount++;
-    } else {
-    continue;
-    }
+        if (
+            $appointment->status == 0 &&
+            Carbon::parse($appointment->appointment_date)->isToday()
+        ) {
+            $todayCount++;
+        } else {
+            continue;
+        }
     }
 
 
@@ -106,7 +106,8 @@ Route::get('/dashboard', function () {
         'petCount',
         'appointmentRequests',
         'dailySales'
-        , 'monthlySales',
+        ,
+        'monthlySales',
         'monthlyRevenue'
     ));
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -142,7 +143,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
     //Pet Vaccination
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
     Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
-     Route::get('/records/vaccination', [VaccinationController::class, 'showVaccinationRecords'])->name('records.vaccination');
+    Route::get('/records/vaccination', [VaccinationController::class, 'showVaccinationRecords'])->name('records.vaccination');
     Route::get('/records/vaccination/view', [VaccinationController::class, 'showVaccination'])->name('records.vaccination.view');
     Route::post('/pets/vaccination/dosage/add', [VaccinationController::class, 'addDosage'])->name('vaccination.dosage.add');
 
@@ -467,15 +468,16 @@ Route::middleware('auth')->group(function () {
             case 'admin':
                 $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
                 break;
-            case 'staff' || 'secretary' || 'cashier':
-                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
-                break;
-            case 'client':
-                $userInfo = Clients::where('user_id', $user->id)->first();
-                break;
             case 'veterinarian':
                 $userInfo = Doctor::where('user_id', $user->id)->first();
                 break;
+            case 'staff':
+            case 'secretary':
+            case 'cashier':
+                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
+                break;
+
+
         }
 
         return view('profile.view', ['user' => $user, 'userInfo' => $userInfo]);
@@ -484,6 +486,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [AdminController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/uploadPhoto/{id}', [AdminController::class, 'uploadPhoto'])->name('uploadPhoto');
+
 
     // sub routes Pet Plan
     Route::post('/soap/plan/{recordID}/addservice', [PetPlanController::class, 'store'])->name('plan.store');
@@ -548,7 +551,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
-Route::get('/notifications/load', [NotificationsController::class, 'load'])->name('notifications.load');
+    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/load', [NotificationsController::class, 'load'])->name('notifications.load');
 });
 require __DIR__ . '/auth.php';
