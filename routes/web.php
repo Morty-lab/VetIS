@@ -124,7 +124,7 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 });
-Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function () {
     //Pet Routes
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
     Route::get('/managepet/archive', [PetsController::class, 'archive'])->name('pet.archive');
@@ -139,7 +139,7 @@ Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () 
 });
 
 
-Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () {
+Route::middleware(['auth', 'role:admin,veterinarian,secretary'])->group(function () {
     //Pet Vaccination
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
     Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
@@ -176,7 +176,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
 });
 
 //User Managemnt
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     // Doctors
     Route::get('/managedoctor', [DoctorController::class, 'index'])->name('doctor.index');
     Route::get('/managedoctor/archives', [DoctorController::class, 'archive'])->name('doctor.archive');
@@ -314,7 +314,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:admin,staff'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     //Lodge
     Route::get('/lodge', [LodgeController::class, 'index'])->name('lodge.index');
     Route::post('/lodge/add', [LodgeController::class, 'store'])->name('lodge.add');
@@ -381,14 +381,11 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
     Route::post('/viewappointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
 });
 
-//POS and Inventory
-Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
-    // POS Routes
 
-    Route::get('/pos', [POSController::class, 'index'])->name('pos');
-    Route::get('/pos/receipt', [POSController::class, 'receipt'])->name('pos.receipt');
-    Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
-    // Inventory Routes
+//Inventory
+Route::middleware(['auth', 'role:admin,secretary,staff'])->group(function () {
+
+ // Inventory Routes
 
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
@@ -417,6 +414,17 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::post('/units/update/{id}', [UnitController::class, 'update'])->name("units.update");
     Route::get('/units/{id}', [UnitController::class, 'destroy'])->name("units.delete");
 
+});
+
+//POS
+Route::middleware(['auth', 'role:admin,secretary,cashier'])->group(function () {
+    // POS Routes
+
+    Route::get('/pos', [POSController::class, 'index'])->name('pos');
+    Route::get('/pos/receipt', [POSController::class, 'receipt'])->name('pos.receipt');
+    Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
+
+
     // billing section
     Route::get('/billing', [BillingController::class, 'index'])->name('billing');
     Route::post('/billing/add', [BillingController::class, 'create'])->name('billing.add');
@@ -437,7 +445,13 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
     Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');
 
-    //Printable sales
+
+});
+
+
+//POS and Inventory
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
+     //Printable sales
     Route::get('/print/sales', function () {
         return view('printable.sales');
     });

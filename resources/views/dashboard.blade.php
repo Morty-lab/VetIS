@@ -5,6 +5,34 @@
 @endsection
 
 @section('content')
+@php
+switch (Auth::user()->role) {
+    case 'veterinarian':
+        header('Location: ' . route('appointments.index'));
+        exit();
+        break;
+
+    case 'cashier':
+        header('Location: ' . route('billing'));
+        exit();
+        break;
+
+    case 'staff':
+        header('Location: ' . route('products.index'));
+        exit();
+        break;
+
+    case 'secretary':
+        header('Location: ' . route('pet.index'));
+        exit();
+        break;
+
+    default:
+        // code for admin
+        break;
+}
+@endphp
+
 <header class="mt-n10 pt-10 mb-4 bg-white border-bottom">
     <div class="container-xl px-4">
         <div class="page-header-content pt-4">
@@ -281,7 +309,7 @@
     // Bar Chart Example
     var ctxbar = document.getElementById("RevenueChart");
     var revenueData = @json($monthlyRevenue);
-    
+
 
     var labels = revenueData.map(sale => {
     var date = new Date(sale.month + '-01'); // Add day to make it a valid date

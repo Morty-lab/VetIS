@@ -29,7 +29,7 @@ class PortalController extends Controller
         $client = Clients::getClientByUserID(Auth::id());
         $appointments = Appointments::getAppointmentByClient($client->id);
         $vets = Doctor::getAllDoctors();
-        $pets = Pets::getAllPets($client->id);
+        $pets = Pets::getAllPets();
 
 
         return view('portal.main.dashboard', ['appointments' => $appointments, 'vets' => $vets, 'pets' => $pets]);
