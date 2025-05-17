@@ -42,7 +42,7 @@
     <div class="sidenav-footer">
         <div class="sidenav-footer-content">
             <div class="sidenav-footer-subtitle">Logged in as:</div>
-            <div class="sidenav-footer-title">{{\Illuminate\Support\Facades\Auth::user()->name}}</div>
+            <div class="sidenav-footer-title">{{\App\Models\Clients::getClientByUserID(\Illuminate\Support\Facades\Auth::user()->id)->client_name}}</div>
         </div>
     </div>
 </nav>

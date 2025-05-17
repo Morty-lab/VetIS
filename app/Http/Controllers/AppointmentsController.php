@@ -101,7 +101,7 @@ class AppointmentsController extends Controller
         $appointment = Appointments::with(['client', 'pet'])->find($id);
 
         $appointment->status = 0;
-        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($appointment->appointment_date), Carbon::parse($appointment->appointment_time));
+        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($appointment->appointment_date), Carbon::parse($appointment->appointment_time),$appointment->doctor_ID);
         $appointment->priority_number = $priority_number;
         $appointment->save();
 
@@ -266,7 +266,7 @@ class AppointmentsController extends Controller
 
         // Create a new appointment using the validated data
         // $request->merge(['pet_ID' => implode(',', $request->input('pet_ID'))]);
-        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($request->appointment_date), Carbon::parse($request->appointment_time));
+        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($request->appointment_date), Carbon::parse($request->appointment_time),$request->input('doctor_ID'));
         $request->merge([
             'pet_ID' => implode(',', $request->input('pet_ID')),
             'purpose' => implode(',', $request->input('reasonOfVisit')),
@@ -362,7 +362,7 @@ class AppointmentsController extends Controller
         $appointment->appointment_date = $validatedData['appointment_date'];
         $appointment->appointment_time = $validatedData['appointment_time'];
         $appointment->doctor_ID = $validatedData['doctor_ID'];
-        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($appointment->appointment_date), Carbon::parse($appointment->appointment_time));
+        $priority_number = Appointments::generateAppointmentNumber(Carbon::parse($appointment->appointment_date), Carbon::parse($appointment->appointment_time),$appointment->doctor_ID);
         $appointment->priority_number = $priority_number;
 
         // Save the changes
