@@ -29,7 +29,7 @@ class PortalController extends Controller
         $client = Clients::getClientByUserID(Auth::id());
         $appointments = Appointments::getAppointmentByClient($client->id);
         $vets = Doctor::getAllDoctors();
-        $pets = Pets::getAllPets($client->id);
+        $pets = Pets::getAllPets();
 
 
         return view('portal.main.dashboard', ['appointments' => $appointments, 'vets' => $vets, 'pets' => $pets]);
@@ -70,21 +70,21 @@ class PortalController extends Controller
         $pet->owner_ID = $client->id;
 
 
-        Notifications::addNotif([
-            'visible_to' => $client->id,
-            'link' => route('appointments.mypets'),
-            'notification_type' => 'success',
-            'message' => "A new pet has been added",
-        ]);
+        // Notifications::addNotif([
+        //     'visible_to' => $client->id,
+        //     'link' => route('appointments.mypets'),
+        //     'notification_type' => 'success',
+        //     'message' => "A new pet has been added",
+        // ]);
 
         // Save the pet
         $pet->save();
-        Notifications::addNotif([
-            'visible_to' => "staff",
-            'link' => route('pets.show', $pet->id),
-            'notification_type' => 'success',
-            'message' => $client->client_name.  "Has added a new pet",
-        ]);
+        // Notifications::addNotif([
+        //     'visible_to' => "staff",
+        //     'link' => route('pets.show', $pet->id),
+        //     'notification_type' => 'success',
+        //     'message' => $client->client_name.  "Has added a new pet",
+        // ]);
 
 
         // Redirect to the pets page

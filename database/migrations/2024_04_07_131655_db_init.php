@@ -343,6 +343,7 @@ return new class extends Migration {
             $table->string("payment_type")->nullable();
             $table->double("total_payable")->nullable();
             $table->double('total_paid')->nullable();
+            $table->double('discount')->nullable();
             $table->date('due_date')->nullable();
             $table->timestamps();
         });

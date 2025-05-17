@@ -52,8 +52,9 @@ Route::get('/', function () {
         return redirect()->route('dashboard');
     }
     return redirect()->route('landing');
-})->name('/');
-Route::get('/home', function () {
+});
+Route::get('/', function () {
+
     return view('landing.index');
 })->name('landing');
 
@@ -67,14 +68,14 @@ Route::get('/dashboard', function () {
     $appointments = Appointments::all();
     $todayCount = 0;
     foreach ($appointments as $appointment) {
-    if (
-    $appointment->status == 0 &&
-    Carbon::parse($appointment->appointment_date)->isToday()
-    ) {
-    $todayCount++;
-    } else {
-    continue;
-    }
+        if (
+            $appointment->status == 0 &&
+            Carbon::parse($appointment->appointment_date)->isToday()
+        ) {
+            $todayCount++;
+        } else {
+            continue;
+        }
     }
 
 
@@ -106,7 +107,8 @@ Route::get('/dashboard', function () {
         'petCount',
         'appointmentRequests',
         'dailySales'
-        , 'monthlySales',
+        ,
+        'monthlySales',
         'monthlyRevenue'
     ));
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -123,7 +125,7 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 });
-Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function () {
     //Pet Routes
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
     Route::get('/managepet/archive', [PetsController::class, 'archive'])->name('pet.archive');
@@ -138,11 +140,11 @@ Route::middleware(['auth', 'role:admin,staff,veterinarian'])->group(function () 
 });
 
 
-Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () {
+Route::middleware(['auth', 'role:admin,veterinarian,secretary'])->group(function () {
     //Pet Vaccination
     Route::post('/pets/vaccination', [VaccinationController::class, 'store'])->name('vaccination.add');
     Route::post('/pets/vacciantion/update', [VaccinationController::class, 'update'])->name('vaccination.update');
-     Route::get('/records/vaccination', [VaccinationController::class, 'showVaccinationRecords'])->name('records.vaccination');
+    Route::get('/records/vaccination', [VaccinationController::class, 'showVaccinationRecords'])->name('records.vaccination');
     Route::get('/records/vaccination/view', [VaccinationController::class, 'showVaccination'])->name('records.vaccination.view');
     Route::post('/pets/vaccination/dosage/add', [VaccinationController::class, 'addDosage'])->name('vaccination.dosage.add');
 
@@ -175,7 +177,7 @@ Route::middleware(['auth', 'role:admin,veterinarian,staff'])->group(function () 
 });
 
 //User Managemnt
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     // Doctors
     Route::get('/managedoctor', [DoctorController::class, 'index'])->name('doctor.index');
     Route::get('/managedoctor/archives', [DoctorController::class, 'archive'])->name('doctor.archive');
@@ -313,7 +315,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:admin,staff'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     //Lodge
     Route::get('/lodge', [LodgeController::class, 'index'])->name('lodge.index');
     Route::post('/lodge/add', [LodgeController::class, 'store'])->name('lodge.add');
@@ -380,14 +382,11 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
     Route::post('/viewappointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
 });
 
-//POS and Inventory
-Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
-    // POS Routes
 
-    Route::get('/pos', [POSController::class, 'index'])->name('pos');
-    Route::get('/pos/receipt', [POSController::class, 'receipt'])->name('pos.receipt');
-    Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
-    // Inventory Routes
+//Inventory
+Route::middleware(['auth', 'role:admin,secretary,staff'])->group(function () {
+
+ // Inventory Routes
 
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
@@ -416,6 +415,17 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::post('/units/update/{id}', [UnitController::class, 'update'])->name("units.update");
     Route::get('/units/{id}', [UnitController::class, 'destroy'])->name("units.delete");
 
+});
+
+//POS
+Route::middleware(['auth', 'role:admin,secretary,cashier'])->group(function () {
+    // POS Routes
+
+    Route::get('/pos', [POSController::class, 'index'])->name('pos');
+    Route::get('/pos/receipt', [POSController::class, 'receipt'])->name('pos.receipt');
+    Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
+
+
     // billing section
     Route::get('/billing', [BillingController::class, 'index'])->name('billing');
     Route::post('/billing/add', [BillingController::class, 'create'])->name('billing.add');
@@ -436,7 +446,13 @@ Route::middleware(['auth', 'role:admin,cashier,staff'])->group(function () {
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
     Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');
 
-    //Printable sales
+
+});
+
+
+//POS and Inventory
+Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
+     //Printable sales
     Route::get('/print/sales', function () {
         return view('printable.sales');
     });
@@ -467,15 +483,16 @@ Route::middleware('auth')->group(function () {
             case 'admin':
                 $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
                 break;
-            case 'staff' || 'secretary' || 'cashier':
-                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
-                break;
-            case 'client':
-                $userInfo = Clients::where('user_id', $user->id)->first();
-                break;
             case 'veterinarian':
                 $userInfo = Doctor::where('user_id', $user->id)->first();
                 break;
+            case 'staff':
+            case 'secretary':
+            case 'cashier':
+                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
+                break;
+
+
         }
 
         return view('profile.view', ['user' => $user, 'userInfo' => $userInfo]);
@@ -484,6 +501,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [AdminController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/uploadPhoto/{id}', [AdminController::class, 'uploadPhoto'])->name('uploadPhoto');
+
 
     // sub routes Pet Plan
     Route::post('/soap/plan/{recordID}/addservice', [PetPlanController::class, 'store'])->name('plan.store');
@@ -518,6 +536,8 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/portal/mypets/view', [PortalController::class, 'viewMyPet'])->name(name: "portal.mypets.view");
     Route::get('/portal/mypets/edit', [PortalController::class, 'editMyPet'])->name(name: "portal.mypets.edit");
     Route::post('/portal/mypets/update', [PortalController::class, 'updateMyPet'])->name(name: "portal.mypets.update");
+    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+
 
     Route::get('/portal/appointments', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments");
     Route::post('/portal/appoinments/add', [PortalController::class, 'addMyAppointment'])->name(name: "portal.appointments.add");
@@ -546,7 +566,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
-Route::get('/notifications/load', [NotificationsController::class, 'load'])->name('notifications.load');
+    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/load', [NotificationsController::class, 'load'])->name('notifications.load');
 });
 require __DIR__ . '/auth.php';

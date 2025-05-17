@@ -56,7 +56,7 @@ class Doctor extends Model
 
     public static function getName($id){
         $doctor = self::where('id',$id)->first();
-        return $doctor->firstname.' '.$doctor->lastname;
+        return trim(($doctor->firstname ?? '') . ' ' . ($doctor->middlename ?? '') . ' ' . ($doctor->lastname ?? '') . ' ' . ($doctor->extensionname ?? ''));
     }
 
     // Update a doctor
