@@ -24,7 +24,9 @@ use App\Http\Controllers\LodgeController;
 use App\Models\Appointments;
 use App\Models\Clients;
 use App\Models\Doctor;
+use App\Models\PetRecords;
 use App\Models\Pets;
+use App\Models\Prescriptions;
 use App\Models\Services;
 use App\Models\TransactionModel;
 use App\Models\User;
@@ -550,7 +552,11 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
     Route::get('/portal/prescription/', [PortalController::class, 'prescription'])->name("portal.prescription.list");
     Route::get('/portal/prescription/print', function () {
-        return view('portal.main.prescriptions.print');
+        $record = PetRecords::where('id', request('recordID'))->first();
+        $prescriptions = Prescriptions::where('recordID', $record->id)->get();
+
+        // dd($prescription);
+        return view('portal.main.prescriptions.print', compact('prescriptions', 'record'));
     })->name("portal.prescription.print");
 
     Route::get('/printable/prescription/print', function () {

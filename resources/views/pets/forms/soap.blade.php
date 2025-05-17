@@ -1268,7 +1268,7 @@
                                                         {{-- <div class="col-md-1">
                                                             <a href="" class="btn btn-danger remove-med">-</a>
                                                         </div> --}}
-                                                        
+
                                                         <hr  class="mt-3 mb-2">
                                                     </div>
 
@@ -1419,7 +1419,7 @@
                                                     @if (isset($prescriptions))
                                                         @foreach ($prescriptions as $index => $prescription)
                                                             @php
-                                                                $prescription_index = 0;
+                                                                $prescription_index = 1;
                                                             @endphp
                                                             <div class="row mb-2 gy-2 prescription-entry gx-2">
                                                                 <!-- Medication Name -->
@@ -1498,7 +1498,7 @@
                                                         <!-- Medication Name -->
                                                         <div class="col-md-5">
                                                             <select class="form-control presc-name select-med"
-                                                                name="prescriptions[0][meds]">
+                                                                name="prescriptions[0][medications]">
                                                                 <option value=""></option>
                                                                 @foreach ($medications as $medication)
                                                                     <option value="{{ $medication->product_name }}">
@@ -1985,7 +1985,7 @@
                     $('.prescriptions').append(`
                     <div class="row mb-2 gy-2 prescription-entry gx-2">
                         <div class="col-md-5">
-                            <select class="form-control presc-name select-presc" name="prescriptions[${prescIndex}][meds]">
+                            <select class="form-control presc-name select-presc" name="prescriptions[${prescIndex}][medications]">
                                 @foreach ($medications as $medication)
                                     <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
                                 @endforeach

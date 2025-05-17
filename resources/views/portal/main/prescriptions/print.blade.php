@@ -77,7 +77,7 @@
         border-left: none;
         padding-left: 0;
     }
-    
+
     /* Section Titles */
     h2 {
         font-size: 16px;
@@ -180,6 +180,8 @@
         if (!is_null($record->doctorID)) {
             $doctor = \App\Models\Doctor::find($record->doctorID);
         }
+        $owner = \App\Models\Clients::find($record->ownerID);
+        $pet  = \App\Models\Pets::find($record->petID);
     @endphp
 
     <!-- Header -->
@@ -189,8 +191,8 @@
         <div class="header-subinfo">
             <span><strong>License No:</strong> {{ $doctor->license_number ?? '------' }}</span>
             <span><strong>PTR No:</strong> {{ $doctor->ptr_number ?? '------' }}</span>
-            <span><strong>Veterinarian:</strong> Dr.    {{ 
-                $doctor 
+            <span><strong>Veterinarian:</strong> Dr.    {{
+                $doctor
                     ? $doctor->firstname . ' ' .
                       ($doctor->middlename ? strtoupper(substr($doctor->middlename, 0, 1)) . '. ' : '') .
                       $doctor->lastname .
@@ -211,14 +213,14 @@
             <strong>Address:</strong> {{ $owner->client_address }}
           </div>
         </div>
-      
+
         <!-- Right column -->
         <div style="flex: 1;">
             <div>
                 <strong>Contact No.:</strong> {{ $owner->client_no }}
             </div>
         </div>
-      </div>      
+      </div>
 
       <h2>Pet Information</h2>
       <div style="display: flex; gap: 40px; max-width: 100%;">
@@ -237,7 +239,7 @@
             <div>{{ $pet->pet_breed }}</div>
           </div>
         </div>
-      
+
         <!-- Right column -->
         <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #666; padding-bottom: 4px;">
@@ -250,8 +252,8 @@
           </div>
         </div>
       </div>
-      
-    
+
+
 
     <!-- Prescriptions -->
     <h2 style="display: flex; align-items: center; gap: 8px;">
@@ -289,8 +291,8 @@
     <footer>
         <div>Date: {{ \Carbon\Carbon::now()->format('F d, Y') }}</div>
         <div>
-            <div style="text-align: center;">Dr. {{ 
-                $doctor 
+            <div style="text-align: center;">Dr. {{
+                $doctor
                     ? $doctor->firstname . ' ' .
                       ($doctor->middlename ? strtoupper(substr($doctor->middlename, 0, 1)) . '. ' : '') .
                       $doctor->lastname .
