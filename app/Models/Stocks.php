@@ -49,44 +49,62 @@ class Stocks extends Model
         return self::create($data);
     }
 
-    public static function subtractStock($product_id, $requiredStock)
+    public static function subtractStock($stock_id, $quantity)
     {
-        // Fetch all stocks for the given product, ordered by expiry date
-        $requiredStockCopy = $requiredStock;
-        $productStocks = Stocks::where('products_id', $product_id)
-            ->orderBy('expiry_date', 'asc')
-            ->get();
+        $stock = self::find($stock_id);
 
-        foreach ($productStocks as $productStock) {
-            $availableStock = $productStock->stock - $productStock->subtracted_stock;
-
-            if ($requiredStockCopy <= $availableStock) {
-                $productStock->subtracted_stock += $requiredStockCopy;
-                $productStock->save();
-
-                // Mark as inactive if the stock reaches zero
-                if ($productStock->subtracted_stock == $productStock->stock) {
-                    $productStock->status = 0;
-                    $productStock->save();
-                }
-
-                // All stock has been subtracted, so break the loop
-                return true;
-            }
-
-            // If the required stock exceeds the current stock
-            $requiredStockCopy -= $availableStock; // Reduce the remaining required stock
-            $productStock->subtracted_stock += $availableStock; // Deplete the current available stock
-            $productStock->save();
+        if (!$stock) {
+            throw new \Exception("Stock not found.");
         }
 
-        // If the loop completes but there are still unmet stock requirements, throw an exception
-        if ($requiredStockCopy > 0) {
-            throw new Exception("Not enough stock available to fulfill the request.");
+        if ($stock->stock < $quantity) {
+            throw new \Exception("Not enough stock to repack.");
         }
+
+        $stock->stock -= $quantity;
+        $stock->save();
 
         return true;
     }
+
+    // public static function subtractStock($product_id, $requiredStock)
+    // {
+    //     // Fetch all stocks for the given product, ordered by expiry date
+    //     $requiredStockCopy = $requiredStock;
+    //     $productStocks = Stocks::where('products_id', $product_id)
+    //         ->orderBy('expiry_date', 'asc')
+    //         ->get();
+
+    //     foreach ($productStocks as $productStock) {
+    //         $availableStock = $productStock->stock - $productStock->subtracted_stock;
+
+    //         if ($requiredStockCopy <= $availableStock) {
+    //             $productStock->subtracted_stock += $requiredStockCopy;
+    //             $productStock->save();
+
+    //             // Mark as inactive if the stock reaches zero
+    //             if ($productStock->subtracted_stock == $productStock->stock) {
+    //                 $productStock->status = 0;
+    //                 $productStock->save();
+    //             }
+
+    //             // All stock has been subtracted, so break the loop
+    //             return true;
+    //         }
+
+    //         // If the required stock exceeds the current stock
+    //         $requiredStockCopy -= $availableStock; // Reduce the remaining required stock
+    //         $productStock->subtracted_stock += $availableStock; // Deplete the current available stock
+    //         $productStock->save();
+    //     }
+
+    //     // If the loop completes but there are still unmet stock requirements, throw an exception
+    //     if ($requiredStockCopy > 0) {
+    //         throw new Exception("Not enough stock available to fulfill the request.");
+    //     }
+
+    //     return true;
+    // }
 
 
     public static function getAllStocksByProductId($product_id)

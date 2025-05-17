@@ -93,17 +93,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (monthlySalesReportsTable) {
         new simpleDatatables.DataTable(monthlySalesReportsTable);
     }
-
-    const inventoryProductsTable = document.getElementById(
-        "inventoryProductsTable"
-    );
+    
+    const inventoryProductsTable = document.getElementById("inventoryProductsTable");
     if (inventoryProductsTable) {
         new simpleDatatables.DataTable(inventoryProductsTable);
     }
-    const tablesWithDuplicateId = document.querySelectorAll("#inventoryStocksTable");
-    tablesWithDuplicateId.forEach((table) => {
-        new simpleDatatables.DataTable(table);
-    });
 
     const inventorySuppliersTable = document.getElementById(
         "inventorySuppliersTable"

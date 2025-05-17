@@ -392,11 +392,24 @@ Route::middleware(['auth', 'role:admin,secretary,staff'])->group(function () {
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
     Route::post('/products/addStocks/{id}', [ProductsController::class, 'addStocks'])->name("products.addStocks");
-    Route::post('/products/repackStocks', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
+    Route::post('/products/repackStocks/{stockid}', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
 
     Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
     Route::post('/products/update', [ProductsController::class, 'update'])->name("products.update");
     Route::get('/products/{id}', [ProductsController::class, 'destroy'])->name("products.delete");
+
+
+    // Products Modals
+    Route::get('/products/{id}/modal', [ProductsController::class, 'viewModal'])->name('products.modal');
+    Route::get('/products/{id}/modal/edit-product', [ProductsController::class, 'loadEditProductModal']);
+    Route::get('/products/{id}/modal/delete-product', [ProductsController::class, 'loadDeleteProductModal']);
+    Route::get('/products/{id}/modal/add-stock', [ProductsController::class, 'loadAddStockModal']);
+    Route::get('/products/{id}/modal/edit-stock/{stockid}', [ProductsController::class, 'loadEditStockModal']);
+    Route::post('/products/{id}/modal/edit-stock/{stockid}/edit', [ProductsController::class, 'updateStock'])->name("products.updateStock");
+    Route::get('/products/{id}/modal/delete-stock/{stockid}', [ProductsController::class, 'loadDeleteStockModal']);
+    Route::get('/products/{id}/modal/repack-stock/{stockid}', [ProductsController::class, 'loadRepackStockModal']);
+    Route::get('/products/{id}/modal/delete-stock/{stockid}/delete', [ProductsController::class, 'deleteStock'])->name("stock.delete");
+
 
     //categories Sub Routes
     Route::get('/categories', [CategoryController::class, 'index'])->name("categories.index");
