@@ -69,9 +69,12 @@ class AppointmentsController extends Controller
 
         // Get the current time and remove the time from the all times that is less than the current time
         $currentTime = Carbon::now()->format('H:i');
-        $allTimes = array_filter($allTimes, function ($time) use ($currentTime) {
+        if ($selectedDate == Carbon::now()->format('Y-m-d')) {
+            $allTimes = array_filter($allTimes, function ($time) use ($currentTime) {
             return strtotime($time) > strtotime($currentTime);
         });
+        }
+
 
 
         // Filter out booked times

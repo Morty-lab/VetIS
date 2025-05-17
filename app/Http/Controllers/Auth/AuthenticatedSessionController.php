@@ -17,13 +17,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('portal.auth.login');
+
     }
 
     /**
      * Handle an incoming authentication request.
      */
-//    public function store(LoginRequest $request): RedirectResponse
+    //    public function store(LoginRequest $request): RedirectResponse
 //    {
 //        $request->authenticate();
 //

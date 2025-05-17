@@ -36,7 +36,7 @@
                             <td>{{\Carbon\Carbon::parse(time: $prescription->record_date)->format("F d, Y")}}</td>
                             <td>{{\App\Models\Pets::where('id',$prescription->petID)->first()->pet_name}}</td>
                             <td>{{\App\Models\Pets::where('id',$prescription->petID)->first()->pet_type}}</td>
-                            <td>Veterinarian Name</td>
+                            <td>{{\App\Models\Doctor::getName($prescription->doctorID) }} </td>
                             <td><a class="btn btn-primary" href="{{route('portal.prescription.print', ['recordID' => $prescription->id])}}" target="_blank"><i class="fa-solid fa-print me-2"></i> Print</a></td>
                         </tr>
                     @endforeach
