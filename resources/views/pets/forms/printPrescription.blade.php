@@ -173,7 +173,7 @@
     }
 </style>
 </head>
-<body>
+<body onload="window.print();">
 <div class="container">
     @php
         $doctor = null;
@@ -282,7 +282,7 @@
     </div>
     <div class="prescription-notes" style="margin-top: 20px;">
         <strong>Prescription Notes:</strong>
-        <p>{{ $record->prescription_notes ?? '--' }}</p>
+      {!! $record->prescription_notes ?? '--' !!}
     </div>
 
     <!-- Footer -->
@@ -297,7 +297,7 @@
                       ($doctor->extname ? ' ' . $doctor->extname : '')
                     : ''
             }}</div>
-            <div class="signature-line">Signature</div>
+            <div class="signature-line">Veterinarian</div>
         </div>
     </footer>
 

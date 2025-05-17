@@ -45,7 +45,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="window.print();">
 
 <h2>Pruderich Veterinary Clinic</h2>
 <p>Purok - 3, Dologon, Maramag, Bukidnon, Philippines, 8714</p>

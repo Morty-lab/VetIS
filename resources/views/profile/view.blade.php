@@ -5,7 +5,7 @@
     <div class="modal fade" id="updateInfo" tabindex="-1" role="dialog" aria-labelledby="updateInfoTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action="{{ route('profile.update') }}" method="POST">
+                <form action="{{ route('profile.update') }}" method="POST" autocomplete="off">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title text-primary" id="updateInfoTitle">Update Account</h5>
@@ -80,10 +80,15 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="editBirthday">Birthday</label>
-                                <input type="date" class="form-control @error('birthday') is-invalid @enderror"
-                                    name="birthday" id="editBirthday"
+                                <label class="small mb-1 @error('birthday') is-invalid border-danger @enderror" for="editBirthday">Birthdate</label>
+                                <div class="input-group input-group-joined">
+                                    <input type="date" class="form-control @error('birthday') is-invalid @enderror"
+                                    name="birthday" id="inputBirthdate"
                                     value="{{ old('birthday', $userInfo->birthday) }}" required>
+                                    <div class="input-group-text">
+                                        <i data-feather="calendar"></i>
+                                    </div>
+                                </div>
                                 @error('birthday')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -93,7 +98,7 @@
 
                         </div>
                     </div>
-                    <div class="modal-footer"><button class="btn btn-dark" type="button"
+                    <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
                             data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary"
                             type="submit">Update</button></div>
                 </form>
@@ -148,98 +153,88 @@
     <div class="container-xl px-4 mt-4">
         <div class="row">
             <div class="col-md-12" id="ProfileCard">
-                <div class="row">
+                <div class="card shadow-none">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Profile Information</span>
+                        <form id="petPhotoForm" action="{{ route('uploadPhoto', $userInfo->user_id) }}"
+                            method="POST">
+                            @csrf
 
-                    <div class="col-xl-3">
-                        <!-- Profile picture card-->
-                        <div class="card shadow-none mb-4 mb-xl-0">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Profile Picture</span>
-                                <!-- Three-dot (kebab) menu button -->
-                                {{-- <div class="dropdown">
-                                    <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#updatePhotoModal">Update Photo</a></li>
-                                        <!-- You can add more items here -->
-                                    </ul>
-                                </div> --}}
-                            </div>
-                            <div class="card-body text-center">
-                                <!-- Profile picture image-->
-                                <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2"
-                                    src="{{ $userInfo->client_profile_picture ? asset('storage/' . $userInfo->client_profile_picture) : ($userInfo->profile_picture ? asset('storage/' . $userInfo->profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png')) }}"
-                                    alt="" />
-                            </div>
-                            <div class="card-footer text-center">
-                                <form id="petPhotoForm" action="{{ route('uploadPhoto', $userInfo->user_id) }}"
-                                    method="POST">
-                                    @csrf
-
-                                    <input type="file" id="petPhotoInput" name="photo"
-                                        accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
-                                    <button class="btn btn-primary" type="button"
-                                        onclick="document.getElementById('petPhotoInput').click();">Select Photo</button>
-                                </form>
-                            </div>
+                            <input type="file" id="petPhotoInput" name="photo"
+                                accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#updateInfo">Update Account</a></li>
+                                        <hr class="my-2">
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick="document.getElementById('petPhotoInput').click(); return false;">Update Photo</a>
+                                </li>
+                                <!-- You can add more items here -->
+                            </ul>
                         </div>
+                        </form>
                     </div>
-                    <div class="col-xl-9">
-                        <!-- Account details card-->
-                        <div class="card shadow-none mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Information</span>
-                                <!-- Three-dot (kebab) menu button -->
-                                <div class="dropdown">
-                                    <button class="btn btn-link text-muted p-0" type="button" id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#updateInfo">Update Account</a></li>
-                                        <!-- You can add more items here -->
-                                    </ul>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <!-- Profile picture card-->
+                                <div class="card shadow-none mb-4 mb-xl-0">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <span></span>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <!-- Profile picture image-->
+                                        <img id="petPhotoPreview" class="img-account-profile rounded-circle mb-2"
+                                            src="{{ $userInfo->client_profile_picture ? asset('storage/' . $userInfo->client_profile_picture) : ($userInfo->profile_picture ? asset('storage/' . $userInfo->profile_picture) : asset('assets/img/illustrations/profiles/profile-1.png')) }}"
+                                            alt="" />
+                                    </div>
+                                    <div class="card-footer text-center">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">Name</label>
-                                        <p>{{ $user->name }}</p>
+                            <div class="col-xl-9">
+                                <!-- Account details card-->
+                                <div class="card shadow-none mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <span></span>
+                                        <!-- Three-dot (kebab) menu button -->
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">ID</label>
-                                        <div>
-                                            <p class="badge bg-primary-soft text-primary rounded-pill">
-                                                {{ sprintf('VetIS-%05d', $user->id) }}</p>
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label class="small mb-1">Name</label>
+                                                <p>{{ $user->name }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1">Role</label>
+                                                <div class="">
+                                                    <p class="badge bg-primary-soft text-primary rounded-pill">
+                                                        {{ Str::title($user->role) }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputBirthday">Birthdate</label>
+                                                <p>{{ \Carbon\Carbon::parse($userInfo->birthday)->format('F d, Y') }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                                <p>{{ $user->email }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                                <p>{{ $userInfo->phone_number }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputAddress">Address</label>
+                                                <p>{{ $userInfo->address }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                        <p>{{ \Carbon\Carbon::parse($userInfo->birthday)->format('F d, Y') }}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1">Role</label>
-                                        <div class="">
-                                            <p class="badge bg-primary-soft text-primary rounded-pill">{{ $user->role }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="small mb-1" for="inputAddress">Address</label>
-                                        <p>{{ $userInfo->address }}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                        <p>{{ $user->email }}</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputPhone">Phone number</label>
-                                        <p>{{ $userInfo->phone_number }}</p>
                                     </div>
                                 </div>
                             </div>

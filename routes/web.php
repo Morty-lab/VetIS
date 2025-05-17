@@ -54,6 +54,7 @@ Route::get('/', function () {
     return redirect()->route('landing');
 });
 Route::get('/', function () {
+
     return view('landing.index');
 })->name('landing');
 

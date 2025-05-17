@@ -1674,9 +1674,9 @@
                                             </button>
 
                                             <div class="dropdown-menu" aria-labelledby="printMenuButton">
-                                                <a class="dropdown-item" href="{{ route('soap.print', ['id' => $record->petID, 'recordID' => $record->id]) }}">Record</a>
+                                                <a class="dropdown-item" href="{{ route('soap.print', ['id' => $record->petID, 'recordID' => $record->id]) }}" target="_blank">Record</a>
                                                 @if ($record->status == 1)
-                                                    <a class="dropdown-item" href="{{ route('soap.prescription.print', ['id' => $record->petID, 'recordID' => $record->id]) }}">Prescription</a>
+                                                    <a class="dropdown-item" href="{{ route('soap.prescription.print', ['id' => $record->petID, 'recordID' => $record->id]) }}" target="_blank">Prescription</a>
                                                 @endif
                                             </div>
                                         </div>
