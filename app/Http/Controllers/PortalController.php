@@ -376,8 +376,12 @@ class PortalController extends Controller
 
     public function prescription()
     {
-        $id = request('id');
-        $prescriptions = PetRecords::getPrescriptions($id);
+        $client = Clients::getClientByUserID(auth()->user()->id);
+        $appointments = Appointments::getAppointmentByClient($client->id);
+        $pets = Pets::getPetByClient($client->id);
+        $vets = Doctor::getAllDoctors();
+        $services = Services::where('service_type', 'services')->get();
+        $prescriptions = PetRecords::getPrescriptions($client->id);
 
         return view('portal.main.prescriptions.prescriptionList', ['prescriptions' => $prescriptions]);
     }

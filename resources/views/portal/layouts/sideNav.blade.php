@@ -19,7 +19,7 @@
             $user =  auth()->user()->id;
             $user_id = \App\Models\Clients::getClientByUserID($user)
             @endphp
-            <a class="nav-link {{ request()->routeIs('portal.prescription*') ? 'active' : '' }}" href="{{ route('portal.prescription.list',['id'=> $user_id->id]) }}">
+            <a class="nav-link {{ request()->routeIs('portal.prescription*') ? 'active' : '' }}" href="{{ route('portal.prescription.list')}}">
                 <div class="nav-link-icon"><i class="fa-solid fa-prescription"></i></div>
                 Prescriptions
             </a>

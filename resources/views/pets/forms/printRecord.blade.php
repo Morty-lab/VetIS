@@ -13,7 +13,7 @@
         h3 { font-size: 14px; margin: 20px 0 8px; }
     </style>
 </head>
-<body>
+<body onload="window.print();">
 
 <div class="text-center mb-3">
     <h4>Pruderich Veterinary Clinic</h4>

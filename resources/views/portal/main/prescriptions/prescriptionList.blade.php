@@ -23,24 +23,23 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Prescription ID</th>
-                            <th>Pet Name</th>
-                            <th>Prescription Details</th>
-                            <th>Date</th>
+                            <th>Date Created</th>
+                            <th>Pet</th>
+                            <th>Pet Type</th>
+                            <th>Veterinarian</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($prescriptions as $prescription)
                         <tr>
-                            <td>001</td>
+                            <td>{{\Carbon\Carbon::parse(time: $prescription->record_date)->format("F d, Y")}}</td>
                             <td>{{\App\Models\Pets::where('id',$prescription->petID)->first()->pet_name}}</td>
-                            <td>{{$prescription->prescription}}e</td>
-                            <td>{{\Carbon\Carbon::parse($prescription->record_date)->format("F d, Y")}}</td>
-                            <td><a class="btn btn-primary" href="{{route('portal.prescription.print')}}" target="_blank">Print</a></td>
+                            <td>{{\App\Models\Pets::where('id',$prescription->petID)->first()->pet_type}}</td>
+                            <td>Veterinarian Name</td>
+                            <td><a class="btn btn-primary" href="{{route('portal.prescription.print')}}" target="_blank"><i class="fa-solid fa-print me-2"></i> Print</a></td>
                         </tr>
                     @endforeach
-
                     </tbody>
                 </table>
             </div>
