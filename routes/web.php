@@ -51,12 +51,11 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
-    return redirect()->route('landing');
+     return view('landing.index');
 });
-Route::get('/', function () {
-
-    return view('landing.index');
-})->name('landing');
+// Route::get('/', function () {
+//     return view('landing.index');
+// })->name('landing');
 
 Route::get('/appointments/available-times', [AppointmentsController::class, 'getAvailableTimes'])->name('appointments.available-times');
 
