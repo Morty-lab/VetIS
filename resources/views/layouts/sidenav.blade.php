@@ -14,7 +14,7 @@
             @endif
 
             <!-- Pet Owners (Accessible to Admin, Secretary) -->
-            @if (in_array(auth()->user()->role, ['admin', 'secretary','veterinarian']))
+            @if (in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
                 <a class="nav-link @if (Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="{{ route('owners.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Pet Owners
@@ -182,8 +182,33 @@
     <!-- Sidenav Footer-->
     <div class="sidenav-footer">
         <div class="sidenav-footer-content">
+@php
+    $user = \App\Models\User::find(Auth::user()->id);
+    $userInfo = null;
+    if ($user) {
+        switch ($user->role) {
+            case 'admin':
+                $userInfo = \App\Models\Admin::where('user_id', $user->id)->first();
+                break;
+            case 'veterinarian':
+                $userInfo = \App\Models\Doctor::where('user_id', $user->id)->first();
+                break;
+            case 'staff':
+            case 'secretary':
+            case 'cashier':
+                $userInfo = \App\Models\Staff::where('user_id', $user->id)->first();
+                break;
+        }
+    }
+@endphp
+
             <div class="sidenav-footer-subtitle">Logged in as:</div>
-            <div class="sidenav-footer-title">{{ Auth::user()->name }}</div>
+            <div class="sidenav-footer-title">
+                {{ $userInfo->firstname ?? '' }}
+                {{ $userInfo->middlename ?? '' }}
+                {{ $userInfo->lastname ?? '' }}
+                {{ $userInfo->extensionname ?? '' }}
+            </div>
         </div>
     </div>
 </nav>

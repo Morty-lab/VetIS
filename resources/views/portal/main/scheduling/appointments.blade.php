@@ -70,12 +70,18 @@
 
                             <div class="col-md-12 mb-3">
                                 <p class="fw-bold mb-1">Reason for Appointment</p>
-                                <span class="badge border text-body text-sm rounded-pill">Appointment Service</span>
+                                @php
+                                    $reasons = explode(',', session('pending_modal_data.reason'));
+                                    $servicesModal = \App\Models\Services::whereIn('id', $reasons)->get();
+                                @endphp
+                                @foreach ($servicesModal as $service)
+                                    <span class="badge border text-body text-sm rounded-pill">{{ $service->service_name }}</span>
+                                @endforeach
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <p class="fw-bold mb-1">Other Notes</p>
-                                <p class="mb-0">{{ session('pending_modal_data.reason') }}</p>
+                                <p class="mb-0">{{ session('pending_modal_data.remarks') }}</p>
                             </div>
 
 
@@ -83,7 +89,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <p class="fw-bold mb-1">Attending Veterinarian</p>
-                                <p class="mb-0">{{ session('pending_modal_data.veterinarian') }}</p>
+                                <p class="mb-0">Dr. {{ session('pending_modal_data.veterinarian') }}</p>
                             </div>
 
                             <div class="col-md-6 mb-3">
