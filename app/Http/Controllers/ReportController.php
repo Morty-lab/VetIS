@@ -134,12 +134,26 @@ class ReportController extends Controller
         ]);
     }
 
-    
+
     public function printReplenishment()
     {
-        $products = Products::all();
-        $stocks = Stocks::all();
-        return view('reports.documents.monthlyReplenishment', ['products' => $products, 'stocks' => $stocks]);
+        $date = request('date');
+        $date = \Carbon\Carbon::parse(request('date'));
+        $stocks = Stocks::whereBetween('created_at', [$date, $date->copy()->endOfMonth()])->get();
+        $productIds = $stocks->pluck('products_id')->unique();
+        $totalStocks = [];
+        $totalSubtractedStocks = [];
+        foreach ($productIds as $productId) {
+            $totalStocks[$productId] = $stocks->where('products_id', $productId)->sum('stock');
+            $totalSubtractedStocks[$productId] = $stocks->where('products_id', $productId)->sum('subtracted_stock');
+        }
+        $products = Products::whereIn('id', $productIds)->get();
+        // dd($products, $totalStocks, $totalSubtractedStocks);
+        return view('reports.documents.monthlyReplenishment', [
+            'products' => $products,
+            'totalStocks' => $totalStocks,
+            'totalSubtractedStocks' => $totalSubtractedStocks,
+        ]);
 
     }
 

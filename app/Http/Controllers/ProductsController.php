@@ -37,6 +37,24 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function checkStocks()
+    {
+        $id = request()->query('product_id');
+        $stocks = Stocks::getAllStocksByProductId($id);
+        $stocksAvailable = $stocks->map(function ($stock) {
+            return [
+                'stock_id' => $stock->id,
+                // 'expiry_date' => $stock->expiry_date ? $stock->expiry_date->format('Y-m-d') : null,
+                'price' => $stock->price,
+                'stock' => $stock->stock - $stock->subtracted_stock
+            ];
+        })->filter(function ($stock) {
+            return $stock['stock'] != 0;
+        });
+
+        return response()->json($stocksAvailable);
+    }
+
     public function viewModal($id)
     {
         $product = Products::findOrFail($id);

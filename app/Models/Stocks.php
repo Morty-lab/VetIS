@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 class Stocks extends Model
 {
@@ -49,7 +51,7 @@ class Stocks extends Model
         return self::create($data);
     }
 
-   public static function repackStock($stock_id, $quantity)
+    public static function repackStock($stock_id, $quantity)
     {
         $stock = self::find($stock_id);
 
@@ -74,7 +76,7 @@ class Stocks extends Model
         // Fetch all stocks for the given product, ordered by expiry date
         $requiredStockCopy = $requiredStock;
         $productStocks = Stocks::where('products_id', $product_id)
-            ->orderBy('expiry_date', 'asc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         foreach ($productStocks as $productStock) {
@@ -112,6 +114,20 @@ class Stocks extends Model
     public static function getAllStocksByProductId($product_id)
     {
         return self::where('products_id', $product_id)->orderBy('expiry_date', 'asc')->get();
+    }
+
+
+    public static function getReplenishmentReport()
+    {
+        return self::select(
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
+            DB::raw('SUM(stock) as total_replenished_stocks'),
+            DB::raw('SUM(stock - subtracted_stock) as remaining_stocks'),
+            DB::raw('COUNT(DISTINCT products_id) as products_replenished')
+        )
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'asc')
+            ->get();
     }
 
 
