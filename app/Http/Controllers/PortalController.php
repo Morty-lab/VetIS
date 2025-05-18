@@ -204,7 +204,8 @@ class PortalController extends Controller
 
         $date = Carbon::parse($request->input('appointment_date'))->format('l, F j, Y'); // E.g., Monday, November 5, 2024
         $time = Carbon::parse($request->input('appointment_time'))->format('g:i A'); // E.g., 3:00 PM
-        $name = Auth::user()->name;
+        $client = Clients::getClientByUserID(Auth::user()->id);
+        $name = $client->client_name;
         $veterinarian = Doctor::where('id', $request->input('doctor_ID'))->first();
 
 
@@ -233,10 +234,11 @@ class PortalController extends Controller
         return redirect()->route('portal.appointments')->with([
             'appointment_success' => true,
             'pending_modal_data' => [
-                'owner_name' => Auth::user()->name,
+                'owner_name' => $name,
                 'pet_ids' => explode(',', $request->input('pet_ID')),
                 'reason' => $request->input('purpose'),
-                'veterinarian' => Doctor::find($request->input('doctor_ID'))->name,
+                'remarks' => $request->input('remarks'),
+                'veterinarian' => Doctor::getName($request->input('doctor_ID')),
                 'appointment_date' => $request->input('appointment_date'),
                 'appointment_time' => $request->input('appointment_time'),
             ],
