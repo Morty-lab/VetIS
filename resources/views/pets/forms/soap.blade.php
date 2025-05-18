@@ -1429,11 +1429,14 @@
                                                                 <div class="col-md-5">
                                                                     <select class="form-control presc-name select-med"
                                                                         name="prescriptions[{{ $prescription_index }}][medications]">
-                                                                        <option value="{{ $prescription->medication }}">
-                                                                            {{ $prescription->medication }}</option>
+                                                                        @if (!in_array($prescription->medication, $medications->pluck('product_name')->toArray()))
+                                                                            <option value="{{ $prescription->medication }}"
+                                                                                selected>{{ $prescription->medication }}</option>
+                                                                        @endif
                                                                         @foreach ($medications as $medication)
                                                                             <option
-                                                                                value="{{ $medication->product_name }}">
+                                                                                value="{{ $medication->product_name }}"
+                                                                                {{ $prescription->medication == $medication->product_name ? 'selected' : '' }}>
                                                                                 {{ $medication->product_name }}
                                                                             </option>
                                                                         @endforeach
@@ -1987,7 +1990,7 @@
                         <div class="col-md-5">
                             <select class="form-control presc-name select-presc" name="prescriptions[${prescIndex}][medications]">
                                 @foreach ($medications as $medication)
-                                    <option value="{{ $medication->id }}">{{ $medication->product_name }}</option>
+                                    <option value="{{ $medication->product_name }}">{{ $medication->product_name }}</option>
                                 @endforeach
                             </select>
                         </div>

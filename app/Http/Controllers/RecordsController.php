@@ -8,6 +8,7 @@ use App\Models\PetRecords;
 use App\Models\Pets;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecordsController extends Controller
 {
@@ -17,14 +18,28 @@ class RecordsController extends Controller
     }
     public function showMedicalRecords()
     {
-        $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])->whereNotIn('status', [2])->orderBy('created_at', 'desc')->get();
+        $userRole = Auth::user()->role;
+
+        if ($userRole == 'veterinarian') {
+            $vetID = Doctor::where('user_id', Auth::user()->id)->first()->id;
+            $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])
+                ->where('doctorID', $vetID)
+                ->whereNotIn('status', [2])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+        } else {
+            $petRecords = PetRecords::with(['pet', 'doctor', 'clients'])->whereNotIn('status', [2])->orderBy('created_at', 'desc')->get();
+
+        }
+
         $pets = Pets::where('isArchived', 0)->get();
         $doctors = Doctor::all();
         $clients = Clients::all();
 
         return view('records.medicalRecordsList', compact('pets', 'doctors', 'clients', 'petRecords'));
     }
-    
+
 
 
     public function createMedicalRecord(Request $request)
