@@ -49,7 +49,7 @@ class Stocks extends Model
         return self::create($data);
     }
 
-    public static function subtractStock($stock_id, $quantity)
+   public static function subtractStock($stock_id, $quantity)
     {
         $stock = self::find($stock_id);
 
@@ -57,11 +57,13 @@ class Stocks extends Model
             throw new \Exception("Stock not found.");
         }
 
-        if ($stock->stock < $quantity) {
-            throw new \Exception("Not enough stock to repack.");
+        $available = $stock->stock - $stock->subtracted_stock;
+
+        if ($available < $quantity) {
+            throw new \Exception("Not enough stock to subtract.");
         }
 
-        $stock->stock -= $quantity;
+        $stock->subtracted_stock += $quantity;
         $stock->save();
 
         return true;

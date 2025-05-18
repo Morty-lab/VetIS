@@ -45,7 +45,7 @@
     <div class="document bg-white">
         <div class="d-flex justify-content-between">
             <div class="text-start">
-                <h1 class="mb-0">Pruderich Veterinary Clinic</h1>
+                <div class="mb-0 text-lg text-dark">Pruderich Veterinary Clinic</div>
                 <p>Purok - 3, Dologon, Maramag, Bukidnon, Philippines</p>
             </div>
             <div class=" text-end">
@@ -57,14 +57,16 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Stock ID</th>
+                    <th>Date Added</th>
+                    <th>Barcode</th>
+                    <th>Brand</th>
                     <th>Product Name</th>
                     <th>Expiry Date</th>
                     <th>Supplier</th>
                     <th>Supplier Price</th>
-                    <th>SRP</th>
+                    <th>Selling Price</th>
                     <th>Stocks</th>
-                    <th>Status</th>
+                    <th>Stocks Available</th>
                 </tr>
             </thead>
             <tbody>

@@ -137,7 +137,7 @@
     </style>
 </head>
 
-<body>
+<body onload="window.print()">
     <div class="container">
         <!-- Header Section -->
         <div class="header mb-4">
@@ -199,7 +199,7 @@
                             @if($service)
                                 <tr>
                                     <td>{{ $service->service_name }}</td>
-                                    <td>Lexie</td>
+                                    <td>{{ App\Models\Pets::firstWhere('id', $s->pet_id)->pet_name ?? 'Unknown Pet' }}</td>
                                     <td>₱{{ number_format($service->service_price, 2) }}</td>
                                     <td class="text-center">x{{ $s->quantity ?? 1 }}</td>
                                     <td class="text-end">₱{{ number_format($lineTotal, 2) }}</td>
@@ -215,7 +215,7 @@
                                 <span class="fw-bold">Sub Total:</span>
                             </div>
                             <div class="col-md-3 text-end">
-                                <span class="text-primary fw-bold me-2">₱{{ number_format($total, 2) }}</span>
+                                <span class="text-primary fw-bold me-2 ms-1">₱{{ number_format($total, 2) }}</span>
                             </div>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                                 <span class="fw-bold">Discount:</span>
                             </div>
                             <div class="col-md-3 text-end">
-                                <span class="text-primary fw-bold me-2">3%</span>
+                                <span class="text-primary fw-bold me-2 ms-1">{{$billing->discount * 100}}%</span>
                             </div>
                         </div>
                     </div>
@@ -235,7 +235,7 @@
                                 <span class="fw-bold">Total:</span>
                             </div>
                             <div class="col-md-3 text-end">
-                                <span class="text-primary fw-bold me-2">₱{{ number_format($total, 2) }}</span>
+                                <span class="text-primary fw-bold me-2 ms-1">₱{{ number_format(($total - ($total * $billing->discount)), 2) }}</span>
                             </div>
                         </div>
                     </div>
@@ -243,6 +243,7 @@
             </div>             
         </div>
 
+        @if($billing->payment_type  !== 'Cash')
         <!-- Billing History Section -->
         <div class="billing-history mb-4">
             <p class="fw-bold" style="font-size: 20px">Billing History</p>
@@ -257,20 +258,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($payments as $p)
-                    <tr>
-                        <td>{{ sprintf("#%05d", $p->id)}}</td>
-                        <td>{{\Carbon\Carbon::parse($p->created_at)->format('m/d/Y')}}</td>
-                        <td class="text-primary">₱{{$p->amount_to_pay}}</td>
-                        <td class="text-primary">₱{{$p->cash_given}}</td>
-                        <td class="text-primary">₱{{$p->amount_to_pay - $p->cash_given}}</td>
-                    </tr>
-                @endforeach
-
+                @foreach($payments->sortByDesc('created_at') as $p)
+                        <tr>
+                            <td>{{ sprintf("#%05d", $p->id)}}</td>
+                            <td>{{ \Carbon\Carbon::parse($p->created_at)->format('m/d/Y') }}</td>
+                            <td class="text-primary">₱{{ number_format($p->amount_to_pay, 2) }}</td>
+                            <td class="text-primary">₱{{ number_format($p->cash_given, 2) }}</td>
+                            <td>₱{{ number_format(max(0, $p->amount_to_pay - $p->cash_given), 2) }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
-
         <!-- Payment Info Section -->
         <div class="payment-info mb-4">
             <div><strong>Payment Type:</strong> {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}</div>
@@ -309,6 +308,7 @@
             @endif
 
         </div>
+        @endif
 
         <!-- Footer Section -->
         <div class="footer mb-4">

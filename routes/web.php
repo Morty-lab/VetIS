@@ -452,12 +452,17 @@ Route::middleware(['auth', 'role:admin,secretary,cashier'])->group(function () {
 
     Route::get('/billing/fees', [ServicesController::class, 'feesIndex'])->name('billing.fees');
     Route::post('/billing/fees/add', [ServicesController::class, 'storeFees'])->name("billing.fees.add");
+    Route::put('/billing/fees/edit/{id}', [ServicesController::class, 'editFee'])->name("billing.fees.edit");
+    Route::delete('/billing/fees/delete/{id}', [ServicesController::class, 'deleteFee'])->name("billing.fees.delete");
+
 
     Route::get('/billing/discounts', [ServicesController::class, 'discountIndex'])->name('billing.discounts');
     Route::post('/billing/discounts/add', [ServicesController::class, 'storeDiscount'])->name("billing.discounts.add");
 
     Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
+    Route::put('/billing/discount/edit/{id}', [ServicesController::class, 'editDiscount'])->name("billing.discount.edit");
+    Route::delete('/billing/discount/delete/{id}', [ServicesController::class, 'deleteDiscount'])->name("billing.discount.delete");
     Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');
 
 
