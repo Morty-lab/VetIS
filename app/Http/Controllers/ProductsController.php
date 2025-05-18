@@ -260,8 +260,8 @@ class ProductsController extends Controller
     public function repackStock(Request $request, $stockid)
     {
         try {
-            $stock = Stocks::findOrFail($stockid); 
-            Stocks::subtractStock($stockid, $request->quantity);
+            $stock = Stocks::findOrFail($stockid);
+            Stocks::repackStock($stockid, $request->quantity);
 
             // Proceed with repacking...
             $products = Products::find($request->product_id);

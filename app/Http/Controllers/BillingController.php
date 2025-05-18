@@ -126,6 +126,7 @@ class BillingController extends Controller
                 'service_price' => $medication['price'],
                 'quantity' => $medication['quantity']
             ]);
+            // dd($medication);
 
             Stocks::subtractStock($medication['serviceID'], $medication['quantity']);
         }
@@ -168,7 +169,7 @@ class BillingController extends Controller
         $payments = Payments::where('billing_id',$id)->get();
 
         return view('billing.print',['billing' => $bill,'owner'=>$owner,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
-        
+
     }
 
     public function addPayment(Request $request)
