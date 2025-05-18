@@ -17,7 +17,7 @@ class POSController extends Controller
      */
     public function index()
     {
-        $products = Products::getAllProducts();
+        $products = Products::where('status', 1)->get();
         $customers = Clients::getAllClients();
         $latestTransaction = TransactionModel::latest('id')->first();
         $nextReceiptNumber = $latestTransaction ? $latestTransaction->id + 1 : 1;
