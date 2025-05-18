@@ -117,9 +117,10 @@
 @endforeach --}}
                         @php
 
-                    $dailySales = \App\Models\TransactionModel::whereDate('created_at', $date)->get();
+                    $dailySales = \App\Models\TransactionModel::getDailySalesReport();
+                    $todaySales = $dailySales->where('date', $date)->first();
                         @endphp
-                        {{ number_format($dailySales->sum('sub_total'), 2) }}
+                        {{ number_format($todaySales->total_sales, 2) }}
                     @endif
                 </h3>
             </div>

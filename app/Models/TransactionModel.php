@@ -36,27 +36,30 @@ class TransactionModel extends Model
 
     public static function getDailySalesReport()
     {
+
         return self::select(
-            DB::raw('DATE(created_at) as date'),
-            DB::raw('SUM(sub_total) as total_sales'),
-            DB::raw('SUM(sub_total * (1 - total_discount / 100)) as revenue'),
-            DB::raw('SUM((SELECT SUM(quantity) FROM transaction_details WHERE transaction_details.transaction_id = transactions.id)) as items_sold')
+            DB::raw('DATE(transactions.created_at) as date'),
+            DB::raw('SUM(transaction_details.quantity * transaction_details.price) as total_sales'),
+            DB::raw('SUM(transaction_details.quantity) as items_sold')
         )
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at)'), 'asc')
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->groupBy(DB::raw('DATE(transactions.created_at)'))
+            ->orderBy(DB::raw('DATE(transactions.created_at)'), 'asc')
             ->get();
     }
 
     public static function getMonthlySalesReport()
     {
+
+
         return self::select(
-            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
-            DB::raw('SUM(sub_total) as total_sales'),
-            DB::raw('SUM(sub_total * (1 - total_discount / 100)) as revenue'),
-            DB::raw('SUM((SELECT SUM(quantity) FROM transaction_details WHERE transaction_details.transaction_id = transactions.id)) as items_sold')
+            DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m") as month'),
+            DB::raw('SUM(transaction_details.quantity * transaction_details.price) as total_sales'),
+            DB::raw('SUM(transaction_details.quantity) as items_sold')
         )
-            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
-            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'asc')
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->groupBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'), 'asc')
             ->get();
     }
     public static function getMonthlyRevenueReport()
