@@ -493,34 +493,17 @@
                         <table id="billingTable">
                             <thead>
                                 <tr>
-                                    <th>Billing #</th>
-                                    <th>Date</th>
-                                    <th>Pet</th>
-                                    <th>Services Availed</th>
-                                    <th>Payable</th>
-                                    <th>Remaining Balance</th>
+                                    <th>Invoice/Billing Number</th>
+                                    <th>Billing Date</th>
                                     <th>Payment Status</th>
-                                    <th>Due Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($billing as $bill)
                                     <tr>
-                                        <td>{{ sprintf('VetISBILL-%05d', $bill->id) }} </td>
-                                        <td>{{ $bill->created_at }}</td>
-                                        <td>{{ $pets->find($bill->pet_id)->pet_name ?? 'Unknown Pet' }}</td>
-                                        <td>
-                                            @php
-                                                $serviceCount = \App\Models\BillingServices::where(
-                                                    'billing_id',
-                                                    $bill->id,
-                                                )->count();
-                                            @endphp
-                                            {{ $serviceCount }}
-                                        </td>
-                                        <td>₱ {{ $bill->total_payable }}</td>
-                                        <td>₱ {{ $bill->total_paid }}</td>
+                                        <td>{{ sprintf('#%05d', $bill->id) }} </td>
+                                        <td>{{ $bill->created_at->format('d M, Y h:i A') }}</td>
                                         <td>
                                             @if ($bill->total_payable - $bill->total_paid == 0)
                                                 <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully
@@ -529,9 +512,6 @@
                                                 <div class="badge bg-secondary-soft text-secondary text-sm rounded-pill">
                                                     Partially Paid</div>
                                             @endif
-                                        </td>
-                                        <td>
-                                            {{ $bill->due_date ?? 'No Due Date' }}
                                         </td>
                                         <td>
                                             <a class="btn btn-datatable btn-primary px-5 py-3"

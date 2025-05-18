@@ -33,11 +33,21 @@
                     <!-- Administered By -->
                     <div class="mb-3">
                         <label for="administeredBy" class="form-label">Administered By</label>
-                        <select class="form-select vac-select-vet-name" id="administeredBy" name="administered_by" required>
-                            @foreach ($doctors as $doctor)
-                                <option value="{{ $doctor->id }}">Dr. {{ $doctor->fullname() }}</option>
-                            @endforeach
-                        </select>
+                        @if (auth()->user()->role === 'veterinarian')
+                            <input type="hidden" name="administered_by" value="{{ App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id }}">
+                            <p class="text-muted">You are the attending veterinarian.</p>
+                            <select class="form-select vac-select-vet-name" id="administeredBy" name="administered_by" disabled>
+                                @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}" {{ (App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id ) == $doctor->id ? 'selected' : '' }}>Dr. {{ $doctor->fullname() }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <select class="form-select vac-select-vet-name" id="administeredBy" name="administered_by" required>
+                                @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}">Dr. {{ $doctor->fullname() }}</option>
+                                @endforeach
+                            </select>
+                        @endif
                         <div class="invalid-feedback">
                             Please select a veterinarian.
                         </div>

@@ -487,6 +487,4 @@ function fetchOwnedPets(ownerID) {
             petSelect.trigger("change.select2");
         },
     });
-
-
 }

@@ -255,21 +255,25 @@
         <div class="col-lg-4 col-md-12">
             <!-- Payment Information -->
             <div class="card shadow-none">
-                <div class="card-header">Payment Information</div>
+                <div class="card-header">Payment Information
+                      <a href="{{ route('billing.print',['billingID' => $billing->id]) }}" target="_blank" class="btn btn-datatable" style="float: right;">
+                        <i class="fa-solid fa-print"></i>
+                    </a>
+                </div>
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="paymentType" class="form-label fw-bold text-primary">Payment Type</label>
                             <div class="d-block">
                                 <p class="mb-1 badge text-sm rounded-pill
-                                    @if($billing->payment_type === 'full_payment') bg-success-soft text-success
+                                    @if($billing->payment_type === 'Cash') bg-success-soft text-success
                                     @elseif($billing->payment_type === 'Partial') bg-secondary-soft text-secondary
                                     @elseif($billing->payment_type === 'pending_payment') bg-danger-soft text-danger
                                     @else bg-secondary-soft text-secondary
                                     @endif">
                                     @if($billing->payment_type === 'Partial')
                                     Partial Payment
-                                    @elseif($billing->payment_type === 'full_payment')
+                                    @elseif($billing->payment_type === 'Cash')
                                         Full Payment
                                     @else
                                         {{ ucwords(str_replace('_', ' ', $billing->payment_type)) }}
@@ -277,16 +281,18 @@
                                 </p>
                             </div>
                         </div>
+                        @if($billing->payment_type !== 'Cash')
                         <div class="col-md-6">
                             <label for="due_date" class="form-label fw-bold text-primary">Due Date</label>
                             <p class="mb-1">{{\Carbon\Carbon::parse($billing->due_date)->format('F d,Y') ?? ''}}</p>
                         </div>
                         <hr class="m-0 mt-3 mb-2">
+                        @endif
                         <div class="col-md-6">
                             <label for="service_total" class="form-label fw-bold text-primary">Bill Total</label>
                             <p class="rounded fw-bold mb-0">₱{{number_format( $total - ($total * $billing->discount), 2)}}</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 @if($billing->payment_type === 'Cash') d-none @endif">
                             <label for="remaining_balance" class="form-label fw-bold text-primary">Remaining Balance</label>
                             @php
                                 // Check payment type
@@ -299,14 +305,6 @@
                                     $totalPaid = $billing->total_paid;
 
                                     $remainingBalance = $totalPayable - $totalPaid;
-
-                                    // // Check if payments array is not empty
-                                    // if (!$payments->isEmpty()) {
-                                    //     $paymentsSum = $payments->sum('cash_given');
-                                    //     $remainingBalance -= $paymentsSum;
-                                    // }
-
-                                    // Determine if fully paid
                                     $fullyPaid = $remainingBalance <= 0;
                                 }
                             @endphp
@@ -330,20 +328,15 @@
                                 Add Payment
                             </button>
                         @endif
-
                     </div>
                 </div>
             </div>
         </div>
+        @if($billing->payment_type  !== 'Cash')
         <div class="col-md-12">
             <div class="card shadow-none mt-4">
                 <div class="card-header">
                     Payment History
-
-                    <a href="{{ route('billing.print',['billingID' => $billing->id]) }}" target="_blank" class="btn btn-datatable" style="float: right;">
-                        <i class="fa-solid fa-print"></i>
-                    </a>
-
                 </div>
                 <div class="card-body">
                     <table class="" id="datatablesSimple">
@@ -365,9 +358,9 @@
                             <tr>
                                 <td>{{ sprintf("#%05d", $p->id)}}</td>
                                 <td>{{\Carbon\Carbon::parse($p->created_at)->format('m/d/Y')}}</td>
-                                <td>₱ {{$p->amount_to_pay}}</td>
-                                <td>₱ {{$p->cash_given}}</td>
-                                <td>₱ {{$p->amount_to_pay - $p->cash_given}}</td>
+                                <td>₱ {{ number_format($p->amount_to_pay, 2) }}</td>
+                                <td>₱ {{ number_format($p->cash_given, 2) }}</td>
+                                <td>₱ {{ number_format(max(0, $p->amount_to_pay - $p->cash_given), 2) }}</td>
                                 <td>
                                     @php
                                         // Calculate the remaining balance
@@ -393,13 +386,14 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
 
 <div class="modal fade" id="addPartialPaymentModal" tabindex="-1" aria-labelledby="addPartialPaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{route('billing.addPayment', ['billingID' => $billing->id])}}" method="POST">
+            <form action="{{ route('billing.addPayment', ['billingID' => $billing->id]) }}" method="POST" id="addPaymentForm">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addPartialPaymentModalLabel">Add Payment</h5>
@@ -408,61 +402,73 @@
                 <div class="modal-body">
                     <!-- Remaining Balance Section -->
                     <div class="mb-3">
+                        <label for="remaining_display" class="form-label">Remaining Balance</label>
                         @php
-                            // Check payment type
                             if ($billing->payment_type === 'full_payment') {
-                                // Full Payment directly shows Fully Paid
                                 $fullyPaid = true;
                             } else {
-                                // Calculate remaining balance
-                                $totalPayable = $billing->total_payable;
+                                $totalPayable = $billing->total_payable - ($billing->total_payable * $billing->discount);
                                 $totalPaid = $billing->total_paid;
-
                                 $remainingBalance = $totalPayable - $totalPaid;
-
-                                // Check if payments array is not empty
-                                if (!$payments->isEmpty()) {
-                                    $paymentsSum = $payments->sum('cash_given');
-                                    $remainingBalance -= $paymentsSum;
-                                }
-
-                                // Determine if fully paid
                                 $fullyPaid = $remainingBalance <= 0;
                             }
                         @endphp
-                        <label for="remaining_balance" class="form-label mb-1">Remaining Balance</label>
 
                         @if($fullyPaid)
-                            <!-- Fully Paid Badge -->
                             <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
                         @else
-                            <!-- Remaining Balance -->
-                            <p id="remaining_balance" class="p-0 mb-2 fw-bold text-danger"  placeholder="Remaining Balance">{{'₱' . number_format($remainingBalance, 2) ?? 'No Balance' }}</p>
+                            <p class="rounded text-danger fw-bold mb-0">₱{{ number_format( $remainingBalance, 2) }}</p>
+                            <input type="hidden" id="remaining_balance" value="{{ $remainingBalance }}">
                         @endif
-
                     </div>
+
                     <hr class="my-3">
-                    <!-- Payment Amount Section -->
+
+                    <!-- Cash Given Input -->
                     <div class="mb-3">
                         <label for="amount_given" class="form-label">Cash Given</label>
-                        <input type="number" name="cash_given" id="amount_given" class="form-control" min="0.01" step="0.01" placeholder="Enter amount given" required>
-                        <input type="hidden" name="amount_to_pay" value={{$remainingBalance}}>
+                        <div class="input-group input-group-prepend">
+                            <div class="input-group-text">
+                                 ₱
+                            </div>
+                            <input type="number" name="cash_given" id="amount_given" class="form-control" min="0.01" step="0.01" placeholder="Enter amount given" required>
+                            <input type="hidden" name="amount_to_pay" value="{{ $remainingBalance }}">
+                        </div>
                     </div>
-{{--                    <div class="mb-3">--}}
-{{--                        <label for="partial_payment" class="form-label">Amount to Pay</label>--}}
-{{--                        <input type="number" name="partial_payment" id="partial_payment" class="form-control" min="1" max="500" placeholder="Enter amount to pay" required>--}}
-{{--                    </div>--}}
-{{--                    <div class="mb-3">--}}
-{{--                        <label for="change" class="form-label">Change</label>--}}
-{{--                        <input type="number" name="change" id="change" class="form-control" readonly placeholder="Change will be calculated automatically">--}}
-{{--                    </div>--}}
+
+                    <!-- Change Display -->
+                    <div class="mb-3">
+                        <label for="change" class="form-label">Change</label>
+                        <input type="number" name="change" id="change" class="form-control" readonly placeholder="Change will be calculated automatically">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary-soft text-primary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Add Payment</button>
                 </div>
             </form>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const cashInput = document.getElementById('amount_given');
+                const changeInput = document.getElementById('change');
+                const remaining = parseFloat(document.getElementById('remaining_balance')?.value || 0);
+
+                if (cashInput && changeInput) {
+                    cashInput.addEventListener('input', function () {
+                        let cashGiven = parseFloat(this.value);
+
+                        if (!isNaN(cashGiven)) {
+                            let change = cashGiven > remaining ? (cashGiven - remaining) : 0;
+                            changeInput.value = change.toFixed(2);
+                        } else {
+                            changeInput.value = '';
+                        }
+                    });
+                }
+            });
+        </script>
     </div>
 </div>
 

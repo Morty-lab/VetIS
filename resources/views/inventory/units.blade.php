@@ -80,9 +80,8 @@
                             value="{{ $unit->unit_name }}" name="unit_name">
                     </div>
                 </div>
-                <div class="modal-footer"><button class="btn btn-secondary" type="button"
-                        data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Edit
-                        Unit Type</button></div>
+                <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
+                        data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Edit</button></div>
             </form>
 
         </div>
@@ -102,10 +101,9 @@
                 <p>Are you sure you want to delete the unit <span
                         class="text-primary">"{{ $unit->unit_name }}"</span>?</p>
             </div>
-            <div class="modal-footer"><button class="btn btn-primary" type="button"
+            <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
                     data-bs-dismiss="modal">Cancel</button><a href="{{ route('units.delete', $unit->id) }}"
-                    class="btn btn-danger" type="button">Delete
-                    Unit</a></div>
+                    class="btn btn-danger" type="button">Delete</a></div>
         </div>
     </div>
 </div>

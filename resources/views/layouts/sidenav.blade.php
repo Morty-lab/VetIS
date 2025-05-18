@@ -1,7 +1,7 @@
 <nav class="sidenav shadow-none border-end sidenav-light no-print">
     <div class="sidenav-menu">
         <div class="nav accordion" id="accordionSidenav">
-            @if (in_array(auth()->user()->role, ['admin', 'secretary']))
+            @if (in_array(auth()->user()->role, ['admin', 'secretary', 'veterinarian']))
                 <div class="sidenav-menu-heading">Main</div>
             @endif
 

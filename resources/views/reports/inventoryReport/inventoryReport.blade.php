@@ -32,11 +32,11 @@
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <th>SKU</th>
+                    <th>Barcode</th>
+                    <th>Brand</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Unit</th>
-                    <th>Price</th>
                     <th>Status</th>
                     <th>Stock</th>
                     <th>Actions</th>
@@ -48,7 +48,8 @@
                         $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock')
                     @endphp
                     <tr data-index="0">
-                        <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                        <td>{{$product->SKU}}</td>
+                        <td>{{$product->brand}}</td>
                         <td>{{$product->product_name}}</td>
                         <td>
                             {{\App\Models\Category::where('id', $product->product_category)->first()->category_name}}
@@ -57,13 +58,10 @@
                             {{\App\Models\Unit::where('id', $product->unit)->first()->unit_name}}
                         </td>
                         <td>
-                            Php {{$product->price}}
+                            <div class="badge {{$stock-$subtracted !== 0  ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock-$subtracted !== 0  ? 'Available' : 'No Stocks'}}</div>
                         </td>
-                        <td>
-                            <div class="badge {{$stock-$subtracted !== 0  ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock-$subtracted !== 0  ? 'Available' : 'Unavailable'}}</div>
-                        </td>
-                        <td>
-                            {{$stock-$subtracted == 0 ? "No stocks available" : $stock-$subtracted}}
+                       <td>
+                            {{$stock - $subtracted == 0 ? "0 Stock/s available" : ($stock - $subtracted) . " Stock/s Available"}}
                         </td>
                         <td>
                             <a class="btn btn-datatable btn-outline-primary px-5 py-3" href="{{route('reports.inventory.itemStock',['product_id'=>$product->id])}}" target="_blank"><i class="fa-solid fa-print"></i></a>

@@ -79,7 +79,7 @@ class ServicesController extends Controller
 
         Services::addService($validatedData);
 
-        return redirect()->route('billing.fees');
+        return redirect()->route('billing.fees')->with('success', 'Fee added successfully.');;
     }
 
 
@@ -157,5 +157,93 @@ class ServicesController extends Controller
 
         // Redirect to the services page with a success message
         return redirect()->route('billing.services')->with('success', 'Service deleted successfully.');
+    }
+
+        public function deleteFee(string $id)
+    {
+        $service = Services::find($id);
+
+        // Check if the service exists
+        if (!$service) {
+            return redirect()->route('billing.fees')->with('error', 'Service not found.');
+        }
+
+        // Delete the service
+        $service->delete();
+
+        // Redirect to the services page with a success message
+        return redirect()->route('billing.fees')->with('success', 'Fee deleted successfully.');
+    }
+
+    
+        public function deleteDiscount(string $id)
+    {
+        $service = Services::find($id);
+
+        // Check if the service exists
+        if (!$service) {
+            return redirect()->route('billing.discounts')->with('error', 'Service not found.');
+        }
+
+        // Delete the service
+        $service->delete();
+
+        // Redirect to the services page with a success message
+        return redirect()->route('billing.discounts')->with('success', 'Discount deleted successfully.');
+    }
+
+
+     public function editFee(Request $request, $id)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'new_price' => 'required|numeric|min:0.01',
+        ], [
+            'new_price.required' => 'Please enter the price of the fee.',
+            'new_price.numeric' => 'The service price must be a valid number.',
+            'new_price.min' => 'The service price must be greater than 0.',
+        ]);
+
+        // Find the service by its ID
+        $service = Services::find($id);
+
+        // Check if the service exists
+        if (!$service) {
+            return redirect()->route('billing.fees')->with('error', 'Service not found.');
+        }
+
+        // Update the price of the service
+        $service->service_price = $validatedData['new_price'];
+        $service->save();
+
+        // Redirect back with a success message
+        return redirect()->route('billing.fees')->with('success', 'Fee updated successfully.');
+    }
+
+    public function editDiscount(Request $request, $id)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'new_price' => 'required|numeric|min:0.01',
+        ], [
+            'new_price.required' => 'Please enter the price of the fee.',
+            'new_price.numeric' => 'The service price must be a valid number.',
+            'new_price.min' => 'The service price must be greater than 0.',
+        ]);
+
+        // Find the service by its ID
+        $service = Services::find($id);
+
+        // Check if the service exists
+        if (!$service) {
+            return redirect()->route('billing.discounts')->with('error', 'Discount not found.');
+        }
+
+        // Update the price of the service
+        $service->service_price = $validatedData['new_price'] / 100;
+        $service->save();
+
+        // Redirect back with a success message
+        return redirect()->route('billing.discounts')->with('success', 'Discount updated successfully.');
     }
 }
