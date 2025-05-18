@@ -72,21 +72,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($billings as $billing)
+                    @foreach($billings->sortByDesc('created_at') as $billing)  
                     <tr>
                         <td>{{sprintf("#%05d",$billing->id)}}</td>
-                        <td>{{$billing->created_at}}</td>
+                        <td>{{ $billing->created_at->format('d M, Y h:i A') }}</td>
                         <td>
                             {{ $clients->firstWhere('id', $billing->user_id)?->client_name ?? 'Unknown' }}
                         </td>
-{{--                        <td>--}}
-{{--                            {{ $pets->firstWhere('id', $billing->pet_id)?->pet_name ?? 'Unknown' }}--}}
-{{--                        </td>--}}
-{{--                        <td>--}}
-{{--                            {{ \App\Models\BillingServices::where('billing_id', $billing->id)->count() }}--}}
-{{--                        </td>--}}
-{{--                        <td>₱ {{ number_format($billing->total_payable, 2) }}</td>--}}
-{{--                        <td>₱ {{ number_format($billing->total_payable - $billing->total_paid, 2) }}</td>--}}
                         <td>
                             @if ($billing->total_paid >= ($billing->total_payable - ($billing->total_payable * $billing->discount)))
                             <div class="badge bg-success-soft text-success text-sm rounded-pill">Fully Paid</div>
@@ -95,12 +87,9 @@
                             @else
                             <div class="badge bg-warning-soft text-warning text-sm rounded-pill">Pending Payment</div>
                             @endif
-
-                             {{-- {{$billing->total_payable - ($billing->total_payable * $billing->discount)}} --}}
                         </td>
-{{--                        <td>{{\Carbon\Carbon::parse($billing->due_date)->format('M d, Y')}}</td>--}}
                         <td>
-                            <a href="{{route('billing.view',['billingID' => $billing->id])}}" class="btn btn-datatable btn-primary px-5 py-3"><i class="fa-solid fa-eye me-2"></i>View</a>
+                            <a href="{{route('billing.view',['billingID' => $billing->id])}}" class="btn btn-datatable btn-primary px-5 py-3">View</a>
                         </td>
                     </tr>
                     @endforeach

@@ -52,9 +52,6 @@ class POSController extends Controller
         ];
 
 
-
-
-
         $transactionID =TransactionModel::storeTransaction($data);
 
         $productData = json_decode($request->products,true);
@@ -90,8 +87,6 @@ class POSController extends Controller
                 ]);
 
             }
-
-
         }
         return redirect('/pos')->with('success', 'Transaction successful!.');
     }

@@ -57,11 +57,10 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>SKU</th>
+                    <th>Barcode</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Unit</th>
-                    <th>Price</th>
                     <th>Stocks</th>
                 </tr>
             </thead>
@@ -73,11 +72,10 @@
                 @endphp
                 @if(($stocks - $subtracted) <= ($stocks * 0.1))
                     <tr>
-                    <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                    <td>{{ $product->SKU }}</td>
                     <td>{{ $product->product_name }} </td>
                     <td>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
                     <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name }}</td>
-                    <td>₱ {{$product->price}}</td>
                     <td> {{$stocks - $subtracted ?? 'No'}} Stock/s Available</td>
                     </tr>
                     @endif

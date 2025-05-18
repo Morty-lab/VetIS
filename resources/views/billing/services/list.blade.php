@@ -38,11 +38,10 @@
                                data-bs-target="#editPriceModal-{{$service->id}}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-
-                            <button class="btn btn-datatable btn-transparent-dark text-body" data-bs-toggle="modal"
+                            <a class="btn btn-datatable btn-transparent-dark text-body" data-bs-toggle="modal"
                                data-bs-target="#deleteServiceModal-{{$service->id}}">
                                 <i class="fa-solid fa-trash"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
