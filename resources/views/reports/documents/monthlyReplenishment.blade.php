@@ -50,36 +50,39 @@
             </div>
             <div class=" text-end">
                 <h2 class="mb-0">Replenishment Report</h2>
-                <p>for {{\Carbon\Carbon::now()->format('F d , Y')}}</p>
+                <p>for {{ \Carbon\Carbon::parse(request()->query('date'))->format('M Y') }}</p>
             </div>
         </div>
         <hr class="mb-3">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Date</th>
+                    {{-- <th>Date</th> --}}
                     <th>Barcode</th>
                     <th>Brand Name</th>
                     <th>Product Name</th>
                     <th>Category</th>
-                    <th>Unit</th>
-                    <th>Added Stock</th>
+                    <th>Total Replenished Stock</th>
+                    <th>Total Remaining Stock</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($stocks as $stock)
+                @foreach($products as $stock)
+                @php
+                 $unit = \App\Models\Unit::where('id', $stock->unit)->first()->unit_name
+                @endphp
                     <tr>
-                        <td>{{ $stock->created_at->format('M d, Y h:i A') }}</td>
-                        <td>{{ $stock->product->SKU }}</td>
-                        <td>{{ $stock->product->brand }}</td>
-                        <td>{{ $stock->product->product_name }}</td>
-                        <td>{{ $stock->product->category->category_name }}</td>
-                        <td></td>
-                        <td>{{ $stock->stock }}</td>
+                        <td>{{ $stock->SKU }}</td>
+                        <td>{{ $stock->brand }}</td>
+                        <td>{{ $stock->product_name }}</td>
+                        <td>{{ \App\Models\Category::where('id', $stock->product_category)->first()->category_name }}</td>
+                        <td>{{ $totalStocks[$stock->id] ?? 0 }} {{ $unit }}/s</td>
+                        <td>{{ $totalStocks[$stock->id] - $totalSubtractedStocks[$stock->id] ?? 0 }} {{ $unit }}/s </td>
                     </tr>
                 @endforeach
 
-            </tbody>
+
+
         </table>
     </div>
 </body>
