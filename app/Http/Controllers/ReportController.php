@@ -134,7 +134,18 @@ class ReportController extends Controller
         ]);
     }
 
+    
+     public function financial()
+    {
+        $dailySales = TransactionModel::getDailySalesReport();
+        $monthlyReports = TransactionModel::getMonthlySalesReport();
+        return view('reports.financialReport.financialReport', [
+            'sales' => $dailySales,
+            'monthlyReports' => $monthlyReports,
+        ]);
+    }
 
+    
     public function printReplenishment()
     {
         $date = request('date');
@@ -154,6 +165,15 @@ class ReportController extends Controller
             'totalStocks' => $totalStocks,
             'totalSubtractedStocks' => $totalSubtractedStocks,
         ]);
+
+    }
+
+    
+    public function printFinancial()
+    {
+        $products = Products::all();
+        $stocks = Stocks::all();
+        return view('reports.documents.financial', ['products' => $products, 'stocks' => $stocks]);
 
     }
 

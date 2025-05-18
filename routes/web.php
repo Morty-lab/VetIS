@@ -492,7 +492,7 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     Route::get('/reports/pos/daily-sales/print', [ReportController::class, 'printDaily'])->name("reports.pos.daily.reports");
     Route::get('/reports/pos/monthly-sales/print', [ReportController::class, 'printMonthly'])->name("reports.pos.monthly.reports");
     Route::post('/reports/pos/date-range', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.dateRange");
-    Route::post('/reports/pos/generate', [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.generate");
+    Route::post('/reports/pos/generate', action: [ReportController::class, 'getSalesByDateRange'])->name("reports.pos.generate");
 
     // Inventory Reports
     Route::get('/reports/inventory/', [ReportController::class, 'inventory'])->name("reports.inventory");
@@ -506,6 +506,10 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
 
     Route::get('/reports/replenishment/', [ReportController::class, 'replenishment'])->name("reports.replenishment");
      Route::get('/reports/replenishment/print', [ReportController::class, 'printReplenishment'])->name("reports.replenishment.print");
+
+    Route::get('/reports/financial/', [ReportController::class, 'financial'])->name("reports.financial");
+    Route::get('/reports/financial/print', [ReportController::class, 'printFinancial'])->name("reports.financial.print");
+
 });
 
 Route::middleware('auth')->group(function () {

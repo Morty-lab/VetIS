@@ -18,45 +18,80 @@
 <div class="row gx-4">
     <div class="col-xl-8">
         <div class="card shadow-none border mb-4">
-            <form action="{{route('portal.mypets.update', ['petid' => $pet->id])}}" method="POST">
+            <form action="{{route('portal.mypets.update', ['petid' => $pet->id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-header">Edit Pet</div>
                 <div class="card-body">
                     <div class="row gx-3 gy-2 mb-3">
                         <div class="col-md-12">
-                            <label class="small mb-1" for="inputPetName">Pet Name</label>
+                            <label class="small mb-1" for="inputPetName">Pet Name <span class="text-danger">*</span></label>
                             <input class="form-control" id="inputPetName" type="text" placeholder="Pet Name" value="{{$pet->pet_name}}" name="pet_name">
+                            @error('pet_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="selectPetType">Pet Type</label>
-                            <select class="form-control" id="selectPetType" name="pet_type">
-                                <option disabled {{ is_null($pet->pet_type) ? 'selected' : '' }}>-- Select Pet Type --</option>
-                                <option value="Dog" {{ $pet->pet_type === 'Dog' ? 'selected' : '' }}>Dog</option>
-                                <option value="Cat" {{ $pet->pet_type === 'Cat' ? 'selected' : '' }}>Cat</option>
-                                <option value="Bird" {{ $pet->pet_type === 'Bird' ? 'selected' : '' }}>Bird</option>
-                                <option value="Frog" {{ $pet->pet_type === 'Frog' ? 'selected' : '' }}>Frog</option>
-                                <option value="Chicken" {{ $pet->pet_type === 'Chicken' ? 'selected' : '' }}>Chicken</option>
-                            </select>
+                            <label class="small mb-1" for="selectPetType">Pet Type <span class="text-danger">*</span></label>
+                              <select class="select-pet-type form-control @error('pet_type') is-invalid @enderror"
+                                        id="selectPetType" name="pet_type" data-placeholder="Select Pet Type">
+                                        <option value="" {{ old('pet_type', $pet->pet_type) === null ? 'selected' : '' }}>-- Select Pet Type --</option>
+                                        <optgroup label="Common Pets">
+                                            <option value="Dog" {{ old('pet_type', $pet->pet_type) == 'Dog' ? 'selected' : '' }}>Dog</option>
+                                            <option value="Cat" {{ old('pet_type', $pet->pet_type) == 'Cat' ? 'selected' : '' }}>Cat</option>
+                                        </optgroup>
+                                        <optgroup label="Other Pets">
+                                            <option value="Chicken" {{ old('pet_type', $pet->pet_type) == 'Chicken' ? 'selected' : '' }}>Chicken</option>
+                                            <option value="Snake" {{ old('pet_type', $pet->pet_type) == 'Snake' ? 'selected' : '' }}>Snake</option>
+                                            <option value="Horse" {{ old('pet_type', $pet->pet_type) == 'Horse' ? 'selected' : '' }}>Horse</option>
+                                            <option value="Rabbit" {{ old('pet_type', $pet->pet_type) == 'Rabbit' ? 'selected' : '' }}>Rabbit</option>
+                                            <option value="Hamster" {{ old('pet_type', $pet->pet_type) == 'Hamster' ? 'selected' : '' }}>Hamster</option>
+                                            <option value="Guinea Pig" {{ old('pet_type', $pet->pet_type) == 'Guinea Pig' ? 'selected' : '' }}>Guinea Pig</option>
+                                            <option value="Bird" {{ old('pet_type', $pet->pet_type) == 'Bird' ? 'selected' : '' }}>Bird</option>
+                                            <option value="Turtle" {{ old('pet_type', $pet->pet_type) == 'Turtle' ? 'selected' : '' }}>Turtle</option>
+                                            <option value="Ferret" {{ old('pet_type', $pet->pet_type) == 'Ferret' ? 'selected' : '' }}>Ferret</option>
+                                    </optgroup>
+                                    @error('pet_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                              </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputBreed">Breed</label>
+                            <label class="small mb-1" for="inputBreed">Breed <span class="text-danger">*</span></label>
                             <input class="form-control" id="inputBreed" type="text" placeholder="Breed" value="{{$pet->pet_breed}}" name="pet_breed">
+                            @error('pet_breed')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputColor">Color</label>
+                            <label class="small mb-1" for="inputColor">Color <span class="text-danger">*</span></label>
                             <input class="form-control" id="inputColor" type="text" value="{{$pet->pet_color}}" placeholder="Color" name="pet_color">
+                            @error('pet_color')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                            <input class="form-control" id="inputBirthdate" type="date" value="{{$pet->pet_birthdate}}" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->toDateString() }}">
+                            <label class="small mb-1" for="inputBirthdate">Birthdate <span class="text-danger">*</span></label>
+                            <div class="input-group input-group-joined">
+                                <input class="form-control" id="select-birth" type="date" value="{{$pet->pet_birthdate}}" name="pet_birthdate" max="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                <span class="input-group-text">
+                                    <i data-feather="calendar"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="selectGender">Gender</label>
-                            <select class="form-control" id="selectGender" name="pet_gender">
-                                <option disabled {{ is_null($pet->pet_gender) ? 'selected' : '' }}>-- Select Gender --</option>
-                                <option value="Male" {{ $pet->pet_gender === 'Male' ? 'selected' : '' }}>Male</option>
-                                <option value="Female" {{ $pet->pet_gender === 'Female' ? 'selected' : '' }}>Female</option>
+                            <label class="small mb-1" for="selectGender">Gender <span class="text-danger">*</span></label>
+                            <select
+                                class="select-pet-gender form-control flatpickr-input @error('pet_gender') is-invalid @enderror"
+                                id="selectGender" name="pet_gender" data-placeholder="Select Gender">
+                                <option value="" {{ old('pet_gender', $pet->pet_gender) === null ? 'selected' : '' }}></option>
+                                <option value="Male" {{ old('pet_gender', $pet->pet_gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ old('pet_gender', $pet->pet_gender) == 'Female' ? 'selected' : '' }}>Female</option>
                             </select>
+                            @error('pet_gender')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -87,33 +122,72 @@
                     <button class="btn btn-primary" type="button" onclick="document.getElementById('petPhotoInput').click();">Change Pet Image</button>
                 </form>
             </div>
+            
+            <script>
+                function uploadPetPhoto() {
+                    const form = document.getElementById('petPhotoForm');
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById('petPhotoPreview').src = data.photo_url;
+                            } else {
+                                console.log(data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            </script>
         </div>
     </div>
-
-    <script>
-        function uploadPetPhoto() {
-            const form = document.getElementById('petPhotoForm');
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById('petPhotoPreview').src = data.photo_url;
-                        alert('Pet photo updated successfully!');
-                    } else {
-                        alert('Failed to upload pet photo. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while uploading the pet photo.');
-                });
-        }
-    </script>
-
 </div>
+
+<script>
+    $(document).ready(function () {
+            $(".select-pet-type").select2({
+                theme: "bootstrap-5",
+                tags: true, // Allow users to add new values
+                width: $(this).data("width")
+                    ? $(this).data("width")
+                    : $(this).hasClass("w-100")
+                    ? "100%"
+                    : "style",
+                placeholder: $(this).data("placeholder"),
+            });
+
+            $(".select-pet-gender").select2({
+                theme: "bootstrap-5",
+                tags: true, // Allow users to add new values
+                width: $(this).data("width")
+                    ? $(this).data("width")
+                    : $(this).hasClass("w-100")
+                    ? "100%"
+                    : "style",
+                placeholder: $(this).data("placeholder"),
+            });
+            flatpickr("#select-birth", {
+                dateFormat: "Y-m-d", // Format for the selected date (equivalent to Litepicker's 'YYYY-MM-DD')
+                minDate: "today", // Disallow past dates
+                maxDate: new Date().fp_incr(60), // Limit to 2 months ahead (60 days)
+            });
+        });
+
+    document.getElementById('petPhotoInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('petPhotoPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 @endsection

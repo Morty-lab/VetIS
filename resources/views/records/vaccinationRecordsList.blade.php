@@ -93,15 +93,6 @@
                     <a class="btn btn-primary justify-end" data-bs-toggle="modal" data-bs-target="#addMedicalRecord" href="javascript:void(0)">
                         <i class="fa-solid fa-plus me-2"></i> Create Vaccination Record
                     </a>
-                    <div class="dropdown">
-                        <button class="btn btn-link text-muted p-0 ms-3" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-ellipsis-vertical"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <div class="dropdown-divider"></div>
-                            <div><a class="dropdown-item" href="{{route('pet.archive')}}"><i class="fa-solid fa-box-archive me-2"></i> Vaccination Records Archive</a></div>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="card-body">

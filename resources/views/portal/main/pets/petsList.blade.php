@@ -41,7 +41,9 @@
                             <p class="mb-0">{{$pet->pet_type}}</p>
                         </div>
                         <div class="col-md-2 d-flex align-items-center">
+                            @if ($pet->status && !$pet->isArchived)
                             <span class="badge bg-primary-soft text-primary text-sm rounded-pill"><i class="fa-solid fa-check"></i></span>
+                            @endif
                         </div>
                     </div>
                 </div>

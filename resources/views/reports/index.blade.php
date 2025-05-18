@@ -16,6 +16,7 @@
             <a href="{{route('reports.pos')}}" class="btn btn-outline-primary">POS Sales Reports</a>
             <a href="{{route('reports.inventory')}}" class="btn btn-outline-primary">Inventory Reports</a>
             <a href="{{route('reports.replenishment')}}" class="btn btn-outline-primary">Replenishment Reports</a>
+                 <a href="{{route('reports.financial')}}" class="btn btn-outline-primary">Financial Reports</a>
         </div>
     </div>
     <div class="row">

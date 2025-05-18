@@ -41,7 +41,6 @@ class PortalController extends Controller
         $pets = Pets::getPetByClient($client->id);
         return view('portal.main.pets.petsList', ['pets' => $pets]);
     }
-
     public function addMyPet(Request $request)
     {
         // Validate the request
@@ -69,26 +68,14 @@ class PortalController extends Controller
         $client = Clients::getClientByUserID(Auth::user()->id);
         $pet->owner_ID = $client->id;
 
-
-        // Notifications::addNotif([
-        //     'visible_to' => $client->id,
-        //     'link' => route('appointments.mypets'),
-        //     'notification_type' => 'success',
-        //     'message' => "A new pet has been added",
-        // ]);
-
         // Save the pet
         $pet->save();
-        // Notifications::addNotif([
-        //     'visible_to' => "staff",
-        //     'link' => route('pets.show', $pet->id),
-        //     'notification_type' => 'success',
-        //     'message' => $client->client_name.  "Has added a new pet",
-        // ]);
 
+        // Flash a success message
+        session()->flash('success', 'Pet registered successfully!');
 
         // Redirect to the pets page
-        return redirect()->route('portal.mypets')->with('success', 'Pet registered successfully!');
+        return redirect()->route('portal.mypets');
     }
 
 
@@ -109,7 +96,6 @@ class PortalController extends Controller
 
         return view('portal.main.pets.edit', ['pet' => $pet]);
     }
-
     public function updateMyPet(Request $request)
     {
         $id = request('petid');
@@ -124,9 +110,10 @@ class PortalController extends Controller
             // 'pet_weight' => 'required',
         ]);
 
-
         $pet->update($validatedData);
         $pet->save();
+
+        session()->flash('success', 'Pet information updated successfully!');
 
         return redirect()->route('portal.mypets.view', ['petid' => $pet->id]);
     }
