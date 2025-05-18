@@ -10,6 +10,7 @@ use App\Models\TransactionDetailsModel;
 use App\Models\TransactionModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -134,18 +135,22 @@ class ReportController extends Controller
         ]);
     }
 
-    
+
      public function financial()
     {
-        $dailySales = TransactionModel::getDailySalesReport();
-        $monthlyReports = TransactionModel::getMonthlySalesReport();
+        $monthlyReports = TransactionModel::select(
+            DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m") as month')
+        )
+        ->join('billing', DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'), '=', DB::raw('DATE_FORMAT(billing.created_at, "%Y-%m")'))
+        ->groupBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'))
+        ->get();
         return view('reports.financialReport.financialReport', [
-            'sales' => $dailySales,
+
             'monthlyReports' => $monthlyReports,
         ]);
     }
 
-    
+
     public function printReplenishment()
     {
         $date = request('date');
@@ -168,9 +173,10 @@ class ReportController extends Controller
 
     }
 
-    
+
     public function printFinancial()
     {
+
         $products = Products::all();
         $stocks = Stocks::all();
         return view('reports.documents.financial', ['products' => $products, 'stocks' => $stocks]);
