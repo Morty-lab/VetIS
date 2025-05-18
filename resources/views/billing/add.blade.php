@@ -1065,7 +1065,7 @@
 
             totalInput.value = total;
 
-            
+
             if (proceedBtn) {
                 if (subTotal > 0) {
                     proceedBtn.classList.remove('d-none');
@@ -1316,7 +1316,7 @@
                     paymentFields.style.display = 'none';
                     thankYouMessage.classList.remove('d-none');
                     remainingBalanceContainer.classList.remove('d-none');
-                    const remaining = total - cashGiven;
+                    const remaining =  (total - discountAmount) - cashGiven;
                     const dueDate = document.getElementById('dueDate').value;
                     remainingBalanceText.textContent = `₱ ${remaining.toFixed(2)}`;
                 }

@@ -171,7 +171,7 @@
                                         <span class="fw-bold">Sub Total:</span>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <span class="text-primary fw-bold me-3">₱{{ number_format($total, 2) }}</span>
+                                        <span class="text-primary fw-bold me-3">₱{{ number_format($billing->total_payable, 2) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@
                                         <span class="fw-bold">Discount:</span>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <span class="text-primary fw-bold me-3">({{$billing->discount * 100}}%) ₱{{number_format($total * $billing->discount,2)}} </span>
+                                        <span class="text-primary fw-bold me-3">({{$billing->discount * 100}}%) ₱{{number_format($billing->total_payable * $billing->discount,2)}} </span>
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                                         <span class="fw-bold">Total:</span>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <span class="text-primary fw-bold me-3">₱{{ number_format(($total - ($total * $billing->discount)), 2) }}</span>
+                                        <span class="text-primary fw-bold me-3">₱{{ number_format(($billing->total_payable - ($billing->total_payable * $billing->discount)), 2) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +290,7 @@
                         @endif
                         <div class="col-md-6">
                             <label for="service_total" class="form-label fw-bold text-primary">Bill Total</label>
-                            <p class="rounded fw-bold mb-0">₱{{number_format( $total - ($total * $billing->discount), 2)}}</p>
+                            <p class="rounded fw-bold mb-0">₱{{number_format( $billing->total_payable - ($billing->total_payable * $billing->discount), 2)}}</p>
                         </div>
                         <div class="col-md-6 @if($billing->payment_type === 'Cash') d-none @endif">
                             <label for="remaining_balance" class="form-label fw-bold text-primary">Remaining Balance</label>
