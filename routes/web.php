@@ -501,6 +501,9 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     Route::get('/reports/inventory/all-stock/print', [ReportController::class, 'printStockListAll'])->name("reports.inventory.allStockList");
 
     Route::get('/reports/inventory/low-stock/print', [ReportController::class, 'printLowStock'])->name("reports.inventory.lowStockList");
+
+    Route::get('/reports/replenishment/', [ReportController::class, 'replenishment'])->name("reports.replenishment");
+     Route::get('/reports/replenishment/print', [ReportController::class, 'printReplenishment'])->name("reports.replenishment.print");
 });
 
 Route::middleware('auth')->group(function () {

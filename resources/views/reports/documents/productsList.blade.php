@@ -80,7 +80,7 @@
                         {{\App\Models\Category::where('id', $product->product_category)->first()->category_name}}
                     </td>
                     <td>
-                        {{\App\Models\Unit::where('id', $product->unit)->first()->unit_name}}
+                        {{ ucfirst(\App\Models\Unit::where('id', $product->unit)->first()->unit_name) }}
                     </td>
                     <td>
                         {{$stock-$subtracted !== 0  ? 'Available' : 'No Stocks'}}

@@ -55,7 +55,7 @@
                             {{\App\Models\Category::where('id', $product->product_category)->first()->category_name}}
                         </td>
                         <td>
-                            {{\App\Models\Unit::where('id', $product->unit)->first()->unit_name}}
+                            {{ ucfirst(\App\Models\Unit::where('id', $product->unit)->first()->unit_name) }}
                         </td>
                         <td>
                             <div class="badge {{$stock-$subtracted !== 0  ? 'bg-primary-soft text-primary':'bg-danger-soft text-danger'}} rounded-pill">{{$stock-$subtracted !== 0  ? 'Available' : 'No Stocks'}}</div>
