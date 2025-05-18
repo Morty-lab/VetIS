@@ -154,7 +154,7 @@ switch (Auth::user()->role) {
         <div class="col-xl-6 mb-4">
             <div class="card card-header-actions h-100 shadow-none">
                 <div class="card-header">
-                    Monthly Revenue
+                    Monthly Net
                     <div class="dropdown no-caret">
                         <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
                         <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="areaChartDropdownExample">
