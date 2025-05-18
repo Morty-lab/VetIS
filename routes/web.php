@@ -53,13 +53,15 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
-     return view('landing.index');
+    return view('landing.index');
 });
 // Route::get('/', function () {
 //     return view('landing.index');
 // })->name('landing');
 
 Route::get('/appointments/available-times', [AppointmentsController::class, 'getAvailableTimes'])->name('appointments.available-times');
+Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+
 
 Auth::routes(['login' => false]);
 
@@ -123,7 +125,7 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     Route::put('/editpet/{petID}', [PetsController::class, 'update'])->name('pets.update');
     Route::post('/pets/store', [PetsController::class, 'store'])->name('pets.store');
     Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
-    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+    // Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 });
 Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function () {
@@ -136,7 +138,7 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
     Route::post('/pets/verify', [PetsController::class, 'verifyPet'])->name('pets.verify');
     Route::post('/pets/archive', [PetsController::class, 'archivePet'])->name('pets.archivePet');
     Route::post('/pets/unarchive', [PetsController::class, 'unarchivePet'])->name('pets.unarchivePet');
-    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
+    // Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 });
 
@@ -387,7 +389,7 @@ Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function
 //Inventory
 Route::middleware(['auth', 'role:admin,secretary,staff'])->group(function () {
 
- // Inventory Routes
+    // Inventory Routes
 
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
@@ -471,7 +473,7 @@ Route::middleware(['auth', 'role:admin,secretary,cashier'])->group(function () {
 
 //POS and Inventory
 Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
-     //Printable sales
+    //Printable sales
     Route::get('/print/sales', function () {
         return view('printable.sales');
     });
@@ -555,7 +557,6 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/portal/mypets/view', [PortalController::class, 'viewMyPet'])->name(name: "portal.mypets.view");
     Route::get('/portal/mypets/edit', [PortalController::class, 'editMyPet'])->name(name: "portal.mypets.edit");
     Route::post('/portal/mypets/update', [PortalController::class, 'updateMyPet'])->name(name: "portal.mypets.update");
-    Route::post('/pets/{id}/upload-photo', [PetsController::class, 'uploadPhoto'])->name('pets.uploadPhoto');
 
 
     Route::get('/portal/appointments', [PortalController::class, 'myAppointments'])->name(name: "portal.appointments");
