@@ -14,7 +14,7 @@
             @endif
 
             <!-- Pet Owners (Accessible to Admin, Secretary) -->
-            @if (in_array(auth()->user()->role, ['admin', 'secretary']))
+            @if (in_array(auth()->user()->role, ['admin', 'secretary','veterinarian']))
                 <a class="nav-link @if (Str::startsWith(request()->path(), ['manageowners', 'addowner', 'profileowner'])) active @endif" href="{{ route('owners.index') }}">
                     <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
                     Pet Owners

@@ -116,7 +116,7 @@ Route::get('/dashboard', function () {
     ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
+Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function () {
     //Pet Routes
     Route::get('/addpet', [PetsController::class, 'create'])->name('pet.create');
     Route::get('/managepet', [PetsController::class, 'index'])->name('pet.index');
@@ -266,12 +266,11 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     })->name('doctor.updateAdmin');
 
     // Pet Owners
-    Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
     Route::get('/addowner', function () {
         return view('owners.add');
     });
+
     Route::post('/profileowner/add', [ClientsController::class, 'store'])->name('owners.add');
-    Route::get('/profileowner/{id}', [ClientsController::class, 'show'])->name('owners.show');
     Route::post('/profileowner/{id}', [ClientsController::class, 'update'])->name('owners.update');
     Route::post('/profileowner/{id}/disable', [ClientsController::class, 'disable'])->name('owners.disable');
 
@@ -317,6 +316,13 @@ Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
 
 });
 
+
+Route::middleware(['auth', 'role:admin,secretary,veterinarian'])->group(function () {
+    Route::get('/manageowners', [ClientsController::class, 'index'])->name('owners.index');
+    Route::get('/profileowner/{id}', [ClientsController::class, 'show'])->name('owners.show');
+
+
+});
 
 Route::middleware(['auth', 'role:admin,secretary'])->group(function () {
     //Lodge

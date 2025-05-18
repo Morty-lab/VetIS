@@ -288,9 +288,11 @@
             <a class="nav-link nav-tab ms-0{{ request()->is('own-profile') ? 'active' : '' }}" href="#own-profile">Owner
                 Profile</a>
             <a class="nav-link nav-tab{{ request()->is('pets') ? 'active' : '' }}" href="#pets">Pet List</a>
-            <a class="nav-link nav-tab{{ request()->is('billinghistory') ? 'active' : '' }}"
-                href="#billinghistory">Billing History</a>
-            <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">Account Settings</a>
+            @if (in_array(auth()->user()->role, ['secretary', 'admin']))
+                <a class="nav-link nav-tab{{ request()->is('billinghistory') ? 'active' : '' }}"
+                    href="#billinghistory">Billing History</a>
+                <a class="nav-link nav-tab{{ request()->is('um') ? 'active' : '' }}" href="#um">Account Settings</a>
+            @endif
         </nav>
         <hr class="mt-0 mb-4" />
 
@@ -401,7 +403,7 @@
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
                                             <input type="file" id="petPhotoInput" name="photo" accept="image/jpeg,image/png" style="display: none;" onchange="uploadPetPhoto()">
-                                    
+
                                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                                 <li>
                                                     <a class="dropdown-item" href="#" onclick="document.getElementById('petPhotoInput').click(); return false;">
@@ -409,7 +411,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        
+
                                     </div>
                                 </form>
                             </div>
