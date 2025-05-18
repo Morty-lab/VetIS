@@ -54,38 +54,53 @@
                 <h1 class="mb-0">Pruderich Veterinary Clinic</h1>
                 <p class="mb-1">Purok - 3, Dologon, Maramag, Bukidnon, Philippines</p>
                 <h2 class="mb-1">Financial Report</h2>
-                <h4 class="mb-1">Month 2000</h4>
+                <h4 class="mb-1">{{ \Carbon\Carbon::parse(request()->query('date', now()))->format('F Y') }}</h4>
             </div>
         </div>
         <hr class="mb-3">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Category</th>
+                    <th>Services</th>
                     <th>Total Transactions</th>
                     <th>Total Income</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Services</td>
-                     <td>100</td>
-                    <td>&#x20B1; 30,000.00</td>
-                </tr>
-                <tr>
-                    <td>Medicines</td>
-                    <td>50</td>
-                    <td>&#x20B1; 10,000.00</td>
-                </tr>
-                <tr>
-                    <td>Product Sales</td>
-                    <td>150</td>
-                    <td>&#x20B1; 20,000.00</td>
-                </tr>
+                @php
+                    $date = \Carbon\Carbon::parse(request()->query('date', now()));
+                    $billings = \App\Models\Billing::whereYear('created_at', $date->year)
+                        ->whereMonth('created_at', $date->month)
+                        ->get();
+
+                    $services = \App\Models\BillingServices::whereIn('billing_id', $billings->pluck('id'))
+                        ->get()
+                        ->filter(function ($service) {
+                            return \App\Models\Services::where('id', $service->service_id)
+                                ->where('service_type', 'services')
+                                ->exists();
+                        })
+                        ->groupBy('service_id')
+                        ->map(function ($services) {
+                            return [
+                                'service_name' => \App\Models\Services::where('id', $services->first()->service_id)->value('service_name'),
+                                'total_transactions' => $services->count(),
+                                'total_income' => $services->sum('service_price'),
+                            ];
+                        });
+                @endphp
+
+                @foreach ($services as $service)
+                    <tr>
+                        <td>{{ $service['service_name'] }}</td>
+                        <td>{{ $service['total_transactions'] }}</td>
+                        <td>&#x20B1; {{ number_format($service['total_income'], 2) }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
-        <h2 class="mt-5 mb-2">Most Requested Services</h2>
+        <h2 class="mt-5 mb-2">Top 5 Most Requested Services</h2>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -96,36 +111,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>General Check-Up</td>
-                    <td>40</td>
-                    <td>&#x20B1; 12,000.00</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Vaccination</td>
-                    <td>35</td>
-                    <td>&#x20B1; 10,500.00</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Deworming</td>
-                    <td>15</td>
-                    <td>&#x20B1; 4,500.00</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Grooming</td>
-                    <td>10</td>
-                    <td>&#x20B1; 3,000.00</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Other</td>
-                    <td>5</td>
-                    <td>&#x20B1; 1,500.00</td>
-                </tr>
+                @foreach ($services->sortByDesc('total_transactions')->take(5) as $service)
+                    <tr>
+                        <td>{{ $loop->index + 1 }}</td>
+                        <td>{{ $service['service_name'] }}</td>
+                        <td>{{ $service['total_transactions'] }}</td>
+                        <td>&#x20B1; {{ number_format($service['total_income'], 2) }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
@@ -137,18 +130,38 @@
                         <th>#</th>
                         <th>Product Name</th>
                         <th>Units Sold</th>
-                        <th>Revenue</th>
+                        <th>Total Sales</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 1; $i <= 5; $i++)
+                    @php
+                        $transactions = \App\Models\TransactionModel::whereYear('created_at', $date->year)
+                            ->whereMonth('created_at', $date->month)
+                            ->get()
+                            ->pluck('id');
+                        $transactionDetails = \App\Models\TransactionDetailsModel::whereIn('transaction_id', $transactions)
+                            ->get()
+                            ->groupBy('product_id')
+                            ->map(function ($transactionDetails) {
+                                return [
+                                    'product_name' => \App\Models\Products::where('id', $transactionDetails->first()->product_id)->value('product_name'),
+                                    'quantity' => $transactionDetails->sum('quantity'),
+                                    'total_sales' => $transactionDetails->sum(function ($transactionDetail) {
+                                        return $transactionDetail->quantity * $transactionDetail->price;
+                                    }),
+                                ];
+                            })
+                            ->sortByDesc('total_sales')
+                            ->take(5);
+                    @endphp
+                    @foreach ($transactionDetails as $index => $transactionDetail)
                         <tr>
-                            <td>{{ $i }}</td>
-                            <td>Product {{ $i }}</td>
-                            <td>{{ rand(1, 12345) }}</td>
-                            <td>&#x20B1; {{ number_format(rand(100, 10000), 2) }}</td>
+                            <td>{{ $index  }}</td>
+                            <td>{{ $transactionDetail['product_name'] }}</td>
+                            <td>{{ $transactionDetail['quantity'] }}</td>
+                            <td>&#x20B1; {{ number_format($transactionDetail['total_sales'], 2) }}</td>
                         </tr>
-                    @endfor
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -156,11 +169,14 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="2" class="text-center text-lg text-dark">Total Income: ₱ 60,000.00</th>
+                        <th colspan="2" class="text-center text-lg text-dark">
+                            Total Income: &#x20B1;
+                            {{ number_format($services->sum('total_income') + $transactionDetails->sum('total_sales'), 2) }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    {{-- <tr>
                         <td><strong>Primary Income Source</strong></td>
                         <td>Services (50% of total income)</td>
                     </tr>
@@ -171,10 +187,10 @@
                     <tr>
                         <td><strong>Top Product</strong></td>
                         <td>Pet Food (Small Pack)</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
-            
+
         </div>
     </div>
 </body>
