@@ -50,7 +50,7 @@
             </div>
             <div class=" text-end">
                 <h2 class="mb-0">POS Monthly Sales Report</h2>
-                <p>{{\Carbon\Carbon::parse($date)->format('F Y')}}</p>
+                <p>{{ \Carbon\Carbon::parse($date)->format('F Y') }}</p>
             </div>
         </div>
         <hr class="mb-3">
@@ -58,23 +58,22 @@
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Revenue</th>
+                    <th>Transactions</th>
                     <th>Item Quantity</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($sales as $sale)
-                @if( $date === \Carbon\Carbon::parse($sale->date)->format('Y-m') )
-                <tr>
-                    <td>{{\Carbon\Carbon::parse($sale->date)->format('F j, Y')}}</td>
-                    <td>{{$sale->items_sold}}</td>
-                    <td>₱{{ $sale->total_sales  }}</td>
-                    <td>₱{{$sale->revenue}}</td>
+                @foreach ($sales as $sale)
+                    @if ($date === \Carbon\Carbon::parse($sale->date)->format('Y-m'))
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($sale->date)->format('F j, Y') }}</td>
+                            <td>{{ \App\Models\TransactionModel::whereDate('created_at', $sale->date)->count() }} Transactions</td>
+                            <td>{{ number_format($sale->items_sold) }}</td>
+                            <td>₱{{ number_format($sale->total_sales, 2) }}</td>
 
-                </tr>
-                @endif
-
+                        </tr>
+                    @endif
                 @endforeach
 
 
@@ -82,15 +81,14 @@
         </table>
         <div class="row">
             <div class="col-md-9 text-end">
-                <h3 class="mb-0">Total Sales</h3>
-                @php
-                $monthly = \App\Models\TransactionModel::getMonthlySalesReport();
-                @endphp
-                <h3 class="text-primary">₱{{$monthly->where('month',$date)->first()->total_sales}}</h3>
+
             </div>
             <div class="col-md-3 text-end">
-                <h3 class="mb-0">Revenue</h3>
-                <h3 class="text-primary">₱{{$monthly->where('month',$date)->first()->revenue}}</h3>
+               <h3 class="mb-0">Total Sales</h3>
+                @php
+                    $monthly = \App\Models\TransactionModel::getMonthlySalesReport();
+                @endphp
+                <h3 class="text-primary">₱{{ number_format($monthly->where('month', $date)->first()->total_sales, 2) }}</h3>
             </div>
         </div>
     </div>
