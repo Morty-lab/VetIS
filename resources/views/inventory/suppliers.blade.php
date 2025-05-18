@@ -147,9 +147,8 @@
                         </div>
                     </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-secondary" type="button"
-                    data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Update
-                    Supplier</button></div>
+            <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
+                    data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Edit</button></div>
         </div>
         </form>
 
@@ -168,10 +167,9 @@
             <div class="modal-body">
                 <p>Are you sure you want to delete <span class="text-primary">{{ $i->supplier_name }}</span>?</p>
             </div>
-            <div class="modal-footer"><button class="btn btn-primary" type="button"
+            <div class="modal-footer"><button class="btn btn-primary-soft text-primary" type="button"
                     data-bs-dismiss="modal">Cancel</button><a href="{{ route('suppliers.delete', $i->id) }}"
-                    class="btn btn-danger" type="button">Delete
-                    Supplier</a></div>
+                    class="btn btn-danger" type="button">Delete</a></div>
         </div>
     </div>
 </div>

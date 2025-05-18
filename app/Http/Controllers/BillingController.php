@@ -52,85 +52,94 @@ class BillingController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // Validate the incoming data
-    //    dd(request()->all());
+     */public function store(Request $request)
+{
+    // Validate the incoming data (uncomment and adjust as needed)
+    // $request->validate([
+    //     'vet_id' => 'required',
+    //     'user_id' => 'required',
+    //     'payment_type' => 'required',
+    //     'total_payable' => 'required',
+    //     'total_paid' => 'required',
+    // ]);
 
-        // $request->validate([
-        //     'vet_id' => 'required',
-        //     'user_id' => 'required',
-        //     'payment_type' => 'required',
-        //     'total_payable' => 'required',
-        //     'total_paid' => 'required',
-        // ]);
+    $billing = Billing::create([
+        'biller_id' => auth()->user()->id,
+        'vet_id' => $request->vet_id,
+        'user_id' => $request->user_id,
+        'payment_type' => $request->payment_type,
+        'total_payable' => $request->total_payable,
+        'total_paid' => $request->cash_given,
+        'discount' => $request->discount,
+        'due_date' => $request->input('due_date', null),
+    ]);
 
-        // Create a new billing record and save it
-        $billing = Billing::create([
-            'biller_id' => auth()->user()->id,
-            'vet_id' => $request->vet_id,
-            'user_id' => $request->user_id,
-            'payment_type' => $request->payment_type,
-            'total_payable' => $request->total_payable,
-            'total_paid' => $request->cash_given,
-            'discount' => $request->discount,
-            'due_date' => $request->input('due_date', null),
-        ]);
+    // Register payment
+    $payment = new Payments();
+    $amountToPay = floatval($request->input('total_payable', 0));
+        $discountDecimal = floatval($request->discount); // e.g. 0.2 for 20%
 
-        // Check if services are provided
-        if ($request->has('bill') && is_array($request->bill)) {
-            foreach ($request->bill as $service) {
-                BillingServices::create([
-                    'pet_id' => $service['petID'],
-                    'billing_id' => $billing->id, // Use the ID of the saved billing record
-                    'service_id' => $service['serviceID'],
-                    'service_price' => $service['price'],
-                    'quantity' =>  $service['quantity'] ?? 1]);
-            }
+        if ($discountDecimal > 0) {
+            $amountToPay = $amountToPay * (1 - $discountDecimal);
         }
 
-        // Check if fees are provided
-        if ($request->has('fees') && is_array($request->fees)) {
-            foreach ($request->fees as $fee) {
-                BillingServices::create([
-                    'pet_id' => $fee['petID'],
-                    'billing_id' => $billing->id, // Use the ID of the saved billing record
-                    'service_id' => $fee['serviceID'],
-                    'service_price' => $fee['price'],
-                    'quantity' => 1
-                ]);
-            }
+        $payment->amount_to_pay = $amountToPay;
+
+    $payment->amount_to_pay = $amountToPay;
+    $payment->billing_id = $billing->id;
+    $payment->cash_given = $request->input('cash_given');
+    $payment->save();
+
+    // Process bill services
+    if ($request->has('bill') && is_array($request->bill)) {
+        foreach ($request->bill as $service) {
+            BillingServices::create([
+                'pet_id' => $service['petID'],
+                'billing_id' => $billing->id,
+                'service_id' => $service['serviceID'],
+                'service_price' => $service['price'],
+                'quantity' =>  $service['quantity'] ?? 1
+            ]);
         }
-
-        // Check if medications are provided
-        if ($request->has('medications') && is_array($request->medications)) {
-            foreach ($request->medications as $medication) {
-                BillingServices::create([
-                    'pet_id' => $medication['petID'],
-                    'billing_id' => $billing->id, // Use the ID of the saved billing record
-                    'product_id' => $medication['serviceID'],
-                    'service_price' => $medication['price'],
-                    'quantity' => $medication['quantity']
-                ]);
-
-                $product_id = $medication['serviceID'];
-                $requiredStock = $medication['quantity'];
-                Stocks::subtractStock($product_id, $requiredStock);
-            }
-        }
-
-        Notifications::addNotif([
-            'visible_to' => "staff",
-            'link' => route('billing'),
-            'notification_type' => 'success',
-            'message' => "Bill for client " . Clients::where('id', $request->user_id)->first()->client_name . " has been created.",
-        ]);
-
-        // Redirect to the billing page
-        return redirect()->route('billing')->with('success', 'Billing record created successfully.');
     }
 
+    // Process fees
+    if ($request->has('fees') && is_array($request->fees)) {
+        foreach ($request->fees as $fee) {
+            BillingServices::create([
+                'pet_id' => $fee['petID'],
+                'billing_id' => $billing->id,
+                'service_id' => $fee['serviceID'],
+                'service_price' => $fee['price'],
+                'quantity' => 1
+            ]);
+        }
+    }
+
+    // Process medications and update stock
+    if ($request->has('medications') && is_array($request->medications)) {
+        foreach ($request->medications as $medication) {
+            BillingServices::create([
+                'pet_id' => $medication['petID'],
+                'billing_id' => $billing->id,
+                'product_id' => $medication['serviceID'],
+                'service_price' => $medication['price'],
+                'quantity' => $medication['quantity']
+            ]);
+
+            Stocks::subtractStock($medication['serviceID'], $medication['quantity']);
+        }
+    }
+
+    Notifications::addNotif([
+        'visible_to' => "staff",
+        'link' => route('billing'),
+        'notification_type' => 'success',
+        'message' => "Bill for client " . Clients::where('id', $request->user_id)->first()->client_name . " has been created.",
+    ]);
+
+    return redirect()->route('billing')->with('success', 'Billing record and payment created successfully.');
+}
     /**
      * Display the specified resource.
      */
@@ -159,30 +168,50 @@ class BillingController extends Controller
         $payments = Payments::where('billing_id',$id)->get();
 
         return view('billing.print',['billing' => $bill,'owner'=>$owner,'services_availed'=>$services_availed,'services'=>$services, 'payments'=>$payments]);
-
+        
     }
 
-    public function addPayment(Request $request){
+    public function addPayment(Request $request)
+    {
         $id = $request->get('billingID');
+        $billing = Billing::findOrFail($id);
 
+        // Calculate actual total payable with discount
+        $totalPayable = $billing->total_payable - ($billing->total_payable * $billing->discount);
+
+        // Current total paid
+        $totalPaid = $billing->total_paid;
+
+        // Remaining balance
+        $remainingBalance = $totalPayable - $totalPaid;
+
+        // Requested payment (cash given)
+        $cashGiven = $request->input('cash_given');
+
+        // Automatically lower the payment if it exceeds the remaining balance
+        if ($cashGiven > $remainingBalance) {
+            $cashGiven = $remainingBalance;
+        }
+
+        // Save payment with adjusted cashGiven
         $payment = new Payments();
         $payment->billing_id = $id;
-        $payment->amount_to_pay = $request->input('amount_to_pay');
-        $payment->cash_given = $request->input('cash_given');
+        $payment->amount_to_pay = $request->input('amount_to_pay'); // You may want to adjust this too based on $cashGiven if needed
+        $payment->cash_given = $cashGiven;
         $payment->save();
 
-        Billing::where('id', $id)->update([
-            'total_paid' => Billing::where('id', $id)->value('total_paid') + $request->input('cash_given'),
-        ]);
+        // Update total paid
+        $billing->total_paid += $cashGiven;
 
-        // Notifications::addNotif([
-        //     'visible_to' => "staff",
-        //     'link' => route('billing.view', ['billingID' => $id]),
-        //     'notification_type' => 'success',
-        //     'message' => "Pethub has received " . $request->input('cash_given') . "From client " . Clients::where('id', $request->user_id)->first()->client_name . " for bill " . Billing::where('id', $id)->first()->billing_number,
-        // ]);
+        // Ensure total_paid never exceeds total payable (extra safety)
+        if ($billing->total_paid > $totalPayable) {
+            $billing->total_paid = $totalPayable;
+        }
 
-        return redirect()->route('billing.view',['billingID' => $id])->with('success', 'Payment record created successfully.');
+        $billing->save();
+
+        return redirect()->route('billing.view', ['billingID' => $id])
+                        ->with('success', 'Payment record created successfully.');
     }
 
     /**

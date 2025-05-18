@@ -392,11 +392,24 @@ Route::middleware(['auth', 'role:admin,secretary,staff'])->group(function () {
     //products Sub Routes
     Route::get('/products', [ProductsController::class, 'index'])->name("products.index");
     Route::post('/products/addStocks/{id}', [ProductsController::class, 'addStocks'])->name("products.addStocks");
-    Route::post('/products/repackStocks', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
+    Route::post('/products/repackStocks/{stockid}', [ProductsController::class, 'repackStock'])->name("products.repackStocks");
 
     Route::post('/products/add', [ProductsController::class, 'store'])->name("products.store");
     Route::post('/products/update', [ProductsController::class, 'update'])->name("products.update");
     Route::get('/products/{id}', [ProductsController::class, 'destroy'])->name("products.delete");
+
+
+    // Products Modals
+    Route::get('/products/{id}/modal', [ProductsController::class, 'viewModal'])->name('products.modal');
+    Route::get('/products/{id}/modal/edit-product', [ProductsController::class, 'loadEditProductModal']);
+    Route::get('/products/{id}/modal/delete-product', [ProductsController::class, 'loadDeleteProductModal']);
+    Route::get('/products/{id}/modal/add-stock', [ProductsController::class, 'loadAddStockModal']);
+    Route::get('/products/{id}/modal/edit-stock/{stockid}', [ProductsController::class, 'loadEditStockModal']);
+    Route::post('/products/{id}/modal/edit-stock/{stockid}/edit', [ProductsController::class, 'updateStock'])->name("products.updateStock");
+    Route::get('/products/{id}/modal/delete-stock/{stockid}', [ProductsController::class, 'loadDeleteStockModal']);
+    Route::get('/products/{id}/modal/repack-stock/{stockid}', [ProductsController::class, 'loadRepackStockModal']);
+    Route::get('/products/{id}/modal/delete-stock/{stockid}/delete', [ProductsController::class, 'deleteStock'])->name("stock.delete");
+
 
     //categories Sub Routes
     Route::get('/categories', [CategoryController::class, 'index'])->name("categories.index");
@@ -439,12 +452,17 @@ Route::middleware(['auth', 'role:admin,secretary,cashier'])->group(function () {
 
     Route::get('/billing/fees', [ServicesController::class, 'feesIndex'])->name('billing.fees');
     Route::post('/billing/fees/add', [ServicesController::class, 'storeFees'])->name("billing.fees.add");
+    Route::put('/billing/fees/edit/{id}', [ServicesController::class, 'editFee'])->name("billing.fees.edit");
+    Route::delete('/billing/fees/delete/{id}', [ServicesController::class, 'deleteFee'])->name("billing.fees.delete");
+
 
     Route::get('/billing/discounts', [ServicesController::class, 'discountIndex'])->name('billing.discounts');
     Route::post('/billing/discounts/add', [ServicesController::class, 'storeDiscount'])->name("billing.discounts.add");
 
     Route::get('/billing/view', [BillingController::class, 'show'])->name('billing.view');
     Route::post('/billing/view/addPayment', [BillingController::class, 'addPayment'])->name('billing.addPayment');
+    Route::put('/billing/discount/edit/{id}', [ServicesController::class, 'editDiscount'])->name("billing.discount.edit");
+    Route::delete('/billing/discount/delete/{id}', [ServicesController::class, 'deleteDiscount'])->name("billing.discount.delete");
     Route::get('/billing/print', [BillingController::class, 'print'])->name('billing.print');
 
 

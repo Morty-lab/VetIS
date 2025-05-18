@@ -11,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" id="modalX" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -94,7 +94,7 @@
                                 <input type="hidden" name="total_payable" id="total_payable">
 
                                 <!-- Payment Type -->
-                                <div class="row gy-3" style="">
+                                <div class="row gy-3" id="paymentFields">
                                     <div class="col-md-6">
                                         <label for="paymentType" class="form-label">Payment Type</label>
                                         <select class="form-select billing-payment-type" id="paymentType"
@@ -146,7 +146,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-primary w-100" type="button"
+                                        <button class="btn btn-primary w-100 mb-2" type="button"
                                             onclick="submitForm()">Enter</button>
                                     </div>
                                 </div>
@@ -200,6 +200,13 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="modalFooter" style="display: none;">
+                    <div class="progress w-100" style="height: 20px;">
+                        <div id="progressBar" class="progress-bar bg-primary" role="progressbar"
+                             style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
                 </div>
@@ -834,8 +841,8 @@
                                 <label for="payable" class="form-label ">Total</label>
                                 <p id="payable" class="text-primary fw-bold text-xl total">₱0</p>
                             </div>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#paymentModal">Proceed to Payment</button>
+                            <button class="btn btn-primary d-none" type="button" data-bs-toggle="modal"
+                                data-bs-target="#paymentModal" id="proceedToPayment">Proceed to Payment</button>
                         </div>
                     </div>
                 </div>
@@ -1043,6 +1050,8 @@
             const subTotalElements = document.querySelectorAll('.subTotal');
             const totalElements = document.querySelectorAll('.total');
             const totalInput = document.getElementById('total_payable');
+            const proceedBtn = document.getElementById('proceedToPayment');
+            console.log(proceedBtn)
 
             subTotalElements.forEach(el => {
                 subTotal = parseFloat(el.textContent.replace(/[^\d.]/g, '')) + price;
@@ -1056,6 +1065,14 @@
 
             totalInput.value = total;
 
+            
+            if (proceedBtn) {
+                if (subTotal > 0) {
+                    proceedBtn.classList.remove('d-none');
+                } else {
+                    proceedBtn.classList.add('d-none');
+                }
+            }
         }
 
         function updatePaymentType(type) {
@@ -1140,7 +1157,7 @@
                     });
                     const day = `0${date.getDate()}`.slice(-2);
                     const year = date.getFullYear();
-                    dueDateText.textContent = this.value ? `Due on ${month} ${day}, ${year}` : 'Not set';
+                    dueDateText.textContent = this.value ? `${month} ${day}, ${year}` : 'Not set';
                 });
 
                 // Update payment text
@@ -1273,41 +1290,54 @@
 
             return isValid;
         }
-
-        // Function to submit the form
-        function submitForm() {
+       function submitForm() {
             if (validateForm()) {
-                // Calculate change for display (only applicable for full payment)
                 const paymentType = document.getElementById('paymentType').value;
                 const cashGiven = parseFloat(document.getElementById('cashGiven').value) || 0;
+                const paymentFields = document.getElementById('paymentFields');
                 const thankYouMessage = document.getElementById('thankYouMessage');
                 const changeContainer = document.getElementById('changeContainer');
                 const changeText = document.getElementById('changeText');
                 const remainingBalanceContainer = document.getElementById('remainingBalanceContainer');
                 const remainingBalanceText = document.getElementById('remainingBalanceText');
+                const modalFooter = document.getElementById('modalFooter');
+                const modalX = document.getElementById('modalX');
+                const progressBar = document.getElementById('progressBar');
+                modalFooter.style.display = 'block';
+                modalX.style.display = 'none';
 
                 if (paymentType === 'Cash') {
                     const change = cashGiven - (total - discountAmount);
+                    paymentFields.style.display = 'none';
                     thankYouMessage.classList.remove('d-none');
                     changeContainer.classList.remove('d-none');
                     changeText.textContent = `₱ ${change.toFixed(2)}`;
-
-                    // You can display the change somewhere in your UI
-                    alert(`Payment successful! Change: ₱${change.toFixed(2)}`);
                 } else if (paymentType === 'Partial') {
+                    paymentFields.style.display = 'none';
                     thankYouMessage.classList.remove('d-none');
                     remainingBalanceContainer.classList.remove('d-none');
                     const remaining = total - cashGiven;
                     const dueDate = document.getElementById('dueDate').value;
                     remainingBalanceText.textContent = `₱ ${remaining.toFixed(2)}`;
-
-                    alert(`Partial payment accepted! Remaining balance: ₱${remaining.toFixed(2)} due on ${dueDate}`);
                 }
 
-                // Submit the form or call your API here
-                document.getElementById('paymentForm').submit();
+                // Animate progress bar for 5 seconds before submitting
+                let width = 0;
+                progressBar.style.width = '0%';
+                progressBar.setAttribute('aria-valuenow', 0);
+
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        document.getElementById('paymentForm').submit();
+                    } else {
+                        width += 2; // 2% every 100ms = 5 seconds
+                        progressBar.style.width = width + '%';
+                        progressBar.setAttribute('aria-valuenow', width);
+                    }
+                }, 100);
+
             } else {
-                // Show general error message
                 alert('Please check the form for errors and try again.');
             }
         }

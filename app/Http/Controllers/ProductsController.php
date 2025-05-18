@@ -37,8 +37,148 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function viewModal($id)
+    {
+        $product = Products::findOrFail($id);
+        $units = Unit::all();
+        $categories = Category::all();
+        $stockforproduct = Stocks::getAllStocksByProductId($id);
+
+        return view('inventory.modals.partials.viewProduct', compact('product', 'units', 'categories', 'stockforproduct'));
+    }
 
 
+    public function loadEditProductModal($id)
+    {
+        $product = \App\Models\Products::findOrFail($id);
+        $suppliers = Suppliers::getAllSuppliers();
+        $units = Unit::getAllUnits();
+        $categories = Category::getAllCategories();
+        $users = User::all();
+        $stocks = Stocks::all();
+        return view('inventory.modals.partials.editProduct', [
+            "product" => $product,
+            "suppliers" => $suppliers,
+            "units" => $units,
+            'categories' => $categories,
+            'users' => $users,
+            'stocks' => $stocks
+        ])->render();
+    }
+
+    public function loadDeleteProductModal($id)
+    {
+        $product = \App\Models\Products::findOrFail($id);
+        $suppliers = Suppliers::getAllSuppliers();
+        $units = Unit::getAllUnits();
+        $categories = Category::getAllCategories();
+        $users = User::all();
+        $stocks = Stocks::all();
+        return view('inventory.modals.partials.deleteProduct', [
+            "product" => $product,
+            "suppliers" => $suppliers,
+            "units" => $units,
+            'categories' => $categories,
+            'users' => $users,
+            'stocks' => $stocks
+        ])->render();
+    }
+
+
+    // ProductController.php
+    public function loadAddStockModal($id)
+    {
+        $product = Products::findOrFail($id);
+        $suppliers = Suppliers::all(); // Or however you fetch them
+
+        return view('inventory.modals.partials.addStock', compact('product', 'suppliers'))->render();
+    }
+
+       public function loadEditStockModal($id, $stockid)
+    {
+        $product = \App\Models\Products::findOrFail($id);
+        $suppliers = Suppliers::getAllSuppliers();
+        $units = Unit::getAllUnits();
+        $categories = Category::getAllCategories();
+        $users = User::all();
+        $stocks = \App\Models\Stocks::findOrFail($stockid);
+        return view('inventory.modals.partials.editStock', [
+            "product" => $product,
+            "suppliers" => $suppliers,
+            "units" => $units,
+            'categories' => $categories,
+            'users' => $users,
+            'stocks' => $stocks
+        ])->render();
+    }
+
+    public function updateStock(Request $request, $productId, $stockId)
+    {
+        $request->validate([
+            'supplier' => 'required|exists:suppliers,id',
+            'stockPrice' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'expiry_date' => 'nullable|date',
+        ]);
+
+        $stock = Stocks::findOrFail($stockId); // Make sure you're using the correct model
+        $stock->supplier_id = $request->supplier;
+        $stock->supplier_price = $request->stockPrice;
+        $stock->price = $request->selling_price;
+        $stock->stock = $request->stock;
+        $stock->expiry_date = $request->expiry_date;
+        $stock->save();
+
+        return redirect()->back()->with('success', 'Stock updated successfully!');
+    }
+
+
+    public function loadDeleteStockModal($id, $stockid)
+    {
+        $product = \App\Models\Products::findOrFail($id);
+        $suppliers = Suppliers::getAllSuppliers();
+        $units = Unit::getAllUnits();
+        $categories = Category::getAllCategories();
+        $users = User::all();
+        $stocks =  \App\Models\Stocks::findOrFail($stockid);
+        return view('inventory.modals.partials.deleteStock', [
+            "product" => $product,
+            "suppliers" => $suppliers,
+            "units" => $units,
+            'categories' => $categories,
+            'users' => $users,
+            'stocks' => $stocks
+        ])->render();
+    }
+
+    public function deleteStock($id, $stockid)
+    {
+        $product = Products::findOrFail($id);
+        $stock = Stocks::where('products_id', $product->id)->where('id', $stockid)->firstOrFail();
+
+        $stock->delete();
+
+        return redirect()->back()->with('success', 'Stock deleted successfully.');
+    }
+
+     public function loadRepackStockModal($id, $stockid)
+    {
+        $product = \App\Models\Products::findOrFail($id);
+        $suppliers = Suppliers::getAllSuppliers();
+        $units = Unit::getAllUnits();
+        $categories = Category::getAllCategories();
+        $users = User::all();
+        $stocks = \App\Models\Stocks::findOrFail($stockid);
+        return view('inventory.modals.partials.repackStock', [
+            "product" => $product,
+            "suppliers" => $suppliers,
+            "units" => $units,
+            'categories' => $categories,
+            'users' => $users,
+            'stocks' => $stocks
+        ])->render();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -113,55 +253,42 @@ class ProductsController extends Controller
             'notification_type' => 'success',
             'message' => "$request->stock stocks added to $productName",
         ]);
-
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Stock added successfully.');
     }
 
 
-    public function repackStock(Request $request)
+    public function repackStock(Request $request, $stockid)
     {
-        // // Validation rules for repacking stock
-        // $validator = Validator::make($request->all(), [
-        //     'product_id' => 'required|exists:products,id',
-        //     'quantity' => 'required|integer|min:1',
-        //     'unit' => 'required|exists:units,id',
-        //     'number_repacked_units' => 'required|integer|min:1',
-        //     'price' => 'required|numeric|min:0.01'
-        // ]);
+        try {
+            $stock = Stocks::findOrFail($stockid); 
+            Stocks::subtractStock($stockid, $request->quantity);
 
-        // dd($request->all());
+            // Proceed with repacking...
+            $products = Products::find($request->product_id);
+            $newProduct = Products::createProduct([
+                'SKU' => $request->repacked_SKU,
+                'brand' => $products->brand,
+                'product_name' => $request->product_name,
+                'product_category' => $products->product_category,
+                'unit' => $request->unit,
+            ]);
 
-        Stocks::subtractStock($request->product_id, $request->quantity);
-        $products = Products::where('id',$request->product_id)->first();
-        $newProduct = Products::createProduct([
-            'SKU' => $request->repacked_SKU,
-            'brand' => $products->brand,
-            'product_name' => $request->product_name,
-            'product_category' => $products->product_category,
-            'unit' => $request->unit,
-        ]);
-        Stocks::addStock([
-            'user_id' => Auth::user()->id,
-            'products_id' => $newProduct->id,
-            'supplier_id' =>$request->supplier,
-            'stock' => $request->number_repacked_units,
-            'price' => $request->stock_price,
-            'supplier_price' => $request->supplier_price,
-            'status' => 1,
-            'unit' => $request->unit
-        ]);
+            Stocks::addStock([
+                'user_id' => Auth::id(),
+                'products_id' => $newProduct->id,
+                'supplier_id' => $request->supplier,
+                'stock' => $request->number_repacked_units,
+                'price' => $request->stock_price,
+                'supplier_price' => $request->supplier_price,
+                'status' => 1,
+                'unit' => $request->unit,
+                'expiry_date' => $stock->expiry_date
+            ]);
 
-        return redirect()->route('products.index')->with('success', 'Stocks repacked successfully!');
-
-        // // Check validation
-        // if ($validator->fails()) {
-        //     return redirect()
-        //         ->route('products.index')
-        //         ->withErrors($validator)
-        //         ->with('error', 'Validation failed! Please check the inputs and try again.')
-        //         ->withInput();
-        // }
-
+            return redirect()->route('products.index')->with('success', 'Stock repacked successfully.');
+            } catch (\Exception $e) {
+                return redirect()->route('products.index')->with('error', $e->getMessage());
+            }
     }
 
     /**

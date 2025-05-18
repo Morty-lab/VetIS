@@ -60,23 +60,23 @@ class TransactionModel extends Model
             ->get();
     }
     public static function getMonthlyRevenueReport()
-    {
-        return DB::table('transactions')
-            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-            ->join('stocks', 'transaction_details.product_id', '=', 'stocks.products_id') // join by product_id
-            ->select(
-                DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m") as month'),
-                DB::raw('SUM(transaction_details.price * transaction_details.quantity) as total_sales'),
-                DB::raw('SUM(
-                    ((transaction_details.price - stocks.supplier_price) * transaction_details.quantity)
-                    * (1 - IFNULL(transactions.total_discount, 0) / 100)
-                ) as revenue'),
-                DB::raw('SUM(transaction_details.quantity) as items_sold')
-            )
-            ->groupBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'))
-            ->orderBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'), 'asc')
-            ->get();
-    }
+{
+    return DB::table('transactions')
+        ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+        ->join('stocks', 'transaction_details.product_id', '=', 'stocks.products_id')
+        ->select(
+            DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m") as month'),
+            DB::raw('SUM(transaction_details.price * transaction_details.quantity) as total_sales'),
+            DB::raw('SUM(
+                ( stocks.price - stocks.supplier_price) * transaction_details.quantity *
+                (1 - IFNULL(transactions.total_discount, 0))
+            ) as revenue'),
+            DB::raw('SUM(transaction_details.quantity) as items_sold')
+        )
+        ->groupBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'))
+        ->orderBy(DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m")'), 'asc')
+        ->get();
+}
 
 
     public static function getTransactionsByDateRange($dateStart, $dateEnd = null)

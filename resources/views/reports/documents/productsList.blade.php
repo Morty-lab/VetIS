@@ -45,23 +45,24 @@
     <div class="document bg-white">
         <div class="d-flex justify-content-between">
             <div class="text-start">
-                <h1 class="mb-0">Pruderich Veterinary Clinic</h1>
+                <p class="mb-0 text-lg text-dark">Pruderich Veterinary Clinic</p>
                 <p>Purok - 3, Dologon, Maramag, Bukidnon, Philippines</p>
             </div>
             <div class=" text-end">
                 <h2 class="mb-0">Products List Report</h2>
-                <p>{{\Carbon\Carbon::now()->format('F d, Y')}}</p>
+               <p>{{ \Carbon\Carbon::now()->format('F d, Y h:i A') }}</p>
             </div>
         </div>
         <hr class="mb-3">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Product ID</th>
+                    <th>Barcode</th>
+                    <th>Brand</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Unit</th>
-                    <th>Price</th>
+                    <th>Status</th>
                     <th>Stocks</th>
                 </tr>
             </thead>
@@ -69,9 +70,11 @@
                 @foreach($products as $product)
                 @php
                 $stock = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock');
+                $subtracted = \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock')
                 @endphp
                 <tr data-index="0">
-                    <td>{{ sprintf("VetIS-%05d", $product->id)}}</td>
+                    <td>{{ $product->SKU}}</td>
+                    <td>{{$product->brand}}</td>
                     <td>{{$product->product_name}}</td>
                     <td>
                         {{\App\Models\Category::where('id', $product->product_category)->first()->category_name}}
@@ -80,11 +83,10 @@
                         {{\App\Models\Unit::where('id', $product->unit)->first()->unit_name}}
                     </td>
                     <td>
-                        Php {{$product->price}}
+                        {{$stock-$subtracted !== 0  ? 'Available' : 'No Stocks'}}
                     </td>
-
                     <td>
-                        {{$stock ?? "No stocks available"}}
+                        {{$stock . ' Stock/s Available' ?? "0 Stock/s Available"}}
                     </td>
 
                 </tr>
