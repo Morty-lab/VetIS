@@ -230,149 +230,6 @@
     </div>
 
 
-    <!-- View Vaccination Modal -->
-    @foreach ($vaccinations as $vac)
-        <div class="modal fade" id="viewVaccination-{{ $vac->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">View Vaccination</h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row g-1">
-                            <div class="col-md-6">
-                                <label for="">Vaccine Type</label>
-                                <p class="text-primary">{{ $vac->vaccine_type }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Date</label>
-                                <div class="">
-                                    <p class="badge bg-primary-soft text-primary rounded-pill">
-                                        {{ \Carbon\Carbon::parse($vac->created_at)->format('F j, Y') }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="selectVeterinarian">Administered By</label>
-                                <p class="text-primary">
-                                    @php
-                                        $vet = $vets->where('id', $vac->doctor_id)->first();
-                                    @endphp
-                                    {{ $vet->firstname . ' ' . $vet->lastname }}
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="selectStatus">Status</label>
-                                <div class="">
-                                    <p
-                                        class="badge {{ $vac->status ? 'bg-success-soft text-success' : 'bg-info-soft text-info' }} rounded-pill">
-                                        {{ $vac->status ? 'Completed' : 'Scheduled' }}</p>
-                                </div>
-                                <!-- <div class="">
-                                            <p class="badge bg-secondary-soft text-secondary rounded-pill">Ongoing</p>
-                                        </div> -->
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Return Date</label>
-                                <p class="text-primary">
-                                    {{ \Carbon\Carbon::parse($vac->next_vaccine_date)->format('F j, Y') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
-                            data-bs-target="#editVaccination-{{ $vac->id }}">Edit
-                        </button>
-                        <button href="" class="btn btn-outline-danger" type="button" data-bs-toggle="modal"
-                            data-bs-target="#deleteVaccination-{{ $vac->id }}">Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Edit Vaccination Modal -->
-        <div class="modal fade" id="editVaccination-{{ $vac->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <form action="{{ route('vaccination.update', ['vacID' => $vac->id]) }}" method="post">
-                        @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Vaccination</h5>
-                            <button class="btn-close" type="button" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row g-3">
-                                <div class="col-md-12">
-                                    <label for="vaccineType">Vaccine Type</label>
-                                    <input type="text" name="vaccineType" id="vaccineType" class="form-control"
-                                        value="{{ $vac->vaccine_type }}" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="nextDueDate">Return Date</label>
-                                    <input type="date" name="nextDueDate" id="nextDueDate" class="form-control"
-                                        value="{{ $vac->next_vaccine_date }}">
-                                    <div class="form-check mt-2">
-                                        <input type="checkbox" class="form-check-input" id="noNextDueDate">
-                                        <label for="noNextDueDate" class="form-check-label">No Return Date</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="selectVeterinarian">Administered By</label>
-                                    <select class="form-control" id="selectVeterinarian" disabled>
-                                        @php
-                                            $doctor = \App\Models\Doctor::where('id', $vac->doctor_id)->first();
-                                        @endphp
-                                        <option selected>{{ $doctor->firstname . ' ' . $doctor->lastname }}</option>
-
-                                    </select>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="selectStatus">Status</label>
-                                    <select class="form-control" id="selectStatus" name="status">
-                                        <option value="1" {{ $vac->status == 1 ? 'selected' : '' }}>Completed
-                                        </option>
-                                        <option value="0" {{ $vac->status == 0 ? 'selected' : '' }}>Scheduled
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel
-                            </button>
-                            <button class="btn btn-primary" type="submit" id="editVaccinationBtn">Edit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Delete Vaccination -->
-        <!-- Delete Pet Modal -->
-        <div class="modal fade" id="deleteVaccination-{{ $vac->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Delete Vacciantion</h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this vaccination?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                        <a href="" class="btn btn-danger" type="button">Delete Vaccination</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-xl px-4">
@@ -824,9 +681,9 @@
                         <div class="card mb-4 shadow-none" id="vaccinationCard" style="display: none;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Vaccination Record</span>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                {{-- <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                     data-bs-target="#addVaccination">Add
-                                </button>
+                                </button> --}}
                             </div>
                             <div class="card-body">
                                 <!-- only shows if there is no record -->
@@ -839,37 +696,31 @@
                                         <tr>
                                             <th>Date</th>
                                             <th>Vaccine Type</th>
-                                            <th>Next Return Date</th>
-                                            <th>Administered By</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($vaccinations as $vac)
+                                        @foreach ($vaccinations as $vaccination)
                                             <tr>
-                                                <td>{{ \Carbon\Carbon::parse($vac->created_at)->format('F j, Y') }}</td>
-                                                <td>{{ $vac->vaccine_type }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($vac->next_vaccine_date)->format('F j, Y') ?? 'No Next Vaccination Scheduled' }}
+                                                <td>{{ $vaccination->created_at->format('M d, Y') }}</td>
+                                                <td>{{ $vaccination->vaccine_type }}</td>
+                                                <td>
+                                                    @if ($vaccination->status == 0)
+                                                        <span class="badge badge-sm text-sm bg-warning-soft text-warning rounded-pill">Ongoing</span>
+                                                    @elseif ($vaccination->status == 1)
+                                                        <span class="badge badge-sm text-sm bg-success-soft text-success rounded-pill">Completed</span>
+                                                    @elseif ($vaccination->status == 2)
+                                                        <span class="badge badge-sm text-sm bg-danger-soft text-danger rounded-pill">Archived</span>
+                                                    @endif
                                                 </td>
                                                 <td>
-                                                    @php
-                                                        $vet = $vets->where('id', $vac->doctor_id)->first();
-                                                    @endphp
-                                                    {{ $vet->firstname . ' ' . $vet->lastname }}
-                                                </td>
-                                                <td>
-                                                    <span
-                                                        class="badge {{ $vac->status == true ? 'bg-success-soft text-success' : 'bg-info-soft text-info' }} rounded-pill">{{ $vac->status == true ? 'Completed' : 'Scheduled' }}</span>
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-datatable btn-primary px-5 py-3"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#viewVaccination-{{ $vac->id }}">View
-                                                    </button>
+                                                    <a href="{{ route('records.vaccination.view', ['vaccination_id' => $vaccination->id]) }}"
+                                                        class="btn btn-datatable btn-primary px-5 py-3">View</a>
                                                 </td>
                                             </tr>
                                         @endforeach
+
 
                                     </tbody>
                                 </table>
