@@ -54,7 +54,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary mb-1" data-bs-toggle="modal"
-                    data-bs-target="#editSupplierModal">Edit Unit</button>
+                    data-bs-target="#editUnitModal{{ $unit->id }}">Edit Unit</button>
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Delete
                     Unit</button>
             </div>
@@ -63,7 +63,7 @@
 </div>
 
 <!-- Edit Supplier Modal -->
-<div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="editUnitModal{{ $unit->id }}" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
