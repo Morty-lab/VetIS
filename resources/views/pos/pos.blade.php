@@ -112,7 +112,7 @@
                         'sku' : {{ $product->id }},
                         'barcode' : {{ $product->SKU }},
                         'name' : '{{ $product->product_name }}',
-                        'price' : {{ optional(App\Models\Stocks::where('products_id', $product->id)->first())->price ?? 'N/A' }},
+                        'price' : {{ optional(App\Models\Stocks::where('products_id', $product->id)->whereColumn('subtracted_stock', '!=', 'stock')->first())->price ?? 'N/A'  }},
                         'qty' : document.getElementById('quantityInputs{{ $product->id }}').value,
                         'stock' : {{ \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('stock') - \App\Models\Stocks::getAllStocksByProductId($product->id)->sum('subtracted_stock') }}
                     })">Add Product</button>
@@ -220,8 +220,7 @@
                                             <td>
                                                 {{ $stocks - $subtracted }}
                                             </td>
-                                            <td>₱
-                                                {{ optional(App\Models\Stocks::where('products_id', $product->id)->first())->price ?? 'N/A' }}.00
+                                            <td>₱ {{ optional(App\Models\Stocks::where('products_id', $product->id)->whereColumn('subtracted_stock', '!=', 'stock')->first())->price ?? 'N/A' }}.00
                                             </td>
                                             <!-- <td><button class="btn btn-primary btn-datatable px-5 py-3" data-bs-toggle="modal" data-bs-target="#selectStockModal">Select</button></td> -->
                                             <td><button class="btn btn-primary btn-datatable px-5 py-3"
@@ -685,6 +684,7 @@
     <span id="receiptNumber" hidden>{{ str_pad($nextReceiptNumber, 8, '0', STR_PAD_LEFT) }}</span>
     <span id="authUserName" hidden>{{ auth()->user()->name }}</span>
     <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js') }}"></script>

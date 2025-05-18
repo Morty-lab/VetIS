@@ -212,6 +212,7 @@ function setQuantity(quantity, stock, productId) {
         addedQuantities[productId] = 0;
     }
 
+
     // Calculate the remaining stock
     let remainingStock = stock - addedQuantities[productId];
 
@@ -497,6 +498,9 @@ function handlePayment() {
         }, 20000);
     }
 }
+function checkStocks(productId) {
+    return
+}
 
 function addItem(item) {
     // Check if the SKU already exists in the Items array
@@ -515,6 +519,56 @@ function addItem(item) {
             alert("Quantity exceeds available stock.");
             return;
         }
+        // axios.post('/check-stocks?product_id=' + item.sku)
+        //     .then(response => {
+        //         const stocksAvailable = response.data.map(stock => ({
+        //             stock_id: stock.stock_id,
+        //             stock: stock.stock,
+        //             price: stock.price,
+        //         }));
+        //         let remainingStock = 0;
+        //         stocksAvailable.forEach(stock => {
+        //             remainingStock += stock.stock;
+        //         });
+        //         if (parseInt(qty) > remainingStock) {
+        //             // If the quantity is more than the available stock
+        //             let remainingQuantity = parseInt(qty);
+        //             stocksAvailable.forEach(stock => {
+        //                 if (remainingQuantity > stock.stock) {
+        //                     // Add the stock with the maximum quantity
+        //                     Items.push({
+        //                         sku: item.sku,
+        //                         barcode: item.barcode,
+        //                         name: item.name,
+        //                         price: stock.price,
+        //                         qty: stock.stock,
+        //                     });
+        //                     remainingQuantity -= stock.stock;
+        //                 } else {
+        //                     // Add the last stock with the remaining quantity
+        //                     Items.push({
+        //                         sku: item.sku,
+        //                         barcode: item.barcode,
+        //                         name: item.name,
+        //                         price: stock.price,
+        //                         qty: remainingQuantity,
+        //                     });
+        //                 }
+        //             });
+        //         } else {
+        //             Items.push({
+        //                 sku: item.sku,
+        //                 barcode: item.barcode,
+        //                 name: item.name,
+        //                 price: item.price,
+        //                 qty: parseInt(qty),
+        //             });
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         return [];
+        //     });
         Items.push({
             sku: item.sku,
             barcode: item.barcode,

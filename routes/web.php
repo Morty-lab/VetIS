@@ -446,6 +446,8 @@ Route::middleware(['auth', 'role:admin,secretary,cashier'])->group(function () {
     Route::get('/pos', [POSController::class, 'index'])->name('pos');
     Route::get('/pos/receipt', [POSController::class, 'receipt'])->name('pos.receipt');
     Route::post('submit-transaction', [POSController::class, 'store'])->name('pos.pay');
+Route::post('/check-stocks', [ProductsController::class, 'checkStocks'])->name('products.checkStocks');
+
 
 
     // billing section
