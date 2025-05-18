@@ -29,11 +29,12 @@
                 </div>
                 <div class="card-body">
                     <div class="row gx-5 px-3">
-                        <div class="col d-flex justify-content-center align-items-center card shadow-none">
-                            <img class="img-account-profile custom-img-2 rounded"
-                                src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : 'https://img.freepik.com/premium-vector/white-cat-portrait-hand-drawn-illustrations-vector_376684-65.jpg' }}"
-                                alt="">
-                        </div>
+                                 <div class="col-md-3 d-flex justify-content-center p-0 align-items-center">
+                                    <img class="img-account-profile rounded-circle"
+                                         src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png') }}"
+                                         alt=""
+                                         style="width: 200px; height: 200px; object-fit: cover;"/>
+                                </div>
                         <div class="col-md-9">
                             <div class="row gx-3">
                                 <div class="col-md-12">
@@ -66,7 +67,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthdate">Birthdate</label>
-                                    <p>{{ $pet->pet_birthdate }}</p>
+                                    <p>{{ \Carbon\Carbon::parse($pet->pet_birthdate)->format('M d, Y') }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="selectGender">Gender</label>
@@ -183,7 +184,6 @@
                 <table id="petScheduledAppointmentsTable">
                     <thead>
                         <tr>
-                            <th><a href="#">Appointment ID</a></th>
                             <th><a href="#">Date and Time</a></th>
                             <th><a href="#">Veterinarian</a></th>
                             <th><a href="#">Purpose</a></th>
@@ -195,9 +195,8 @@
                         @foreach ($appointments as $appointment)
                             @if ($appointment->status === 0)
                                 <tr>
-                                    <td>{{ sprintf('VetIS-%05d', $appointment->id) }}</td>
                                     <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
-                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
+                                        {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('g:i A') }}</td>
                                     <td>
                                         @foreach ($vets as $vet)
                                             @if ($vet->id == $appointment->doctor_ID)
@@ -205,7 +204,18 @@
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td>{{ $appointment->purpose }}</td>
+                                    <td>
+                                        @php
+                                            $service_ids = explode(',', $appointment->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        @endphp
+                                        @foreach ($services as $service)
+                                            <span
+                                                class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                {{ $service->service_name }}
+                                            </span>
+                                        @endforeach
+                                    </td>
                                     <td>Scheduled</td>
 
                                     <td><a href="{{ route('portal.appointments.view', ['appid' => $appointment->id, 'petid' => $appointment->pet_ID]) }}"
@@ -243,7 +253,18 @@
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} |
                                         {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i') }}</td>
-                                    <td>{{ $appointment->purpose }}</td>
+                                    <td>
+                                        @php
+                                            $service_ids = explode(',', $appointment->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        @endphp
+                                        @foreach ($services as $service)
+                                            <span
+                                                class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                {{ $service->service_name }}
+                                            </span>
+                                        @endforeach
+                                    </td>
                                     <td>Completed</td>
                                     <td><a href="" class="btn btn-primary">Open</a></td>
                                 </tr>

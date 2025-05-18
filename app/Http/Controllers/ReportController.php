@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use App\Models\Stocks;
 use App\Models\Suppliers;
+use App\Models\Units;
 use App\Models\TransactionDetailsModel;
 use App\Models\TransactionModel;
 use Carbon\Carbon;
@@ -120,6 +121,25 @@ class ReportController extends Controller
         $products = Products::all();
 
         return view('reports.documents.lowStockList', ['products' => $products]);
+
+    }
+
+     public function replenishment()
+    {
+        $dailySales = TransactionModel::getDailySalesReport();
+        $monthlyReports = TransactionModel::getMonthlySalesReport();
+        return view('reports.replenishmentReport.replenishmentList', [
+            'sales' => $dailySales,
+            'monthlyReports' => $monthlyReports,
+        ]);
+    }
+
+    
+    public function printReplenishment()
+    {
+        $products = Products::all();
+        $stocks = Stocks::all();
+        return view('reports.documents.monthlyReplenishment', ['products' => $products, 'stocks' => $stocks]);
 
     }
 

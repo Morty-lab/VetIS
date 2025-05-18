@@ -61,38 +61,42 @@
                     <th>Barcode</th>
                     <th>Brand</th>
                     <th>Product Name</th>
+                    <th>Unit</th>
                     <th>Expiry Date</th>
                     <th>Supplier</th>
                     <th>Supplier Price</th>
                     <th>Selling Price</th>
-                    <th>Stocks</th>
-                    <th>Stocks Available</th>
+                    <th>Total Stock</th>
+                    <th>Available Stock</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($stocks as $stock)
+                @foreach($stocks->sortByDesc('created_at') as $stock)
                 @php
                 $product = \App\Models\Products::where('id', $stock->products_id)->first();
                 @endphp
                 <tr>
-                    <td>{{sprintf("STK-%05d", $stock->id)}}</td>
+                    <td>{{ $stock->created_at->format('F j, Y g:i A') }}</td> 
+                    <td>{{$product->SKU}}</td>
+                    <td>{{$product->brand}}</td>
                     <td>{{$product->product_name}}</td>
+                    <td>{{ ucfirst(\App\Models\Unit::where('id', $product->unit)->first()->unit_name) }}</td>
                     <td>{{\Carbon\Carbon::parse($stock->expiry_date)->format('M d, Y')}}</td>
                     <td>{{\App\Models\Suppliers::where('id', $stock->supplier_id)->first()->supplier_name}}</td>
-                    <td>Php {{$stock->price}}</td>
-                    <td>Php {{$product->price}}</td>
-                    <td>{{$stock->stock - $stock->subtracted_stock . " " . \App\Models\Unit::where('id',$stock->unit)->first()->unit_name}}</td>
-                    <td>@if ($stock->stock - $stock->subtracted_stock <= 0)
+                    <td>₱ {{$stock->supplier_price}}</td>
+                    <td>₱ {{$stock->price}}</td>
+                    <td>{{$stock->stock}}</td>
+                    <td>{{$stock->stock - $stock->subtracted_stock}}</td>
+                    {{-- <td>@if ($stock->stock - $stock->subtracted_stock <= 0)
                             <div class="badge bg-danger-soft text-danger rounded-pill">No Stocks
-    </div>
-    @elseif (($stock->stock - $stock->subtracted_stock) <= ($stock->stock * 0.1))
-        <div class="badge bg-warning-soft text-warning rounded-pill">Low Stock</div>
-        @else
-        <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
-        @endif</td>
-        </tr>
-        @endforeach
-
+                        </div>
+                        @elseif (($stock->stock - $stock->subtracted_stock) <= ($stock->stock * 0.1))
+                            <div class="badge bg-warning-soft text-warning rounded-pill">Low Stock</div>
+                            @else
+                            <div class="badge bg-primary-soft text-primary rounded-pill">Available</div>
+                            @endif</td>
+                            </tr> --}}
+                @endforeach
         </tbody>
         </table>
         </div>

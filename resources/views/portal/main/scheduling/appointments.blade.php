@@ -337,7 +337,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($appointments as $s)
+                            @foreach ($appointments->sortByDesc(function($s) {
+                                return $s->appointment_date . ' ' . $s->appointment_time;
+                            }) as $s)
                                 @if ($s->status === 0 && \Carbon\Carbon::parse($s->appointment_date)->isToday())
                                     @php
                                         $petIDs = explode(',', $s->pet_ID);
@@ -345,8 +347,8 @@
                                         $owner = Clients::getClientById($s->owner_ID);
                                     @endphp
                                     <tr data-index="0">
-                                        <td>{{ $s->appointment_date }} |
-                                            {{ $s->appointment_time }}
+                                        <td>{{ \Carbon\Carbon::parse($s->appointment_date)->format('j F, Y') }} |
+                                            {{ \Carbon\Carbon::parse($s->appointment_time)->format('g:i A') }}
                                         </td>
                                         <td>
                                             @foreach ($pets as $pet)
@@ -404,7 +406,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($appointments as $s)
+                            @foreach ($appointments->sortByDesc(function($appointment) {
+                                return $appointment->appointment_date . ' ' . $appointment->appointment_time;
+                            }) as $s)
                                 @if (
                                     $s->status === 0 )
                                     @php
@@ -414,8 +418,8 @@
 
                                     @endphp
                                     <tr data-index="0">
-                                        <td>{{ $s->appointment_date }} |
-                                            {{ $s->appointment_time }}
+                                        <td>{{ \Carbon\Carbon::parse($s->appointment_date)->format('j F, Y') }} |
+                                            {{ \Carbon\Carbon::parse($s->appointment_time)->format('g:i A') }}
                                         </td>
                                         <td>
                                             @foreach ($pets as $pet)
@@ -469,7 +473,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($appointments as $a)
+                            @foreach ($appointments->sortByDesc(function($a) {
+                                return $a->appointment_date . ' ' . $a->appointment_time;
+                            }) as $a)
                                 @if (
                                     $a->status === null &&
                                         (\Carbon\Carbon::parse($a->appointment_date)->isToday() ||
@@ -481,8 +487,8 @@
 
                                     @endphp
                                     <tr data-index="0">
-                                        <td>{{ $a->appointment_date }} |
-                                            {{ $a->appointment_time }}
+                                        <td>{{ \Carbon\Carbon::parse($a->appointment_date)->format('j F, Y') }} |
+                                            {{ \Carbon\Carbon::parse($a->appointment_time)->format('g:i A') }}
                                         </td>
                                         <td>
                                             @foreach ($pets as $pet)
@@ -535,7 +541,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($appointments as $appointment_history)
+                            @foreach ($appointments->sortByDesc(function($appointment_history) {
+                                return $appointment_history->appointment_date . ' ' . $appointment_history->appointment_time;
+                            }) as $appointment_history)
                                 {{-- @if (\Carbon\Carbon::parse($a->appointment_date)->lt(\Carbon\Carbon::today())) --}}
                                 @php
                                     $petIDs = explode(',', $s->pet_ID);
@@ -543,8 +551,8 @@
                                     $vet = \App\Models\Doctor::where('id', $appointment_history->doctor_ID)->first();
                                 @endphp
                                 <tr data-index="0">
-                                    <td>{{ $appointment_history->appointment_date }} |
-                                        {{ $appointment_history->appointment_time }}
+                                    <td>{{ \Carbon\Carbon::parse($appointment_history->appointment_date)->format('j F, Y') }} |
+                                        {{ \Carbon\Carbon::parse($appointment_history->appointment_time)->format('g:i A') }}
                                     </td>
                                     <td>
                                         @foreach ($pets as $pet)
@@ -596,10 +604,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
         (() => {
             'use strict';

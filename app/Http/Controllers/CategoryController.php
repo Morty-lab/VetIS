@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -58,12 +59,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'required|string|max:255|unique:category,category_name,' . $id,
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Validation failed. Please check the form and try again.');
+        }
+
         $data = [
             "category_name" => $request->category_name
         ];
 
         Category::updateCategory($data, $id);
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
 
     /**
@@ -71,7 +80,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::deleteCategory($id);
-        return redirect()->route('categories.index');
+        try {
+            Category::deleteCategory($id);
+            return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        } catch (\Exception $e) {
+            if (str_contains($e->getMessage(), 'Integrity constraint violation')) {
+                return redirect()->route('categories.index')->with('error', 'This category cannot be deleted while it is linked to one or more products.');
+            } else {
+                return redirect()->route('categories.index')->with('error', 'Failed to delete category');
+            }
+        }
     }
 }

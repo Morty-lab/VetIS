@@ -74,7 +74,7 @@
                     <tr>
                     <td>{{ $product->SKU }}</td>
                     <td>{{ $product->product_name }} </td>
-                    <td>{{ \App\Models\Unit::where('id', $product->unit)->first()->unit_name }}</td>
+                    <td>{{ ucfirst(\App\Models\Unit::where('id', $product->unit)->first()->unit_name) }}</td>
                     <td>{{ \App\Models\Category::where('id',$product->product_category)->first()->category_name }}</td>
                     <td> {{$stocks - $subtracted ?? 'No'}} Stock/s Available</td>
                     </tr>

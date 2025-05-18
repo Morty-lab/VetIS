@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Item Stock Report</title>
+    <title>Replenishment Report</title>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <style>
         body {
@@ -45,43 +45,38 @@
     <div class="document bg-white">
         <div class="d-flex justify-content-between">
             <div class="text-start">
-                <p class="mb-0 text-lg text-dark">Pruderich Veterinary Clinic</p>
+                <h1 class="mb-0">Pruderich Veterinary Clinic</h1>
                 <p>Purok - 3, Dologon, Maramag, Bukidnon, Philippines</p>
             </div>
             <div class=" text-end">
-                <h2 class="mb-1">Item Stock Report</h2>
-                <p class="text-primary mb-1">{{\App\Models\Products::where('id',$productId)->first()->brand}} | {{\App\Models\Products::where('id',$productId)->first()->product_name}}</p>
-                <p class="mb-0">{{\App\Models\Products::where('id',$productId)->first()->SKU}}</p>
+                <h2 class="mb-0">Replenishment Report</h2>
+                <p>for {{\Carbon\Carbon::now()->format('F d , Y')}}</p>
             </div>
         </div>
         <hr class="mb-3">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Date Added</th>
+                    <th>Date</th>
                     <th>Barcode</th>
-                    <th>Expiry Date</th>
-                    <th>Supplier Name</th>
-                    <th>Supplier Price</th>
-                    <th>Selling Price</th>
-                    <th>Total Stock</th>
-                    <th>Available Stock</th>
+                    <th>Brand Name</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Unit</th>
+                    <th>Added Stock</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($stocks->sortByDesc('created_at') as $stock)
-                <tr>
-                    <td>{{ $stock->created_at->format('M d, Y h:i A') }}</td>
-                    <td>{{\App\Models\Products::where('id', $productId)->first()->SKU}}</td>
-                    <td>
-                        {{ $stock->expiry_date ? \Carbon\Carbon::parse($stock->expiry_date)->format('F d, Y') : 'No Expiry Date' }}
-                    </td>
-                    <td>{{ \App\Models\Suppliers::where('id', $stock->supplier_id)->first()->supplier_name }}</td>
-                    <td>₱ {{$stock->supplier_price}}</td>
-                    <td>₱ {{$stock->price}}</td>
-                    <td>{{$stock->stock}}</td>
-                    <td>{{$stock->stock - $stock->subtracted_stock}}</td>
-                </tr>
+                @foreach($stocks as $stock)
+                    <tr>
+                        <td>{{ $stock->created_at->format('M d, Y h:i A') }}</td>
+                        <td>{{ $stock->product->SKU }}</td>
+                        <td>{{ $stock->product->brand }}</td>
+                        <td>{{ $stock->product->product_name }}</td>
+                        <td>{{ $stock->product->category->category_name }}</td>
+                        <td></td>
+                        <td>{{ $stock->stock }}</td>
+                    </tr>
                 @endforeach
 
             </tbody>

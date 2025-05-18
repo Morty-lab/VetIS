@@ -31,12 +31,11 @@
         <table id="myScheduleTable">
             <thead>
                 <tr>
-                    <th>Appointment ID</th>
                     <th>Date and Time</th>
                     <th>Veterinarian</th>
                     <th>Pet</th>
                     <th>Pet Type</th>
-                    <th>Purpose</th>
+                    <th>Reason of Visit</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -46,7 +45,6 @@
                 @foreach ($appointments as $appointment)
                     @if ($appointment->status === 0)
                     <tr>
-                        <td>{{ $appointment->id }}</td>
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('j F, Y') }} | {{ $appointment->appointment_time }}</td>
                         <td>
                             @php
@@ -65,7 +63,19 @@
                         <td>
                             {{ $pet ? $pet->pet_type : 'N/A' }}
                         </td>
-                        <td>{{ $appointment->purpose }}</td>
+                        <td>
+                                  @php
+                                            $service_ids = explode(',', $appointment->purpose);
+                                            $services = \App\Models\Services::whereIn('id', $service_ids)->get();
+                                        @endphp
+                                        @foreach ($services as $service)
+                                            <span
+                                                class="badge badge-sm bg-secondary-soft text-secondary rounded-pill me-1">
+                                                {{ $service->service_name }}
+                                            </span>
+                                        @endforeach
+
+                        </td>
                         <td>
                             <span class="badge bg-success-soft text-success text-sm rounded-pill">
                                 Scheduled

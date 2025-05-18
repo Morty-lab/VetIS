@@ -15,13 +15,23 @@
 @endsection
 @section('content')
 <div class="row">
+    @if($pets->isEmpty())
+    <div class="col-12 text-center mt-5">
+        <i class="fa-solid fa-cat fa-3x mb-3 text-primary"></i>
+        <p class="text-muted">You don't have any pets registered. Add a pet to get started!</p>
+        <a href="{{ route('portal.mypets.register') }}" class="btn btn-primary">Register Pet</a>
+    </div>
+@else
     @foreach($pets as $pet)
     <div class="col-md-3 mb-4">
         <div class="card border-top-lg border-top-primary shadow-none border">
             <!-- Card -->
             <div class="card-body p-0">
-                <div class="d-flex justify-content-center pt-2 px-2">
-                    <img class="img-account-profile mb-2 rounded border custom-img" src="{{$pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png')}}" alt="Profile Picture" />
+                <div class="col-md-3 w-100 h-100 d-flex justify-content-center mt-2">
+                    <img class="img-account-profile rounded-circle"
+                         src="{{ $pet->pet_picture != null ? asset('storage/' . $pet->pet_picture) : asset('assets/img/illustrations/profiles/pet.png') }}"
+                         alt=""
+                         style="width: 200px; height: 200px; object-fit: cover;"/>
                 </div>
                 <div class="pet-info mt-2 py-2 px-4 border-top bg-white">
                     <div class="row">
@@ -34,7 +44,6 @@
                             <span class="badge bg-primary-soft text-primary text-sm rounded-pill"><i class="fa-solid fa-check"></i></span>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="card-footer mt-0 d-flex justify-content-end">
@@ -43,5 +52,6 @@
         </div>
     </div>
     @endforeach
+@endif
 </div>
 @endsection

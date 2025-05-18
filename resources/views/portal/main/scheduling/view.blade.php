@@ -33,7 +33,7 @@
                                             'g:i A',
                                         );
                                     @endphp
-                                    <select class="select-appointment-time-edit form-control" id="selectAppointmentTime"
+                                    <select class="sedit-select-time form-control" id="selectAppointmentTime"
                                         name="appointment_time" data-placeholder="Select Time" required disabled>
                                         <option value=""></option>
                                         <optgroup label="AM">
@@ -233,7 +233,7 @@
                                     <span
                                         class="mb-3 badge
                                     @if (is_null($appointment->status)) bg-warning-soft text-warning
-                                    @elseif($appointment->status === 0) bg-info-soft text-info
+                                    @elseif($appointment->status === 0) bg-primary-soft text-primary
                                     @elseif($appointment->status === 1) bg-success-soft text-success
                                     @elseif($appointment->status === 2) bg-danger-soft text-danger @endif
                                     text-sm rounded-pill">
@@ -344,7 +344,7 @@
                                             <td>{{ $pet->pet_name }}</td>
                                             <td>{{ $pet->pet_type }}</td>
                                             <td>{{ $pet->pet_breed }}</td>
-                                            <td>{{ $pet->age }} year/s old</td>
+                                            <td>{{ $pet->age }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -489,6 +489,93 @@
             minTime: "08:00",
             maxTime: "17:00",
             minuteIncrement: 5, // Optional: set minute increment
+        });
+    </script>
+    <script>
+        let selectedVet = 0;
+        let selectedDate = 0;
+
+        function selectVet(vet) {
+            selectedVet = vet
+            console.log(selectedVet)
+        }
+
+        function selectDate(date) {
+            selectedDate = date;
+            console.log(selectedDate)
+        }
+
+        function sendRequest(selectedDate, selectedVet) {
+            $.ajax({
+                url: '{{ route('appointments.available-times') }}',
+                type: 'GET',
+                data: {
+                    date: selectedDate,
+                    vet: selectedVet
+                },
+                success: function(response) {
+                    console.log(response);
+                    let timeSelect = $('#selectAppointmentTime');
+                    timeSelect.empty();
+                    timeSelect.append('<option value="">--- Select a Time ---</option>');
+
+                    if (response.length > 0) {
+                        let amGroup = $('<optgroup label="AM"></optgroup>');
+                        let pmGroup = $('<optgroup label="PM"></optgroup>');
+
+                        response.forEach(function(time) {
+                            // Convert 24-hour format to 12-hour display format
+                            let displayTime = convertTo12HourDisplay(time);
+                            let option = `<option value="${time}">${displayTime}</option>`;
+
+                            let hour = parseInt(time.split(':')[0]);
+                            if (hour < 12) {
+                                amGroup.append(option);
+                            } else {
+                                pmGroup.append(option);
+                            }
+                        });
+
+                        timeSelect.append(amGroup);
+                        timeSelect.append(pmGroup);
+                        timeSelect.prop('disabled', false)
+                    } else {
+                        timeSelect.append('<option value="">No available times</option>');
+                    }
+                },
+                error: function(error) {
+                    console.log("Error fetching available times:", error);
+                }
+            });
+        }
+
+        function convertTo12HourDisplay(time24) {
+            const [hours, minutes] = time24.split(':');
+            const hour = parseInt(hours);
+            const period = hour < 12 ? 'AM' : 'PM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${period}`;
+        }
+
+        $(document).ready(function() {
+            $('#vetSelect').on('change', function() {
+                selectVet(this.value);
+                console.log(selectedVet);
+                if (selectVet) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            $('#select-schedule').on('change', function() {
+                selectDate(this.value);
+
+                if (selectedDate) {
+                    sendRequest(selectedDate, selectedVet);
+                }
+            });
+
+            // Helper function to convert 24-hour time to 12-hour display format
+
         });
     </script>
 @endsection
