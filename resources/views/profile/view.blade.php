@@ -208,7 +208,12 @@
                                         <div class="row g-2">
                                             <div class="col-md-6">
                                                 <label class="small mb-1">Name</label>
-                                                <p>{{ $user->name }}</p>
+                                                <p>
+                                                    {{ $userInfo->firstname ?? '' }}
+                                                    {{ $userInfo->middlename ?? '' }}
+                                                    {{ $userInfo->lastname ?? '' }}
+                                                    {{ $userInfo->extensionname ?? '' }}
+                                                </p>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1">Role</label>

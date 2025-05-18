@@ -443,11 +443,11 @@
                                             <p class="mb-0">Sub Total</p>
                                             <p class="text-lg text-grey mb-0 sub-total">₱0.00</p>
                                         </div>
-                                        <div
+                                        {{-- <div
                                             class="discount-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0 ">Discount %</p>
                                             <p class="text-lg text-grey mb-0 discount">--</p>
-                                        </div>
+                                        </div> --}}
                                         <hr>
                                         <div class="total-section d-flex justify-content-between align-items-center">
                                             <p class="mb-0">Total</p>
@@ -605,10 +605,10 @@
                                 <p class="mb-0 ">Sub Total</p>
                                 <p class="text-lg text-grey mb-0 sub-total">₱0.00</p>
                             </div>
-                            <div class="discount-section d-flex justify-content-between align-items-center">
+                            {{-- <div class="discount-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Discount %</p>
                                 <p class="text-lg text-grey mb-0 discount">--</p>
-                            </div>
+                            </div> --}}
                             <hr>
                             <div class="total-section d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Total</p>
@@ -647,8 +647,8 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#customerModal"
                                     class="dropdown-item">Customer</a></li>
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#discountModal"
-                                    class="dropdown-item">Discount</a></li>
+                            {{-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#discountModal"
+                                    class="dropdown-item">Discount</a></li> --}}
                             <hr class="my-2">
                             <li>
                                 <a href="{{ route('billing', ['openModal' => 'add']) }}" class="dropdown-item text-primary">
