@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $this->call([UsersTableSeeder::class, ClientsTableSeeder::class, ServicesTableSeeder::class, PetSeeder::class, NotificationSeeder::class, CategorySeeder::class, ProductsSeeder::class,PetRoomSeeder::class]);
+        $this->call([UsersTableSeeder::class, ServicesTableSeeder::class, CategorySeeder::class, ProductsSeeder::class]);
+        // ClientsTableSeeder::class,PetSeeder::class,NotificationSeeder::class,PetRoomSeeder::class
 
 
-
-        \App\Models\User::factory(10)->create();
-        Appointments::factory()->count(10)->create();
+        // \App\Models\User::factory(10)->create();
+        // Appointments::factory()->count(10)->create();
 
 
 
