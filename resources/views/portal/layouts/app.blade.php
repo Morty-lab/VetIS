@@ -35,6 +35,16 @@
 {{--    exit;--}}
 {{--    }--}}
 {{--    @endphp--}}
+    @php
+        $user = auth()->user();
+        $client = \App\Models\Clients::where('user_id', $user->id)->first();
+        // dd($client);
+        if (isset($client) && $client->status == 0) {
+            echo view('errors.403');
+            exit;
+        }
+    @endphp
+
     @include('portal.layouts.topNav')
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
