@@ -190,7 +190,6 @@ return new class extends Migration {
             $table->string("pet_color");
             $table->string("pet_picture")->nullable();
             $table->string("pet_description")->nullable();
-            // $table->float("pet_weight");
             $table->boolean("vaccinated")->nullable();
             $table->boolean("neutered")->nullable();
 
@@ -239,7 +238,6 @@ return new class extends Migration {
             $table->text("pet_ID");
             $table->unsignedBigInteger("doctor_ID");
             $table->foreign("doctor_ID")->references("id")->on("doctors")->onDelete("cascade");
-            // $table->foreign("pet_ID")->references("id")->on("pets")->onDelete("cascade");
             $table->foreign("owner_ID")->references("id")->on("clients")->onDelete("cascade");
             $table->date("appointment_date");
             $table->time("appointment_time")->nullable();
@@ -264,8 +262,6 @@ return new class extends Migration {
             $table->longText("complaint")->nullable();
             $table->longText("examination")->nullable();
             $table->longText("diagnosis")->nullable();
-            // $table->longText('medication_given')->nullable();
-            // $table->longText('procedure_given')->nullable();
             $table->longText('remarks')->nullable();
             $table->longText('treatment_notes')->nullable();
 
@@ -302,27 +298,6 @@ return new class extends Migration {
 
             $table->timestamps();
         });
-
-        //        Schema::create("laboratory", function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger("pet_record_id");
-//            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
-//            $table->binary("file_content"); // This stores the file content as a blob
-//            $table->string("file_extension");
-//            $table->string("remarks");
-//            $table->timestamps();
-//        });
-
-        //        Schema::create('pet_plan', function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger("pet_record_id");
-//            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
-//            $table->string("service_name");
-//            $table->date("date_return");
-//            $table->string("reason_for_return")->nullable();
-//            $table->integer("status");
-//            $table->timestamps();
-//        });
 
         Schema::create('services', function (Blueprint $table) {
             $table->id();
@@ -385,18 +360,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        //        Schema::create("pet_diagnosis", function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger("pet_record_id");
-//            $table->foreign('pet_record_id')->references("id")->on("pet_records")->onDelete("cascade");
-//            $table->string("diagnosis");
-//            $table->string("treatment");
-//            $table->string("prescription");
-//            $table->string("client_communication");
-//            $table->timestamps();
-//
-//        });
-
         Schema::create('medications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("recordID");
@@ -404,7 +367,6 @@ return new class extends Migration {
             $table->foreign("recordID")->references("id")->on("pet_records")->onDelete("cascade");
             $table->foreign("productID")->references("id")->on("products")->onDelete("cascade");
             $table->string("dosage");
-            // $table->float("price");
             $table->string("frequency");
             $table->string('medication_type');
             $table->timestamps();
@@ -465,9 +427,6 @@ return new class extends Migration {
         Schema::dropIfExists('billing');
         Schema::dropIfExists('services');
         Schema::dropIfExists('prescriptions');
-        //        Schema::dropIfExists('pet_diagnosis');
-//        Schema::dropIfExists('pet_plan');
-//        Schema::dropIfExists('laboratory');
         Schema::dropIfExists('examinations');
         Schema::dropIfExists('pet_records');
         Schema::dropIfExists('pets');

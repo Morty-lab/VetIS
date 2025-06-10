@@ -39,18 +39,11 @@ class Appointments extends Model
         $doctor = Doctor::where('id', $doctor_ID)->first();
         $suffix = strtoupper(substr($doctor->firstname, 0, 1) . substr($doctor->lastname, 0, 1));
 
-        // Check for similar appointment times on the selected date
-        // $similarAppointmentsCount = self::where('appointment_date', $date->format('Y-m-d'))
-        //     ->where('appointment_time', $time->format('H:i'))
-        //     ->count();
-
-        // Add a letter suffix (a-z) if there are similar times
-        // $letterSuffix = $similarAppointmentsCount > 0 ? chr(64 + $similarAppointmentsCount) : '';
 
         return $prefix . '-' . $time->format('Hi') . '-' . $suffix;
 
 
-        // return $prefix . '-' . $time->format('Hi');
+      
     }
 
     public static function getAllAppointments()
